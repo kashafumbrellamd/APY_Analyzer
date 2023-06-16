@@ -16,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['middleware' => 'role:user'], function() {
+
+    Route::get('/user', function() {
+ 
+       return 'Welcome...!!';
+       
+    });
+ 
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/roles', [App\Http\Controllers\PermissionController::class,'Permission']);
