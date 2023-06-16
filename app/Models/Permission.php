@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
+
+    protected $table = "permission";
     use HasFactory;
 
     public function roles() {
-        return $this->belongsToMany(Role::class,'roles_permissions');       
+        return $this->belongsToMany(Role::class,'roles_permissions');
     }
-     
-    public function users() { 
+
+    public function users() {
         return $this->belongsToMany(User::class,'users_permissions');
     }
 }

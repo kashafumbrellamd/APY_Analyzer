@@ -6,11 +6,12 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
     public function Permission()
-    {   
+    {
     	$user_permission = Permission::where('slug','create-tasks')->first();
 		$admin_permission = Permission::where('slug', 'edit-users')->first();
 
@@ -63,7 +64,12 @@ class PermissionController extends Controller
 		$admin->roles()->attach($admin_role);
 		$admin->permissions()->attach($admin_perm);
 
-		
+
 		return redirect()->back();
+    }
+
+    public function add_permission($Permission)
+    {
+        
     }
 }
