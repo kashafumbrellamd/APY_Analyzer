@@ -16,6 +16,11 @@ class RolesController extends Controller
         return view('roles.index');
     }
 
+    public function role_permission()
+    {
+        return view('roles.role_permissions');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -81,4 +86,5 @@ class RolesController extends Controller
     {
         //
     }
+
 }

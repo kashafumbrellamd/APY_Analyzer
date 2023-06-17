@@ -24,8 +24,10 @@ Route::group(['middleware' => 'role:user'], function() {
 });
 
 Route::group(['middleware' => 'role:admin'], function() {
-    Route::resource('role', App\Http\Controllers\RolesController::class);
+    Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
 });
+
+Route::resource('role', App\Http\Controllers\RolesController::class);
 
 Auth::routes();
 

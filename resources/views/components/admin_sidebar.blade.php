@@ -24,6 +24,9 @@
         <a class="nav-link" href="{{ url('/role') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Roles</span></a>
+        <a class="nav-link" href="{{ url('/role/permissions') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Role Permissions</span></a>
     </li>
     {{-- <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
