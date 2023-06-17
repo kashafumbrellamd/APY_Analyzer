@@ -19,9 +19,12 @@ class Permission extends Model
         return $this->belongsToMany(User::class,'users_permissions');
     }
 
-    public function getPermissionsWithRoles()
+    public function getPermissionsWithRoles($roleId)
     {
-        return Permission::leftJoin('roles_permissions', 'permission.id', '=', 'roles_permissions.permission_id')
+        return Permission::leftJoin('roles_permissions', function ($join) use ($roleId) {
+                $join->on('permission.id', '=', 'roles_permissions.permission_id')
+                     ->where('roles_permissions.role_id', '=', $roleId);
+            })
             ->select('permission.*', 'roles_permissions.*')
             ->get();
     }

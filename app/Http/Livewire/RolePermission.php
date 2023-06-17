@@ -13,10 +13,7 @@ class RolePermission extends Component
 
     public function render()
     {
-        if($this->role_id != ''){
-            dd('ok');
-        }
-        $permissions = Permission::getPermissionsWithRoles();
+        $permissions = Permission::getPermissionsWithRoles($this->role_id);
         $rolls = Role::all();
         return view('livewire.role-permission',['permissions'=>$permissions,'rolls'=>$rolls]);
     }
