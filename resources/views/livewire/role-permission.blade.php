@@ -6,7 +6,7 @@
         </div>
         <div class="row mb-4">
             <div class="col-md-8" >
-                <select class="form-select form-control" aria-label="Default select example" wire:model="role_id">
+                <select class="form-select form-control" aria-label="Default select example" wire:change="onrollselect($event.target.value)">
                     <option value="">Select Role</option>
                     @foreach($rolls as $roll)
                         @if($roll->id == $role_id)
@@ -29,10 +29,10 @@
                         <fieldset>      
                             <legend>Assigned permissions to this role</legend>
                             @foreach($permissions as $permission)
-                                <input type="checkbox" name="{{$permission->slug}}" value="{{$permission->id}}" wire:model.prevent="selectedOptions">{{$permission->name}}<br>
+                                <input type="checkbox" name="{{$permission->slug}}" value="{{$permission->id}}" wire:model.defer="selectedOptions">{{$permission->name}}<br>
                             @endforeach 
                             <br>      
-                            <button type="submit">Submit</button>     
+                            <button type="submit" class="btn btn-primary">Submit</button>     
                         </fieldset>      
                     </form>
                 </div>
