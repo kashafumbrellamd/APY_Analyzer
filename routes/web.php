@@ -13,9 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/',function(){
+    return redirect()->route('login');
+});
+
+Route::get('/home', function () {
     return view('welcome');
-})->name('dashboard');
+})->name('home');
 
 Route::group(['middleware' => 'role:user'], function() {
     Route::get('/user', function() {
@@ -31,6 +35,6 @@ Route::resource('role', App\Http\Controllers\RolesController::class);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/abc', [App\Http\Controllers\HomeController::class, 'index'])->name('abc');
 Route::get('/roles', [App\Http\Controllers\PermissionController::class,'Permission']);
 Route::get('/add_permisiion/{permissoon}', [App\Http\Controllers\PermissionController::class,'add_permisiion']);
