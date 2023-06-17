@@ -5,16 +5,11 @@
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-between mb-4">
-                    @if (auth()->user()->hasRole('admin'))
-                        <input type="text" class="form-control mr-2" wire:model.lazy="role"
-                            placeholder="Enter New Role....">
-                    @if ($update)
-                        <button type="button" wire:click="update" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-primary">Cancel</button>
-                    @else
-                        <button type="submit" wire:click="submitForm" class="btn btn-primary">Submit</button>
-                    @endif
-                    @endif
+                @if (auth()->user()->hasRole('admin'))
+                    <input type="text" class="form-control mr-2" wire:model.lazy="role"
+                        placeholder="Enter New Role....">
+                    <button type="submit" wire:click="submitForm" class="btn btn-primary">Submit</button>
+                @endif
             </div>
             @error('role')
                 <div class="mt-3 text-center">
@@ -25,7 +20,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Roles</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -42,7 +37,25 @@
                         @foreach ($data as $dt)
                             <tr>
                                 <td>{{ $dt->id }}</td>
-                                <td>{{ $dt->name }}</td>
+                                @if ($update)
+                                    @if ($user_id == $dt->id)
+                                        <td class="d-flex">
+                                            <input type="text" class="form-control mr-2"
+                                                wire:model.lazy="update_name" placeholder="Enter New Role...." />
+
+                                            <button type="button" wire:click="update"
+                                                class="btn btn-primary mr-2">Update</button>
+
+                                            <button type="button" wire:click="cancel"
+                                                class="btn btn-primary mr-2">Cancel</button>
+
+                                        </td>
+                                    @else
+                                        <td>{{ $dt->name }}</td>
+                                    @endif
+                                @else
+                                    <td>{{ $dt->name }}</td>
+                                @endif
                                 <td class="text-center">
                                     <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
                                             class="bi bi-pen"></span></button>

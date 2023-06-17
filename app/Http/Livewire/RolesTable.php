@@ -10,6 +10,7 @@ class RolesTable extends Component
 {
     public $role = '';
     public $update = false;
+    public $update_name = '';
     public $edit_info = '';
     public $user_id = '';
 
@@ -49,34 +50,42 @@ class RolesTable extends Component
 
     public function edit($id){
         $this->user_id = $id;
-        $this->role = Role::find($id)->name;
+        $this->update_name = Role::find($id)->name;
         $this->update = true;
         $this->render();
     }
 
     public function update(){
-        if($this->role!='')
+        if($this->update_name!='')
         {
-            $slug = Str::slug($this->role, '-');
+            $slug = Str::slug($this->update_name, '-');
             $check = Role::where('slug',$slug)->first();
             if($check == null)
             {
                 Role::find($this->user_id)->update([
-                    'name' => $this->role,
+                    'name' => $this->update_name,
                     'slug'=> $slug,
                 ]);
-                $this->role = '';
+                $this->update_name = '';
                 $this->update = false;
                 $this->edit_info = '';
                 $this->user_id = '';
-                $this->render();
             }else{
-                $this->addError('role', 'Role Already Exists');
+                $this->addError('update_name', 'Role Already Exists');
             }
         }else{
-            $this->addError('role', 'Role Can\'t be Empty');
+            $this->addError('update_name', 'Role Can\'t be Empty');
         }
-        $this->role = '';
+        $this->cancel();
+        $this->render();
+    }
+
+    public function cancel(){
+        $this->update_name = '';
+        $this->update = false;
+        $this->edit_info = '';
+        $this->user_id = '';
+        $this->render();
     }
 
 
