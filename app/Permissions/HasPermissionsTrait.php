@@ -10,7 +10,6 @@ trait HasPermissionsTrait {
    public function givePermissionsTo(... $permissions) {
 
     $permissions = $this->getAllPermissions($permissions);
-    dd($permissions);
     if($permissions === null) {
       return $this;
     }
@@ -75,7 +74,7 @@ trait HasPermissionsTrait {
   protected function getAllPermissions(array $permissions) {
 
     return Permission::whereIn('slug',$permissions)->get();
-    
+
   }
 
 }
