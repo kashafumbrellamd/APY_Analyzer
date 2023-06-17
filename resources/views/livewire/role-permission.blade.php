@@ -25,18 +25,14 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="row-flex">
-                    <form method="post" action="/Tests/Post/">      
+                    <form wire:submit.prevent="submitForm">      
                         <fieldset>      
                             <legend>Assigned permissions to this role</legend>
                             @foreach($permissions as $permission)
-                            @if($role_id == $permission->role_id && $role_id!='')
-                            <input checked type="checkbox" name="{{$permission->slug}}" value="{{$permission->id}}">{{$permission->name}}<br>
-                            @else
-                            <input type="checkbox" name="{{$permission->slug}}" value="{{$permission->id}}">{{$permission->name}}<br>
-                            @endif
+                                <input type="checkbox" name="{{$permission->slug}}" value="{{$permission->id}}" wire:model.prevent="selectedOptions">{{$permission->name}}<br>
                             @endforeach 
                             <br>      
-                            <input type="submit" value="Submit now" />      
+                            <button type="submit">Submit</button>     
                         </fieldset>      
                     </form>
                 </div>
