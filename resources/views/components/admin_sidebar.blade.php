@@ -41,7 +41,9 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Manage Users</span></a>
     </li>
-    {{-- <!-- Nav Item - Pages Collapse Menu -->
+
+    
+    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
@@ -55,7 +57,7 @@
                 <a class="collapse-item" href="cards.html">Cards</a>
             </div>
         </div>
-    </li> --}}
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">

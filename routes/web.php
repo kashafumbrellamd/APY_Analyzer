@@ -22,18 +22,12 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
-// Route::group(['middleware' => 'role:admin'], function() {
-//     Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
-// });
-
-
 Auth::routes();
-
+Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
 Route::resource('role', App\Http\Controllers\RolesController::class);
 Route::get('/abc', [App\Http\Controllers\HomeController::class, 'index'])->name('abc');
 Route::get('/roles', [App\Http\Controllers\PermissionController::class,'Permission']);
 Route::get('/add_permisiion/{permissoon}', [App\Http\Controllers\PermissionController::class,'add_permisiion']);
-Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
 Route::get('/manage/users', [App\Http\Controllers\RolesController::class,'manage_users']);
 
 

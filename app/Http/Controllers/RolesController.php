@@ -16,11 +16,6 @@ class RolesController extends Controller
         return view('roles.index');
     }
 
-    public function role_permission()
-    {
-        return view('roles.role_permissions');
-    }
-
     public function manage_users()
     {
         return view('manage_users.index');
@@ -73,4 +68,8 @@ class RolesController extends Controller
         //
     }
 
+    public function role_permission()
+    {
+        return view('roles.role_permissions');
+    }
 }
