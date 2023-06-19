@@ -24,9 +24,22 @@
         <a class="nav-link" href="{{ url('/role') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Roles</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item active">
         <a class="nav-link" href="{{ url('/role/permissions') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Role Permissions</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/manage/users') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Manage Users</span></a>
     </li>
     {{-- <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">

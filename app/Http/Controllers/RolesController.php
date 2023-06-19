@@ -21,6 +21,13 @@ class RolesController extends Controller
         return view('roles.role_permissions');
     }
 
+    public function manage_users()
+    {
+        return view('manage_users.index');
+    }
+
+
+
     /**
      * Display the specified resource.
      *
