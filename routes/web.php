@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +35,14 @@ Route::get('/roles', [App\Http\Controllers\PermissionController::class,'Permissi
 Route::get('/add_permisiion/{permissoon}', [App\Http\Controllers\PermissionController::class,'add_permisiion']);
 Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
 Route::get('/manage/users', [App\Http\Controllers\RolesController::class,'manage_users']);
+
+
+Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);
+Route::get('/user/password/reset/{id}', [App\Http\Controllers\PermissionController::class,'password_reset'])->name('user_password_reset');
+Route::post('/user/password/reset', [App\Http\Controllers\PermissionController::class,'password_update'])->name('password_update');
+
+
+
+Route::get('/email',function(){
+    Mail::to("moaz.muhammad@yopmail.com")->send(new TestMail());
+});
