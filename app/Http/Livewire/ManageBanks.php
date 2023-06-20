@@ -20,7 +20,7 @@ class ManageBanks extends Component
 
     public function render()
     {
-        $data = Bank::get();
+        $data = Bank::BanksWithState();
         $states = State::where('country_id','233')->get();
         return view('livewire.manage-banks',['data'=>$data,'update'=>$this->update,'states'=>$states]);
     }
@@ -76,11 +76,7 @@ class ManageBanks extends Component
     }
 
     public function cancel(){
-        $this->update_name = '';
-        $this->update = false;
-        $this->edit_info = '';
-        $this->user_id = '';
-        $this->render();
+        $this->clear();
     }
 
     public function clear(){

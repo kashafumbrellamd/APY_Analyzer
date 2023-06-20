@@ -16,4 +16,12 @@ class Bank extends Model
         'website',
         'msa_code',
     ];
+
+    public function BanksWithState()
+    {
+        $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+             ->select('banks.*', 'states.name as state_name')
+             ->get();
+        return $states;
+    }
 }

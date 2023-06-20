@@ -50,7 +50,10 @@
                                         <div class="col-md-4">
                                         </div>
                                     </div>
-                                    <center><button type="submit" class="btn btn-primary mt-3">Update</button></center>
+                                    <center>
+                                        <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                        <button class="btn btn-danger mt-3" wire:click="cancel()">Cancel</button>
+                                    </center>
                                 </div>
                             </fieldset>
                         </form>
@@ -130,7 +133,7 @@
                         @foreach ($data as $dt)
                             <tr>
                                 <td>{{ $dt->name }}</td>
-                                <td>{{ $dt->state_id }}</td>
+                                <td>{{ $dt->state_name }}</td>
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->website }}</td>
                                 <td>{{ $dt->msa_code }}</td>
