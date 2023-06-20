@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $dt)
+                        @forelse ($data as $dt)
                             <tr>
                                 <td>{{ $dt->id }}</td>
                                 @if ($update)
@@ -63,10 +63,14 @@
                                             class="bi bi-trash"></span></button>
                                 </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">No Data</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>

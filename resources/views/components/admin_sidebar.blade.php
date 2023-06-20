@@ -36,18 +36,31 @@
 
     <hr class="sidebar-divider">
 
+    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/manage/users') }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+            aria-expanded="true" aria-controls="collapseThree">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Manage Users</span></a>
+            <span>Users Management</span>
+        </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">User Management:</h6>
+                <a class="collapse-item" href="{{ url('/add/users') }}">Add Users</a>
+                <a class="collapse-item" href="{{ url('/manage/users') }}">Manage Users</a>
+            </div>
+        </div>
     </li>
+
+    <hr class="sidebar-divider">
+
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/manage/banks') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Manage Banks</span></a>
     </li>
 
-    
+
     <!-- Nav Item - Pages Collapse Menu -->
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"

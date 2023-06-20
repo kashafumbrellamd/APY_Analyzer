@@ -29,6 +29,7 @@ Route::get('/abc', [App\Http\Controllers\HomeController::class, 'index'])->name(
 Route::get('/roles', [App\Http\Controllers\PermissionController::class,'Permission']);
 Route::get('/add_permisiion/{permissoon}', [App\Http\Controllers\PermissionController::class,'add_permisiion']);
 Route::get('/manage/users', [App\Http\Controllers\RolesController::class,'manage_users']);
+Route::get('/add/users', [App\Http\Controllers\RolesController::class,'add_users']);
 Route::get('/manage/banks', [App\Http\Controllers\GeneralController::class,'manage_banks']);
 
 

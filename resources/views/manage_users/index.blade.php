@@ -6,6 +6,6 @@
 
 @section('content')
     <div class="container-fluid">
-        @livewire('manage-users')
+        @livewire('add-users')
     </div>
 @endsection

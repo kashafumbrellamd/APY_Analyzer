@@ -16,9 +16,14 @@ class RolesController extends Controller
         return view('roles.index');
     }
 
-    public function manage_users()
+    public function add_users()
     {
         return view('manage_users.index');
+    }
+
+    public function manage_users()
+    {
+        // return view('manage_users.second');
     }
 
 

@@ -6,37 +6,29 @@
         <div class="card-body">
             @if (auth()->user()->hasRole('admin'))
                 <div class="d-flex justify-content-between mb-4">
-                    <div class="col-6">
-                        <input type="text" class="form-control mr-2 @error('name') is-invalid @enderror"
-                            wire:model="name" placeholder="Enter Name....">
-                        @error('name')
+                    <input type="text" class="form-control mr-2 @error('name') is-invalid @enderror" wire:model="name"
+                        placeholder="Enter Name....">
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <input type="email" class="form-control mr-2 @error('email') is-invalid @enderror"
+                        wire:model="email" placeholder="Enter Email....">
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <select class="form-select form-control mr-2 @error('role_id') is-invalid @enderror"
+                        wire:model="role_id">
+                        <option>Select Role</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                        @error('role_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-                    <div class="col-6">
-                        <input type="email" class="form-control mr-2 @error('email') is-invalid @enderror"
-                            wire:model="email" placeholder="Enter Email....">
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    </select>
                 </div>
-                <div class="d-flex justify-content-between mb-4">
-                    <div class="col-11">
-                        <select class="form-select form-control mr-2 @error('role_id') is-invalid @enderror"
-                            wire:model="role_id">
-                            <option>Select Role</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                            @error('role_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </select>
-                    </div>
-                    <div class="col-1">
-                        <button type="submit" wire:click="submitForm" class="btn btn-primary">Submit</button>
-                    </div>
+                <div class="d-flex justify-content-center mb-4">
+                    <button type="submit" wire:click="submitForm" class="btn btn-primary">Submit</button>
                 </div>
             @endif
         </div>
@@ -59,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $dt)
+                        @forelse ($data as $dt)
                             <tr>
                                 <td>{{ $dt->id }}</td>
                                 <td>{{ $dt->name }}</td>
@@ -70,7 +62,11 @@
                                             class="bi bi-trash"></span></button>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">No Data</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

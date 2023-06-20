@@ -8,7 +8,7 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserEmailVerification;
 
-class ManageUsers extends Component
+class AddUsers extends Component
 {
     public $name;
     public $email;
@@ -24,7 +24,7 @@ class ManageUsers extends Component
     {
         $data = PendingUsers::with('role')->get();
         $roles = Role::all();
-        return view('livewire.manage-users', ['data'=>$data,'roles' => $roles]);
+        return view('livewire.add-users', ['data'=>$data,'roles' => $roles]);
     }
 
     public function submitForm()
