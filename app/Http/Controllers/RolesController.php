@@ -23,7 +23,7 @@ class RolesController extends Controller
 
     public function manage_users()
     {
-        // return view('manage_users.second');
+        return view('manage_users.permanent_users');
     }
 
 
