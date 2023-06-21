@@ -51,39 +51,46 @@
             </div>
         </div>
     </li>
-
-    <hr class="sidebar-divider">
-
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/manage/banks') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Manage Banks</span></a>
-    </li>
-
-    <hr class="sidebar-divider">
-
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/manage/rate/types') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Manage Rate Types</span></a>
-    </li>
     @endif
-    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('editor'))
+
+    <hr class="sidebar-divider">
+
+    @if(auth()->user()->hasRole('admin'))
     <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/add/bank/rates') }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+            aria-expanded="true" aria-controls="collapseFour">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Add Bank Rates</span></a>
+            <span>Customer Bank</span>
+        </a>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">User Management:</h6>
+                <a class="collapse-item" href="{{ url('/add/customer/bank') }}">Add Customer Bank</a>
+                {{-- <a class="collapse-item" href="{{ url('/manage/users') }}">Manage Users</a> --}}
+            </div>
+        </div>
     </li>
     @endif
 
     <hr class="sidebar-divider">
 
+    @if(auth()->user()->hasRole('admin'))
     <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/add/customer/bank') }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+            aria-expanded="true" aria-controls="collapseFive">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Add Customer Bank</span></a>
+            <span>Data Management</span>
+        </a>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Data Management:</h6>
+                <a class="collapse-item" href="{{ url('/manage/banks') }}">Manage Banks</a>
+                <a class="collapse-item" href="{{ url('/manage/rate/types') }}">Manage Rate Types</a>
+                <a class="collapse-item" href="{{ url('/add/bank/rates') }}">Add Bank Rates</a>
+            </div>
+        </div>
     </li>
-
+    @endif
     @if(auth()->user()->hasRole('checker'))
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/add/bank/rates') }}">
@@ -91,24 +98,5 @@
             <span>Check Bank Rates</span></a>
     </li>
     @endif
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Manage Banks</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Banks:</h6>
-                <a class="collapse-item" href="buttons.html">Add Bank</a>
-                <a class="collapse-item" href="cards.html">View Banks</a>
-            </div>
-        </div>
-    </li> -->
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
 </ul>
 <!-- End of Sidebar -->
