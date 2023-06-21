@@ -26,6 +26,12 @@ class CustomerBank extends Component
     public $gender;
     public $charges;
 
+    protected $rules = [
+        'name' => 'required',
+        'email' => 'required|email|unique:pending_users',
+        'role_id' => 'required',
+    ];
+
     public function render()
     {
         $states = State::where('country_id','233')->get();
