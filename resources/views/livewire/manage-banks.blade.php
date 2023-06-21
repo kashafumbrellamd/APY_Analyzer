@@ -8,12 +8,9 @@
             @endif
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-between mb-4">
                 @if (auth()->user()->hasRole('admin'))
                     @if($update)
                         <form wire:submit.prevent="updateForm">
-                            <fieldset>
-                                <div class="container">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="name">Name</label>
@@ -51,56 +48,49 @@
                                         </div>
                                     </div>
                                     <center><button type="submit" class="btn btn-primary mt-3">Update</button></center>
-                                </div>
-                            </fieldset>
                         </form>
                     @else
                         <form wire:submit.prevent="submitForm">
-                            <fieldset>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="name">Name</label>
-                                            <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
-                                                placeholder="Enter New Role....">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="state">State</label>
-                                            <select class="form-select form-control" id="state" aria-label="Default select example"
-                                                wire:model="state_id">
-                                                <option value="">Select State</option>
-                                                @foreach ($states as $state)
-                                                <option value="{{ $state->id }}">{{ $state->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="name">Phone Number</label>
-                                            <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
-                                                placeholder="Enter New Role....">
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="name">Name</label>
+                                        <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
+                                            placeholder="Enter New Role....">
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="website">Website</label>
-                                            <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
-                                                placeholder="Enter New Role....">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="msa_code">MSA Code</label>
-                                            <input type="text" id="msa_code" class="form-control mr-2" wire:model.lazy="msa_code"
-                                                placeholder="Enter New Role....">
-                                        </div>
-                                        <div class="col-md-4">
-                                        </div>
+                                    <div class="col-md-4">
+                                        <label for="state">State</label>
+                                        <select class="form-select form-control" id="state" aria-label="Default select example"
+                                            wire:model="state_id">
+                                            <option value="">Select State</option>
+                                            @foreach ($states as $state)
+                                            <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <center><button type="submit" class="btn btn-primary mt-3">Submit</button></center>
+                                    <div class="col-md-4">
+                                        <label for="name">Phone Number</label>
+                                        <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
+                                            placeholder="Enter New Role....">
+                                    </div>
                                 </div>
-                            </fieldset>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="website">Website</label>
+                                        <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
+                                            placeholder="Enter New Role....">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="msa_code">MSA Code</label>
+                                        <input type="text" id="msa_code" class="form-control mr-2" wire:model.lazy="msa_code"
+                                            placeholder="Enter New Role....">
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                </div>
+                                <center><button type="submit" class="btn btn-primary mt-3">Submit</button></center>
                         </form>
                     @endif
                 @endif
-            </div>
             @error('submit')
                 <div class="mt-3 text-center">
                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
