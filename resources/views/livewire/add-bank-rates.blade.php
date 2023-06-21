@@ -71,7 +71,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                @if($bank_id != '')
+                @if($bank_id != '' && $bank!=null)
                 <form wire:submit.prevent="submitForm">
                 <div class="row mb-3">
                     <div class="col-md-4">

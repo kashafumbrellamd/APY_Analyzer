@@ -18,7 +18,7 @@ class CreateBankPricesTable extends Migration
             $table->unsignedBigInteger('bank_id');
             $table->unsignedBigInteger('rate_type_id');
             $table->unsignedBigInteger('rate');
-            $table->boolean('is_checked')->default(1);
+            $table->boolean('is_checked')->default(0);
             $table->timestamps();
         });
     }

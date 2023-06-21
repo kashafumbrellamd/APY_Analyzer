@@ -44,7 +44,7 @@ class AddBankRates extends Component
 
     public function submitForm()
     {
-        if($this->bank_id!='' && $this->rate_type_id!='' && $this->rate!='')
+        if($this->bank_id!='' && $this->rate_type_id!='' && $this->rate!='' && $this->bank_id!=0)
         {
             $check = BankPrices::where('bank_id',$this->bank_id)->where('rate_type_id',$this->rate_type_id)
             ->where('rate',$this->rate)->first();
