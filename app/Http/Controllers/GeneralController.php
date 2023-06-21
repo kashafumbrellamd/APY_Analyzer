@@ -15,4 +15,14 @@ class GeneralController extends Controller
     {
         return view('manage_banks.index');
     }
+    
+    public function add_bank_rates()
+    {
+        return view('manage_banks.add_rates');
+    }
+
+    public function manage_rate_types()
+    {
+        return view('manage_rate_types.index');
+    }
 }
