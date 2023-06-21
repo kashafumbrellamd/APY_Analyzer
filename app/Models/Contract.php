@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BankAdmin extends Model
+class Contract extends Model
 {
     use HasFactory;
-    protected $table = 'bank_admin';
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone_number',
+        'contract_start',
+        'contract_end',
+        'charges',
         'bank_id',
-        'designation',
-        'employee_id',
-        'gender',
     ];
 }
