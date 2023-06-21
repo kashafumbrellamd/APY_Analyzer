@@ -69,7 +69,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                @if($bank_id != '' && $bank!=null && !auth()->user()->hasRole('checker'))
+                @if($bank_id != '' && $bank!=null && !auth()->user()->hasRole('data-verification-operator'))
                 <form wire:submit.prevent="submitForm">
                 <div class="row mb-3">
                     <div class="col-md-4">

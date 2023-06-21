@@ -18,8 +18,8 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
     @if(auth()->user()->hasRole('admin'))
+    <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/role') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -53,9 +53,9 @@
     </li>
     @endif
 
-    <hr class="sidebar-divider">
 
     @if(auth()->user()->hasRole('admin'))
+    <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
             aria-expanded="true" aria-controls="collapseFour">
@@ -72,9 +72,9 @@
     </li>
     @endif
 
-    <hr class="sidebar-divider">
 
-    @if(auth()->user()->hasRole('admin'))
+    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('data-entry-operator'))
+    <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
             aria-expanded="true" aria-controls="collapseFive">
@@ -84,14 +84,16 @@
         <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Data Management:</h6>
-                <a class="collapse-item" href="{{ url('/manage/banks') }}">Manage Banks</a>
-                <a class="collapse-item" href="{{ url('/manage/rate/types') }}">Manage Rate Types</a>
+                @if(auth()->user()->hasRole('admin'))
+                    <a class="collapse-item" href="{{ url('/manage/banks') }}">Manage Banks</a>
+                    <a class="collapse-item" href="{{ url('/manage/rate/types') }}">Manage Rate Types</a>
+                @endif
                 <a class="collapse-item" href="{{ url('/add/bank/rates') }}">Add Bank Rates</a>
             </div>
         </div>
     </li>
     @endif
-    @if(auth()->user()->hasRole('checker'))
+    @if(auth()->user()->hasRole('data-verification-operator'))
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/add/bank/rates') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>

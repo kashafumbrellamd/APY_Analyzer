@@ -76,7 +76,7 @@ class PermissionController extends Controller
     public function verify_email($code)
     {
         $pending = PendingUsers::where('verification_code', $code)->first();
-        $role = Role::find($pending->role_id)->first();
+        $role = Role::find($pending->role_id);
 
         $user = new User();
         $user->name = $pending->name;
