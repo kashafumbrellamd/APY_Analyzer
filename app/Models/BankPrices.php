@@ -28,7 +28,7 @@ class BankPrices extends Model
         // ->latest('bank_prices.created_at')
         // ->get();
         // $id=2;
-        $latestRates= BankPrices::select('bank_prices.id', 'bank_prices.rate_type_id', 'bank_prices.rate', 'bank_prices.created_at','rate_types.name as rate_type_name')
+        $latestRates= BankPrices::select('bank_prices.id', 'bank_prices.rate_type_id', 'bank_prices.rate', 'bank_prices.created_at','bank_prices.is_checked','rate_types.name as rate_type_name')
         ->whereIn('bank_prices.created_at', function ($query) use ($id) {
             $query->selectRaw('MAX(created_at)')
                 ->from('bank_prices')

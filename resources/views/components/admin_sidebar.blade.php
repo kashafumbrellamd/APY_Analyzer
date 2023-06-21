@@ -19,7 +19,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-
+    @if(auth()->user()->hasRole('admin'))
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/role') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -64,11 +64,14 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Manage Rate Types</span></a>
     </li>
+    @endif
+    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('editor'))
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/add/bank/rates') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Add Bank Rates</span></a>
     </li>
+    @endif
 
 
     <!-- Nav Item - Pages Collapse Menu -->
