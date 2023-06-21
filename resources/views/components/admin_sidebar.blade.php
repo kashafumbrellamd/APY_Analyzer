@@ -59,6 +59,16 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Manage Banks</span></a>
     </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/manage/rate/types') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Manage Rate Types</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/add/bank/rates') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Add Bank Rates</span></a>
+    </li>
 
 
     <!-- Nav Item - Pages Collapse Menu -->
