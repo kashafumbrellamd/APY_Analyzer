@@ -72,7 +72,13 @@
             <span>Add Bank Rates</span></a>
     </li>
     @endif
-
+    @if(auth()->user()->hasRole('checker'))
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/add/bank/rates') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Check Bank Rates</span></a>
+    </li>
+    @endif
 
     <!-- Nav Item - Pages Collapse Menu -->
     <!-- <li class="nav-item">
