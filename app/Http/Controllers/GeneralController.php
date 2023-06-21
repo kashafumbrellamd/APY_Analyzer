@@ -15,7 +15,7 @@ class GeneralController extends Controller
     {
         return view('manage_banks.index');
     }
-    
+
     public function add_bank_rates()
     {
         return view('manage_banks.add_rates');
@@ -25,4 +25,11 @@ class GeneralController extends Controller
     {
         return view('manage_rate_types.index');
     }
+
+    public function add_customer_bank()
+    {
+        return view('customer_bank.index');
+    }
+
+
 }
