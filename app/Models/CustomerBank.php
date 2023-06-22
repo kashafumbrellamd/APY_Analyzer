@@ -18,4 +18,8 @@ class CustomerBank extends Model
         'msa_code',
         'state',
     ];
+
+    public function contract(){
+       return $this->belongsTo(Contract::class,'id','bank_id');
+    }
 }

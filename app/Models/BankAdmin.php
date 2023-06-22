@@ -19,4 +19,8 @@ class BankAdmin extends Model
         'employee_id',
         'gender',
     ];
+
+    public function customer_bank(){
+        return $this->belongsTo(CustomerBank::class,'bank_id','id');
+    }
 }

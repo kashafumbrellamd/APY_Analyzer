@@ -48,7 +48,8 @@ class CustomerBank extends Component
     public function render()
     {
         $states = State::where('country_id','233')->get();
-        return view('livewire.customer-bank',['states'=>$states]);
+        $data = CB::with('contract')->get();
+        return view('livewire.customer-bank',['data'=>$data,'states'=>$states]);
     }
 
     public function submitForm(){

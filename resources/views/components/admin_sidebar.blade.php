@@ -64,9 +64,9 @@
         </a>
         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">User Management:</h6>
-                <a class="collapse-item" href="{{ url('/add/customer/bank') }}">Add Customer Bank</a>
-                {{-- <a class="collapse-item" href="{{ url('/manage/users') }}">Manage Users</a> --}}
+                <small class="collapse-header">Customer Bank :</small>
+                <a class="collapse-item" href="{{ url('/add/customer/bank') }}">Manage Customer Bank</a>
+                <a class="collapse-item" href="{{ url('/view/customer/bank/admin') }}">Bank Admin</a>
             </div>
         </div>
     </li>

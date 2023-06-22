@@ -119,4 +119,49 @@
             </form>
         </div>
     </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Roles</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Bank Name</th>
+                            <th>Bank Email</th>
+                            <th>Bank Phone Number</th>
+                            <th>Website</th>
+                            <th>MSA Code</th>
+                            <th>State</th>
+                            <th>Contract Start</th>
+                            <th>Contract End</th>
+                            <th>Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($data as $dt)
+                            <tr>
+                                <td>{{ $dt->bank_name }}</td>
+                                <td>{{ $dt->bank_email }}</td>
+                                <td>{{ $dt->bank_phone_numebr }}</td>
+                                <td>{{ $dt->website }}</td>
+                                <td>{{ $dt->msa_code }}</td>
+                                <td>{{ $dt->state }}</td>
+                                <td>{{ $dt->contract->contract_start }}</td>
+                                <td>{{ $dt->contract->contract_end }}</td>
+                                <td>{{ number_format($dt->contract->charges, 2) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center">No Data</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

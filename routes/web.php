@@ -34,6 +34,7 @@ Route::get('/manage/banks', [App\Http\Controllers\GeneralController::class,'mana
 Route::get('/add/bank/rates', [App\Http\Controllers\GeneralController::class,'add_bank_rates']);
 Route::get('/manage/rate/types', [App\Http\Controllers\GeneralController::class,'manage_rate_types']);
 Route::get('/add/customer/bank', [App\Http\Controllers\GeneralController::class,'add_customer_bank']);
+Route::get('/view/customer/bank/admin', [App\Http\Controllers\GeneralController::class,'customer_bank_admin']);
 
 
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);

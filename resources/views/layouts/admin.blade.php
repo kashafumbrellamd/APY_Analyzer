@@ -3,6 +3,12 @@
 
 <head>
     @include('components.admin_topscript')
+    <style>
+        label{
+            font-weight: 600;
+            margin-top: 10px;
+        }
+    </style>
     @livewireStyles
 </head>
 

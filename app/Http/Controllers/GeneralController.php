@@ -31,5 +31,9 @@ class GeneralController extends Controller
         return view('customer_bank.index');
     }
 
+    public function customer_bank_admin()
+    {
+        return view('customer_bank.admin');
+    }
 
 }
