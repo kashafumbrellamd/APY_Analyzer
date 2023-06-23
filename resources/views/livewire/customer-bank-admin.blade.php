@@ -100,7 +100,7 @@
                                 <td>{{ $dt->designation }}</td>
                                 <td>{{ $dt->gender }}</td>
                                 <td>{{ $dt->employee_id }}</td>
-                                <td>{{ $dt->customer_bank->bank_name }}</td>
+                                <td>{{ $dt->bank_id }}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn" wire:click="delete({{ $dt->id }})"><span
                                             class="bi bi-trash"></span></button>

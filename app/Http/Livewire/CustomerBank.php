@@ -6,8 +6,8 @@ use Livewire\Component;
 use App\Models\Bank;
 use App\Models\State;
 use App\Models\CustomerBank as CB;
-use App\Models\BankAdmin;
 use App\Models\Contract;
+use App\Models\User;
 
 class CustomerBank extends Component
 {
@@ -62,13 +62,14 @@ class CustomerBank extends Component
             'msa_code' => $this->msa_code,
             'state' => $this->state,
         ]);
-        $admin = BankAdmin::create([
+        $user = User::create([
             'name' => $this->admin_name,
             'email' => $this->admin_email,
             'phone_number' => $this->admin_phone_number,
             'designation' => $this->designation,
             'employee_id' => $this->employee_id,
             'gender' => $this->gender,
+            'password' => bcrypt($this->admin_phone_number),
             'bank_id' => $bank->id,
         ]);
         $contract = Contract::create([

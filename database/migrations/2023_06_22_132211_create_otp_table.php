@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContractTable extends Migration
+class CreateOtpTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateContractTable extends Migration
      */
     public function up()
     {
-        Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('otp', function (Blueprint $table) {
             $table->id();
-            $table->date('contract_start');
-            $table->date('contract_end');
-            $table->double('charges');
-
-            $table->unsignedBigInteger('bank_id');
-            $table->foreign('bank_id')->references('id')->on('customer_bank')->onDelete('cascade');
-
+            $table->string('opt');
+            $table->unsignedBigInteger('user_id');
+            $table->dateTime('expiry_date');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreateContractTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('otp');
     }
 }

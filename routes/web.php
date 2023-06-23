@@ -15,7 +15,11 @@ use App\Mail\TestMail;
 */
 
 Route::get('/',function(){
-    return redirect()->route('login');
+    if(!Auth::check()){
+        return view('landing_page');
+    }else{
+        return redirect()->route('login');
+    }
 });
 
 Route::get('/home', function () {
@@ -40,6 +44,10 @@ Route::get('/view/customer/bank/admin', [App\Http\Controllers\GeneralController:
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);
 Route::get('/user/password/reset/{id}', [App\Http\Controllers\PermissionController::class,'password_reset'])->name('user_password_reset');
 Route::post('/user/password/reset', [App\Http\Controllers\PermissionController::class,'password_update'])->name('password_update');
+
+Route::post('/bank/login', [App\Http\Controllers\GeneralController::class,'bank_login'])->name('bank_login');
+Route::get('/otp/apply/login', [App\Http\Controllers\GeneralController::class,'otp_apply'])->name('otp_apply');
+Route::post('/verify/login', [App\Http\Controllers\GeneralController::class,'verify_login'])->name('verify_login');
 
 
 

@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Bank;
 use App\Models\CustomerBank;
-use App\Models\BankAdmin;
+use App\Models\User;
 use App\Models\State;
 
 class CustomerBankAdmin extends Component
@@ -31,7 +31,7 @@ class CustomerBankAdmin extends Component
     public function render()
     {
         $states = State::where('country_id','233')->get();
-        $data = BankAdmin::with('customer_bank')->get();
+        $data = User::where('bank_id', '!=', null)->get();
         $banks = CustomerBank::get();
         return view('livewire.customer-bank-admin', ['data'=>$data,'states'=>$states,'banks'=>$banks]);
     }
