@@ -15,6 +15,9 @@ class Bank extends Model
         'phone_number',
         'website',
         'msa_code',
+        'cp_name',
+        'cp_email',
+        'cp_phone',
     ];
 
     public function BanksWithState()

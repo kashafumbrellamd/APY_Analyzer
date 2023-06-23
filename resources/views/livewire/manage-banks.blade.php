@@ -15,7 +15,7 @@
                                         <div class="col-md-4">
                                             <label for="name">Name</label>
                                             <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
-                                                placeholder="Enter New Role....">
+                                                placeholder="Enter Bank Name....">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="state">State</label>
@@ -30,24 +30,45 @@
                                         <div class="col-md-4">
                                             <label for="name">Phone Number</label>
                                             <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
-                                                placeholder="Enter New Role....">
+                                                placeholder="Enter Phone Number....">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="website">Website</label>
                                             <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
-                                                placeholder="Enter New Role....">
+                                                placeholder="Enter Website....">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="msa_code">MSA Code</label>
                                             <input type="text" id="msa_code" class="form-control mr-2" wire:model.lazy="msa_code"
-                                                placeholder="Enter New Role....">
+                                                placeholder="Enter MSA Code....">
                                         </div>
                                         <div class="col-md-4">
                                         </div>
                                     </div>
-                                    <center><button type="submit" class="btn btn-primary mt-3">Update</button></center>
+                                    <label for="more">Contact Person Details(Optional)</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="cp_name">Name</label>
+                                            <input type="text" id="cp_name" class="form-control mr-2" wire:model.lazy="cp_name"
+                                                placeholder="Enter Name....">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cp_email">Email</label>
+                                                <input type="email" id="cp_email" class="form-control mr-2" wire:model.lazy="cp_email"
+                                                    placeholder="Enter Email....">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cp_phone">Phone Number</label>
+                                            <input type="text" id="cp_phone" class="form-control mr-2" wire:model.lazy="cp_phone"
+                                                placeholder="Enter Phone NUmber....">
+                                        </div>
+                                    </div>
+                                    <center>
+                                        <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                        <button type="button" wire:click="cancel()" class="btn btn-danger mt-3">Cancel</button>
+                                    </center>
                         </form>
                     @else
                         <form wire:submit.prevent="submitForm">
@@ -55,7 +76,7 @@
                                     <div class="col-md-4">
                                         <label for="name">Name</label>
                                         <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
-                                            placeholder="Enter New Role....">
+                                            placeholder="Enter Bank Name....">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="state">State</label>
@@ -70,22 +91,49 @@
                                     <div class="col-md-4">
                                         <label for="name">Phone Number</label>
                                         <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
-                                            placeholder="Enter New Role....">
+                                            placeholder="Enter Phone Number....">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="website">Website</label>
                                         <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
-                                            placeholder="Enter New Role....">
+                                            placeholder="Enter Website....">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="msa_code">MSA Code</label>
                                         <input type="text" id="msa_code" class="form-control mr-2" wire:model.lazy="msa_code"
-                                            placeholder="Enter New Role....">
+                                            placeholder="Enter MSA Code....">
                                     </div>
                                     <div class="col-md-4">
+                                        <label for="more">(Optional)</label><br>
+                                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            Load More
+                                        </a>
                                     </div>
+                                </div>
+                                <div class="collapse" id="collapseExample">
+                                    <label for="more">Contact Person Details(Optional)</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="cp_name">Name</label>
+                                            <input type="text" id="cp_name" class="form-control mr-2" wire:model.lazy="cp_name"
+                                                placeholder="Enter Name....">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cp_email">Email</label>
+                                                <input type="email" id="cp_email" class="form-control mr-2" wire:model.lazy="cp_email"
+                                                    placeholder="Enter Email....">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cp_phone">Phone Number</label>
+                                            <input type="text" id="cp_phone" class="form-control mr-2" wire:model.lazy="cp_phone"
+                                                placeholder="Enter Phone Number....">
+                                        </div>
+                                    </div>
+                                    <!-- <div class="card card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                    </div> -->
                                 </div>
                                 <center><button type="submit" class="btn btn-primary mt-3">Submit</button></center>
                         </form>
@@ -113,6 +161,9 @@
                             <th>Phone Number</th>
                             <th>Website</th>
                             <th>MSA Code</th>
+                            <th>Contact Person Name</th>
+                            <th>Contact Person Email</th>
+                            <th>Contact Person Phone</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -120,10 +171,13 @@
                         @foreach ($data as $dt)
                             <tr>
                                 <td>{{ $dt->name }}</td>
-                                <td>{{ $dt->state_id }}</td>
+                                <td>{{ $dt->state_name }}</td>
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->website }}</td>
                                 <td>{{ $dt->msa_code }}</td>
+                                <td>{{ $dt->cp_name }}</td>
+                                <td>{{ $dt->cp_email }}</td>
+                                <td>{{ $dt->cp_phone }}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
                                             class="bi bi-pen"></span></button>

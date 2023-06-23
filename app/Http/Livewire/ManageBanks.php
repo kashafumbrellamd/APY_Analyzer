@@ -17,6 +17,9 @@ class ManageBanks extends Component
     public $phone_number = '';
     public $website = '';
     public $msa_code = '';
+    public $cp_name = '';
+    public $cp_email = '';
+    public $cp_phone = '';
 
     public function render()
     {
@@ -35,6 +38,9 @@ class ManageBanks extends Component
                 'phone_number' => $this->phone_number,
                 'website' => $this->website,
                 'msa_code' => $this->msa_code,
+                'cp_name' => $this->cp_name,
+                'cp_email' => $this->cp_email,
+                'cp_phone' => $this->cp_phone,
             ]);
             $this->clear();
         }else{
@@ -55,6 +61,9 @@ class ManageBanks extends Component
         $this->phone_number = $bank->phone_number;
         $this->website = $bank->website;
         $this->msa_code = $bank->msa_code;
+        $this->cp_name = $bank->cp_name;
+        $this->cp_email = $bank->cp_email;
+        $this->cp_phone = $bank->cp_phone;
         $this->update = true;
         $this->render();
     }
@@ -68,6 +77,9 @@ class ManageBanks extends Component
                 'phone_number' => $this->phone_number,
                 'website' => $this->website,
                 'msa_code' => $this->msa_code,
+                'cp_name' => $this->cp_name,
+                'cp_email' => $this->cp_email,
+                'cp_phone' => $this->cp_phone,
             ]);
             $this->clear();
         }else{
@@ -86,6 +98,9 @@ class ManageBanks extends Component
         $this->website = '';
         $this->msa_code = '';
         $this->bank_id = '';
+        $this->cp_name = '';
+        $this->cp_email = '';
+        $this->cp_phone = '';
         $this->update = false;
         $this->render();
     }
