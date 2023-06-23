@@ -23,4 +23,8 @@ class CustomerBank extends Model
     public function contract(){
        return $this->belongsTo(Contract::class,'id','bank_id');
     }
+
+    public function user(){
+       return $this->belongsTo(User::class,'id','bank_id');
+    }
 }
