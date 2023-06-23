@@ -39,6 +39,7 @@
                         @csrf
                         <div class="control-group">
                             <div class="input-prepend">
+                                <input type="hidden" name="id" value="{{ $id }}">
                                 <span class="add-on"><i class="icon-user"></i></span>
                                 <input name="otp" placeholder="otp" type="otp" id="otp"
                                     class="@error('otp') is-invalid @enderror" value="{{ old('otp') }}" required

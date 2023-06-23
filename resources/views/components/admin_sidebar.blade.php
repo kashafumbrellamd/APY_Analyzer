@@ -100,5 +100,12 @@
             <span>Check Bank Rates</span></a>
     </li>
     @endif
+    @if(auth()->user()->hasRole('bank-admin'))
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/customer/bank/user') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Bank Users Management</span></a>
+    </li>
+    @endif
 </ul>
 <!-- End of Sidebar -->

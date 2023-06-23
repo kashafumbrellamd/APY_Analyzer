@@ -78,6 +78,8 @@ class CustomerBank extends Component
             'charges' => $this->charges,
             'bank_id' => $bank->id,
         ]);
+        $role = Role::where('slug','bank-admin');
+        $user->roles()->attach($role);
         $this->clear();
         $this->render();
     }
