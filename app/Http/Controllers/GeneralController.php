@@ -36,10 +36,16 @@ class GeneralController extends Controller
         return view('customer_bank.admin');
     }
 
-    public function otp_apply()
+    public function customer_bank_user()
     {
-        return view('apply_otp');
+        return view('customer_bank.user');
     }
+
+    public function otp_apply($id)
+    {
+        return view('apply_otp',['id'=>$id]);
+    }
+
 
     public function bank_login(Request $request)
     {
@@ -53,17 +59,22 @@ class GeneralController extends Controller
             ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
         );
         Mail::to($user->email)->send(new OtpMail($otp));
-        return redirect()->route('otp_apply');
+        return redirect()->route('otp_apply',['id'=>$user->id]);
     }
 
     public function verify_login(Request $request)
     {
-        $user = User::find(22);
+        $user = User::find($request->id);
         if(isset($user)){
-            Auth::login($user, $remember = true);
-            return redirect()->route('home');
+            $otp = OTP::where('user_id',$request->id)->first();
+            if($otp->opt == $request->otp){
+                Auth::login($user, $remember = true);
+                return redirect()->route('home');
+            }else{
+                return redirect()->back();
+            }
         }else{
-            dd('not Login');
+            return redirect()->back();
         }
     }
 

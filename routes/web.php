@@ -39,6 +39,7 @@ Route::get('/add/bank/rates', [App\Http\Controllers\GeneralController::class,'ad
 Route::get('/manage/rate/types', [App\Http\Controllers\GeneralController::class,'manage_rate_types']);
 Route::get('/add/customer/bank', [App\Http\Controllers\GeneralController::class,'add_customer_bank']);
 Route::get('/view/customer/bank/admin', [App\Http\Controllers\GeneralController::class,'customer_bank_admin']);
+Route::get('/customer/bank/user', [App\Http\Controllers\GeneralController::class,'customer_bank_user']);
 
 
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);
@@ -46,7 +47,7 @@ Route::get('/user/password/reset/{id}', [App\Http\Controllers\PermissionControll
 Route::post('/user/password/reset', [App\Http\Controllers\PermissionController::class,'password_update'])->name('password_update');
 
 Route::post('/bank/login', [App\Http\Controllers\GeneralController::class,'bank_login'])->name('bank_login');
-Route::get('/otp/apply/login', [App\Http\Controllers\GeneralController::class,'otp_apply'])->name('otp_apply');
+Route::get('/otp/apply/login/{id}', [App\Http\Controllers\GeneralController::class,'otp_apply'])->name('otp_apply');
 Route::post('/verify/login', [App\Http\Controllers\GeneralController::class,'verify_login'])->name('verify_login');
 
 

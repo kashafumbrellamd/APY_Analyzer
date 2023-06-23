@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
 
-class CustomerBankAdmin extends Component
+class BankUser extends Component
 {
     public $admin_name;
     public $admin_email;
@@ -17,10 +17,8 @@ class CustomerBankAdmin extends Component
     public $designation;
     public $employee_id;
     public $gender;
-    public $bank_id;
 
     protected $rules = [
-        'bank_id' => 'required',
         'admin_name' => 'required',
         'admin_email' => 'required',
         'admin_phone_number' => 'required',
@@ -31,32 +29,26 @@ class CustomerBankAdmin extends Component
 
     public function render()
     {
-        $states = State::where('country_id','233')->get();
-        $data = User::where('bank_id', '!=', null)->get();
+        $data = User::where('bank_id', auth()->user()->bank_id)->where('id','!=',auth()->user()->id)->get();
         $banks = CustomerBank::get();
-        return view('livewire.customer-bank-admin', ['data'=>$data,'states'=>$states,'banks'=>$banks]);
+        return view('livewire.bank-user',['data'=>$data,'banks'=>$banks]);
     }
 
     public function submitForm(){
         $this->validate();
-        $user = User::where('bank_id',$this->bank_id)->first();
-        if($user == null){
-            $user = User::create([
-                'name' => $this->admin_name,
-                'email' => $this->admin_email,
-                'phone_number' => $this->admin_phone_number,
-                'designation' => $this->designation,
-                'employee_id' => $this->employee_id,
-                'gender' => $this->gender,
-                'bank_id' => $this->bank_id,
-                'status' => "1",
-                'password' => bcrypt($this->admin_phone_number),
-            ]);
-            $role = Role::where('slug','bank-admin')->first();
-            $user->roles()->attach($role);
-        }else{
-            $this->addError('error','This Bank Already has an Admin');
-        }
+        $user = User::create([
+            'name' => $this->admin_name,
+            'email' => $this->admin_email,
+            'phone_number' => $this->admin_phone_number,
+            'designation' => $this->designation,
+            'employee_id' => $this->employee_id,
+            'gender' => $this->gender,
+            'bank_id' => auth()->user()->bank_id,
+            'password' => bcrypt($this->admin_phone_number),
+            'status' => "1",
+        ]);
+        $role = Role::where('slug','bank-user')->first();
+        $user->roles()->attach($role);
 
         $this->clear();
         $this->render();
