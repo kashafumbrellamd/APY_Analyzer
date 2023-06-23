@@ -18,12 +18,12 @@
                             <div class="col-md-4">
                                 <label for="msa_code">Email</label>
                                 <input type="text" wire:model.lazy="bank_email" class="form-control mr-2"
-                                     placeholder="Enter Bank Email....">
+                                    placeholder="Enter Bank Email....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Phone Number</label>
                                 <input type="text" wire:model.lazy="bank_phone_numebr" class="form-control mr-2"
-                                     placeholder="Enter Bank Phone Number....">
+                                    placeholder="Enter Bank Phone Number....">
                             </div>
                         </div>
                         <div class="row">
@@ -35,12 +35,12 @@
                             <div class="col-md-4">
                                 <label for="msa_code">MSA Code</label>
                                 <input type="text" wire:model.lazy="msa_code" class="form-control mr-2"
-                                     placeholder="Enter Bank MSA Code....">
+                                    placeholder="Enter Bank MSA Code....">
                             </div>
                             <div class="col-md-4">
                                 <label for="state">State</label>
-                                <select class="form-select form-control"
-                                    aria-label="Default select example" wire:model.lazy="state">
+                                <select class="form-select form-control" aria-label="Default select example"
+                                    wire:model.lazy="state">
                                     <option value="">Select State</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -62,12 +62,12 @@
                             <div class="col-md-4">
                                 <label for="name">Email</label>
                                 <input type="text" wire:model.lazy="admin_email" class="form-control mr-2"
-                                     placeholder="Enter Email....">
+                                    placeholder="Enter Email....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Phone Number</label>
                                 <input type="text" wire:model.lazy="admin_phone_number" class="form-control mr-2"
-                                     placeholder="Enter Phone Number....">
+                                    placeholder="Enter Phone Number....">
                             </div>
                         </div>
                         <div class="row">
@@ -79,12 +79,12 @@
                             <div class="col-md-4">
                                 <label for="name">Employee Id</label>
                                 <input type="text" wire:model.lazy="employee_id" class="form-control mr-2"
-                                     placeholder="Enter Employee Id....">
+                                    placeholder="Enter Employee Id....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Gender</label>
-                                <select class="form-select form-control"
-                                    aria-label="Default select example" wire:model.lazy="gender">
+                                <select class="form-select form-control" aria-label="Default select example"
+                                    wire:model.lazy="gender">
                                     <option value="">Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -105,12 +105,35 @@
                             <div class="col-md-4">
                                 <label for="name">Contract End</label>
                                 <input type="date" wire:model.lazy="contract_end" class="form-control mr-2"
-                                     placeholder="Enter New Role....">
+                                    placeholder="Enter New Role....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Charges</label>
                                 <input type="text" wire:model.lazy="charges" class="form-control mr-2"
-                                     placeholder="Enter Subscription Charges....">
+                                    placeholder="Enter Subscription Charges....">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Reports -->
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <h6 class="m-0 font-weight-bold text-dark mb-2">Reports To Show</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" wire:model.lazy="report" value="state">
+                                    <label class="form-check-label" for="state">By State</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" wire:model.lazy="report" value="msa">
+                                    <label class="form-check-label" for="msa">By MSA Code</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" wire:model.lazy="report" value="custom">
+                                    <label class="form-check-label" for="custom">Custom</label>
+                                </div>
                             </div>
                         </div>
                     </div>

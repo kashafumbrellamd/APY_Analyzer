@@ -8,6 +8,7 @@ use App\Models\State;
 use App\Models\CustomerBank as CB;
 use App\Models\Contract;
 use App\Models\User;
+use App\Models\Role;
 
 class CustomerBank extends Component
 {
@@ -26,6 +27,7 @@ class CustomerBank extends Component
     public $employee_id;
     public $gender;
     public $charges;
+    public $report;
 
     protected $rules = [
         'bank_name' => 'required',
@@ -61,6 +63,7 @@ class CustomerBank extends Component
             'website' => $this->website,
             'msa_code' => $this->msa_code,
             'state' => $this->state,
+            'display_reports' => $this->report,
         ]);
         $user = User::create([
             'name' => $this->admin_name,
@@ -78,7 +81,7 @@ class CustomerBank extends Component
             'charges' => $this->charges,
             'bank_id' => $bank->id,
         ]);
-        $role = Role::where('slug','bank-admin');
+        $role = Role::where('slug','bank-admin')->first();
         $user->roles()->attach($role);
         $this->clear();
         $this->render();
