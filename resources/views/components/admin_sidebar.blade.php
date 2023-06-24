@@ -106,6 +106,11 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Bank Users Management</span></a>
     </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/view/bank/reports') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>View Bank Reports</span></a>
+    </li>
     @endif
 </ul>
 <!-- End of Sidebar -->

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Bank;
+use App\Models\CustomerBank;
+use App\Models\RateType;
 
 class BankPrices extends Model
 {
@@ -41,5 +44,60 @@ class BankPrices extends Model
         //BankPrices::distinct('rate_type_id')->where('bank_id',$id)->with('rates')->get();
         // dd($latestRates);
         return $latestRates;
+    }
+
+    public function BankReports()
+    {
+        $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($filter->display_reports == 'state'){
+            $banks = Bank::where('state_id',$filter->state)->get();
+        }elseif ($filter->display_reports == 'msa') {
+            $banks = Bank::where('msa_code',$filter->msa_code)->get();
+        }else{
+            $banks = Bank::all();
+        }
+        $rate_types = RateType::orderby('name','ASC')->get();
+        foreach ($banks as $key => $bank) {
+            foreach ($rate_types as $re_key => $rt) {
+                $bank[$rt->id] = BankPrices::where('bank_id',$bank->id)
+                ->where('rate_type_id',$rt->id)
+                ->where('is_checked',1)
+                ->orderby('id','DESC')
+                ->first();
+            }
+        }
+        return $banks;
+    }
+
+    public function BankReportsWithState($state_id)
+    {
+        $banks = Bank::where('state_id',$state_id)->get();
+        $rate_types = RateType::orderby('name','ASC')->get();
+        foreach ($banks as $key => $bank) {
+            foreach ($rate_types as $re_key => $rt) {
+                $bank[$rt->id] = BankPrices::where('bank_id',$bank->id)
+                ->where('rate_type_id',$rt->id)
+                ->where('is_checked',1)
+                ->orderby('id','DESC')
+                ->first();
+            }
+        }
+        return $banks;
+    }
+    public function BankReportsWithMsa($msa)
+    {
+        $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        $banks = Bank::where('state_id',$filter->state)->where('msa_code',$msa)->get();
+        $rate_types = RateType::orderby('name','ASC')->get();
+        foreach ($banks as $key => $bank) {
+            foreach ($rate_types as $re_key => $rt) {
+                $bank[$rt->id] = BankPrices::where('bank_id',$bank->id)
+                ->where('rate_type_id',$rt->id)
+                ->where('is_checked',1)
+                ->orderby('id','DESC')
+                ->first();
+            }
+        }
+        return $banks;
     }
 }
