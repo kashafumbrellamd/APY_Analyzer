@@ -56,11 +56,11 @@
                     </div>
                 </div>
             </div>
-            @error('submit')
+            <!-- @error('submit')
                 <div class="mt-3 text-center">
                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
                 </div>
-            @enderror
+            @enderror -->
         </div>
     </div>
     <div class="card shadow mb-4">
@@ -82,11 +82,20 @@
                             @endforeach
                         </select>
                     </div>
+                    @if(auth()->user()->hasRole('admin'))
                     <div class="col-md-4">
                         <label for="rate">rate</label>
                             <input type="text" id="rate" class="form-control mr-2" wire:model="rate"
                                 placeholder="Enter Rate....">
                     </div>
+                    @endif
+                    @if(auth()->user()->hasRole('data-entry-operator'))
+                    <div class="col-md-4">
+                        <label for="rate">Rate Change</label>
+                            <input type="text" id="rate" class="form-control mr-2" wire:model="rate"
+                                placeholder="Enter Change....">
+                    </div>
+                    @endif
                     <div class="col-md-4 mt-3">
                         <label for="rate"></label>
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -95,7 +104,7 @@
                 </form>
                 @endif
                 @error('submit')
-                <div class="mt-3 text-center">
+                <div class="mt-3 text-center mb-3">
                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
                 </div>
                 @enderror
@@ -106,9 +115,16 @@
                     <thead>
                         <tr>
                             <th>Rate Type</th>
+                            @if(auth()->user()->hasRole('admin'))
                             <th>Rate</th>
+                            @endif
+                            <th>Previous Rate</th>
+                            <th>Current Rate</th>
+                            <th>Change</th>
                             <th>Date/Time</th>
+                            @if(auth()->user()->hasRole('data-entry-operator'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -116,8 +132,14 @@
                         @foreach($bank_prices as $bp)
                             <tr>
                                 <td>{{ $bp->rate_type_name }}</td>
+                                @if(auth()->user()->hasRole('admin'))
                                 <td>{{ $bp->rate }}</td>
+                                @endif
+                                <td>{{ $bp->previous_rate }}</td>
+                                <td>{{ $bp->current_rate }}</td>
+                                <td>{{ $bp->change }}</td>
                                 <td>{{ $bp->created_at }}</td>
+                                @if(auth()->user()->hasRole('data-entry-operator'))
                                 <td class="text-center">
                                     <!-- <button type="button" class="btn" wire:click="edit({{ $bp->id }})"><span
                                             class="bi bi-pen"></span></button>
@@ -132,6 +154,7 @@
                                         Default checkbox
                                     </label> -->
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         @endif

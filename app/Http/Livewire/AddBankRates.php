@@ -49,19 +49,43 @@ class AddBankRates extends Component
         if($this->bank_id!='' && $this->rate_type_id!='' && $this->rate!='' && $this->bank_id!=0)
         {
             $check = BankPrices::where('bank_id',$this->bank_id)->where('rate_type_id',$this->rate_type_id)
-            ->where('rate',$this->rate)->first();
-            if($check==null)
+            ->orderby('id','DESC')->first();
+            if(auth()->user()->hasRole('admin'))
             {
-                $p_user = BankPrices::create([
-                    'bank_id' => $this->bank_id,
-                    'rate_type_id' => $this->rate_type_id,
-                    'rate' => $this->rate,
-                ]);
-                $this->clear();
+                if($check==null)
+                {
+                    $p_user = BankPrices::create([
+                        'bank_id' => $this->bank_id,
+                        'rate_type_id' => $this->rate_type_id,
+                        'rate' => $this->rate,
+                        'previous_rate' => $this->rate,
+                        'current_rate' => $this->rate,
+                    ]);
+                    $this->clear();
+                }
+                else
+                {
+                    $this->addError('submit', 'Already Exist');
+                }   
             }
             else
             {
-                $this->addError('submit', 'Already Exist');
+                if($check!=null)
+                {
+                    $p_user = BankPrices::create([
+                        'bank_id' => $this->bank_id,
+                        'rate_type_id' => $this->rate_type_id,
+                        'rate' => $check->rate,
+                        'previous_rate' => $check->current_rate,
+                        'current_rate' => $check->current_rate+$this->rate,
+                        'change' => $this->rate,
+                    ]);
+                    $this->clear();
+                }
+                else
+                {
+                    $this->addError('submit', 'Rate Does Not Exist');
+                }
             }
         }else{
             $this->addError('submit', 'Bank and Rate Type should be selected along with rate');

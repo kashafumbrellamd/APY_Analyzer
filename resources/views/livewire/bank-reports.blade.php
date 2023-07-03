@@ -86,7 +86,7 @@
                                 @foreach($rate_type as $rt_key => $rt)
                                 @if($columns[$rt->id]==1)
                                 @if($report[$rt->id]!=null)
-                                <td>{{ $report[$rt->id]['rate'] }}</td>
+                                <td>{{ $report[$rt->id]['current_rate'] }}</td>
                                 @else
                                 <td>---</td>
                                 @endif
