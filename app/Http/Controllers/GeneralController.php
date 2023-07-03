@@ -40,10 +40,15 @@ class GeneralController extends Controller
     {
         return view('customer_bank.user');
     }
-    
+
     public function view_bank_reports()
     {
         return view('customer_bank.view_bank_reports');
+    }
+
+    public function view_detailed_reports()
+    {
+        return view('customer_bank.view_detailed_reports');
     }
 
     public function otp_apply($id)

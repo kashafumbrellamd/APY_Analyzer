@@ -94,6 +94,7 @@
     </li>
     @endif
     @if(auth()->user()->hasRole('data-verification-operator'))
+    <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/add/bank/rates') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -101,15 +102,23 @@
     </li>
     @endif
     @if(auth()->user()->hasRole('bank-admin'))
+    <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/customer/bank/user') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Bank Users Management</span></a>
     </li>
+    <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/view/bank/reports') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>View Bank Reports</span></a>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/view/detailed/reports') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>View Detailed Reports</span></a>
     </li>
     @endif
 </ul>

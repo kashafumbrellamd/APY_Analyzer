@@ -41,6 +41,7 @@ Route::get('/add/customer/bank', [App\Http\Controllers\GeneralController::class,
 Route::get('/view/customer/bank/admin', [App\Http\Controllers\GeneralController::class,'customer_bank_admin']);
 Route::get('/customer/bank/user', [App\Http\Controllers\GeneralController::class,'customer_bank_user']);
 Route::get('/view/bank/reports', [App\Http\Controllers\GeneralController::class,'view_bank_reports']);
+Route::get('/view/detailed/reports', [App\Http\Controllers\GeneralController::class,'view_detailed_reports']);
 
 
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);
