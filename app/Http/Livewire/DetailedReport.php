@@ -27,17 +27,20 @@ class DetailedReport extends Component
         $msa_codes = $this->getmsacodes();
         if($this->state_id!='' && $this->state_id!='all'){
             $reports = BankPrices::BankReportsWithState($this->state_id);
+            $results = BankPrices::get_min_max_func_with_state($this->state_id);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
             $reports = BankPrices::BankReportsWithMsa($this->msa_code);
+            $results = BankPrices::get_min_max_func_with_msa($this->state_id);
         }else {
             $reports = BankPrices::BankReports();
+            $results = BankPrices::get_min_max_func();
         }
         if($this->columns == [])
         {
             $this->fill($rt);
         }
         $this->clear();
-        return view('livewire.detailed-report',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes]);
+        return view('livewire.detailed-report',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'results'=>$results]);
     }
 
     public function fill($data)

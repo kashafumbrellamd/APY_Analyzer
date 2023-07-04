@@ -122,7 +122,7 @@
                     <tfoot>
                         <tr>
                             <td></td>
-                            @foreach ($rate_type as $rt)
+                            @foreach ($results as $rt)
                                 @if ($columns[$rt->id] == 1)
                                     <td>
                                         <table class="table table-bordered" id="dataTable" width="100%"
@@ -135,28 +135,28 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Highest APY</td>
-                                                    <td>{{ $rt->id }}</td>
-                                                    <td>{{ $rt->id }}</td>
+                                                    <td>{{ $rt->c_max }}</td>
+                                                    <td>{{ $rt->p_max }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Median</td>
-                                                    <td>{{ $rt->id }}</td>
-                                                    <td>{{ $rt->id }}</td>
+                                                    <td>{{ $rt->c_med }}</td>
+                                                    <td>{{ $rt->p_med }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Lowest APY</td>
-                                                    <td>{{ $rt->id }}</td>
-                                                    <td>{{ $rt->id }}</td>
+                                                    <td>{{ $rt->c_min }}</td>
+                                                    <td>{{ $rt->p_min }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Average</td>
-                                                    <td>{{ $rt->id }}</td>
-                                                    <td>{{ $rt->id }}</td>
+                                                    <td>{{ $rt->c_avg }}</td>
+                                                    <td>{{ $rt->p_avg }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Mode</td>
-                                                    <td>{{ $rt->id }}</td>
-                                                    <td>{{ $rt->id }}</td>
+                                                    <td>{{ $rt->c_mode }}</td>
+                                                    <td>{{ $rt->p_mode }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
