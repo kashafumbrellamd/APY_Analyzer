@@ -39,7 +39,6 @@ class DetailedReport extends Component
         {
             $this->fill($rt);
         }
-        $this->clear();
         return view('livewire.detailed-report',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'results'=>$results]);
     }
 
