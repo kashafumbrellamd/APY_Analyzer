@@ -1,8 +1,8 @@
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Reports</h6>
-            <span>({{ $last_updated }}) updated on weekly basis</span>
+            <h6 class="m-0 font-weight-bold text-primary">Reports &nbsp;&nbsp;<span> (Last Updated On: {{ $last_updated }}) updated on weekly basis</span></h6>
+
         </div>
         <div class="card-body">
             <div class="row">
@@ -77,6 +77,7 @@
                                             cellspacing="0">
                                             <thead>
                                                 <tr>
+                                                    <th>Previous</th>
                                                     <th>APY</th>
                                                     <th>Changes</th>
                                                 </tr>
@@ -99,6 +100,7 @@
                                                 <tbody>
                                                     @if ($report[$rt->id] != null)
                                                         <tr>
+                                                            <td>{{ $report[$rt->id]['previous_rate'] }}</td>
                                                             <td>{{ $report[$rt->id]['current_rate'] }}</td>
                                                             <td>{{ $report[$rt->id]['change'] }}</td>
                                                         </tr>
