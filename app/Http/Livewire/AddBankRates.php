@@ -77,8 +77,8 @@ class AddBankRates extends Component
                         'rate_type_id' => $this->rate_type_id,
                         'rate' => $check->rate,
                         'previous_rate' => $check->current_rate,
-                        'current_rate' => $check->current_rate+$this->rate,
-                        'change' => $this->rate,
+                        'current_rate' => $this->rate,
+                        'change' => $this->rate-$check->current_rate,
                     ]);
                     $this->clear();
                 }

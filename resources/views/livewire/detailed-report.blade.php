@@ -136,28 +136,28 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Highest APY</td>
-                                                    <td>{{ $rt->c_max }}</td>
-                                                    <td>{{ $rt->p_max }}</td>
+                                                    <td>{{ round($rt->c_max,2) }}</td>
+                                                    <td>{{ round($rt->p_max,2) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Median</td>
-                                                    <td>{{ $rt->c_med }}</td>
-                                                    <td>{{ $rt->p_med }}</td>
+                                                    <td>{{ round($rt->c_med,2) }}</td>
+                                                    <td>{{ round($rt->p_med,2) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Lowest APY</td>
-                                                    <td>{{ $rt->c_min }}</td>
-                                                    <td>{{ $rt->p_min }}</td>
+                                                    <td>{{ round($rt->c_min,2) }}</td>
+                                                    <td>{{ round($rt->p_min,2) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Average</td>
-                                                    <td>{{ $rt->c_avg }}</td>
-                                                    <td>{{ $rt->p_avg }}</td>
+                                                    <td>{{ round($rt->c_avg,2) }}</td>
+                                                    <td>{{ round($rt->p_avg,2) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Mode</td>
-                                                    <td>{{ $rt->c_mode }}</td>
-                                                    <td>{{ $rt->p_mode }}</td>
+                                                    <td>{{ round($rt->c_mode,2) }}</td>
+                                                    <td>{{ round($rt->p_mode,2) }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -91,9 +91,9 @@
                     @endif
                     @if(auth()->user()->hasRole('data-entry-operator'))
                     <div class="col-md-4">
-                        <label for="rate">Rate Change</label>
+                        <label for="rate">New Rate</label>
                             <input type="text" id="rate" class="form-control mr-2" wire:model="rate"
-                                placeholder="Enter Change....">
+                                placeholder="Enter New Rate....">
                     </div>
                     @endif
                     <div class="col-md-4 mt-3">

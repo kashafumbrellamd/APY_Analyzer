@@ -138,35 +138,37 @@ class BankPrices extends Model
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->pluck('previous_rate')->toArray();
-            //dd($get_mod);
-            //where('rate_type_id',$rt->id)->where('is_checked',1)->pluck('current_rate')->toArray();
-            $abc = array_map('strval',$get_mod);
-            $counts = array_count_values($abc);
-            arsort($counts);
-            $rt->c_mode = array_keys($counts)[0];
-            sort($abc);
-            $count = count($abc);
-            $middle = floor(($count - 1) / 2);
-            if ($count % 2 == 0) {
-                $rt->c_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
-            } else {
-                $rt->c_med = $abc[$middle];
+            if($get_mod != null){
+                $abc = array_map('strval',$get_mod);
+                $counts = array_count_values($abc);
+                arsort($counts);
+                $rt->c_mode = array_keys($counts)[0];
+                sort($abc);
+                $count = count($abc);
+                $middle = floor(($count - 1) / 2);
+                if ($count % 2 == 0) {
+                    $rt->c_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                } else {
+                    $rt->c_med = $abc[$middle];
+                }
             }
             $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->pluck('previous_rate')->toArray();
-            $abc = array_map('strval',$get_mod);
-            $counts = array_count_values($abc);
-            arsort($counts);
-            $rt->p_mode = array_keys($counts)[0];
-            sort($abc);
-            $count = count($abc);
-            $middle = floor(($count - 1) / 2);
-            if ($count % 2 == 0) {
-                $rt->p_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
-            } else {
-                $rt->p_med = $abc[$middle];
+            if($get_mod != null){
+                $abc = array_map('strval',$get_mod);
+                $counts = array_count_values($abc);
+                arsort($counts);
+                $rt->p_mode = array_keys($counts)[0];
+                sort($abc);
+                $count = count($abc);
+                $middle = floor(($count - 1) / 2);
+                if ($count % 2 == 0) {
+                    $rt->p_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                } else {
+                    $rt->p_med = $abc[$middle];
+                }
             }
         }
         return $rate_types;
