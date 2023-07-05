@@ -138,7 +138,7 @@
                                 <td>{{ $bp->previous_rate }}</td>
                                 <td>{{ $bp->current_rate }}</td>
                                 <td>{{ $bp->change }}</td>
-                                <td>{{ $bp->created_at }}</td>
+                                <td>{{ date('m-d-Y',strtotime(explode(' ',$bp->created_at)[0])) }} {{explode(' ',$bp->created_at)[1]}}</td>
                                 @if(auth()->user()->hasRole('data-entry-operator'))
                                 <td class="text-center">
                                     <!-- <button type="button" class="btn" wire:click="edit({{ $bp->id }})"><span
