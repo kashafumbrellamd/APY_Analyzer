@@ -106,7 +106,7 @@ class BankPrices extends Model
 
     public function get_min_max_func()
     {
-        $rate_types = RateType::orderby('name','ASC')->get();
+        $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($rate_types as $re_key => $rt) {
             $id = $rt->id;
             $rt->c_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
@@ -176,7 +176,7 @@ class BankPrices extends Model
 
     public function get_min_max_func_with_state($state_id)
     {
-        $rate_types = RateType::orderby('name','ASC')->get();
+        $rate_types = RateType::orderby('id','ASC')->get();
 
         foreach ($rate_types as $re_key => $rt) {
             $id = $rt->id;
@@ -258,7 +258,7 @@ class BankPrices extends Model
     }
     public function get_min_max_func_with_msa($msa)
     {
-        $rate_types = RateType::orderby('name','ASC')->get();
+        $rate_types = RateType::orderby('id','ASC')->get();
 
         foreach ($rate_types as $re_key => $rt) {
             $id = $rt->id;

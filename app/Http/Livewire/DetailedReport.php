@@ -21,7 +21,7 @@ class DetailedReport extends Component
     public $last_updated = '';
     public function render()
     {
-        $rt = RateType::orderby('name','ASC')->get();
+        $rt = RateType::orderby('id','ASC')->get();
         $data = BankPrices::all();
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $states = $this->getstates();
