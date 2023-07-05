@@ -57,3 +57,9 @@ Route::post('/verify/login', [App\Http\Controllers\GeneralController::class,'ver
 Route::get('/email',function(){
     Mail::to("moaz.muhammad@yopmail.com")->send(new TestMail());
 });
+
+
+Route::get('/mhlChart', [App\Http\Controllers\GeneralController::class,'mhlChart']);
+Route::get('/mamChart', [App\Http\Controllers\GeneralController::class,'mamChart']);
+
+Route::get('/getLabels', [App\Http\Controllers\GeneralController::class,'getLabels']);

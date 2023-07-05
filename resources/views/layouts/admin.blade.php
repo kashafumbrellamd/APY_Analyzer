@@ -7,6 +7,9 @@
         label{
             font-weight: 600;
             margin-top: 10px;
+        },
+        table td{
+            font-weight: 500;
         }
     </style>
     @livewireStyles

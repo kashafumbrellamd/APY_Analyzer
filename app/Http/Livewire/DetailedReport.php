@@ -18,6 +18,7 @@ class DetailedReport extends Component
     public $columns = [];
     public $state_id = '';
     public $msa_code = '';
+    public $last_updated = '';
     public function render()
     {
         $rt = RateType::orderby('name','ASC')->get();
@@ -25,6 +26,7 @@ class DetailedReport extends Component
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
+        $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!='' && $this->state_id!='all'){
             $reports = BankPrices::BankReportsWithState($this->state_id);
             $results = BankPrices::get_min_max_func_with_state($this->state_id);

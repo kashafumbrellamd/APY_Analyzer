@@ -2,6 +2,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Reports</h6>
+            <span>({{ $last_updated }}) updated on weekly basis</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -56,8 +57,8 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <div class="table-responsive table__font_style">
+                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Bank Name</th>
@@ -167,6 +168,23 @@
                     </tfoot>
                 </table>
             </div>
+
+            {{-- <div class="card-body">
+                <h2 class="text-center"></h2>
+                <div class="chart-area m-2">
+                    <canvas id="mhlChart"></canvas>
+                </div>
+                <hr>
+                <h2 class="text-center"></h2>
+                <div class="chart-area m-2">
+                    <canvas id="mamChart"></canvas>
+                </div>
+                <hr>
+                <h2 class="text-center"></h2>
+                <div class="chart-area m-2">
+                    <canvas id="mhrChart"></canvas>
+                </div>
+            </div> --}}
         </div>
     </div>
 </div>

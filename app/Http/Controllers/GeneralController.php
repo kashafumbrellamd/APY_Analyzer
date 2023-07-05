@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OtpMail;
 use App\Models\User;
+use App\Models\BankPrices;
+use App\Models\RateType;
 use App\Models\OTP;
 
 class GeneralController extends Controller
@@ -86,6 +88,49 @@ class GeneralController extends Controller
         }else{
             return redirect()->back();
         }
+    }
+
+    public function mhlChart(){
+        $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
+        $ids = [];
+        $max = [];
+        $min = [];
+        $ids = array_column($rate_cd, 'id');
+
+        $data = BankPrices::get_min_max_func();
+        foreach ($data as $key => $value) {
+            if(in_array($value->id,$ids)){
+                array_push($max,$value->c_max);
+                array_push($min,$value->c_min);
+            }
+        }
+        return response()->json(['max'=>$max,'min'=>$min]);
+    }
+
+    public function mamChart(){
+        $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
+        $ids = [];
+        $med = [];
+        $avg = [];
+        $ids = array_column($rate_cd, 'id');
+
+        $data = BankPrices::get_min_max_func();
+        foreach ($data as $key => $value) {
+            if(in_array($value->id,$ids)){
+                array_push($med,$value->c_med);
+                array_push($avg,$value->c_avg);
+            }
+        }
+        return response()->json(['med'=>$med,'avg'=>$avg]);
+    }
+
+    public function getLabels(){
+        $rate_cd = RateType::where('name','like','%CD%')->select('name')->get()->toArray();
+        $ids = [];
+        $med = [];
+        $avg = [];
+        $ids = array_column($rate_cd, 'name');
+        return response()->json($ids);
     }
 
 }

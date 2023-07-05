@@ -1516,6 +1516,8 @@ pre code {
 .table-bordered th,
 .table-bordered td {
   border: 1px solid #e3e6f0;
+  font-weight: 500;
+  color: black;
 }
 
 .table-bordered thead th,
