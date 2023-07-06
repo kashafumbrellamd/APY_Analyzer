@@ -94,10 +94,10 @@ if (ctx != null) {
                 label: "Market Low",
                 lineTension: 0.0,
                 backgroundColor: "rgba(0, 0, 0, 0)", // Example background color for the second line
-                borderColor: "rgba(0, 0, 0, 0)", // Example border color for the second line
+                borderColor: "rgba(255, 0, 0, 1)", // Example border color for the second line
                 pointRadius: 1,
                 pointBackgroundColor: "rgba(255, 99, 132, 1)", // Example point color for the second line
-                pointBorderColor: "rgba(255, 99, 132, 1)", // Example point border color for the second line
+                pointBorderColor: "rgba(255, 0, 0, 1)", // Example point border color for the second line
                 pointHoverRadius: 3,
                 // pointHoverBackgroundColor: "rgba(255, 99, 132, 1)", // Example point hover color for the second line
                 // pointHoverBorderColor: "rgba(255, 99, 132, 1)", // Example point hover border color for the second line
@@ -203,10 +203,10 @@ if (ctx != null) {
                 label: "Average",
                 lineTension: 0.3,
                 backgroundColor: "rgba(0, 0, 0, 0)",
-                borderColor: "rgba(78, 115, 223, 1)",
+                borderColor: "rgba(255, 0, 0, 1)",
                 pointRadius: 3,
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverBackgroundColor: "rgba(255, 99, 132, 1)", // Example point hover color for the second line
+                pointHoverBorderColor: "rgba(255, 99, 132, 1)", // Example point hover border color for the second line
                 pointHoverRadius: 3,
                 pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
                 pointHoverBorderColor: "rgba(78, 115, 223, 1)",
@@ -218,15 +218,15 @@ if (ctx != null) {
                 label: "Median",
                 lineTension: 0.3,
                 backgroundColor: "rgba(0, 0, 0, 0)", // Example background color for the second line
-                borderColor: "rgba(0, 0, 0, 0)", // Example border color for the second line
+                borderColor: "rgba(78, 115, 223, 1)", // Example border color for the second line
                 pointRadius: 3,
                 pointBackgroundColor: "rgba(255, 99, 132, 1)", // Example point color for the second line
                 pointBorderColor: "rgba(255, 99, 132, 1)", // Example point border color for the second line
                 pointHoverRadius: 3,
-                // pointHoverBackgroundColor: "rgba(255, 99, 132, 1)", // Example point hover color for the second line
-                // pointHoverBorderColor: "rgba(255, 99, 132, 1)", // Example point hover border color for the second line
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
                 pointHitRadius: 10,
-                pointBorderWidth: 4,
+                pointBorderWidth: 1,
                 data: median,
             },
                 // {

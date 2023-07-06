@@ -1,3 +1,21 @@
+<style>
+    .table {
+    border-radius: 0.2rem;
+    width: 100%;
+    padding-bottom: 1rem;
+    color: #212529;
+    margin-bottom: 0;
+    }
+    .first-col{
+    position: sticky;
+    left: 0;
+    color: #373737;
+    background: #fafafa
+    }
+    .table td {
+    white-space: nowrap;
+    }
+</style>
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -58,10 +76,11 @@
             </div>
 
             <div class="table-responsive table__font_style">
+                <div class="table-wrapper">
                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Bank Name</th>
+                            <td class="first-col">Bank Name</td>
                             @foreach ($rate_type as $rt)
                                 @if ($columns[$rt->id] == 1)
                                     <th>{{ $rt->name }}</th>
@@ -69,7 +88,7 @@
                             @endforeach
                         </tr>
                         <tr>
-                            <th> </th>
+                            <th class="first-col"> </th>
                             @foreach ($rate_type as $rt)
                                 @if ($columns[$rt->id] == 1)
                                     <th>
@@ -91,7 +110,7 @@
                     <tbody>
                         @forelse ($reports as $report)
                             <tr>
-                                <td>{{ $report->name }}</td>
+                                <td class="first-col">{{ $report->name }}</td>
                                 @foreach ($rate_type as $rt_key => $rt)
                                     @if ($columns[$rt->id] == 1)
                                         <td>
@@ -124,7 +143,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td></td>
+                            <td class="first-col"></td>
                             @foreach ($results as $rt)
                                 @if ($columns[$rt->id] == 1)
                                     <td>
@@ -169,6 +188,7 @@
                         </tr>
                     </tfoot>
                 </table>
+                </div>
             </div>
 
             {{-- <div class="card-body">
