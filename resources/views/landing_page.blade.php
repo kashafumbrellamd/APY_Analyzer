@@ -56,9 +56,9 @@
                                         <div class="text-center mb-3">
                                             <a href="{{ route('signup') }}"> Create Account </a>
                                         </div>
-                                        <div class="text-center">
+                                        <!-- <div class="text-center">
                                             <a href="{{ route('login') }}"> Go To Admin Login </a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </form>

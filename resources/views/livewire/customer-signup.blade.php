@@ -14,41 +14,41 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_name" class="form-label">Enter Bank Name</label>
-                                                    <input type="name" id="bank_name" name="bank_name" class="form-control" aria-describedby="name" wire:model.lazy="bank_name">
+                                                    <input type="name" id="bank_name" name="bank_name" class="form-control" aria-describedby="name" wire:model.lazy="bank_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_email" class="form-label">Email</label>
-                                                    <input type="email" id="bank_email" name="bank_email" class="form-control" aria-describedby="email" wire:model.lazy="bank_email">
+                                                    <input type="email" id="bank_email" name="bank_email" class="form-control" aria-describedby="email" wire:model.lazy="bank_email" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_phone" class="form-label">Phone Number</label>
-                                                    <input type="number" id="bank_phone" name="bank_phone" class="form-control" aria-describedby="phone" wire:model.lazy="bank_phone">
+                                                    <input type="number" id="bank_phone" name="bank_phone" class="form-control" aria-describedby="phone" wire:model.lazy="bank_phone" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_website" class="form-label">Website</label>
-                                                    <input type="text" id="bank_website" name="bank_website" class="form-control" aria-describedby="website" wire:model.lazy="bank_website">
+                                                    <input type="text" id="bank_website" name="bank_website" class="form-control" aria-describedby="website" wire:model.lazy="bank_website" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_msa" class="form-label">MSA Code</label>
-                                                    <input type="text" id="bank_msa" name="bank_msa" class="form-control" aria-describedby="msa_code" wire:model.lazy="bank_msa">
+                                                    <input type="text" id="bank_msa" name="bank_msa" class="form-control" aria-describedby="msa_code" wire:model.lazy="bank_msa" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">State</label>
-                                                    <select class="form-select" id="bank_state" name="bank_state" aria-label="Default select example" wire:model.lazy="bank_state">
+                                                    <select class="form-select" id="bank_state" name="bank_state" aria-label="Default select example" wire:model.lazy="bank_state" required>
                                                         <option value="">Select State</option>
                                                         @foreach($states as $state)
                                                         <option value="{{$state->id}}">{{$state->name}}</option>
@@ -69,42 +69,42 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_name" class="form-label">Name</label>
-                                                    <input type="name" id="admin_name" name="admin_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_name">
+                                                    <input type="name" id="admin_name" name="admin_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_email" class="form-label">Email</label>
-                                                    <input type="email" id="admin_email" name="admin_email" class="form-control" aria-describedby="email" wire:model.lazy="admin_email">
+                                                    <input type="email" id="admin_email" name="admin_email" class="form-control" aria-describedby="email" wire:model.lazy="admin_email" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_phone" class="form-label">Phone Number</label>
-                                                    <input type="number" id="admin_phone" name="admin_phone" class="form-control" aria-describedby="phone" wire:model.lazy="admin_phone">
+                                                    <input type="number" id="admin_phone" name="admin_phone" class="form-control" aria-describedby="phone" wire:model.lazy="admin_phone" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_designation" class="form-label">Designation</label>
-                                                    <input type="text" id="admin_designation" name="admin_designation" class="form-control" aria-describedby="Designation" wire:model.lazy="admin_designation">
+                                                    <input type="text" id="admin_designation" name="admin_designation" class="form-control" aria-describedby="Designation" wire:model.lazy="admin_designation" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_id" class="form-label">Employee Id</label>
-                                                    <input type="text" id="admin_id" name="admin_employeeid" class="form-control" aria-describedby="msa_code" wire:model.lazy="admin_employeeid">
+                                                    <input type="text" id="admin_id" name="admin_employeeid" class="form-control" aria-describedby="msa_code" wire:model.lazy="admin_employeeid" required>
                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_gender" class="form-label">Gender</label>
-                                                    <select class="form-select" id="admin_gender" name="admin_gender" aria-label="Default select example" wire:model.lazy="admin_gender">
+                                                    <select class="form-select" id="admin_gender" name="admin_gender" aria-label="Default select example" wire:model.lazy="admin_gender" required>
                                                         <option value="">Select Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>

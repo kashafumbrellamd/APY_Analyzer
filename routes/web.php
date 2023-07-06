@@ -21,10 +21,22 @@ Route::get('/',function(){
         return redirect()->route('login');
     }
 });
+Route::get('/',function(){
+    if(!Auth::check()){
+        return view('home_page');
+    }else{
+        return redirect()->route('login');
+    }
+});
 
 Route::get('/home', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/signin', function () {
+    return view('landing_page');
+})->name('/signin');
+
 Route::get('/signup', function () {
     return view('customer_bank.signup');
 })->name('signup');
