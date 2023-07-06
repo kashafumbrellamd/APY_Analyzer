@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main_signUp{
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: rgb(245 245 245 / 88%);
+}
+.submit_btn{
+    background: #79a471;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    padding: 6px 25px;
+}
+.regiter_heading_h{
+    text-align: center;
+    color: #79a471;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 2px #79a
+}
+hr{
+    margin: 0.5rem 0 !important;
+}
+.back_sign__{
+    background-image: url(../images/sign__.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 58% 55%;
+}
+.main_signUp label{
+    font-weight: 600;
+}
+.login__{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

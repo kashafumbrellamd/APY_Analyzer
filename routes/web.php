@@ -25,6 +25,9 @@ Route::get('/',function(){
 Route::get('/home', function () {
     return view('welcome');
 })->name('home');
+Route::get('/signup', function () {
+    return view('customer_bank.signup');
+})->name('signup');
 
 Auth::routes();
 Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);

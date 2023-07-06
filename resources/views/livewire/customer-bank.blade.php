@@ -314,8 +314,8 @@
                                 <td>{{ $dt->website }}</td>
                                 <td>{{ $dt->msa_code }}</td>
                                 <td>{{ $dt->state }}</td>
-                                <td>{{ $dt->contract->contract_start }}</td>
-                                <td>{{ $dt->contract->contract_end }}</td>
+                                <td>{{ date('m-d-Y',strtotime($dt->contract->contract_start)) }}</td>
+                                <td>{{ date('m-d-Y',strtotime($dt->contract->contract_end)) }}</td>
                                 <td>{{ number_format($dt->contract->charges, 2) }}</td>
                                 <td>{{ Str::ucfirst($dt->display_reports) }}</td>
                                 <td class="text-center">
