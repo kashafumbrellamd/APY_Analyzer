@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="dropdown d-flex mb-2" style="float:right;">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Select Columns
                         </button>

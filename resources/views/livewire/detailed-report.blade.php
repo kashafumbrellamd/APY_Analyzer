@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="dropdown d-flex mb-2" style="float:right;">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Select Columns
                         </button>
@@ -101,13 +101,17 @@
                                                 <tbody>
                                                     @if ($report[$rt->id] != null)
                                                         <tr>
-                                                            <td>{{ $report[$rt->id]['previous_rate'] }}</td>
-                                                            <td>{{ $report[$rt->id]['current_rate'] }}</td>
                                                             @if ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
+                                                                <td class="text-success">{{ $report[$rt->id]['previous_rate'] }}</td>
+                                                                <td class="text-success">{{ $report[$rt->id]['current_rate'] }}</td>
                                                                 <td class="text-success">{{ $report[$rt->id]['change'] }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                                                             @elseif ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
+                                                                <td>{{ $report[$rt->id]['previous_rate'] }}</td>
+                                                                <td>{{ $report[$rt->id]['current_rate'] }}</td>
                                                                 <td>{{ $report[$rt->id]['change'] }}</td>
-                                                            @else
+                                                                @else
+                                                                <td class="text-danger">{{ $report[$rt->id]['previous_rate'] }}</td>
+                                                                <td class="text-danger">{{ $report[$rt->id]['current_rate'] }}</td>
                                                                 <td class="text-danger">{{ $report[$rt->id]['change'] }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                                             @endif
                                                         </tr>
