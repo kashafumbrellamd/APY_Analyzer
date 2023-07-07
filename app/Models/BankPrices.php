@@ -133,7 +133,7 @@ class BankPrices extends Model
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->avg('previous_rate');
-            
+
             $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
@@ -214,7 +214,7 @@ class BankPrices extends Model
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
             ->where('banks.state_id',$state_id)->avg('previous_rate');
-            
+
             $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
@@ -296,7 +296,7 @@ class BankPrices extends Model
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
             ->where('banks.msa_code',$msa)->avg('previous_rate');
-            
+
             $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');

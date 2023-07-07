@@ -120,6 +120,12 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>View Detailed Reports</span></a>
     </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/view/special/reports') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>View Special Reports</span></a>
+    </li>
     @endif
 </ul>
 <!-- End of Sidebar -->

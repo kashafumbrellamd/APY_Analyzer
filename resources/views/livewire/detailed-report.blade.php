@@ -103,7 +103,13 @@
                                                         <tr>
                                                             <td>{{ $report[$rt->id]['previous_rate'] }}</td>
                                                             <td>{{ $report[$rt->id]['current_rate'] }}</td>
-                                                            <td>{{ $report[$rt->id]['change'] }}</td>
+                                                            @if ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
+                                                                <td class="text-success">{{ $report[$rt->id]['change'] }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                            @elseif ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
+                                                                <td>{{ $report[$rt->id]['change'] }}</td>
+                                                            @else
+                                                                <td class="text-danger">{{ $report[$rt->id]['change'] }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                            @endif
                                                         </tr>
                                                     @else
                                                         <tr>

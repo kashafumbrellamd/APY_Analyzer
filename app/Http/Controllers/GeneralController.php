@@ -53,6 +53,11 @@ class GeneralController extends Controller
         return view('customer_bank.view_detailed_reports');
     }
 
+    public function view_speical_reports()
+    {
+        return view('customer_bank.view_speical_reports');
+    }
+
     public function otp_apply($id)
     {
         return view('apply_otp',['id'=>$id]);

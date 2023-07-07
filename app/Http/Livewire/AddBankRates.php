@@ -7,6 +7,7 @@ use App\Models\RateType;
 use App\Models\Bank;
 use App\Models\BankPrices;
 use App\Models\State;
+use App\Models\SpecializationRates;
 use Illuminate\Support\Str;
 
 class AddBankRates extends Component
@@ -17,13 +18,18 @@ class AddBankRates extends Component
     public $state_name = '';
     public $rate = '';
     public $rate_type_id = '';
-    
+    public $special_rate = '';
+    public $special_description = '';
+
     public function render()
     {
         $data = Bank::BanksWithState();
         $rate_types = RateType::all();
         $bank_prices = BankPrices::BankPricesWithType($this->bank_id);
-        return view('livewire.add-bank-rates',['data'=>$data,'bank_prices'=>$bank_prices,'update'=>$this->update,'rate_types'=>$rate_types]);
+        $special_prices = SpecializationRates::specialPricesWithBankId($this->bank_id);
+        return view('livewire.add-bank-rates',
+                        ['data'=>$data,'bank_prices'=>$bank_prices,
+                        'update'=>$this->update,'rate_types'=>$rate_types,'special_prices'=>$special_prices]);
     }
 
     public function onbankselect($id)
@@ -66,7 +72,7 @@ class AddBankRates extends Component
                 else
                 {
                     $this->addError('submit', 'Already Exist');
-                }   
+                }
             }
             else
             {
@@ -92,6 +98,19 @@ class AddBankRates extends Component
         }
     }
 
+    public function specialRateSubmit(){
+        if ($this->special_rate != '' && $this->special_description != '') {
+                $p_user = SpecializationRates::create([
+                    'bank_id' => $this->bank_id,
+                    'rate' => $this->special_rate,
+                    'description' => $this->special_description,
+                ]);
+            $this->clear();
+        } else {
+            $this->addError('s_submit', 'Bank and Rate Type should be selected along with rate');
+        }
+    }
+
     public function status_change($id)
     {
         $check = BankPrices::where('id',$id)->first();
@@ -104,9 +123,18 @@ class AddBankRates extends Component
         $this->render();
     }
 
+    public function deleteSpecRate($id){
+        SpecializationRates::find($id)->delete();
+        $this->render();
+    }
+
     public function clear(){
         $this->rate_type_id = '';
         $this->rate = '';
+        $this->special_rate = '';
+        $this->special_description = '';
         $this->render();
     }
+
+
 }
