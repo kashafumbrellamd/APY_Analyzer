@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Bank;
 use App\Models\CustomerBank;
+use App\Models\CustomPackageBanks;
 use App\Models\RateType;
 
 class BankPrices extends Model
@@ -57,7 +58,8 @@ class BankPrices extends Model
         }elseif ($filter->display_reports == 'msa') {
             $banks = Bank::where('msa_code',$filter->msa_code)->get();
         }else{
-            $banks = Bank::all();
+            $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
+            $banks = Bank::whereIn('id',$selected_banks)->get();
         }
         $rate_types = RateType::orderby('name','ASC')->get();
         foreach ($banks as $key => $bank) {
@@ -74,7 +76,10 @@ class BankPrices extends Model
 
     public function BankReportsWithState($state_id)
     {
-        $banks = Bank::where('state_id',$state_id)->get();
+        $banks = Bank::where('state_id',$state_id)
+        ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+        ->select('banks.*')
+        ->get();
         $rate_types = RateType::orderby('name','ASC')->get();
         foreach ($banks as $key => $bank) {
             foreach ($rate_types as $re_key => $rt) {
@@ -106,119 +111,278 @@ class BankPrices extends Model
 
     public function get_min_max_func()
     {
-        $rate_types = RateType::orderby('id','ASC')->get();
-        foreach ($rate_types as $re_key => $rt) {
-            $id = $rt->id;
-            $rt->c_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->max('current_rate');
-            $rt->p_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->max('previous_rate');
-            $rt->c_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->min('current_rate');
-            $rt->p_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->min('previous_rate');
-            $rt->c_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->avg('current_rate');
-            $rt->p_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->avg('previous_rate');
+        $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($filter->display_reports == 'custom'){
+            $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
+            $rate_types = RateType::orderby('id','ASC')->get();
+            foreach ($rate_types as $re_key => $rt) {
+                $id = $rt->id;
+                $rt->c_max = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->max('current_rate');
+                $rt->p_max = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->max('previous_rate');
+                $rt->c_min = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->min('current_rate');
+                $rt->p_min = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->min('previous_rate');
+                $rt->c_avg = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->avg('current_rate');
+                $rt->p_avg = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->avg('previous_rate');
 
-            $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->pluck('previous_rate')->toArray();
-            if($get_mod != null){
-                $abc = array_map('strval',$get_mod);
-                $counts = array_count_values($abc);
-                arsort($counts);
-                $rt->c_mode = array_keys($counts)[0];
-                sort($abc);
-                $count = count($abc);
-                $middle = floor(($count - 1) / 2);
-                if ($count % 2 == 0) {
-                    $rt->c_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
-                } else {
-                    $rt->c_med = $abc[$middle];
+                $get_mod = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->pluck('previous_rate')->toArray();
+                if($get_mod != null){
+                    $abc = array_map('strval',$get_mod);
+                    $counts = array_count_values($abc);
+                    arsort($counts);
+                    $rt->c_mode = array_keys($counts)[0];
+                    sort($abc);
+                    $count = count($abc);
+                    $middle = floor(($count - 1) / 2);
+                    if ($count % 2 == 0) {
+                        $rt->c_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                    } else {
+                        $rt->c_med = $abc[$middle];
+                    }
+                }
+                $get_mod = BankPrices::whereIn('bank_id',$selected_banks)->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->pluck('previous_rate')->toArray();
+                if($get_mod != null){
+                    $abc = array_map('strval',$get_mod);
+                    $counts = array_count_values($abc);
+                    arsort($counts);
+                    $rt->p_mode = array_keys($counts)[0];
+                    sort($abc);
+                    $count = count($abc);
+                    $middle = floor(($count - 1) / 2);
+                    if ($count % 2 == 0) {
+                        $rt->p_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                    } else {
+                        $rt->p_med = $abc[$middle];
+                    }
                 }
             }
-            $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
-                ->where('is_checked',1)->groupBy('bank_id');
-            })->pluck('previous_rate')->toArray();
-            if($get_mod != null){
-                $abc = array_map('strval',$get_mod);
-                $counts = array_count_values($abc);
-                arsort($counts);
-                $rt->p_mode = array_keys($counts)[0];
-                sort($abc);
-                $count = count($abc);
-                $middle = floor(($count - 1) / 2);
-                if ($count % 2 == 0) {
-                    $rt->p_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
-                } else {
-                    $rt->p_med = $abc[$middle];
+            return $rate_types;
+        }elseif($filter->display_reports == 'state'){
+            $rate_types = RateType::orderby('id','ASC')->get();
+            foreach ($rate_types as $re_key => $rt) {
+                $id = $rt->id;
+                $rt->c_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->max('current_rate');
+                $rt->p_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->max('previous_rate');
+                $rt->c_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->min('current_rate');
+                $rt->p_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->min('previous_rate');
+                $rt->c_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->avg('current_rate');
+                $rt->p_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->avg('previous_rate');
+
+                $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->pluck('previous_rate')->toArray();
+                if($get_mod != null){
+                    $abc = array_map('strval',$get_mod);
+                    $counts = array_count_values($abc);
+                    arsort($counts);
+                    $rt->c_mode = array_keys($counts)[0];
+                    sort($abc);
+                    $count = count($abc);
+                    $middle = floor(($count - 1) / 2);
+                    if ($count % 2 == 0) {
+                        $rt->c_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                    } else {
+                        $rt->c_med = $abc[$middle];
+                    }
+                }
+                $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.state_id',$filter->state)->pluck('previous_rate')->toArray();
+                if($get_mod != null){
+                    $abc = array_map('strval',$get_mod);
+                    $counts = array_count_values($abc);
+                    arsort($counts);
+                    $rt->p_mode = array_keys($counts)[0];
+                    sort($abc);
+                    $count = count($abc);
+                    $middle = floor(($count - 1) / 2);
+                    if ($count % 2 == 0) {
+                        $rt->p_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                    } else {
+                        $rt->p_med = $abc[$middle];
+                    }
                 }
             }
+            return $rate_types;
+        }else{
+            $rate_types = RateType::orderby('id','ASC')->get();
+            foreach ($rate_types as $re_key => $rt) {
+                $id = $rt->id;
+                $rt->c_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->max('current_rate');
+                $rt->p_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->max('previous_rate');
+                $rt->c_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->min('current_rate');
+                $rt->p_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->min('previous_rate');
+                $rt->c_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->avg('current_rate');
+                $rt->p_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->avg('previous_rate');
+
+                $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->pluck('previous_rate')->toArray();
+                if($get_mod != null){
+                    $abc = array_map('strval',$get_mod);
+                    $counts = array_count_values($abc);
+                    arsort($counts);
+                    $rt->c_mode = array_keys($counts)[0];
+                    sort($abc);
+                    $count = count($abc);
+                    $middle = floor(($count - 1) / 2);
+                    if ($count % 2 == 0) {
+                        $rt->c_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                    } else {
+                        $rt->c_med = $abc[$middle];
+                    }
+                }
+                $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
+                    ->where('is_checked',1)->groupBy('bank_id');
+                })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->where('banks.msa_code',$filter->msa_code)->pluck('previous_rate')->toArray();
+                if($get_mod != null){
+                    $abc = array_map('strval',$get_mod);
+                    $counts = array_count_values($abc);
+                    arsort($counts);
+                    $rt->p_mode = array_keys($counts)[0];
+                    sort($abc);
+                    $count = count($abc);
+                    $middle = floor(($count - 1) / 2);
+                    if ($count % 2 == 0) {
+                        $rt->p_med = ($abc[$middle] + $abc[$middle + 1]) / 2;
+                    } else {
+                        $rt->p_med = $abc[$middle];
+                    }
+                }
+            }
+            return $rate_types;
         }
-        return $rate_types;
     }
 
     public function get_min_max_func_with_state($state_id)
     {
         $rate_types = RateType::orderby('id','ASC')->get();
-
         foreach ($rate_types as $re_key => $rt) {
             $id = $rt->id;
-
             $rt->c_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)
             ->max('current_rate');
             $rt->p_max = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)->max('previous_rate');
 
             $rt->c_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)->min('current_rate');
             $rt->p_min = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)->min('previous_rate');
 
             $rt->c_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)->avg('current_rate');
             $rt->p_avg = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)->avg('previous_rate');
 
             $get_mod = BankPrices::whereIn('bank_prices.created_at', function ($query) use ($id) {
                 $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                 ->where('is_checked',1)->groupBy('bank_id');
             })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
             ->where('banks.state_id',$state_id)->pluck('previous_rate')->toArray();
             if($get_mod != null){
                 $abc = array_map('strval',$get_mod);
@@ -239,6 +403,7 @@ class BankPrices extends Model
                     $query->selectRaw('MAX(created_at)')->from('bank_prices')->where('rate_type_id', $id)
                     ->where('is_checked',1)->groupBy('bank_id');
                 })->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+                ->join('custom_package_banks', 'banks.id', '=', 'custom_package_banks.customer_selected_bank_id')
                 ->where('banks.state_id',$state_id)->pluck('previous_rate')->toArray();
                 $abc = array_map('strval',$get_mod);
                 $counts = array_count_values($abc);
@@ -259,7 +424,6 @@ class BankPrices extends Model
     public function get_min_max_func_with_msa($msa)
     {
         $rate_types = RateType::orderby('id','ASC')->get();
-
         foreach ($rate_types as $re_key => $rt) {
             $id = $rt->id;
 

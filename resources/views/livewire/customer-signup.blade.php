@@ -123,20 +123,13 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
+                                                    @foreach($packages as $package)
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="custom" wire:model.lazy="subscription">
-                                                        <label class="form-check-label" for="inlineRadio1">Platinum Package (All Bank details)</label>
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio{{$package->id}}" value="{{$package->package_type}}" wire:model.lazy="subscription">
+                                                        <label class="form-check-label" for="inlineRadio{{$package->id}}">{{$package->name}}</label>
                                                     </div>
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="state" wire:model.lazy="subscription">
-                                                        <label class="form-check-label" for="inlineRadio2">Gold Package (Banks of your State)</label>
-                                                    </div>
-                                                    <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="msa" wire:model.lazy="subscription">
-                                                        <label class="form-check-label" for="inlineRadio3">Silver Package (Only your MSA code Banks)</label>
-                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

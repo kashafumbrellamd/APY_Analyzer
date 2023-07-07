@@ -1,24 +1,3 @@
-<style>
-    .table {
-        border-radius: 0.2rem;
-        width: 100%;
-        padding-bottom: 1rem;
-        color: #212529;
-        margin-bottom: 0;
-    }
-
-    .first-col {
-        position: sticky;
-        left: 0;
-        color: #373737;
-        background: #fafafa
-    }
-
-    .table td {
-        white-space: nowrap;
-    }
-</style>
-
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">

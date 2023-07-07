@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Bank;
 use App\Models\BankPrices;
 use App\Models\CustomerBank;
+use App\Models\CustomPackageBanks;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
@@ -32,7 +33,7 @@ class DetailedReport extends Component
             $results = BankPrices::get_min_max_func_with_state($this->state_id);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
             $reports = BankPrices::BankReportsWithMsa($this->msa_code);
-            $results = BankPrices::get_min_max_func_with_msa($this->state_id);
+            $results = BankPrices::get_min_max_func_with_msa($this->msa_code);
         }else {
             $reports = BankPrices::BankReports();
             $results = BankPrices::get_min_max_func();
@@ -62,10 +63,14 @@ class DetailedReport extends Component
 
     public function getstates()
     {
-        $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
-        ->select('states.*')
-        ->groupBy('states.id')
-        ->get();
+        $selected_banks = CustomPackageBanks::where('bank_id',auth()->user()->bank_id)
+        ->join('banks', 'custom_package_banks.customer_selected_bank_id', '=', 'banks.id')
+        ->pluck('banks.state_id')->toArray();
+        $states = State::whereIn('id',$selected_banks)->get();
+        // $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+        // ->select('states.*')
+        // ->groupBy('states.id')
+        // ->get();
         return $states;
     }
 

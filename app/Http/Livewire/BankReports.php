@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Bank;
 use App\Models\BankPrices;
 use App\Models\CustomerBank;
+use App\Models\CustomPackageBanks;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
@@ -57,10 +58,14 @@ class BankReports extends Component
 
     public function getstates()
     {
-        $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
-        ->select('states.*')
-        ->groupBy('states.id')
-        ->get();
+        $selected_banks = CustomPackageBanks::where('bank_id',auth()->user()->bank_id)
+        ->join('banks', 'custom_package_banks.customer_selected_bank_id', '=', 'banks.id')
+        ->pluck('banks.state_id')->toArray();
+        $states = State::whereIn('id',$selected_banks)->get();
+        // $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+        // ->select('states.*')
+        // ->groupBy('states.id')
+        // ->get();
         return $states;
     }
 

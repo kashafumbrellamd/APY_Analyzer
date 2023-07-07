@@ -8,6 +8,8 @@ use App\Models\CustomerBank as CB;
 use App\Models\Role;
 use App\Models\State;
 use App\Models\User;
+use App\Models\Packages;
+use App\Models\CustomPackageBanks;
 use Livewire\Component;
 
 class CustomerSignup extends Component
@@ -48,7 +50,8 @@ class CustomerSignup extends Component
     public function render()
     {
         $states = State::where('country_id', '233')->get();
-        return view('livewire.customer-signup', ['states' => $states]);
+        $packages = Packages::get();
+        return view('livewire.customer-signup', ['states' => $states,'packages'=>$packages]);
     }
 
     public function submitForm()
@@ -73,22 +76,25 @@ class CustomerSignup extends Component
             'password' => bcrypt($this->admin_phone),
             'bank_id' => $bank->id,
         ]);
-        $charges = 125;
         if($this->subscription == 'custom'){
-            $charges = 500;
-        }elseif ($this->subscription == 'state') {
-            $charges = 250;
+            foreach($this->custom_banks as $key => $custom_bank) {
+                $custom_selected_banks = CustomPackageBanks::create([
+                    'bank_id' => $bank->id,
+                    'customer_selected_bank_id' => $custom_bank,
+                ]);
+            }
         }
+        $charges = Packages::where('package_type',$this->subscription)->first();
         $contract = Contract::create([
             'contract_start' => date('Y-m-d'),
             'contract_end' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 year')),
-            'charges' => $charges,
+            'charges' => $charges->price,
             'bank_id' => $bank->id,
         ]);
         $role = Role::where('slug', 'bank-admin')->first();
         $user->roles()->attach($role);
         $this->clear();
-        return redirect(url('/'));
+        return redirect(url('/signin'));
         $this->render();
     }
 
