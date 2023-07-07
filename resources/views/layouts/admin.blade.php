@@ -15,7 +15,7 @@
     @livewireStyles
 </head>
 
-<body id="page-top">
+<body id="page-top" class="sidebar-toggled">
     <div id="wrapper">
         @include('components.admin_sidebar')
         <div id="content-wrapper" class="d-flex flex-column">
