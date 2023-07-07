@@ -139,6 +139,39 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                            </div>
+                                            @if($this->subscription == 'custom')
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="custom_states" class="form-label">State</label>
+                                                    <select class="form-select" id="custom_states" name="custom_states[]" aria-label="Default select example" wire:model.lazy="custom_states" multiple>
+                                                        <!-- <option value="">Select State</option> -->
+                                                        @foreach($states as $state)
+                                                        <option value="{{$state->id}}">{{$state->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mt-5 text-center">
+                                                    <button wire:click.prevent="selectlist()" class="btn submit_btn">Show Banks</button>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @if($this->custom_bank_select != '' && $this->subscription == 'custom')
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="custom_banks" class="form-label">Banks</label>
+                                                    <select class="form-select" id="custom_banks" name="custom_banks[]" aria-label="Default select example" wire:model.lazy="custom_banks" multiple>
+                                                        <!-- <option value="">Select Banks</option> -->
+                                                        @foreach($this->custom_bank_select as $bank)
+                                                        <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
                                             <div class="col-md-12">
                                                 <div class="mb-3 text-center">
                                                     <button type="submit" class="btn submit_btn">Submit</button>

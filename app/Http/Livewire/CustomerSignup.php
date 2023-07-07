@@ -25,6 +25,9 @@ class CustomerSignup extends Component
     public $admin_employeeid = '';
     public $admin_gender = '';
     public $subscription = '';
+    public $custom_states = [];
+    public $custom_banks = [];
+    public $custom_bank_select = '';
 
     protected $rules = [
         'bank_name' => 'required',
@@ -87,6 +90,11 @@ class CustomerSignup extends Component
         $this->clear();
         return redirect(url('/'));
         $this->render();
+    }
+
+    public function selectlist()
+    {
+        $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
     }
 
     public function clear()
