@@ -79,3 +79,6 @@ Route::get('/mhlChart', [App\Http\Controllers\GeneralController::class,'mhlChart
 Route::get('/mamChart', [App\Http\Controllers\GeneralController::class,'mamChart']);
 
 Route::get('/getLabels', [App\Http\Controllers\GeneralController::class,'getLabels']);
+
+
+Route::get('/add_packages',[App\Http\Controllers\GeneralController::class,'add_packages']);
