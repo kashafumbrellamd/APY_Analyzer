@@ -65,7 +65,7 @@ class CustomerSignup extends Component
 
     public function submitForm()
     {
-        if($this->$subscription == 'custom' && $this->custom_banks != []){
+        if($this->subscription == 'custom' && $this->custom_banks != []){
             $this->addError('customer_banks', 'You have to Select atleast 1 bank');
         }else{
             $bank = CB::create([
