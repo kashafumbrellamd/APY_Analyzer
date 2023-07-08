@@ -54,8 +54,13 @@ class CustomerSignup extends Component
     public function render()
     {
         $states = State::where('country_id', '233')->get();
+        $bank_states = State::where('country_id', '233')
+        ->join('banks','banks.state_id','states.id')
+        ->groupby('states.id')
+        ->select('states.*')
+        ->get();
         $packages = Packages::get();
-        return view('livewire.customer-signup', ['states' => $states,'packages'=>$packages]);
+        return view('livewire.customer-signup', ['states' => $states,'packages'=>$packages,'bank_states'=>$bank_states]);
     }
 
     public function submitForm()
@@ -105,10 +110,10 @@ class CustomerSignup extends Component
         $this->render();
     }
 
-    public function selectlist()
-    {
-        $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
-    }
+    // public function selectlist()
+    // {
+    //     $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
+    // }
 
     public function clear()
     {
@@ -126,41 +131,49 @@ class CustomerSignup extends Component
         $this->admin_gender = '';
         $this->subscription = '';
     }
-    public function selected($value)
-    {
-        $this->custom_states = $value;
-        $this->selectlist();
-    }
+    // public function selected($value)
+    // {
+    //     $this->custom_states = $value;
+    //     $this->selectlist();
+    // }
 
     public function addArray($item){
         if($item != ""){
-            if(!in_array($item,$this->selected)){
-                array_push($this->selected,$item);
+            $state = State::where('id',$item)->first();
+            if(!in_array($item,$this->custom_states)){
+                array_push($this->custom_states,$item);
+                array_push($this->selected,$state->name);
             }else{
-                unset($this->selected[array_search($item,$this->selected)]);
+                unset($this->custom_states[array_search($item,$this->custom_states)]);
+                unset($this->selected[array_search($state->name,$this->selected)]);
             }
+            $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
         }
-        $this->custom_states = $this->selected;
     }
 
     public function addBanks($item){
         if($item != ""){
-            if(!in_array($item,$this->selectedbanks)){
-                array_push($this->selectedbanks,$item);
+            $bank = Bank::where('id',$item)->first();
+            if(!in_array($item,$this->custom_banks)){
+                array_push($this->custom_banks,$item);
+                array_push($this->selectedbanks,$bank->name);
             }else{
-                unset($this->selectedbanks[array_search($item,$this->selectedbanks)]);
+                unset($this->custom_banks[array_search($item,$this->custom_banks)]);
+                unset($this->selectedbanks[array_search($bank->name,$this->selectedbanks)]);
             }
         }
-        $this->custom_banks = $this->selectedbanks;
     }
 
     public function deleteState($item){
+        $state = State::where('name',$this->selected[$item])->first();
+        unset($this->custom_states[array_search($state->id,$this->custom_states)]);
         unset($this->selected[$item]);
-        $this->custom_states = $this->selected;
+        $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
     }
 
     public function deleteBank($item){
+        $bank = Bank::where('name',$this->selectedbanks[$item])->first();
+        unset($this->custom_banks[array_search($bank->id,$this->custom_banks)]);
         unset($this->selectedbanks[$item]);
-        $this->custom_banks = $this->selectedbanks;
     }
 }

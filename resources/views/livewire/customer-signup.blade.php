@@ -149,13 +149,13 @@
                                                     <div>
                                                         <select class="form-control" wire:change="addArray($event.target.value)">
                                                             <option value="">Select Option</option>
-                                                            @foreach ($states as $item)
+                                                            @foreach ($bank_states as $item)
                                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                             @endforeach
                                                         </select>
-                                                        <div class="mt-5 text-center">
+                                                        <!-- <div class="mt-5 text-center">
                                                             <button wire:click.prevent="selectlist()" class="btn submit_btn">Show Banks</button>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     {{-- @livewire('select2-dropdown',['data'=>$states]) --}}
                                                 </div>
