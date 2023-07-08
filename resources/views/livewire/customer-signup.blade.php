@@ -141,7 +141,7 @@
                                                     <div class="d-flex">
                                                         @foreach ($selected as $key => $item)
                                                             <p class="border border-secondary rounded"> {{ $item }}
-                                                                <button type="button" class="btn" wire:click="delete({{ $key }})"><span
+                                                                <button type="button" class="btn" wire:click="deleteState({{ $key }})"><span
                                                                         class="fa fa-close"></span></button>
                                                             </p> &nbsp;&nbsp;
                                                         @endforeach
@@ -170,7 +170,7 @@
                                                     <div class="d-flex">
                                                         @foreach ($selectedbanks as $key => $item)
                                                             <p class="border border-secondary rounded"> {{ $item }}
-                                                                <button type="button" class="btn" wire:click="delete({{ $key }})"><span
+                                                                <button type="button" class="btn" wire:click="deleteBank({{ $key }})"><span
                                                                         class="fa fa-close"></span></button>
                                                             </p> &nbsp;&nbsp;
                                                         @endforeach

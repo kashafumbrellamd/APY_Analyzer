@@ -153,4 +153,14 @@ class CustomerSignup extends Component
         }
         $this->custom_banks = $this->selectedbanks;
     }
+
+    public function deleteState($item){
+        unset($this->selected[$item]);
+        $this->custom_states = $this->selected;
+    }
+
+    public function deleteBank($item){
+        unset($this->selectedbanks[$item]);
+        $this->custom_banks = $this->selectedbanks;
+    }
 }
