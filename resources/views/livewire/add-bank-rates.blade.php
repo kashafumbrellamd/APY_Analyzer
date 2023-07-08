@@ -156,21 +156,11 @@
                                                 {{ explode(' ', $bp->created_at)[1] }}</td>
                                             @if (auth()->user()->hasRole('data-entry-operator'))
                                                 <td class="text-center">
-                                                    <!-- <button type="button" class="btn" wire:click="edit({{ $bp->id }})"><span
-                                                    class="bi bi-pen"></span></button>
-                                            <button type="button" class="btn" wire:click="delete({{ $bp->id }})"><span
-                                                    class="bi bi-trash"></span></button> -->
                                                     @if ($bp->is_checked != 1)
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value=""
-                                                            wire:click="status_change({{ $bp->id }})">
+                                                        <button class="btn btn-success" wire:click="status_change({{ $bp->id }})">check</button>
                                                     @else
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value="" checked disabled>
+                                                    <button class="btn btn-primary">checked</button>
                                                     @endif
-                                                    <!-- <label class="form-check-label" for="flexCheckDefault">
-                                                Default checkbox
-                                            </label> -->
                                                 </td>
                                             @endif
                                         </tr>
