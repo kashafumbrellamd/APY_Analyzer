@@ -81,6 +81,20 @@ class DetailedReport extends Component
         return $msa_codes;
     }
 
+    public function selectAll(){
+        foreach ($this->columns as $key => $dt) {
+                $this->columns[$key] = 1;
+        }
+        $this->render();
+    }
+
+    public function deselectAll(){
+        foreach ($this->columns as $key => $dt) {
+                $this->columns[$key] = 0;
+        }
+        $this->render();
+    }
+
     public function clear()
     {
         $this->state_id = '';

@@ -37,21 +37,40 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
                             aria-labelledby="dropdownMenuButton1">
+                            @php
+                                $count = 0;
+                            @endphp
                             @foreach ($rate_type as $rt)
-                                <li>
-                                    <div class="form-check ml-1" style="color:white;">
-                                        @if ($columns[$rt->id] == 1)
-                                            <input class="form-check-input" type="checkbox" value="" checked
-                                                wire:click="check_column({{ $rt->id }})">
-                                            {{ $rt->name }}
-                                        @else
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                wire:click="check_column({{ $rt->id }})">
-                                            {{ $rt->name }}
-                                        @endif
-                                    </div>
-                                </li>
+                            <li>
+                                <div class="form-check ml-1" style="color:white;">
+                                    @if ($columns[$rt->id] == 1)
+                                        <input class="form-check-input" type="checkbox" value="" checked
+                                            wire:click="check_column({{ $rt->id }})">
+                                        {{ $rt->name }}
+                                        @php
+                                            $count++;
+                                        @endphp
+                                    @else
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            wire:click="check_column({{ $rt->id }})">
+                                        {{ $rt->name }}
+                                    @endif
+                                </div>
+                            </li>
                             @endforeach
+                            <div class="text-center">
+                                @if ($count == count($rate_type))
+                                    <button class="btn mt-2"
+                                        style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAll">
+                                        Deselect All
+                                    </button>
+                                @else
+                                    <button class="btn mt-2"
+                                        style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="selectAll">
+                                        Select All
+                                    </button>
+                                @endif
+                            </div>
                         </ul>
                     </div>
                 </div>

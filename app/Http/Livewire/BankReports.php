@@ -43,7 +43,7 @@ class BankReports extends Component
     public function fill($data)
     {
         foreach ($data as $key => $dt) {
-            $this->columns[$dt->id] = 1; 
+            $this->columns[$dt->id] = 1;
         }
     }
 
@@ -74,6 +74,20 @@ class BankReports extends Component
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $msa_codes = Bank::where('state_id',$customer_type->state)->groupBy('msa_code')->get();
         return $msa_codes;
+    }
+
+    public function selectAll(){
+        foreach ($this->columns as $key => $dt) {
+                $this->columns[$key] = 1;
+        }
+        $this->render();
+    }
+
+    public function deselectAll(){
+        foreach ($this->columns as $key => $dt) {
+                $this->columns[$key] = 0;
+        }
+        $this->render();
     }
 
     public function clear()
