@@ -38,13 +38,13 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            {{-- <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_msa" class="form-label">MSA Code</label>
                                                     <input type="text" id="bank_msa" name="bank_msa" class="form-control" aria-describedby="msa_code" wire:model.lazy="bank_msa" required>
 
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">State</label>
@@ -54,9 +54,21 @@
                                                         <option value="{{$state->id}}">{{$state->name}}</option>
                                                         @endforeach
                                                     </select>
-
                                                 </div>
                                             </div>
+                                            @if($bank_cities != null)
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="bank_state" class="form-label">City</label>
+                                                        <select class="form-select" id="bank_city" name="bank_city" aria-label="Default select example" wire:model.lazy="bank_city" required>
+                                                            <option value="">Select State</option>
+                                                            @foreach($bank_cities as $city)
+                                                                <option value="{{$city->id}}">{{$city->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
 
                                     </div>
@@ -68,8 +80,15 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_name" class="form-label">Name</label>
-                                                    <input type="name" id="admin_name" name="admin_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_name" required>
+                                                    <label for="admin_first_name" class="form-label">First Name</label>
+                                                    <input type="name" id="admin_first_name" name="admin_first_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_first_name" required>
+                                                    <!-- <div id="name" class="form-text">error message</div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="admin_last_name" class="form-label">Last Name</label>
+                                                    <input type="name" id="admin_last_name" name="admin_last_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_last_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
@@ -89,12 +108,12 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_designation" class="form-label">Designation</label>
+                                                    <label for="admin_designation" class="form-label">Title</label>
                                                     <input type="text" id="admin_designation" name="admin_designation" class="form-control" aria-describedby="Designation" wire:model.lazy="admin_designation" required>
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            {{-- <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_id" class="form-label">Employee Id</label>
                                                     <input type="text" id="admin_id" name="admin_employeeid" class="form-control" aria-describedby="msa_code" wire:model.lazy="admin_employeeid" required>
@@ -111,7 +130,7 @@
                                                     </select>
 
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                     </div>
@@ -126,7 +145,7 @@
                                                     @foreach($packages as $package)
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio{{$package->id}}" value="{{$package->package_type}}" wire:model.lazy="subscription">
-                                                        <label class="form-check-label" for="inlineRadio{{$package->id}}">{{$package->name}}</label>
+                                                        <label class="form-check-label" for="inlineRadio{{$package->id}}">{{$package->name}} ({{ $package->package_type }})</label>
                                                     </div>
                                                     <br>
                                                     @endforeach

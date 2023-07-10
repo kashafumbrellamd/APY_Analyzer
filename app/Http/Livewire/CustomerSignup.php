@@ -10,6 +10,7 @@ use App\Models\State;
 use App\Models\User;
 use App\Models\Packages;
 use App\Models\CustomPackageBanks;
+use App\Models\Cities;
 use Livewire\Component;
 
 class CustomerSignup extends Component
@@ -20,12 +21,16 @@ class CustomerSignup extends Component
     public $bank_website = '';
     public $bank_msa = '';
     public $bank_state = '';
-    public $admin_name = '';
+    public $bank_city = '';
+
+    public $admin_first_name = '';
+    public $admin_last_name = '';
     public $admin_email = '';
     public $admin_phone = '';
     public $admin_designation = '';
     public $admin_employeeid = '';
     public $admin_gender = '';
+
     public $subscription = '';
     public $custom_states = [];
     public $custom_banks = [];
@@ -37,14 +42,17 @@ class CustomerSignup extends Component
         'bank_email' => 'required',
         'bank_phone' => 'required',
         'bank_website' => 'required',
-        'bank_msa' => 'required',
+        // 'bank_msa' => 'required',
         'bank_state' => 'required',
-        'admin_name' => 'required',
+        'bank_city' => 'required',
+        'bank_state' => 'required',
+        'admin_first_name' => 'required',
+        'admin_last_name' => 'required',
         'admin_email' => 'required',
         'admin_phone' => 'required',
         'admin_designation' => 'required',
-        'admin_employeeid' => 'required',
-        'admin_gender' => 'required',
+        // 'admin_employeeid' => 'required',
+        // 'admin_gender' => 'required',
         'subscription' => 'required',
     ];
     protected $listeners = [
@@ -59,8 +67,13 @@ class CustomerSignup extends Component
         ->groupby('states.id')
         ->select('states.*')
         ->get();
+        if($this->bank_state != ""){
+            $bank_cities = Cities::where('state_id',$this->bank_state)->get();
+        }else{
+            $bank_cities = null;
+        }
         $packages = Packages::get();
-        return view('livewire.customer-signup', ['states' => $states,'packages'=>$packages,'bank_states'=>$bank_states]);
+        return view('livewire.customer-signup', ['states' => $states,'packages'=>$packages,'bank_states'=>$bank_states,'bank_cities'=>$bank_cities]);
     }
 
     public function submitForm()
@@ -73,17 +86,19 @@ class CustomerSignup extends Component
             'bank_email' => $this->bank_email,
             'bank_phone_numebr' => $this->bank_phone,
             'website' => $this->bank_website,
-            'msa_code' => $this->bank_msa,
+            'city_id' => $this->bank_city,
+            // 'msa_code' => $this->bank_msa,
             'state' => $this->bank_state,
             'display_reports' => $this->subscription,
             ]);
             $user = User::create([
-                'name' => $this->admin_name,
+                'name' => $this->admin_first_name,
+                'last_name' => $this->admin_last_name,
                 'email' => $this->admin_email,
                 'phone_number' => $this->admin_phone,
                 'designation' => $this->admin_designation,
-                'employee_id' => $this->admin_employeeid,
-                'gender' => $this->admin_gender,
+                // 'employee_id' => $this->admin_employeeid,
+                // 'gender' => $this->admin_gender,
                 'password' => bcrypt($this->admin_phone),
                 'bank_id' => $bank->id,
             ]);
@@ -123,7 +138,7 @@ class CustomerSignup extends Component
         $this->bank_website = '';
         $this->bank_msa = '';
         $this->bank_state = '';
-        $this->admin_name = '';
+        $this->admin_first_name = '';
         $this->admin_email = '';
         $this->admin_phone = '';
         $this->admin_designation = '';
