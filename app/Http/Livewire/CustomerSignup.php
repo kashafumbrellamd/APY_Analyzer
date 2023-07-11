@@ -37,6 +37,10 @@ class CustomerSignup extends Component
     public $custom_bank_select = '';
     public $selectedbanks = [];
     public $selected = [];
+
+    public $all_banks = null;
+    public $bank_search = '';
+
     protected $rules = [
         'bank_name' => 'required',
         'bank_email' => 'required',
@@ -67,6 +71,17 @@ class CustomerSignup extends Component
         ->groupby('states.id')
         ->select('states.*')
         ->get();
+        if(strlen($this->bank_search) > 3){
+            $this->search_bank($this->bank_search);
+        }else
+        {
+
+            $All_banks = Bank::join('states','banks.state_id','states.id')
+            ->join('cities','banks.msa_code','cities.id')
+            ->select('banks.*','states.name as state_name','cities.name as city_name')
+            ->get();
+            $this->all_banks = $All_banks;
+        }
         if($this->bank_state != ""){
             $bank_cities = Cities::where('state_id',$this->bank_state)->get();
         }else{
@@ -190,5 +205,84 @@ class CustomerSignup extends Component
         $bank = Bank::where('name',$this->selectedbanks[$item])->first();
         unset($this->custom_banks[array_search($bank->id,$this->custom_banks)]);
         unset($this->selectedbanks[$item]);
+    }
+
+    public function search_bank()
+    {
+        if($this->bank_search != '')
+        {
+            $All_banks = Bank::join('states','banks.state_id','states.id')
+            ->join('cities','banks.msa_code','cities.id')
+            ->where('banks.name',$this->bank_search)
+            ->orwhere('states.name',$this->bank_search)
+            ->orwhere('cities.name',$this->bank_search)
+            ->select('banks.*','states.name as state_name','cities.name as city_name')
+            ->get();
+            $this->all_banks = $All_banks;
+        }
+        else
+        {
+            $All_banks = Bank::join('states','banks.state_id','states.id')
+            ->join('cities','banks.msa_code','cities.id')
+            ->select('banks.*','states.name as state_name','cities.name as city_name')
+            ->get();
+            $this->all_banks = $All_banks;
+        }
+    }
+
+    public function select_bank($id)
+    {
+        if(in_array($id,$this->custom_banks)){
+            unset($this->custom_banks[array_search($id,$this->custom_banks)]);
+        }else{
+            array_push($this->custom_banks,$id);
+        }
+        foreach($this->all_banks as $bank)
+        {
+            array_push($this->selectedbanks,$bank->id);
+        }
+        $All_banks = Bank::whereIn('banks.id',$this->selectedbanks)
+        ->join('states','banks.state_id','states.id')
+        ->join('cities','banks.msa_code','cities.id')
+        ->select('banks.*','states.name as state_name','cities.name as city_name')
+        ->get();
+        $this->all_banks = $All_banks;
+        $this->selectedbanks = [];
+    }
+    
+    public function select_all_banks()
+    {
+        foreach($this->all_banks as $bank)
+        {
+            if(!in_array($bank->id,$this->custom_banks)){
+                array_push($this->custom_banks,$bank->id);
+            }
+            array_push($this->selectedbanks,$bank->id);
+        }
+        $All_banks = Bank::whereIn('banks.id',$this->selectedbanks)
+        ->join('states','banks.state_id','states.id')
+        ->join('cities','banks.msa_code','cities.id')
+        ->select('banks.*','states.name as state_name','cities.name as city_name')
+        ->get();
+        $this->all_banks = $All_banks;
+        $this->selectedbanks = [];
+    }
+
+    public function deselect_all_banks()
+    {
+        foreach($this->all_banks as $bank)
+        {
+            if(in_array($bank->id,$this->custom_banks)){
+                unset($this->custom_banks[array_search($bank->id,$this->custom_banks)]);
+            }
+            array_push($this->selectedbanks,$bank->id);
+        }
+        $All_banks = Bank::whereIn('banks.id',$this->selectedbanks)
+        ->join('states','banks.state_id','states.id')
+        ->join('cities','banks.msa_code','cities.id')
+        ->select('banks.*','states.name as state_name','cities.name as city_name')
+        ->get();
+        $this->all_banks = $All_banks;
+        $this->selectedbanks = [];
     }
 }
