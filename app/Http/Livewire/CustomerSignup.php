@@ -147,51 +147,6 @@ class CustomerSignup extends Component
         $this->admin_gender = '';
         $this->subscription = '';
     }
-    // public function selected($value)
-    // {
-    //     $this->custom_states = $value;
-    //     $this->selectlist();
-    // }
-
-    // public function addArray($item){
-    //     if($item != ""){
-    //         $state = State::where('id',$item)->first();
-    //         if(!in_array($item,$this->custom_states)){
-    //             array_push($this->custom_states,$item);
-    //             array_push($this->selected,$state->name);
-    //         }else{
-    //             unset($this->custom_states[array_search($item,$this->custom_states)]);
-    //             unset($this->selected[array_search($state->name,$this->selected)]);
-    //         }
-    //         $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
-    //     }
-    // }
-
-    // public function addBanks($item){
-    //     if($item != ""){
-    //         $bank = Bank::where('id',$item)->first();
-    //         if(!in_array($item,$this->custom_banks)){
-    //             array_push($this->custom_banks,$item);
-    //             array_push($this->selectedbanks,$bank->name);
-    //         }else{
-    //             unset($this->custom_banks[array_search($item,$this->custom_banks)]);
-    //             unset($this->selectedbanks[array_search($bank->name,$this->selectedbanks)]);
-    //         }
-    //     }
-    // }
-
-    // public function deleteState($item){
-    //     $state = State::where('name',$this->selected[$item])->first();
-    //     unset($this->custom_states[array_search($state->id,$this->custom_states)]);
-    //     unset($this->selected[$item]);
-    //     $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
-    // }
-
-    // public function deleteBank($item){
-    //     $bank = Bank::where('name',$this->selectedbanks[$item])->first();
-    //     unset($this->custom_banks[array_search($bank->id,$this->custom_banks)]);
-    //     unset($this->selectedbanks[$item]);
-    // }
 
     public function search_bank($value)
     {
