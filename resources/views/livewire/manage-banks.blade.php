@@ -15,12 +15,24 @@
                                         <div class="col-md-4">
                                             <label for="name">Name</label>
                                             <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
-                                                placeholder="Enter Bank Name....">
+                                                placeholder="Enter Bank Name...." required>
                                         </div>
+                                        <div class="col-md-4">
+                                            <label for="website">Website</label>
+                                            <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
+                                                placeholder="Enter Website...." required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="name">Phone Number</label>
+                                            <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
+                                                placeholder="Enter Phone Number...." required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4">
                                             <label for="state">State</label>
                                             <select class="form-select form-control" id="state" aria-label="Default select example"
-                                                wire:model="state_id">
+                                                wire:model="state_id" required>
                                                 <option value="">Select State</option>
                                                 @foreach ($states as $state)
                                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -28,23 +40,24 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="name">Phone Number</label>
-                                            <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
-                                                placeholder="Enter Phone Number....">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="website">Website</label>
-                                            <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
-                                                placeholder="Enter Website....">
+                                            <label for="city">City</label>
+                                            <select class="form-select form-control" id="city" aria-label="Default select example"
+                                                wire:model="msa_code" required>
+                                                <option value="">Select City</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="msa_code">MSA Code</label>
-                                            <input type="text" id="msa_code" class="form-control mr-2" wire:model.lazy="msa_code"
-                                                placeholder="Enter MSA Code....">
-                                        </div>
-                                        <div class="col-md-4">
+                                            <label for="bank-type-id">Bank Type</label>
+                                            <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
+                                                wire:model="bank_type" required>
+                                                <option value="">Select Bank Type</option>
+                                                @foreach ($bts as $bt)
+                                                    <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <label for="more">Contact Person Details(Optional)</label>
@@ -79,6 +92,18 @@
                                             placeholder="Enter Bank Name....">
                                     </div>
                                     <div class="col-md-4">
+                                        <label for="website">Website</label>
+                                        <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
+                                            placeholder="Enter Website....">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="name">Phone Number</label>
+                                        <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
+                                            placeholder="Enter Phone Number....">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
                                         <label for="state">State</label>
                                         <select class="form-select form-control" id="state" aria-label="Default select example"
                                             wire:model="state_id">
@@ -89,23 +114,26 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="name">Phone Number</label>
-                                        <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
-                                            placeholder="Enter Phone Number....">
+                                        <label for="city">City</label>
+                                        <select class="form-select form-control" id="city" aria-label="Default select example"
+                                            wire:model="msa_code">
+                                            <option value="">Select City</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="website">Website</label>
-                                        <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
-                                            placeholder="Enter Website....">
+                                    <div class="col-md-2">
+                                        <label for="bank-type-id">Bank Type Id</label>
+                                        <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
+                                            wire:model="bank_type">
+                                            <option value="">Select Bank Type</option>
+                                            @foreach ($bts as $bt)
+                                                <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="msa_code">MSA Code</label>
-                                        <input type="text" id="msa_code" class="form-control mr-2" wire:model.lazy="msa_code"
-                                            placeholder="Enter MSA Code....">
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <label for="more">(Optional)</label><br>
                                         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                             Load More
@@ -131,9 +159,6 @@
                                                 placeholder="Enter Phone Number....">
                                         </div>
                                     </div>
-                                    <!-- <div class="card card-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                    </div> -->
                                 </div>
                                 <center><button type="submit" class="btn btn-primary mt-3">Submit</button></center>
                         </form>
@@ -160,7 +185,8 @@
                             <th>State</th>
                             <th>Phone Number</th>
                             <th>Website</th>
-                            <th>MSA Code</th>
+                            <th>City</th>
+                            <th>Bank Type</th>
                             <th>Contact Person Name</th>
                             <th>Contact Person Email</th>
                             <th>Contact Person Phone</th>
@@ -175,6 +201,7 @@
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->website }}</td>
                                 <td>{{ $dt->msa_code }}</td>
+                                <td>{{ $dt->type_name }}</td>
                                 <td>{{ $dt->cp_name }}</td>
                                 <td>{{ $dt->cp_email }}</td>
                                 <td>{{ $dt->cp_phone }}</td>

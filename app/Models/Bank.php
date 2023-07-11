@@ -15,6 +15,7 @@ class Bank extends Model
         'phone_number',
         'website',
         'msa_code',
+        'bank_type_id',
         'cp_name',
         'cp_email',
         'cp_phone',
@@ -27,6 +28,16 @@ class Bank extends Model
              ->get();
         return $states;
     }
+
+    public function BanksWithStateAndType()
+    {
+        $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+             ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+             ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+             ->get();
+        return $states;
+    }
+
     public function BankWithState($id)
     {
         $states = Bank::where('banks.id',$id)
