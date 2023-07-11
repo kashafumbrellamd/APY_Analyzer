@@ -158,7 +158,7 @@
                                                 <div>
                                                     <div class="mb-3">
                                                         <label for="bank_name_city" class="form-label">Bank Name , State , City</label>
-                                                        <input type="text" class="form-control" id="bank_name_city" aria-describedby="emailHelp" wire:model="bank_search">
+                                                        <input type="text" class="form-control" id="bank_name_city" aria-describedby="emailHelp" wire:model="bank_search" placeholder="Search Banks by Name, State and City...">
                                                         <div class="mt-2">
                                                             <div class="bank_select_divv">
                                                                 @if(count($this->all_banks)!=0)
