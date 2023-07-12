@@ -45,10 +45,13 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
                   </li> -->
                     </ul>
-                    <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2" type="submit">Sign
-                        Up</button>
-                    <button onclick="window.location.href='/signin'" class="btn submit_btn"
-                        type="submit">Login</button>
+                    @if (Auth::check())
+                        <button onclick="window.location.href='/home'" class="btn submit_btn">Go To Dashboard</button>
+                    @else
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2" type="submit">Sign
+                            Up</button>
+                        <button onclick="window.location.href='/signin'" class="btn submit_btn" type="submit">Login</button>
+                    @endif
                 </div>
             </div>
         </nav>
@@ -148,6 +151,17 @@
             </div>
         </section>
 
+        <section id="advertisers" class="advertisers-service-sec pt-3 pb-3">
+            <div class="container d-flex justify-content-evenly">
+                @foreach ($stories as $item)
+                    {{-- <input type="hidden" id="{{  }}"> --}}
+                    <button type="button" class="btn btn-primary" onclick="addUrl('{{ $item->url }}')" >
+                        {{ $item->title }}
+                    </button>
+                @endforeach
+            </div>
+        </section>
+
     </main>
     <footer class="footer-section">
         <div class="container">
@@ -234,9 +248,38 @@
             </div>
         </div>
     </footer>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <iframe
+                            id="iframeDiv"
+                            src=""
+                            width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+                            ></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 </script>
-
+<script>
+    function addUrl(url){
+        document.getElementById('iframeDiv').src=url;
+        var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
+        myModal.show();
+    }
+</script>
 </html>
