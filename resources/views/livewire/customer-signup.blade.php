@@ -155,53 +155,56 @@
                                             </div>
                                             @if($this->subscription == 'custom')
                                             <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="custom_states" class="form-label">State</label>
-                                                    <div class="d-flex">
-                                                        @foreach ($selected as $key => $item)
-                                                            <p class="border border-secondary rounded"> {{ $item }}
-                                                                <button type="button" class="btn" wire:click="deleteState({{ $key }})"><span
-                                                                        class="fa fa-close"></span></button>
-                                                            </p> &nbsp;&nbsp;
-                                                        @endforeach
+                                                <div>
+                                                    <div class="mb-3">
+                                                        <label for="bank_name_city" class="form-label">Bank Name , State , City</label>
+                                                        <input type="text" class="form-control" id="bank_name_city" aria-describedby="emailHelp" wire:model="bank_search" placeholder="Search Banks by Name, State and City...">
+                                                        <div class="mt-2">
+                                                            <div class="bank_select_divv">
+                                                                @if(count($this->all_banks)!=0)
+                                                                @php $count = 0; @endphp
+                                                                @foreach ($this->all_banks as $bank)
+                                                                @if(in_array($bank->id,$this->custom_banks))
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
+                                                                    wire:click="select_bank({{ $bank->id }})" checked>
+                                                                    <label class="form-check-label" for="defaultCheck2">
+                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>                                          
+                                                                    </label>
+                                                                </div>
+                                                                @php $count++; @endphp
+                                                                @else
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
+                                                                    wire:click="select_bank({{ $bank->id }})">
+                                                                    <label class="form-check-label" for="defaultCheck2">
+                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>                                          
+                                                                    </label>
+                                                                </div>
+                                                                @endif
+                                                                @endforeach
+                                                                @if($count == count($this->all_banks) && $count!=0)
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
+                                                                        wire:click="deselect_all_banks()" checked>
+                                                                    <label class="form-check-label" for="defaultCheck2">
+                                                                        Select All <span class="state_city_span"></span>                                          
+                                                                    </label>
+                                                                </div>
+                                                                @else
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
+                                                                        wire:click="select_all_banks()">
+                                                                    <label class="form-check-label" for="defaultCheck2">
+                                                                        Select All <span class="state_city_span"></span>                                          
+                                                                    </label>
+                                                                </div>
+                                                                @endif
+                                                                @endif
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <select class="form-control" wire:change="addArray($event.target.value)">
-                                                            <option value="">Select Option</option>
-                                                            @foreach ($bank_states as $item)
-                                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <!-- <div class="mt-5 text-center">
-                                                            <button wire:click.prevent="selectlist()" class="btn submit_btn">Show Banks</button>
-                                                        </div> -->
-                                                    </div>
-                                                    {{-- @livewire('select2-dropdown',['data'=>$states]) --}}
-                                                </div>
-                                            </div>
-                                            @endif
-                                            <div class="col-md-6">
-                                            </div>
-                                            @if($this->custom_bank_select != '' && $this->subscription == 'custom')
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="custom_banks" class="form-label">Banks</label>
-                                                    <div class="d-flex">
-                                                        @foreach ($selectedbanks as $key => $item)
-                                                            <p class="border border-secondary rounded"> {{ $item }}
-                                                                <button type="button" class="btn" wire:click="deleteBank({{ $key }})"><span
-                                                                        class="fa fa-close"></span></button>
-                                                            </p> &nbsp;&nbsp;
-                                                        @endforeach
-                                                    </div>
-                                                    <div>
-                                                        <select class="form-control" wire:change="addBanks($event.target.value)">
-                                                            <option value="">Select Option</option>
-                                                            @foreach ($this->custom_bank_select as $item)
-                                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                             @endif
