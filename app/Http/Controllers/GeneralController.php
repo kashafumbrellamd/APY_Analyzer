@@ -69,6 +69,11 @@ class GeneralController extends Controller
         return view('apply_otp',['id'=>$id]);
     }
 
+    public function manage_stories()
+    {
+        return view('stories');
+    }
+
 
     public function bank_login(Request $request)
     {

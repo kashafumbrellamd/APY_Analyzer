@@ -44,6 +44,14 @@
 
     <hr class="sidebar-divider">
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/manage/stories') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Interesting Stories</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"

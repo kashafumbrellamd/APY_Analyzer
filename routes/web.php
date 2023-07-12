@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
+use App\Models\Stories;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,8 +23,9 @@ Route::get('/',function(){
     }
 });
 Route::get('/',function(){
+    $stories = Stories::where('status','1')->get();
     if(!Auth::check()){
-        return view('home_page');
+        return view('home_page',['stories'=>$stories]);
     }else{
         return redirect()->route('login');
     }
@@ -59,6 +61,7 @@ Route::get('/view/bank/reports', [App\Http\Controllers\GeneralController::class,
 Route::get('/view/detailed/reports', [App\Http\Controllers\GeneralController::class,'view_detailed_reports']);
 Route::get('/view/special/reports', [App\Http\Controllers\GeneralController::class,'view_speical_reports']);
 Route::get('/bank/type', [App\Http\Controllers\GeneralController::class,'bank_type']);
+Route::get('/manage/stories', [App\Http\Controllers\GeneralController::class,'manage_stories']);
 
 
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);
