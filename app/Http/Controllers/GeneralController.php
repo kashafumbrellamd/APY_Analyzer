@@ -178,4 +178,9 @@ class GeneralController extends Controller
         ]);
     }
 
+    public function manage_charity()
+    {
+        return view('charity.index');
+    }
+
 }

@@ -18,7 +18,8 @@ class CustomerBank extends Model
         'msa_code',
         'state',
         'display_reports',
-        'city_id'
+        'city_id',
+        'charity_id'
     ];
 
     public function contract(){

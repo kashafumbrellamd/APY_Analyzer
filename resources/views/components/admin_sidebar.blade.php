@@ -67,10 +67,6 @@
             </div>
         </div>
     </li>
-    @endif
-
-
-    @if(auth()->user()->hasRole('admin'))
     <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
@@ -85,6 +81,13 @@
                 <a class="collapse-item" href="{{ url('/view/customer/bank/admin') }}">Bank Admin</a>
             </div>
         </div>
+    </li>
+    <hr class="sidebar-divider">
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/manage/charity') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Manage Charity</span></a>
     </li>
     @endif
 

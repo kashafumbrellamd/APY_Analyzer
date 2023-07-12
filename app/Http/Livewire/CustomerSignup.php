@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Packages;
 use App\Models\CustomPackageBanks;
 use App\Models\Cities;
+use App\Models\Charity;
 use Livewire\Component;
 
 class CustomerSignup extends Component
@@ -22,6 +23,7 @@ class CustomerSignup extends Component
     public $bank_msa = '';
     public $bank_state = '';
     public $bank_city = '';
+    public $bank_charity = null;
 
     public $admin_first_name = '';
     public $admin_last_name = '';
@@ -63,6 +65,7 @@ class CustomerSignup extends Component
     public function render()
     {
         $states = State::where('country_id', '233')->get();
+        $charities = Charity::all();
         if(strlen($this->bank_search) > 0){
             $this->search_bank($this->bank_search);
         }else{
@@ -74,7 +77,7 @@ class CustomerSignup extends Component
             $bank_cities = null;
         }
         $packages = Packages::get();
-        return view('livewire.customer-signup', ['states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities]);
+        return view('livewire.customer-signup', ['states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities,'charities'=>$charities]);
     }
 
     public function submitForm()
@@ -88,7 +91,7 @@ class CustomerSignup extends Component
             'bank_phone_numebr' => $this->bank_phone,
             'website' => $this->bank_website,
             'city_id' => $this->bank_city,
-            // 'msa_code' => $this->bank_msa,
+            'charity_id' => $this->bank_charity,
             'state' => $this->bank_state,
             'display_reports' => $this->subscription,
             ]);

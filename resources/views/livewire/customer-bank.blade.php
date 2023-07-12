@@ -121,6 +121,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="bank_charity" class="form-label">Select Charity Option</label>
+                                                    <select class="form-select form-control" id="bank_charity" name="bank_charity" aria-label="Default select example" wire:model.lazy="bank_charity">
+                                                        <option value="">Select Charity</option>
+                                                        @foreach($charities as $charity)
+                                                        <option value="{{$charity->id}}">{{$charity->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             @if ($this->subscription == 'custom')
                                                 <div class="col-md-6">
@@ -294,7 +303,7 @@
                                     </h6>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="mb-3">
                                                     @foreach ($packages as $package)
                                                         <div class="form-check form-check-inline">
@@ -312,7 +321,16 @@
                                                     @endforeach
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="bank_charity" class="form-label">Select Charity Option</label>
+                                                    <select class="form-select form-control" id="bank_charity" name="bank_charity" aria-label="Default select example" wire:model.lazy="bank_charity">
+                                                        <option value="">Select Charity</option>
+                                                        @foreach($charities as $charity)
+                                                        <option value="{{$charity->id}}">{{$charity->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             @if ($this->subscription == 'custom')
                                                 <div class="col-md-6">

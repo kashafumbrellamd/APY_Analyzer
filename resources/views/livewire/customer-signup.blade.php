@@ -208,6 +208,25 @@
                                                 </div>
                                             </div>
                                             @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div>
+                                    <h5>Charity Details</h5>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <!-- <label for="bank_charity" class="form-label">Charity Options</label> -->
+                                                    <select class="form-select" id="bank_charity" name="bank_charity" aria-label="Default select example" wire:model.lazy="bank_charity">
+                                                        <option value="">Select Charity</option>
+                                                        @foreach($charities as $charity)
+                                                        <option value="{{$charity->id}}">{{$charity->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                             @error('customer_banks')
                                                 <div class="mt-3 text-center mb-5">
                                                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
@@ -219,7 +238,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

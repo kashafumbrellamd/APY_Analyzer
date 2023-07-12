@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\State;
 use App\Models\User;
 use App\Models\Cities;
+use App\Models\Charity;
 use App\Models\Packages;
 use App\Models\CustomPackageBanks;
 use Livewire\Component;
@@ -24,17 +25,18 @@ class CustomerBank extends Component
     // public $msa_code;
     public $state;
     public $bank_city;
+    public $bank_charity = null;
 
     public $admin_name;
     public $admin_last_name;
     public $admin_email;
     public $admin_phone_number;
-    // public $contract_start;
-    // public $contract_end;
+    public $contract_start;
+    public $contract_end;
     public $designation;
     // public $employee_id;
     // public $gender;
-    // public $charges;
+    public $charges;
     // public $report;
     public $subscription;
     public $selected = [];
@@ -65,6 +67,7 @@ class CustomerBank extends Component
     public function render()
     {
         $states = State::where('country_id', '233')->get();
+        $charities = Charity::all();
         $data = CB::with('contract')->get();
         if($this->state != ""){
             $this->bank_cities = Cities::where('state_id',$this->state)->get();
@@ -77,7 +80,7 @@ class CustomerBank extends Component
         ->groupby('states.id')
         ->select('states.*')
         ->get();
-        return view('livewire.customer-bank', ['data' => $data, 'states' => $states,'packages'=>$packages,'bank_states'=>$bank_states]);
+        return view('livewire.customer-bank', ['data' => $data, 'states' => $states,'packages'=>$packages,'bank_states'=>$bank_states,'charities'=>$charities]);
     }
 
     public function submitForm()
@@ -92,7 +95,7 @@ class CustomerBank extends Component
                 'bank_phone_numebr' => $this->bank_phone_numebr,
                 'website' => $this->website,
                 'city_id' => $this->bank_city,
-                // 'msa_code' => $this->bank_msa,
+                'charity_id' => $this->bank_charity,
                 'state' => $this->state,
                 'display_reports' => $this->subscription,
             ]);
@@ -139,12 +142,16 @@ class CustomerBank extends Component
         $this->msa_code = $bank->msa_code;
         $this->state = $bank->state;
         $this->bank_city = $bank->city_id;
+        $this->bank_charity = $bank->charity_id;
         $this->admin_name = $bank->user->name;
         $this->admin_last_name = $bank->user->last_name;
         $this->admin_email = $bank->user->email;
         $this->admin_phone_number = $bank->user->phone_number;
         $this->designation = $bank->user->designation;
         $this->subscription = $bank->display_reports;
+        $this->contract_start = $bank->contract->contract_start;
+        $this->contract_end = $bank->contract->contract_end;
+        $this->charges = $bank->contract->charges;
         // $this->selected = [];
         // $this->custom_states = [];
         // $this->custom_banks = [];
@@ -163,17 +170,19 @@ class CustomerBank extends Component
             'bank_email' => $this->bank_email,
             'bank_phone_numebr' => $this->bank_phone_numebr,
             'website' => $this->website,
-            'msa_code' => $this->msa_code,
+            'city_id' => $this->bank_city,
+            'charity_id' => $this->bank_charity,
             'state' => $this->state,
-            'display_reports' => $this->report,
+            'display_reports' => $this->subscription,
         ]);
         $user = User::where('bank_id',$this->bank_id)->update([
             'name' => $this->admin_name,
+            'last_name' => $this->admin_last_name,
             'email' => $this->admin_email,
             'phone_number' => $this->admin_phone_number,
             'designation' => $this->designation,
-            'employee_id' => $this->employee_id,
-            'gender' => $this->gender,
+            //'employee_id' => $this->employee_id,
+            //'gender' => $this->gender,
             'password' => bcrypt($this->admin_phone_number),
         ]);
         $contract = Contract::where('bank_id',$this->bank_id)->update([
@@ -195,10 +204,13 @@ class CustomerBank extends Component
         $this->bank_name = '';
         $this->bank_email = '';
         $this->bank_phone_numebr = '';
+        $this->bank_charity = null;
+        $this->bank_city = '';
         $this->website = '';
         $this->msa_code = '';
         $this->state = '';
         $this->admin_name = '';
+        $this->admin_last_name = '';
         $this->admin_email = '';
         $this->admin_phone_number = '';
         $this->contract_start = '';
@@ -208,6 +220,7 @@ class CustomerBank extends Component
         $this->gender = '';
         $this->charges = '';
         $this->report = '';
+        $this->subscription = '';
     }
 
 
