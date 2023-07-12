@@ -156,7 +156,7 @@ class CustomerSignup extends Component
         if($value != '')
         {
             $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.msa_code','cities.id')
+            ->join('cities','banks.city_id','cities.id')
             ->where('banks.name',$value)
             ->orwhere('states.name',$value)
             ->orwhere('cities.name',$value)
@@ -168,7 +168,7 @@ class CustomerSignup extends Component
         else
         {
             $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.msa_code','cities.id')
+            ->join('cities','banks.city_id','cities.id')
             ->select('banks.*','states.name as state_name','cities.name as city_name')
             ->get();
             $this->all_banks = $All_banks;
@@ -188,7 +188,7 @@ class CustomerSignup extends Component
         }
         $All_banks = Bank::whereIn('banks.id',$this->selectedbanks)
         ->join('states','banks.state_id','states.id')
-        ->join('cities','banks.msa_code','cities.id')
+        ->join('cities','banks.city_id','cities.id')
         ->select('banks.*','states.name as state_name','cities.name as city_name')
         ->get();
         $this->all_banks = $All_banks;
@@ -206,7 +206,7 @@ class CustomerSignup extends Component
         }
         $All_banks = Bank::whereIn('banks.id',$this->selectedbanks)
         ->join('states','banks.state_id','states.id')
-        ->join('cities','banks.msa_code','cities.id')
+        ->join('cities','banks.city_id','cities.id')
         ->select('banks.*','states.name as state_name','cities.name as city_name')
         ->get();
         $this->all_banks = $All_banks;
@@ -224,7 +224,7 @@ class CustomerSignup extends Component
         }
         $All_banks = Bank::whereIn('banks.id',$this->selectedbanks)
         ->join('states','banks.state_id','states.id')
-        ->join('cities','banks.msa_code','cities.id')
+        ->join('cities','banks.city_id','cities.id')
         ->select('banks.*','states.name as state_name','cities.name as city_name')
         ->get();
         $this->all_banks = $All_banks;

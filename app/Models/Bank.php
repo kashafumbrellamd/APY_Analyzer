@@ -15,6 +15,7 @@ class Bank extends Model
         'phone_number',
         'website',
         'msa_code',
+        'city_id',
         'bank_type_id',
         'cp_name',
         'cp_email',
