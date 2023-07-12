@@ -27,7 +27,7 @@ Route::get('/',function(){
     if(!Auth::check()){
         return view('home_page',['stories'=>$stories]);
     }else{
-        return redirect()->route('login');
+        return view('home_page',['stories'=>$stories]);
     }
 });
 
