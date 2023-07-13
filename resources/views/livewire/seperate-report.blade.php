@@ -27,7 +27,7 @@
                     @endif
                 </div>
                 <div class="col-md-7">
-                    <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Print Report</button>
+                    <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
                 </div>
                 <div class="col-md-2">
                     <div class="dropdown d-flex mb-2" style="float:right;">
@@ -40,7 +40,7 @@
                             @php
                                 $count = 0;
                             @endphp
-                            @foreach ($this->reports as $rt)
+                            @foreach ($reports as $rt)
                             <li>
                                 <div class="form-check ml-1" style="color:white;">
                                     @if ($columns[$rt->id] == 1)
@@ -59,7 +59,7 @@
                             </li>
                             @endforeach
                             <div class="text-center">
-                                @if ($count == count($this->reports))
+                                @if ($count == count($reports))
                                     <button class="btn mt-2"
                                         style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAll">
                                         Deselect All
@@ -76,11 +76,11 @@
                 </div>
             </div>
             <div class="row">
-            @foreach($this->reports as $key => $rt)
+            @foreach($reports as $key => $rt)
             @if($columns[$rt->id] == 1)
             <div class="col-md-6 mt-3">
             <div class="table-responsive table__font_style">
-            <h5 class="m-0 font-weight-bold text-primary" style="text-align:center;">{{$this->results[$key]['name']}}</h5>
+            <h5 class="m-0 font-weight-bold text-primary" style="text-align:center;">{{$rt->name}}</h5>
                 <div class="table-wrapper">
                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -142,32 +142,32 @@
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Highest APY</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['c_max'] }}</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['p_max'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['c_max'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['p_max'] }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Median</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['c_med'] }}</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['p_med'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['c_med'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['p_med'] }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Lowest APY</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['c_min'] }}</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['p_min'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['c_min'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['p_min'] }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Average</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['c_avg'] }}</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['p_avg'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['c_avg'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['p_avg'] }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Mode</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['c_mode'] }}</td>
-                            <td style="text-align:center;">{{ $this->results[$key]['p_mode'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['c_mode'] }}</td>
+                            <td style="text-align:center;">{{ $results[$key]['p_mode'] }}</td>
                         </tr>
                     </tfoot>
                 </table>
