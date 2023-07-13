@@ -183,4 +183,8 @@ class GeneralController extends Controller
         return view('charity.index');
     }
 
+    public function seperate_reports()
+    {
+        return view('customer_bank.view_seperate_report');
+    }
 }

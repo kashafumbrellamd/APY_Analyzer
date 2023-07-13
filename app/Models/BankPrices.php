@@ -61,7 +61,7 @@ class BankPrices extends Model
             $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
             $banks = Bank::whereIn('id',$selected_banks)->get();
         }
-        $rate_types = RateType::orderby('name','ASC')->get();
+        $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($banks as $key => $bank) {
             foreach ($rate_types as $re_key => $rt) {
                 $bank[$rt->id] = BankPrices::where('bank_id',$bank->id)
@@ -74,13 +74,55 @@ class BankPrices extends Model
         return $banks;
     }
 
+    public function SeperateReports($type,$code)
+    {
+        if($type == 'state')
+        {
+            $banks = Bank::where('state_id',$code)->pluck('id')->toArray();
+        }
+        elseif($type == 'msa')
+        {
+            $banks = Bank::where('msa_code',$code)->pluck('id')->toArray();
+        }
+        else
+        {
+            $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
+            if($filter->display_reports == 'state'){
+                $banks = Bank::where('state_id',$filter->state)->pluck('id')->toArray();
+            }elseif ($filter->display_reports == 'msa') {
+                $banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
+            }else{
+                $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
+                $banks = Bank::whereIn('id',$selected_banks)->get();
+            }
+        }
+        $rate_types = RateType::orderby('id','ASC')->get();
+        foreach ($rate_types as $key => $rt) {
+            $id = $rt->id;
+            $rt['banks'] = BankPrices::select('bank_prices.*','banks.name as bank_name')
+            ->join('banks','bank_prices.bank_id','banks.id')
+            ->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                $query->selectRaw('MAX(created_at)')
+                    ->from('bank_prices')
+                    ->where('rate_type_id', $id)
+                    ->where('is_checked',1)
+                    ->groupBy('bank_id')
+                    ->get();
+            })
+            ->whereIn('bank_id',$banks)
+            ->orderby('current_rate','DESC')
+            ->get();
+        }
+        return $rate_types;
+    }
+
     public function BankReportsWithState($state_id)
     {
         $banks = Bank::where('state_id',$state_id)
         ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
         ->select('banks.*')
         ->get();
-        $rate_types = RateType::orderby('name','ASC')->get();
+        $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($banks as $key => $bank) {
             foreach ($rate_types as $re_key => $rt) {
                 $bank[$rt->id] = BankPrices::where('bank_id',$bank->id)
@@ -96,7 +138,7 @@ class BankPrices extends Model
     {
         $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $banks = Bank::where('state_id',$filter->state)->where('msa_code',$msa)->get();
-        $rate_types = RateType::orderby('name','ASC')->get();
+        $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($banks as $key => $bank) {
             foreach ($rate_types as $re_key => $rt) {
                 $bank[$rt->id] = BankPrices::where('bank_id',$bank->id)
