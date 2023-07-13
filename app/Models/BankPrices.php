@@ -92,8 +92,8 @@ class BankPrices extends Model
             }elseif ($filter->display_reports == 'msa') {
                 $banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
             }else{
-                $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
-                $banks = Bank::whereIn('id',$selected_banks)->get();
+                $banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
+                //$banks = Bank::whereIn('id',$selected_banks)->get();
             }
         }
         $rate_types = RateType::orderby('id','ASC')->get();
