@@ -154,7 +154,6 @@
         <section id="advertisers" class="advertisers-service-sec pt-3 pb-3">
             <div class="container d-flex justify-content-evenly">
                 @foreach ($stories as $item)
-                    {{-- <input type="hidden" id="{{  }}"> --}}
                     <button type="button" class="btn btn-primary" onclick="addUrl('{{ $item->url }}')" >
                         {{ $item->title }}
                     </button>

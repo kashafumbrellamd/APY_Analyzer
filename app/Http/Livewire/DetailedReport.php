@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
 use App\Models\RateType;
+use App\Models\BankType;
 use DB;
 
 class DetailedReport extends Component
@@ -20,6 +21,7 @@ class DetailedReport extends Component
     public $state_id = '';
     public $msa_code = '';
     public $last_updated = '';
+    public $selected_bank_type = '';
     public function render()
     {
         $rt = RateType::orderby('id','ASC')->get();
@@ -29,20 +31,21 @@ class DetailedReport extends Component
         $msa_codes = $this->getmsacodes();
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!='' && $this->state_id!='all'){
-            $reports = BankPrices::BankReportsWithState($this->state_id);
+            $reports = BankPrices::BankReportsWithState($this->state_id,$this->selected_bank_type);
             $results = BankPrices::get_min_max_func_with_state($this->state_id);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $reports = BankPrices::BankReportsWithMsa($this->msa_code);
+            $reports = BankPrices::BankReportsWithMsa($this->msa_code,$this->selected_bank_type);
             $results = BankPrices::get_min_max_func_with_msa($this->msa_code);
         }else {
-            $reports = BankPrices::BankReports();
+            $reports = BankPrices::BankReports($this->selected_bank_type);
             $results = BankPrices::get_min_max_func();
         }
         if($this->columns == [])
         {
             $this->fill($rt);
         }
-        return view('livewire.detailed-report',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'results'=>$results]);
+        $bankTypes = BankType::where('status','1')->get();
+        return view('livewire.detailed-report',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'results'=>$results,'bankTypes'=>$bankTypes]);
     }
 
     public function fill($data)

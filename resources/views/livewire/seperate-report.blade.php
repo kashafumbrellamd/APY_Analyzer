@@ -26,11 +26,20 @@
                         </select>
                     @endif
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-3">
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="selected_bank_type">
+                        <option value="">Select Bank Type</option>
+                        @foreach ($bankTypes as $bt)
+                            <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
                     <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
                 </div>
                 <div class="col-md-2">
-                    <div class="dropdown d-flex mb-2" style="float:right;">
+                    <div class="dropdown d-flex mb-2">
                         <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Select Columns

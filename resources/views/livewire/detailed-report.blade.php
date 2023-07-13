@@ -27,7 +27,13 @@
                     @endif
                 </div>
                 <div class="col-md-3">
-
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="selected_bank_type">
+                        <option value="">Select Bank Type</option>
+                        @foreach ($bankTypes as $bt)
+                            <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <div class="dropdown d-flex mb-2" style="float:right;">
@@ -154,48 +160,50 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td class="first-col"></td>
-                            @foreach ($results as $rt)
-                                @if ($columns[$rt->id] == 1)
-                                    <td>
-                                        <table class="table table-bordered" id="dataTable" width="100%"
-                                            cellspacing="0">
-                                            <thead>
-                                                <th></th>
-                                                <th>Current</th>
-                                                <th>Prior</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Highest APY</td>
-                                                    <td>{{ round($rt->c_max,2) }}</td>
-                                                    <td>{{ round($rt->p_max,2) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Median</td>
-                                                    <td>{{ round($rt->c_med,2) }}</td>
-                                                    <td>{{ round($rt->p_med,2) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lowest APY</td>
-                                                    <td>{{ round($rt->c_min,2) }}</td>
-                                                    <td>{{ round($rt->p_min,2) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Average</td>
-                                                    <td>{{ round($rt->c_avg,2) }}</td>
-                                                    <td>{{ round($rt->p_avg,2) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mode</td>
-                                                    <td>{{ round($rt->c_mode,2) }}</td>
-                                                    <td>{{ round($rt->p_mode,2) }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                @endif
-                            @endforeach
+                            @if ($results != null)
+                                <td class="first-col"></td>
+                                @foreach ($results as $rt)
+                                    @if ($columns[$rt->id] == 1)
+                                        <td>
+                                            <table class="table table-bordered" id="dataTable" width="100%"
+                                                cellspacing="0">
+                                                <thead>
+                                                    <th></th>
+                                                    <th>Current</th>
+                                                    <th>Prior</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Highest APY</td>
+                                                        <td>{{ round($rt->c_max,2) }}</td>
+                                                        <td>{{ round($rt->p_max,2) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Median</td>
+                                                        <td>{{ round($rt->c_med,2) }}</td>
+                                                        <td>{{ round($rt->p_med,2) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Lowest APY</td>
+                                                        <td>{{ round($rt->c_min,2) }}</td>
+                                                        <td>{{ round($rt->p_min,2) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Average</td>
+                                                        <td>{{ round($rt->c_avg,2) }}</td>
+                                                        <td>{{ round($rt->p_avg,2) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mode</td>
+                                                        <td>{{ round($rt->c_mode,2) }}</td>
+                                                        <td>{{ round($rt->p_mode,2) }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    @endif
+                                @endforeach
+                            @endif
                         </tr>
                     </tfoot>
                 </table>

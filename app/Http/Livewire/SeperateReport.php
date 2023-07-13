@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
 use App\Models\RateType;
+use App\Models\BankType;
 use DB;
 use PDF;
 
@@ -23,6 +24,7 @@ class SeperateReport extends Component
     public $state_id = '';
     public $msa_code = '';
     public $last_updated = '';
+    public $selected_bank_type = '';
     public function render()
     {
         $rt = RateType::orderby('id','ASC')->get();
@@ -31,20 +33,21 @@ class SeperateReport extends Component
         $msa_codes = $this->getmsacodes();
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!='' && $this->state_id!='all'){
-            $this->reports = BankPrices::SeperateReports('state',$this->state_id);
+            $this->reports = BankPrices::SeperateReports('state',$this->state_id,$this->selected_bank_type);
             $this->results = BankPrices::get_min_max_func_with_state($this->state_id);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $this->reports = BankPrices::SeperateReports('msa',$this->msa_code);
+            $this->reports = BankPrices::SeperateReports('msa',$this->msa_code,$this->selected_bank_type);
             $this->results = BankPrices::get_min_max_func_with_msa($this->msa_code);
         }else {
-            $this->reports = BankPrices::SeperateReports('all','0');
+            $this->reports = BankPrices::SeperateReports('all','0',$this->selected_bank_type);
             $this->results = BankPrices::get_min_max_func();
         }
         if($this->columns == [])
         {
             $this->fill($rt);
         }
-        return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes]);
+        $bankTypes = BankType::where('status','1')->get();
+        return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes]);
     }
 
     public function fill($data)
@@ -119,7 +122,7 @@ class SeperateReport extends Component
         return response()->streamDownload(
             fn () => print($pdf),
             "Seperate_Report.pdf"
-        ); 
+        );
         $this->render();
     }
 
