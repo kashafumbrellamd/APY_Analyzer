@@ -8,6 +8,7 @@ use App\Models\Bank;
 use App\Models\CustomerBank;
 use App\Models\CustomPackageBanks;
 use App\Models\RateType;
+use DB;
 
 class BankPrices extends Model
 {
@@ -543,5 +544,39 @@ class BankPrices extends Model
             }
         }
         return $rate_types;
+    }
+
+    public function summary_report($id){
+        $type = DB::table('customer_bank')->where('id',auth()->user()->bank_id)->first();
+        if($type->display_reports == 'state'){
+            $banks = Bank::where('state_id',$type->state)->pluck('id')->toArray();
+        }elseif($type->display_reports == 'msa'){
+            $banks = Bank::where('msa_code',$type->msa_code)->pluck('id')->toArray();
+        }else{
+            $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
+            if($filter->display_reports == 'state'){
+                $banks = Bank::where('state_id',$filter->state)->pluck('id')->toArray();
+            }elseif ($filter->display_reports == 'msa') {
+                $banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
+            }else{
+                $banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
+            }
+        }
+        $data = BankPrices::select('bank_prices.id', 'bank_prices.rate_type_id','bank_prices.previous_rate','bank_prices.current_rate','bank_prices.change', 'bank_prices.rate', 'bank_prices.created_at','bank_prices.is_checked','rate_types.name as rate_type_name','banks.name as bk_name','banks.id as bk_id')
+            ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {
+                $query->selectRaw('MAX(created_at)')
+                    ->from('bank_prices')
+                    ->where('rate_type_id', $id)
+                    ->whereIn('bank_id',$banks)
+                    ->where('is_checked','1')
+                    ->groupBy('bank_id')
+                    ->groupBy('rate_type_id');
+            })
+            ->where('bank_prices.rate_type_id', $id)
+            ->join('rate_types', 'bank_prices.rate_type_id', '=', 'rate_types.id')
+            ->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
+            ->orderBy('bank_prices.current_rate','desc')
+            ->get();
+        return $data;
     }
 }

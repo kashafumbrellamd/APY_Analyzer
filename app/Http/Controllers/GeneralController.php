@@ -74,6 +74,11 @@ class GeneralController extends Controller
         return view('stories');
     }
 
+    public function summary_reports()
+    {
+        return view('customer_bank.summary_reports');
+    }
+
 
     public function bank_login(Request $request)
     {

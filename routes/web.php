@@ -64,6 +64,7 @@ Route::get('/bank/type', [App\Http\Controllers\GeneralController::class,'bank_ty
 Route::get('/manage/stories', [App\Http\Controllers\GeneralController::class,'manage_stories']);
 Route::get('/manage/charity', [App\Http\Controllers\GeneralController::class,'manage_charity']);
 Route::get('/view/seperate/reports', [App\Http\Controllers\GeneralController::class,'seperate_reports']);
+Route::get('/view/summary/reports', [App\Http\Controllers\GeneralController::class,'summary_reports']);
 //Route::get('/managee/charity', App\Http\Livewire\ManageCharity::class);
 
 
