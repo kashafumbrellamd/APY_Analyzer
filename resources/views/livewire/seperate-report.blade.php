@@ -26,10 +26,10 @@
                         </select>
                     @endif
                 </div>
-                <div class="col-md-3">
-
+                <div class="col-md-7">
+                    <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Print Report</button>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <div class="dropdown d-flex mb-2" style="float:right;">
                         <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -40,7 +40,7 @@
                             @php
                                 $count = 0;
                             @endphp
-                            @foreach ($rate_type as $rt)
+                            @foreach ($this->reports as $rt)
                             <li>
                                 <div class="form-check ml-1" style="color:white;">
                                     @if ($columns[$rt->id] == 1)
@@ -59,7 +59,7 @@
                             </li>
                             @endforeach
                             <div class="text-center">
-                                @if ($count == count($rate_type))
+                                @if ($count == count($this->reports))
                                     <button class="btn mt-2"
                                         style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAll">
                                         Deselect All
@@ -75,17 +75,20 @@
                     </div>
                 </div>
             </div>
-            @foreach($reports as $rt)
+            <div class="row">
+            @foreach($this->reports as $key => $rt)
             @if($columns[$rt->id] == 1)
+            <div class="col-md-6 mt-3">
             <div class="table-responsive table__font_style">
+            <h5 class="m-0 font-weight-bold text-primary" style="text-align:center;">{{$this->results[$key]['name']}}</h5>
                 <div class="table-wrapper">
                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="first-col">Bank Name</td>
-                            <th class="first-col">Previous</td>
-                            <th class="first-col">APY</td>
-                            <th class="first-col">Changes</td>
+                            <th class="first-col" style="text-align:center;">Bank Name</td>
+                            <th class="first-col" style="text-align:center;">Previous</td>
+                            <th class="first-col" style="text-align:center;">APY</td>
+                            <th class="first-col" style="text-align:center;">Changes</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,27 +98,27 @@
                                     @if ($bank != null)
                                         <tr>
                                             @if ($bank['current_rate'] > $bank['previous_rate'])
-                                                <td class="text-success">{{ $bank['bank_name'] }}</td>
-                                                <td class="text-success">{{ $bank['previous_rate'] }}</td>
-                                                <td class="text-success">{{ $bank['current_rate'] }}</td>
-                                                <td class="text-success">{{ $bank['change'] }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                <td class="text-success" style="text-align:center;">{{ $bank['bank_name'] }}</td>
+                                                <td class="text-success" style="text-align:center;">{{ $bank['previous_rate'] }}</td>
+                                                <td class="text-success" style="text-align:center;">{{ $bank['current_rate'] }}</td>
+                                                <td class="text-success" style="text-align:center;">{{ $bank['change'] }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                                             @elseif ($bank['current_rate'] == $bank['previous_rate'])
-                                                <td>{{ $bank['bank_name'] }}</td>
-                                                <td>{{ $bank['previous_rate'] }}</td>
-                                                <td>{{ $bank['current_rate'] }}</td>
-                                                <td>{{ $bank['change'] }}</td>
+                                                <td style="text-align:center;">{{ $bank['bank_name'] }}</td>
+                                                <td style="text-align:center;">{{ $bank['previous_rate'] }}</td>
+                                                <td style="text-align:center;">{{ $bank['current_rate'] }}</td>
+                                                <td style="text-align:center;">{{ $bank['change'] }}</td>
                                                 @else
-                                                <td class="text-danger">{{ $bank['bank_name'] }}</td>
-                                                <td class="text-danger">{{ $bank['previous_rate'] }}</td>
-                                                <td class="text-danger">{{ $bank['current_rate'] }}</td>
-                                                <td class="text-danger">{{ $bank['change'] }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                <td class="text-danger" style="text-align:center;">{{ $bank['bank_name'] }}</td>
+                                                <td class="text-danger" style="text-align:center;">{{ $bank['previous_rate'] }}</td>
+                                                <td class="text-danger" style="text-align:center;">{{ $bank['current_rate'] }}</td>
+                                                <td class="text-danger" style="text-align:center;">{{ $bank['change'] }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                             @endif
                                         </tr>
                                     @else
                                         <tr>
-                                            <td>---</td>
-                                            <td>---</td>
-                                            <td>---</td>
+                                            <td style="text-align:center;">---</td>
+                                            <td style="text-align:center;">---</td>
+                                            <td style="text-align:center;">---</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -128,58 +131,52 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Stats</th>
-                            <th>Current</th>
-                            <th>Prior</th>
+                            <th></th>
                         </tr>
                         <tr>
-                            <td>Highest APY</td>
-                            <td>{{ round($results[$rt->id]['c_max'],2) }}</td>
-                            <td>{{ round($results[$rt->id]['p_max'],2) }}</td>
+                            <th></th>
+                            <th></th>
+                            <th style="text-align:center;">Current</th>
+                            <th style="text-align:center;">Prior</th>
                         </tr>
                         <tr>
-                            <td>Median</td>
-                            <td>{{ round($results[$rt->id]['c_med'],2) }}</td>
-                            <td>{{ round($results[$rt->rate_type_id]['p_med'],2) }}</td>
+                            <td></td>
+                            <td style="text-align:center;">Highest APY</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['c_max'] }}</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['p_max'] }}</td>
                         </tr>
                         <tr>
-                            <td>Lowest APY</td>
-                            <td>{{ round($results[$rt->rate_type_id]['c_min'],2) }}</td>
-                            <td>{{ round($results[$rt->rate_type_id]['p_min'],2) }}</td>
+                            <td></td>
+                            <td style="text-align:center;">Median</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['c_med'] }}</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['p_med'] }}</td>
                         </tr>
                         <tr>
-                            <td>Average</td>
-                            <td>{{ round($results[$rt->rate_type_id]['c_avg'],2) }}</td>
-                            <td>{{ round($results[$rt->rate_type_id]['p_avg'],2) }}</td>
+                            <td></td>
+                            <td style="text-align:center;">Lowest APY</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['c_min'] }}</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['p_min'] }}</td>
                         </tr>
                         <tr>
-                            <td>Mode</td>
-                            <td>{{ round($results[$rt->rate_type_id]['c_mode'],2) }}</td>
-                            <td>{{ round($results[$rt->rate_type_id]['p_mode'],2) }}</td>
+                            <td></td>
+                            <td style="text-align:center;">Average</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['c_avg'] }}</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['p_avg'] }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align:center;">Mode</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['c_mode'] }}</td>
+                            <td style="text-align:center;">{{ $this->results[$key]['p_mode'] }}</td>
                         </tr>
                     </tfoot>
                 </table>
                 </div>
             </div>
+            </div>
             @endif
             @endforeach
-
-            {{-- <div class="card-body">
-                <h2 class="text-center"></h2>
-                <div class="chart-area m-2">
-                    <canvas id="mhlChart"></canvas>
-                </div>
-                <hr>
-                <h2 class="text-center"></h2>
-                <div class="chart-area m-2">
-                    <canvas id="mamChart"></canvas>
-                </div>
-                <hr>
-                <h2 class="text-center"></h2>
-                <div class="chart-area m-2">
-                    <canvas id="mhrChart"></canvas>
-                </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>

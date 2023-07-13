@@ -12,39 +12,39 @@ use App\Models\State;
 use App\Models\Role;
 use App\Models\RateType;
 use DB;
+use PDF;
 
 class SeperateReport extends Component
 {
 
     public $columns = [];
+    public $reports;
+    public $results;
     public $state_id = '';
     public $msa_code = '';
     public $last_updated = '';
     public function render()
     {
         $rt = RateType::orderby('id','ASC')->get();
-        $data = BankPrices::all();
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!='' && $this->state_id!='all'){
-            $reports = BankPrices::SeperateReports('state',$this->state_id);
-            $results = BankPrices::get_min_max_func_with_state($this->state_id);
+            $this->reports = BankPrices::SeperateReports('state',$this->state_id);
+            $this->results = BankPrices::get_min_max_func_with_state($this->state_id);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $reports = BankPrices::SeperateReports('msa',$this->msa_code);
-            $results = BankPrices::get_min_max_func_with_msa($this->msa_code);
+            $this->reports = BankPrices::SeperateReports('msa',$this->msa_code);
+            $this->results = BankPrices::get_min_max_func_with_msa($this->msa_code);
         }else {
-            $reports = BankPrices::SeperateReports('all','0');
-            $results = BankPrices::get_min_max_func();
+            $this->reports = BankPrices::SeperateReports('all','0');
+            $this->results = BankPrices::get_min_max_func();
         }
         if($this->columns == [])
         {
             $this->fill($rt);
         }
-        dd($results);
-        //dd($reports[11]['id']);
-        return view('livewire.seperate-report',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'results'=>$results]);
+        return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes]);
     }
 
     public function fill($data)
@@ -94,6 +94,32 @@ class SeperateReport extends Component
         foreach ($this->columns as $key => $dt) {
                 $this->columns[$key] = 0;
         }
+        $this->render();
+    }
+
+    public function print_report()
+    {
+        $rt = RateType::orderby('id','ASC')->get();
+        if($this->state_id!='' && $this->state_id!='all'){
+            $reports = BankPrices::SeperateReports('state',$this->state_id);
+            $results = BankPrices::get_min_max_func_with_state($this->state_id);
+        }elseif ($this->msa_code != '' && $this->msa_code!='all') {
+            $reports = BankPrices::SeperateReports('msa',$this->msa_code);
+            $results = BankPrices::get_min_max_func_with_msa($this->msa_code);
+        }else {
+            $reports = BankPrices::SeperateReports('all','0');
+            $results = BankPrices::get_min_max_func();
+        }
+        if($this->columns == [])
+        {
+            $this->fill($rt);
+        }
+        $columns = $this->columns;
+        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns'))->output();
+        return response()->streamDownload(
+            fn () => print($pdf),
+            "Seperate_Report.pdf"
+        ); 
         $this->render();
     }
 
