@@ -26,7 +26,13 @@
                     @endif
                 </div>
                 <div class="col-md-3">
-
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="selected_bank_type">
+                        <option value="">Select Bank Type</option>
+                        @foreach ($bankTypes as $bt)
+                            <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <div class="dropdown d-flex mb-2" style="float:right;">
@@ -122,7 +128,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">No Data</td>
+                                <td colspan="{{ count($rate_type)+1 }}" class="text-center">No Data</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -17,7 +17,13 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="selected_bank_type">
+                        <option value="">Select Bank Type</option>
+                        @foreach ($bankTypes as $bankType)
+                            <option value="{{ $bankType->id }}">{{ $bankType->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <div class="dropdown d-flex mb-2" style="float:right;">
@@ -95,7 +101,8 @@
                                         @if ($columns[$rt->id] == 1)
                                             @if (isset($rt['data'][$i]))
                                                 @if ($rt['data'][$i]->bk_id != $selected_bank)
-                                                    <td title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;">
+                                                    <td
+                                                        title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;">
                                                         {{ $rt['data'][$i]->bk_name }}
                                                         ({{ $rt['data'][$i]->current_rate }})</td>
                                                 @else
@@ -104,7 +111,7 @@
                                                         ({{ $rt['data'][$i]->current_rate }})</td>
                                                 @endif
                                             @else
-                                                <td></td>
+                                                <td> </td>
                                             @endif
                                         @endif
                                     @endforeach

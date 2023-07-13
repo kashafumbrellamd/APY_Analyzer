@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
 use App\Models\RateType;
+use App\Models\BankType;
 use DB;
 
 class BankReports extends Component
@@ -18,6 +19,7 @@ class BankReports extends Component
     public $columns = [];
     public $state_id = '';
     public $msa_code = '';
+    public $selected_bank_type = '';
     public function render()
     {
         $rt = RateType::orderby('name','ASC')->get();
@@ -26,18 +28,19 @@ class BankReports extends Component
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
         if($this->state_id!='' && $this->state_id!='all'){
-            $reports = BankPrices::BankReportsWithState($this->state_id);
+            $reports = BankPrices::BankReportsWithState($this->state_id,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $reports = BankPrices::BankReportsWithMsa($this->msa_code);
+            $reports = BankPrices::BankReportsWithMsa($this->msa_code,$this->selected_bank_type);
         }else {
-            $reports = BankPrices::BankReports();
+            $reports = BankPrices::BankReports($this->selected_bank_type);
         }
         if($this->columns == [])
         {
             $this->fill($rt);
         }
-        $this->clear();
-        return view('livewire.bank-reports',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes]);
+        $bankTypes = BankType::where('status','1')->get();
+        // $this->clear();
+        return view('livewire.bank-reports',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes]);
     }
 
     public function fill($data)
@@ -94,5 +97,6 @@ class BankReports extends Component
     {
         $this->state_id = '';
         $this->msa_code = '';
+        $this->selected_bank_type = '';
     }
 }
