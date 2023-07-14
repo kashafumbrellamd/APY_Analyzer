@@ -143,6 +143,17 @@
                             </tr>
                         @endforelse
                     </tbody>
+                    @if (
+                        $results[$key]['c_max'] != null &&
+                        $results[$key]['p_max'] != null &&
+                        $results[$key]['c_min'] != null &&
+                        $results[$key]['p_min'] != null &&
+                        $results[$key]['c_avg'] != null &&
+                        $results[$key]['p_avg'] != null &&
+                        $results[$key]['c_med'] != null &&
+                        $results[$key]['p_med'] != null &&
+                        $results[$key]['c_mode'] != null &&
+                        $results[$key]['p_mode'] != null)
                     <tfoot>
                         <tr>
                             <th></th>
@@ -184,6 +195,7 @@
                             <td style="text-align:center;">{{ $results[$key]['p_mode'] }}</td>
                         </tr>
                     </tfoot>
+                    @endif
                 </table>
                 </div>
             </div>
