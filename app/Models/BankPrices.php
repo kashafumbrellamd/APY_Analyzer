@@ -66,7 +66,11 @@ class BankPrices extends Model
             $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
             $banks = Bank::whereIn('id',$selected_banks)->get();
         }else{
-            $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->where('bank_type_id',$selected_bank_id)->pluck('customer_selected_bank_id')->toArray();
+            $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)
+                ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
+                ->where('banks.bank_type_id',$selected_bank_type)
+                ->pluck('customer_selected_bank_id')
+                ->toArray();
             $banks = Bank::whereIn('id',$selected_banks)->get();
         }
         $rate_types = RateType::orderby('id','ASC')->get();
@@ -143,15 +147,16 @@ class BankPrices extends Model
         if($selected_bank_type == ""){
             $banks = Bank::where('state_id',$state_id)
             ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+            ->groupBy('custom_package_banks.customer_selected_bank_id')
             ->select('banks.*')
             ->get();
         }else{
             $banks = Bank::where('state_id',$state_id)
             ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
             ->where('banks.bank_type_id',$selected_bank_type)
+            ->groupBy('custom_package_banks.customer_selected_bank_id')
             ->select('banks.*')
             ->get();
-
         }
         $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($banks as $key => $bank) {
@@ -169,9 +174,18 @@ class BankPrices extends Model
     {
         $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($selected_bank_type == ""){
-            $banks = Bank::where('state_id',$filter->state)->where('msa_code',$msa)->get();
+            $banks = Bank::where('state_id',$state_id)
+            ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+            ->groupBy('custom_package_banks.customer_selected_bank_id')
+            ->select('banks.*')
+            ->get();
         }else{
-            $banks = Bank::where('state_id',$filter->state)->where('msa_code',$msa)->where('bank_type_id',$selected_bank_type)->get();
+            $banks = Bank::where('state_id',$state_id)
+            ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+            ->where('banks.bank_type_id',$selected_bank_type)
+            ->groupBy('custom_package_banks.customer_selected_bank_id')
+            ->select('banks.*')
+            ->get();
         }
         $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($banks as $key => $bank) {
@@ -602,11 +616,19 @@ class BankPrices extends Model
         }else{
             $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
             if($filter->display_reports == 'state'){
-                $banks = Bank::where('state_id',$filter->state)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+                $banks = Bank::where('state_id',$filter->state)
+                    ->where('bank_type_id',$selected_bank_type)
+                    ->pluck('id')->toArray();
             }elseif ($filter->display_reports == 'msa') {
-                $banks = Bank::where('msa_code',$filter->msa_code)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+                $banks = Bank::where('msa_code',$filter->msa_code)
+                ->where('bank_type_id',$selected_bank_type)
+                ->pluck('id')->toArray();
             }else{
-                $banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
+                $banks = CustomPackageBanks::where('bank_id',$filter->id)
+                ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
+                ->where('banks.bank_type_id',$selected_bank_type)
+                ->pluck('customer_selected_bank_id')
+                ->toArray();
             }
         }
         $data = BankPrices::select('bank_prices.id', 'bank_prices.rate_type_id','bank_prices.previous_rate','bank_prices.current_rate','bank_prices.change', 'bank_prices.rate', 'bank_prices.created_at','bank_prices.is_checked','rate_types.name as rate_type_name','banks.name as bk_name','banks.id as bk_id')

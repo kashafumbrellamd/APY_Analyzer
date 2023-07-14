@@ -104,13 +104,13 @@ class SeperateReport extends Component
     {
         $rt = RateType::orderby('id','ASC')->get();
         if($this->state_id!='' && $this->state_id!='all'){
-            $reports = BankPrices::SeperateReports('state',$this->state_id);
+            $reports = BankPrices::SeperateReports('state',$this->state_id,$this->selected_bank_type);
             $results = BankPrices::get_min_max_func_with_state($this->state_id);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $reports = BankPrices::SeperateReports('msa',$this->msa_code);
+            $reports = BankPrices::SeperateReports('msa',$this->msa_code,$this->selected_bank_type);
             $results = BankPrices::get_min_max_func_with_msa($this->msa_code);
         }else {
-            $reports = BankPrices::SeperateReports('all','0');
+            $reports = BankPrices::SeperateReports('all','0',$this->selected_bank_type);
             $results = BankPrices::get_min_max_func();
         }
         if($this->columns == [])

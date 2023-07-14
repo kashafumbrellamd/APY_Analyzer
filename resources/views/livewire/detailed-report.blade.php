@@ -35,7 +35,12 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <p><span  class="text-success">Green: Increase </span>
+                    <span class="text-danger"> Red: Decrease </span>
+                    <span>Black: No Change</span></p>
+                </div>
+                <div class="col-md-2">
                     <div class="dropdown d-flex mb-2" style="float:right;">
                         <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -209,23 +214,6 @@
                 </table>
                 </div>
             </div>
-
-            {{-- <div class="card-body">
-                <h2 class="text-center"></h2>
-                <div class="chart-area m-2">
-                    <canvas id="mhlChart"></canvas>
-                </div>
-                <hr>
-                <h2 class="text-center"></h2>
-                <div class="chart-area m-2">
-                    <canvas id="mamChart"></canvas>
-                </div>
-                <hr>
-                <h2 class="text-center"></h2>
-                <div class="chart-area m-2">
-                    <canvas id="mhrChart"></canvas>
-                </div>
-            </div> --}}
         </div>
     </div>
 </div>

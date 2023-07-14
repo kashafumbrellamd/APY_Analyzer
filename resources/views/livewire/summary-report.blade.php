@@ -104,11 +104,11 @@
                                                     <td
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;">
                                                         {{ $rt['data'][$i]->bk_name }}
-                                                        ({{ $rt['data'][$i]->current_rate }})</td>
+                                                        ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @else
                                                     <td title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;"
                                                         class="text-danger">{{ $rt['data'][$i]->bk_name }}
-                                                        ({{ $rt['data'][$i]->current_rate }})</td>
+                                                        ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @endif
                                             @else
                                                 <td> </td>

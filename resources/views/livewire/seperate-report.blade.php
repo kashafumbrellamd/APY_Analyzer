@@ -6,7 +6,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-3 mb-2">
+                <div class="col-md-2 mb-2">
                     @if ($customer_type->display_reports == 'custom')
                         <select class="form-select form-control" aria-label="Default select example" wire:model="state_id">
                             <option value="">Select State</option>
@@ -26,7 +26,7 @@
                         </select>
                     @endif
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
                         <option value="">Select Bank Type</option>
@@ -36,6 +36,11 @@
                     </select>
                 </div>
                 <div class="col-md-4">
+                    <p><span  class="text-success">Green: Increase </span>
+                        <span class="text-danger"> Red: Decrease </span>
+                        <span>Black: No Change</span></p>
+                </div>
+                <div class="col-md-2">
                     <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
                 </div>
                 <div class="col-md-2">
