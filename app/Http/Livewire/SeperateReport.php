@@ -34,13 +34,13 @@ class SeperateReport extends Component
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!='' && $this->state_id!='all'){
             $this->reports = BankPrices::SeperateReports('state',$this->state_id,$this->selected_bank_type);
-            $this->results = BankPrices::get_min_max_func_with_state($this->state_id);
+            $this->results = BankPrices::get_min_max_func('state',$this->state_id,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
             $this->reports = BankPrices::SeperateReports('msa',$this->msa_code,$this->selected_bank_type);
-            $this->results = BankPrices::get_min_max_func_with_msa($this->msa_code);
+            $this->results = BankPrices::get_min_max_func('msa',$this->msa_code,$this->selected_bank_type);
         }else {
             $this->reports = BankPrices::SeperateReports('all','0',$this->selected_bank_type);
-            $this->results = BankPrices::get_min_max_func();
+            $this->results = BankPrices::get_min_max_func('all','0',$this->selected_bank_type);
         }
         if($this->columns == [])
         {
@@ -105,13 +105,13 @@ class SeperateReport extends Component
         $rt = RateType::orderby('id','ASC')->get();
         if($this->state_id!='' && $this->state_id!='all'){
             $reports = BankPrices::SeperateReports('state',$this->state_id,$this->selected_bank_type);
-            $results = BankPrices::get_min_max_func_with_state($this->state_id);
+            $results = BankPrices::get_min_max_func('state',$this->state_id,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
             $reports = BankPrices::SeperateReports('msa',$this->msa_code,$this->selected_bank_type);
-            $results = BankPrices::get_min_max_func_with_msa($this->msa_code);
+            $results = BankPrices::get_min_max_func('msa',$this->msa_code,$this->selected_bank_type);
         }else {
             $reports = BankPrices::SeperateReports('all','0',$this->selected_bank_type);
-            $results = BankPrices::get_min_max_func();
+            $results = BankPrices::get_min_max_func('all','0',$this->selected_bank_type);
         }
         if($this->columns == [])
         {
