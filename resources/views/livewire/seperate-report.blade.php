@@ -38,7 +38,7 @@
                 <div class="col-md-4">
                     <p><span  class="text-success">Green: Increase </span>
                         <span class="text-danger"> Red: Decrease </span>
-                        <span>Black: No Change</span></p>
+                        <span class="text-dark">Black: No Change</span></p>
                 </div>
                 <div class="col-md-2">
                     <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
@@ -117,10 +117,10 @@
                                                 <td class="text-success" style="text-align:center;">{{ $bank['current_rate'] }}</td>
                                                 <td class="text-success" style="text-align:center;">{{ $bank['change'] }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                                             @elseif ($bank['current_rate'] == $bank['previous_rate'])
-                                                <td style="text-align:center;">{{ $bank['bank_name'] }}</td>
-                                                <td style="text-align:center;">{{ $bank['previous_rate'] }}</td>
-                                                <td style="text-align:center;">{{ $bank['current_rate'] }}</td>
-                                                <td style="text-align:center;">{{ $bank['change'] }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ $bank['bank_name'] }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ $bank['previous_rate'] }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ $bank['current_rate'] }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ $bank['change'] }}</td>
                                                 @else
                                                 <td class="text-danger" style="text-align:center;">{{ $bank['bank_name'] }}</td>
                                                 <td class="text-danger" style="text-align:center;">{{ $bank['previous_rate'] }}</td>

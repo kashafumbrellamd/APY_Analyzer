@@ -147,8 +147,8 @@
                                             <td>{{ $bp->current_rate }}</td>
                                             @if ($bp->current_rate > $bp->previous_rate)
                                                <td class="text-success">{{ $bp->change }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
-                                            @elseif ($bp->current_rate > $bp->previous_rate)
-                                               <td>{{ $bp->change }}</td>
+                                            @elseif ($bp->current_rate == $bp->previous_rate)
+                                               <td class="text-dark">{{ $bp->change }}</td>
                                             @else
                                                <td class="text-danger">{{ $bp->change }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                             @endif

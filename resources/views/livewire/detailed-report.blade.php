@@ -39,7 +39,7 @@
                 <div class="col-md-4">
                     <p><span class="text-success">Green: Increase </span>
                         <span class="text-danger"> Red: Decrease </span>
-                        <span>Black: No Change</span>
+                        <span class="text-dark">Black: No Change</span>
                     </p>
                 </div>
                 <div class="col-md-2">
@@ -144,10 +144,10 @@
                                                                         {{ $report[$rt->id]['change'] }} <i
                                                                             class="fa fa-arrow-up"
                                                                             aria-hidden="true"></i></td>
-                                                                @elseif ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
-                                                                    <td>{{ $report[$rt->id]['previous_rate'] }}</td>
-                                                                    <td>{{ $report[$rt->id]['current_rate'] }}</td>
-                                                                    <td>{{ $report[$rt->id]['change'] }}</td>
+                                                                @elseif ($report[$rt->id]['current_rate'] == $report[$rt->id]['previous_rate'])
+                                                                    <td class="text-dark">{{ $report[$rt->id]['previous_rate'] }}</td>
+                                                                    <td class="text-dark">{{ $report[$rt->id]['current_rate'] }}</td>
+                                                                    <td class="text-dark">{{ $report[$rt->id]['change'] }}</td>
                                                                 @else
                                                                     <td class="text-danger">
                                                                         {{ $report[$rt->id]['previous_rate'] }}</td>
