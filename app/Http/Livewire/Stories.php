@@ -23,6 +23,8 @@ class Stories extends Component
     public $status;
     public $image;
     public $description;
+    public $update;
+    public $story_id;
 
     public function render()
     {
@@ -45,6 +47,34 @@ class Stories extends Component
         $this->render();
     }
 
+    public function updateForm(){
+        $story = Story::find($this->story_id)->update([
+            'title' => $this->title,
+            'url' => $this->url,
+            'status' => $this->status,
+            'description' => $this->description,
+        ]);
+        $this->update = false;
+        $this->clear();
+        $this->render();
+    }
+
+    public function edit($id){
+        $bt = Story::find($id);
+        $this->story_id = $id;
+        $this->title = $bt->title;
+        $this->url = $bt->url;
+        $this->status = $bt->status;
+        $this->description = $bt->description;
+        $this->update = true;
+        $this->render();
+    }
+
+    public function delete($id){
+        Story::find($id)->delete();
+        $this->render();
+    }
+
     public function clear(){
         $this->title = '';
         $this->url = '';
@@ -52,4 +82,5 @@ class Stories extends Component
         $this->image = '';
         $this->description = '';
     }
+
 }
