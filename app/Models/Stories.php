@@ -13,5 +13,7 @@ class Stories extends Model
         'title',
         'url',
         'status',
+        'image',
+        'description',
     ];
 }

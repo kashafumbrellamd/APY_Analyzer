@@ -401,3 +401,19 @@ body {
   .state_city_span{
     color: #79a471;
   }
+
+  /* -----News__Page---- */
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+.news_card_section{
+  background: linear-gradient(17deg, rgb(121 164 113 / 68%) 18%, rgba(255,255,255,0.9948354341736695) 52%, rgb(39 134 100 / 54%) 80%);
+}
+.card_Main{
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  font-family: 'Tinos', serif;
+
+}
+.card_Main:hover{
+  transform: scale(1.06);
+
+}

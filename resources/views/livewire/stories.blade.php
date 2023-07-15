@@ -13,26 +13,37 @@
                 <div class="container">
                     <div class="mt-2">
                         <h6 class="m-0 font-weight-bold text-dark mb-2">Stories<h6>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="name">Title</label>
-                                        <input type="text" wire:model.lazy="title" class="form-control mr-2"
-                                            placeholder="Enter Title of the Story....">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="name">URL</label>
-                                        <input type="text" wire:model.lazy="url" class="form-control mr-2"
-                                            placeholder="Enter URL of the Website....">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="status">Status</label>
-                                        <select wire:model="status" id="status" class="form-control mr-2">
-                                            <option value="">Select State</option>
-                                            <option value="1">Active</option>
-                                            <option value="0">Deactive</option>
-                                        </select>
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="name">Title</label>
+                                    <input type="text" wire:model.lazy="title" class="form-control mr-2"
+                                        placeholder="Enter Title of the Story....">
                                 </div>
+                                <div class="col-md-4">
+                                    <label for="name">URL</label>
+                                    <input type="text" wire:model.lazy="url" class="form-control mr-2"
+                                        placeholder="Enter URL of the Website....">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="status">Status</label>
+                                    <select wire:model="status" id="status" class="form-control mr-2">
+                                        <option value="">Select State</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Deactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="Image">Image</label>
+                                    <input type="file" wire:model.lazy="image" class="form-control mr-2">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="description">Description</label>
+                                    <input type="text" wire:model.lazy="description" class="form-control mr-2"
+                                    placeholder="Enter Description of the Story...." >
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <center><button type="submit" class="btn btn-primary mt-3">Submit</button></center>

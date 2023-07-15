@@ -23,11 +23,10 @@ Route::get('/',function(){
     }
 });
 Route::get('/',function(){
-    $stories = Stories::where('status','1')->get();
     if(!Auth::check()){
-        return view('home_page',['stories'=>$stories]);
+        return view('home_page');
     }else{
-        return view('home_page',['stories'=>$stories]);
+        return view('home_page');
     }
 });
 
@@ -42,6 +41,11 @@ Route::get('/signin', function () {
 Route::get('/signup', function () {
     return view('customer_bank.signup');
 })->name('signup');
+
+Route::get('/interesting_stories', function () {
+    $stories = Stories::where('status','1')->get();
+    return view('interesting_stories',['stories'=>$stories]);
+})->name('interesting_stories');
 
 Auth::routes();
 Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
