@@ -137,24 +137,24 @@
                                                             <tr>
                                                                 @if ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
                                                                     <td class="text-success">
-                                                                        {{ $report[$rt->id]['previous_rate'] }}</td>
+                                                                        {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
                                                                     <td class="text-success">
-                                                                        {{ $report[$rt->id]['current_rate'] }}</td>
+                                                                        {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
                                                                     <td class="text-success">
-                                                                        {{ $report[$rt->id]['change'] }} <i
+                                                                        {{ number_format($report[$rt->id]['change'],2) }} <i
                                                                             class="fa fa-arrow-up"
                                                                             aria-hidden="true"></i></td>
                                                                 @elseif ($report[$rt->id]['current_rate'] == $report[$rt->id]['previous_rate'])
-                                                                    <td class="text-dark">{{ $report[$rt->id]['previous_rate'] }}</td>
-                                                                    <td class="text-dark">{{ $report[$rt->id]['current_rate'] }}</td>
-                                                                    <td class="text-dark">{{ $report[$rt->id]['change'] }}</td>
+                                                                    <td class="text-dark">{{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                    <td class="text-dark">{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                    <td class="text-dark">{{ number_format($report[$rt->id]['change'],2) }}</td>
                                                                 @else
                                                                     <td class="text-danger">
-                                                                        {{ $report[$rt->id]['previous_rate'] }}</td>
+                                                                        {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
                                                                     <td class="text-danger">
-                                                                        {{ $report[$rt->id]['current_rate'] }}</td>
+                                                                        {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
                                                                     <td class="text-danger">
-                                                                        {{ $report[$rt->id]['change'] }} <i
+                                                                        {{ number_format($report[$rt->id]['change'],2) }} <i
                                                                             class="fa fa-arrow-down"
                                                                             aria-hidden="true"></i></td>
                                                                 @endif
@@ -205,28 +205,28 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>Highest APY</td>
-                                                                <td>{{ round($rt->c_max, 2) }}</td>
-                                                                <td>{{ round($rt->p_max, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_max, 2) }}</td>
+                                                                <td>{{ number_format($rt->p_max, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Median</td>
-                                                                <td>{{ round($rt->c_med, 2) }}</td>
-                                                                <td>{{ round($rt->p_med, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_med, 2) }}</td>
+                                                                <td>{{ number_format($rt->p_med, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Lowest APY</td>
-                                                                <td>{{ round($rt->c_min, 2) }}</td>
-                                                                <td>{{ round($rt->p_min, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_min, 2) }}</td>
+                                                                <td>{{ number_format($rt->p_min, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Average</td>
-                                                                <td>{{ round($rt->c_avg, 2) }}</td>
-                                                                <td>{{ round($rt->p_avg, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_avg, 2) }}</td>
+                                                                <td>{{ number_format($rt->p_avg, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Mode</td>
-                                                                <td>{{ round($rt->c_mode, 2) }}</td>
-                                                                <td>{{ round($rt->p_mode, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_mode, 2) }}</td>
+                                                                <td>{{ number_format($rt->p_mode, 2) }}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

@@ -113,19 +113,19 @@
                                         <tr>
                                             @if ($bank['current_rate'] > $bank['previous_rate'])
                                                 <td class="text-success" style="text-align:center;">{{ $bank['bank_name'] }}</td>
-                                                <td class="text-success" style="text-align:center;">{{ $bank['previous_rate'] }}</td>
-                                                <td class="text-success" style="text-align:center;">{{ $bank['current_rate'] }}</td>
-                                                <td class="text-success" style="text-align:center;">{{ $bank['change'] }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                <td class="text-success" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                                             @elseif ($bank['current_rate'] == $bank['previous_rate'])
                                                 <td class="text-dark" style="text-align:center;">{{ $bank['bank_name'] }}</td>
-                                                <td class="text-dark" style="text-align:center;">{{ $bank['previous_rate'] }}</td>
-                                                <td class="text-dark" style="text-align:center;">{{ $bank['current_rate'] }}</td>
-                                                <td class="text-dark" style="text-align:center;">{{ $bank['change'] }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
                                                 @else
                                                 <td class="text-danger" style="text-align:center;">{{ $bank['bank_name'] }}</td>
-                                                <td class="text-danger" style="text-align:center;">{{ $bank['previous_rate'] }}</td>
-                                                <td class="text-danger" style="text-align:center;">{{ $bank['current_rate'] }}</td>
-                                                <td class="text-danger" style="text-align:center;">{{ $bank['change'] }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                             @endif
                                         </tr>
                                     @else
@@ -167,32 +167,32 @@
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Highest APY</td>
-                            <td style="text-align:center;">{{ $results[$key]['c_max'] }}</td>
-                            <td style="text-align:center;">{{ $results[$key]['p_max'] }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Median</td>
-                            <td style="text-align:center;">{{ $results[$key]['c_med'] }}</td>
-                            <td style="text-align:center;">{{ $results[$key]['p_med'] }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['p_med'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Lowest APY</td>
-                            <td style="text-align:center;">{{ $results[$key]['c_min'] }}</td>
-                            <td style="text-align:center;">{{ $results[$key]['p_min'] }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['p_min'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Average</td>
-                            <td style="text-align:center;">{{ $results[$key]['c_avg'] }}</td>
-                            <td style="text-align:center;">{{ $results[$key]['p_avg'] }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['p_avg'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Mode</td>
-                            <td style="text-align:center;">{{ $results[$key]['c_mode'] }}</td>
-                            <td style="text-align:center;">{{ $results[$key]['p_mode'] }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['p_mode'],2) }}</td>
                         </tr>
                     </tfoot>
                     @endif

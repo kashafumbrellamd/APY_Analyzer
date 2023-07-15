@@ -18,7 +18,7 @@
                         @forelse ($specialization_rates as $dt)
                             <tr>
                                 <td>{{ $dt->bank->name }}</td>
-                                <td>{{ $dt->rate }}</td>
+                                <td>{{ number_format($dt->rate,2) }}</td>
                                 <td>{{ $dt->description }}</td>
                             </tr>
                         @empty
