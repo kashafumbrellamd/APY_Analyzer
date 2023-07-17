@@ -22,7 +22,7 @@ class BankReports extends Component
     public $selected_bank_type = '';
     public function render()
     {
-        $rt = RateType::orderby('name','ASC')->get();
+        $rt = RateType::orderby('id','ASC')->get();
         $data = BankPrices::all();
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $states = $this->getstates();
