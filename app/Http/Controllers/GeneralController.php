@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OtpMail;
 use App\Models\User;
 use App\Models\BankPrices;
+use App\Models\CustomerBank;
 use App\Models\RateType;
 use App\Models\Packages;
 use App\Models\OTP;
+
+
 
 class GeneralController extends Controller
 {
@@ -117,8 +120,14 @@ class GeneralController extends Controller
         $max = [];
         $min = [];
         $ids = array_column($rate_cd, 'id');
-
-        $data = BankPrices::get_min_max_func();
+        $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($customer_type->display_reports=='state'){
+            $data = BankPrices::get_min_max_func('state',$customer_type->state,"");
+        }elseif ($customer_type->display_reports == 'msa') {
+            $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+        }else {
+            $data = BankPrices::get_min_max_func('all','0',"");
+        }
         foreach ($data as $key => $value) {
             if(in_array($value->id,$ids)){
                 array_push($max,$value->c_max);
@@ -135,7 +144,15 @@ class GeneralController extends Controller
         $avg = [];
         $ids = array_column($rate_cd, 'id');
 
-        $data = BankPrices::get_min_max_func();
+        $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($customer_type->display_reports=='state'){
+            $data = BankPrices::get_min_max_func('state',$customer_type->state,"");
+        }elseif ($customer_type->display_reports == 'msa') {
+            $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+        }else {
+            $data = BankPrices::get_min_max_func('all','0',"");
+        }
+
         foreach ($data as $key => $value) {
             if(in_array($value->id,$ids)){
                 array_push($med,$value->c_med);
