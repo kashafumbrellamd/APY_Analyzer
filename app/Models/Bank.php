@@ -22,7 +22,7 @@ class Bank extends Model
         'cp_phone',
     ];
 
-    public function BanksWithState()
+    public static function BanksWithState()
     {
         $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
              ->select('banks.*', 'states.name as state_name')
@@ -30,7 +30,7 @@ class Bank extends Model
         return $states;
     }
 
-    public function BanksWithStateAndType()
+    public static function BanksWithStateAndType()
     {
         $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
              ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')

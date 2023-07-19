@@ -27,7 +27,7 @@ class BankPrices extends Model
         return $this->belongsTo(RateType::class);
     }
 
-    public function BankPricesWithType($id)
+    public static function BankPricesWithType($id)
     {
         // $latestRates = BankPrices::select('bank_prices.*', 'rate_types.name as rate_type_name')
         // ->join('rate_types', 'rate_types.id', '=', 'bank_prices.rate_type_id')
@@ -51,7 +51,7 @@ class BankPrices extends Model
         return $latestRates;
     }
 
-    public function BankReports($selected_bank_type)
+    public static function BankReports($selected_bank_type)
     {
         $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($filter->display_reports == 'state' && $selected_bank_type == ""){
@@ -86,7 +86,7 @@ class BankPrices extends Model
         return $banks;
     }
 
-    public function SeperateReports($type,$code,$selected_bank_type)
+    public static function SeperateReports($type,$code,$selected_bank_type)
     {
         if($type == 'state' && $selected_bank_type == ""){
             $banks = Bank::where('state_id',$code)->pluck('id')->toArray();
@@ -142,7 +142,7 @@ class BankPrices extends Model
         return $rate_types;
     }
 
-    public function BankReportsWithState($state_id,$selected_bank_type)
+    public static function BankReportsWithState($state_id,$selected_bank_type)
     {
         if($selected_bank_type == ""){
             $banks = Bank::where('state_id',$state_id)
@@ -170,7 +170,7 @@ class BankPrices extends Model
         }
         return $banks;
     }
-    public function BankReportsWithMsa($msa,$selected_bank_type)
+    public static function BankReportsWithMsa($msa,$selected_bank_type)
     {
         $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($selected_bank_type == ""){
@@ -200,7 +200,7 @@ class BankPrices extends Model
         return $banks;
     }
 
-    public function get_min_max_func($type,$code,$selected_bank_type)
+    public static function get_min_max_func($type,$code,$selected_bank_type)
     {
         $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $rate_types = RateType::orderby('id','ASC')->get();
@@ -474,7 +474,7 @@ class BankPrices extends Model
     //     return $rate_types;
     // }
 
-    public function summary_report($id,$selected_bank_type){
+    public static function summary_report($id,$selected_bank_type){
         $type = DB::table('customer_bank')->where('id',auth()->user()->bank_id)->first();
         if($type->display_reports == 'state' && $selected_bank_type == ""){
             $banks = Bank::where('state_id',$type->state)->pluck('id')->toArray();

@@ -15,7 +15,7 @@ class SpecializationRates extends Model
         'description',
     ];
 
-    public function specialPricesWithBankId($id){
+    public static function specialPricesWithBankId($id){
         $sprates = SpecializationRates::where('bank_id',$id)->get();
         return $sprates;
     }
