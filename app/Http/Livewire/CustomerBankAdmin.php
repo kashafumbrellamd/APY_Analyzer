@@ -32,7 +32,7 @@ class CustomerBankAdmin extends Component
     public function render()
     {
         $states = State::where('country_id','233')->get();
-        $data = User::where('bank_id', '!=', null)->get();
+        $data = User::with('banks')->where('bank_id', '!=', null)->where('bank_id', '!=', 9)->where('bank_id', '!=', 11)->get();
         $banks = CustomerBank::get();
         return view('livewire.customer-bank-admin', ['data'=>$data,'states'=>$states,'banks'=>$banks]);
     }

@@ -68,7 +68,7 @@ class CustomerBank extends Component
     {
         $states = State::where('country_id', '233')->get();
         $charities = Charity::all();
-        $data = CB::with('contract')->get();
+        $data = CB::with('contract','states')->get();
         if($this->state != ""){
             $this->bank_cities = Cities::where('state_id',$this->state)->get();
         }else{

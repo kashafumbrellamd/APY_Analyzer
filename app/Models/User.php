@@ -51,4 +51,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function banks(){
+        return $this->belongsTo(CustomerBank::class,'bank_id','id');
+    }
+
 }

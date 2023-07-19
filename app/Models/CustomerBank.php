@@ -29,4 +29,8 @@ class CustomerBank extends Model
     public function user(){
        return $this->belongsTo(User::class,'id','bank_id');
     }
+
+    public function states(){
+       return $this->belongsTo(State::class,'state','id');
+    }
 }

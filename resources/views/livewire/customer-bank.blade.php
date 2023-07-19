@@ -448,7 +448,7 @@
                                 <td>{{ $dt->bank_phone_numebr }}</td>
                                 <td>{{ $dt->website }}</td>
                                 <td>{{ $dt->msa_code }}</td>
-                                <td>{{ $dt->state }}</td>
+                                <td>{{ $dt->states->name }}</td>
                                 {{-- <td>{{ date('m-d-Y', strtotime($dt->contract->contract_start)) }}</td>
                                 <td>{{ date('m-d-Y', strtotime($dt->contract->contract_end)) }}</td> --}}
                                 <td>{{ number_format($dt->contract->charges, 2) }}</td>

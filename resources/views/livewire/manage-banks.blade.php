@@ -200,7 +200,7 @@
                                 <td>{{ $dt->state_name }}</td>
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->website }}</td>
-                                <td>{{ $dt->msa_code }}</td>
+                                <td>{{ $dt->cities->name }}</td>
                                 <td>{{ $dt->type_name }}</td>
                                 <td>{{ $dt->cp_name }}</td>
                                 <td>{{ $dt->cp_email }}</td>

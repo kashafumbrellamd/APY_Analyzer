@@ -35,6 +35,7 @@ class Bank extends Model
         $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
              ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
              ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+             ->with('cities')
              ->get();
         return $states;
     }
@@ -46,5 +47,9 @@ class Bank extends Model
             ->select('banks.*', 'states.name as state_name')
             ->get();
         return $states;
+    }
+
+    public function cities(){
+        return $this->belongsTo(Cities::class,'city_id','id');
     }
 }
