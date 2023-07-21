@@ -173,7 +173,36 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Banks</h6>
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-6">
+                    <h5 class="m-0 font-weight-bold text-primary">Banks</h5>
+                </div>
+                <div class="col-md-6">
+                    <button wire:click="download_xlsx" class="btn btn-primary">Download Format</button>
+                    <input type="file" wire:model="file" class="btn btn-primary"/>
+                    <button wire:click="upload_xlsx" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+            @error('upload_error')
+                <div class="mt-3 text-center">
+                    @foreach($not_inserted_banks as $bank)
+                    <span class="alert alert-danger" role="alert">{{ $bank }}</span>
+                    @endforeach
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-danger">{{$message}}</span>
+                </div>
+            @enderror
+            @error('file_error')
+                <div class="mt-4 text-center">
+                    <span class="text-danger">{{$message}}</span>
+                </div>
+            @enderror
+            @error('upload_success')
+                <div class="mt-4 text-center">
+                    <span class="text-success">{{$message}}</span>
+                </div>
+            @enderror
         </div>
         <div class="card-body">
             <div class="table-responsive">
