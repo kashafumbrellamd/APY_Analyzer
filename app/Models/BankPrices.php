@@ -122,23 +122,56 @@ class BankPrices extends Model
                 ->pluck('customer_selected_bank_id')->toArray();
             }
         }
-        $rate_types = RateType::orderby('id','ASC')->get();
-        foreach ($rate_types as $key => $rt) {
+        // $rate_types = RateType::orderby('id','ASC')->get();
+        // foreach ($rate_types as $key => $rt) {
+        //     $id = $rt->id;
+        //     $rt['banks'] = BankPrices::select('bank_prices.*','banks.name as bank_name')
+        //     ->join('banks','bank_prices.bank_id','banks.id')
+        //     ->whereIn('bank_prices.created_at', function ($query) use ($id) {
+        //         $query->selectRaw('MAX(created_at)')
+        //             ->from('bank_prices')
+        //             ->where('rate_type_id', $id)
+        //             ->where('is_checked',1)
+        //             ->groupBy('bank_id')
+        //             ->get();
+        //     })
+        //     ->whereIn('bank_id',$banks)
+        //     ->orderby('current_rate','DESC')
+        //     ->get();
+        // }
+
+
+        // Fetch all rate types ordered by id in ascending order
+        $rate_types = RateType::orderBy('id', 'ASC')->get();
+
+        // Prepare an array to store the latest bank prices for each rate type
+        $latest_bank_prices_by_type = [];
+
+        // Loop through all rate types and fetch the latest bank prices for each rate type
+        foreach ($rate_types as $rt) {
             $id = $rt->id;
-            $rt['banks'] = BankPrices::select('bank_prices.*','banks.name as bank_name')
-            ->join('banks','bank_prices.bank_id','banks.id')
-            ->whereIn('bank_prices.created_at', function ($query) use ($id) {
-                $query->selectRaw('MAX(created_at)')
-                    ->from('bank_prices')
-                    ->where('rate_type_id', $id)
-                    ->where('is_checked',1)
-                    ->groupBy('bank_id')
-                    ->get();
-            })
-            ->whereIn('bank_id',$banks)
-            ->orderby('current_rate','DESC')
-            ->get();
+
+            // Get the latest bank prices for the current rate type
+            $latest_bank_prices = BankPrices::select('bank_prices.*', 'banks.name as bank_name')
+                ->join('banks', 'bank_prices.bank_id', 'banks.id')
+                ->where('rate_type_id', $id)
+                ->where('is_checked', 1)
+                ->whereIn('bank_prices.created_at', function ($query) use ($id) {
+                    $query->selectRaw('MAX(created_at)')
+                        ->from('bank_prices')
+                        ->where('rate_type_id', $id)
+                        ->where('is_checked', 1)
+                        ->groupBy('bank_id');
+                })
+                ->whereIn('bank_id', $banks) // Assuming $banks is an array containing selected bank IDs
+                ->groupBy('bank_id') // Group by bank_id to get the latest rate for each bank in the current rate type
+                ->orderBy('current_rate', 'DESC')
+                ->get();
+
+            // Store the latest bank prices for the current rate type
+            $rt['banks'] = $latest_bank_prices;
         }
+
         return $rate_types;
     }
 

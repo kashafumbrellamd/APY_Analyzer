@@ -126,9 +126,9 @@ class ManageBanks extends Component
                 $bank_check = Bank::where('name',$bank['Bank Name'])->first();
                 if($bank_check==null)
                 {
-                    $bank_state = State::where('name',$bank['State'])->where('country_id',233)->first();
+                    $bank_state = State::where('name',$bank['State'])->orWhere('state_code',$bank['State'])->where('country_id',233)->first();
                     $bank_city = Cities::where('name',$bank['City'])->first();
-                    $bank_type = BankType::where('name',$bank['Bank Type'])->orWhere('state_code',$bank['Bank Type'])->first();
+                    $bank_type = BankType::where('name',$bank['Bank Type'])->first();
                     if($bank_state != null && $bank_city != null && $bank_type != null)
                     {
                         $new_bank = Bank::create([
