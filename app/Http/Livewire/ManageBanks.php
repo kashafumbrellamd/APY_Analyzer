@@ -128,7 +128,7 @@ class ManageBanks extends Component
                 {
                     $bank_state = State::where('name',$bank['State'])->where('country_id',233)->first();
                     $bank_city = Cities::where('name',$bank['City'])->first();
-                    $bank_type = BankType::where('name',$bank['Bank Type'])->first();
+                    $bank_type = BankType::where('name',$bank['Bank Type'])->orWhere('state_code',$bank['Bank Type'])->first();
                     if($bank_state != null && $bank_city != null && $bank_type != null)
                     {
                         $new_bank = Bank::create([
@@ -167,7 +167,7 @@ class ManageBanks extends Component
         else{
             $this->addError('file_error','Please select the file again');
         }
-        
+
     }
 
     public function cancel(){
