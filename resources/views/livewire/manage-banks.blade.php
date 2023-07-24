@@ -178,9 +178,9 @@
                     <h5 class="m-0 font-weight-bold text-primary">Banks</h5>
                 </div>
                 <div class="col-md-6">
-                    <button wire:click="download_xlsx" class="btn btn-primary">Download Format</button>
+                    <button wire:click="download_xlsx" class="btn btn-primary">Format <i class="fa fa-download" aria-hidden="true"></i></button>
                     <input type="file" wire:model="file" class="btn btn-primary"/>
-                    <button wire:click="upload_xlsx" class="btn btn-primary">Upload</button>
+                    <button wire:click="upload_xlsx" class="btn btn-primary">Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
                 </div>
             </div>
             @error('upload_error')

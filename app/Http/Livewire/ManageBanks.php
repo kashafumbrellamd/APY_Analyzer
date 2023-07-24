@@ -156,7 +156,7 @@ class ManageBanks extends Component
             }
             if($this->not_inserted_banks!=[])
             {
-                $this->addError('upload_error','These Banks are not inserted');
+                $this->addError('upload_error','Above Banks are not inserted');
             }
             else
             {
@@ -165,7 +165,7 @@ class ManageBanks extends Component
             $this->file = null;
         }
         else{
-            $this->addError('file_error','Please select the file again');
+            $this->addError('file_error','Please select file again');
         }
 
     }

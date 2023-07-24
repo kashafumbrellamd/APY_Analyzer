@@ -9,9 +9,13 @@ use App\Models\BankPrices;
 use App\Models\State;
 use App\Models\SpecializationRates;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class AddBankRates extends Component
 {
+    use WithFileUploads;
+
     public $update = false;
     public $bank_id = '';
     public $bank = '';
@@ -20,6 +24,9 @@ class AddBankRates extends Component
     public $rate_type_id = '';
     public $special_rate = '';
     public $special_description = '';
+    public $file = null;
+    public $not_inserted_banks = [];
+    public $not_inserted_rt = [];
 
     public function render()
     {
@@ -128,12 +135,108 @@ class AddBankRates extends Component
         $this->render();
     }
 
+    public function download_xlsx()
+    {
+        $headers = array(
+            'Content-Type' => 'text/xlsx'
+        );
+        $filename =  public_path('BankRates.xlsx');
+
+        return response()->download($filename, "BankRates.xlsx", $headers);
+    }
+
+    public function upload_xlsx()
+    {
+        $this->not_inserted_banks = [];
+        $this->not_inserted_rt = [];
+        if($this->file != null)
+        {
+            $head = $this->xlsxToArray($this->file->path());
+            $data = $head['file'];
+            $head = $head['headerRow'];
+            foreach ($data as $key => $dt) {
+                $bank = Bank::where('name',$dt['Bank Name'])->first();
+                if($bank!=null)
+                {
+                    foreach ($head as $key => $hd) {
+                        if($hd!=null && $hd != 'Bank Name')
+                        {
+                            $rt = RateType::where('name',$hd)->first();
+                            if($rt!=null)
+                            {
+                                $check = BankPrices::where('bank_id',$bank->id)->where('rate_type_id',$rt->id)->orderby('id','DESC')->first();
+                                if($check==null){
+                                    $p_user = BankPrices::create([
+                                        'bank_id' => $bank->id,
+                                        'rate_type_id' => $rt->id,
+                                        'rate' => $dt[$hd],
+                                        'previous_rate' => $dt[$hd],
+                                        'current_rate' => $dt[$hd],
+                                    ]);
+                                }else{
+                                    $p_user = BankPrices::create([
+                                        'bank_id' => $bank->id,
+                                        'rate_type_id' => $rt->id,
+                                        'rate' => $check->rate,
+                                        'previous_rate' => $check->current_rate,
+                                        'current_rate' => $dt[$hd],
+                                        'change' => $dt[$hd]-$check->current_rate,
+                                    ]);
+                                }
+                            }else{
+                                array_push($this->not_inserted_rt,$hd);
+                            }
+                        }
+                    }
+                }else{
+                    array_push($this->not_inserted_banks,$dt['Bank Name']);
+                }
+            }
+
+            if($this->not_inserted_banks == [] && $this->not_inserted_rt == []){
+                $this->addError('upload_success','All Data inserted successfully');
+            }else{
+                if($this->not_inserted_banks != []){
+                    $this->addError('upload_error','Above Banks Does not exist');
+                }
+                if($this->not_inserted_rt != []){
+                    $this->addError('upload_rt_error','Above Columns does not exist and their data is not inserted');
+                }
+            }
+            $this->file = null;
+        }
+        else{
+            $this->addError('file_error','Please select file again');
+        }
+    }
+
     public function clear(){
         $this->rate_type_id = '';
         $this->rate = '';
         $this->special_rate = '';
         $this->special_description = '';
         $this->render();
+    }
+
+    function xlsxToArray($filePath)
+    {
+        if (!file_exists($filePath) || !is_readable($filePath)){
+            return false;
+        }
+        $spreadsheet = IOFactory::load($filePath);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $rows = $worksheet->toArray();
+        
+        // Remove the header row if needed
+        $data['headerRow'] = array_shift($rows);
+
+        $data['file'] = [];
+        foreach ($rows as $row) {
+            // Assuming your XLSX file has headers in the first row
+            $data['file'][] = array_combine($data['headerRow'], $row);
+        }
+
+        return $data;
     }
 
 
