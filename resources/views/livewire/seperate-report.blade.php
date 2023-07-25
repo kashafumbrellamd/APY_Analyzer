@@ -1,7 +1,10 @@
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Reports &nbsp;&nbsp;<span> (Last Updated On: {{ $last_updated }}) updated on weekly basis</span></h6>
+            <h6 class="d-flex font-weight-bold justify-content-between m-0 text-primary">Reports &nbsp;&nbsp; (Last Updated On: {{ $last_updated }}) updated on weekly basis
+                <span class="text-success">Green: Increase </span>
+                    <span class="text-danger">Red: Decrease</span>
+                    <span class="text-dark">Black: No Change</span></h6>
 
         </div>
         <div class="card-body">
@@ -35,10 +38,19 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <p><span  class="text-success">Green: Increase </span>
-                        <span class="text-danger"> Red: Decrease </span>
-                        <span class="text-dark">Black: No Change</span></p>
+                <div class="col-md-2">
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="selected_bank">
+                        <option value="">Select Institution</option>
+                        @foreach ($banks as $bank)
+                            <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    {{-- <p><span class="text-success">Green: Increase <br></span>
+                       <span class="text-danger">Red: Decrease<br></span>
+                       <span class="text-dark">Black: No Change<br></span></p> --}}
                 </div>
                 <div class="col-md-2">
                     <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
@@ -111,23 +123,43 @@
                             <tr>
                                 <tbody>
                                     @if ($bank != null)
-                                        <tr>
-                                            <td>{{ ++$key }}</td>
-                                            <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
-                                            @if ($bank['current_rate'] > $bank['previous_rate'])
-                                                <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
-                                                <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                <td class="text-success" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
-                                            @elseif ($bank['current_rate'] == $bank['previous_rate'])
-                                                <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
-                                                <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
-                                            @else
-                                                <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
-                                                <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
-                                            @endif
-                                        </tr>
+                                        @if ($selected_bank == $bank['bank_id'])
+                                            <tr style="background-color: #e8e7e7;">
+                                                <td>{{ ++$key }}</td>
+                                                <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
+                                                @if ($bank['current_rate'] > $bank['previous_rate'])
+                                                    <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                    <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                    <td class="text-success" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                @elseif ($bank['current_rate'] == $bank['previous_rate'])
+                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
+                                                @else
+                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                @endif
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ ++$key }}</td>
+                                                <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
+                                                @if ($bank['current_rate'] > $bank['previous_rate'])
+                                                    <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                    <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                    <td class="text-success" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                @elseif ($bank['current_rate'] == $bank['previous_rate'])
+                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
+                                                @else
+                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
+                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                @endif
+                                            </tr>
+                                        @endif
                                     @else
                                         <tr>
                                             <td style="text-align:center;">---</td>

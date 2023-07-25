@@ -24,6 +24,7 @@ class SeperateReport extends Component
     public $state_id = '';
     public $msa_code = '';
     public $last_updated = '';
+    public $selected_bank = '';
     public $selected_bank_type = '';
     public function render()
     {
@@ -46,8 +47,9 @@ class SeperateReport extends Component
         {
             $this->fill($rt);
         }
+        $banks = Bank::get();
         $bankTypes = BankType::where('status','1')->get();
-        return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes]);
+        return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes,'banks'=>$banks]);
     }
 
     public function fill($data)
