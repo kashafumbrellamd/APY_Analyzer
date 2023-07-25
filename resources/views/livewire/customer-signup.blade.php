@@ -38,13 +38,18 @@
 
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-4">
+                                            <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_msa" class="form-label">MSA Code</label>
-                                                    <input type="text" id="bank_msa" name="bank_msa" class="form-control" aria-describedby="msa_code" wire:model.lazy="bank_msa" required>
-
+                                                    <label for="CBSA_CODE" class="form-label">CBSA Code</label>
+                                                    <input type="text" id="CBSA_CODE" name="CBSA_CODE" class="form-control" aria-describedby="website" wire:model.lazy="cbsa_code" required>
                                                 </div>
-                                            </div> --}}
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="zip_code" class="form-label">Zip Code</label>
+                                                    <input type="text" id="zip_code" name="zip_code" class="form-control" aria-describedby="website" wire:model="zip_code" wire:keyup="fetch_zip_code" required>
+                                                </div>
+                                            </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">State</label>
@@ -56,19 +61,19 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            @if($bank_cities != null)
-                                                <div class="col-md-4">
-                                                    <div class="mb-3">
-                                                        <label for="bank_state" class="form-label">City</label>
-                                                        <select class="form-select" id="bank_city" name="bank_city" aria-label="Default select example" wire:model.lazy="bank_city" required>
-                                                            <option value="">Select State</option>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="bank_state" class="form-label">City</label>
+                                                    <select class="form-select" id="bank_city" name="bank_city" aria-label="Default select example" wire:model.lazy="bank_city" required>
+                                                        <option value="">Select City</option>
+                                                        @if ($bank_cities != null)
                                                             @foreach($bank_cities as $city)
                                                                 <option value="{{$city->id}}">{{$city->name}}</option>
                                                             @endforeach
-                                                        </select>
-                                                    </div>
+                                                        @endif
+                                                    </select>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </div>
 
                                     </div>

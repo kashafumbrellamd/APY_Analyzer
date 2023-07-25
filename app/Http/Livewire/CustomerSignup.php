@@ -12,7 +12,9 @@ use App\Models\Packages;
 use App\Models\CustomPackageBanks;
 use App\Models\Cities;
 use App\Models\Charity;
+use App\Models\Zip_code;
 use Livewire\Component;
+use Str;
 
 class CustomerSignup extends Component
 {
@@ -21,6 +23,8 @@ class CustomerSignup extends Component
     public $bank_phone = '';
     public $bank_website = '';
     public $bank_msa = '';
+    public $cbsa_code = '';
+    public $zip_code = '';
     public $bank_state = '';
     public $bank_city = '';
     public $bank_charity = null;
@@ -71,11 +75,7 @@ class CustomerSignup extends Component
         }else{
             $this->search_bank('');
         }
-        if($this->bank_state != ""){
-            $bank_cities = Cities::where('state_id',$this->bank_state)->get();
-        }else{
-            $bank_cities = null;
-        }
+        $bank_cities = Cities::get();
         $packages = Packages::get();
         return view('livewire.customer-signup', ['states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities,'charities'=>$charities]);
     }
@@ -93,6 +93,8 @@ class CustomerSignup extends Component
             'city_id' => $this->bank_city,
             'charity_id' => $this->bank_charity,
             'state' => $this->bank_state,
+            'zip_code' => $this->zip_code,
+            'cbsa_code' => $this->cbsa_code,
             'display_reports' => $this->subscription,
             ]);
             $user = User::create([
@@ -142,6 +144,8 @@ class CustomerSignup extends Component
         $this->bank_website = '';
         $this->bank_msa = '';
         $this->bank_state = '';
+        $this->zip_code = '';
+        $this->cbsa_code = '';
         $this->admin_first_name = '';
         $this->admin_email = '';
         $this->admin_phone = '';
@@ -194,7 +198,7 @@ class CustomerSignup extends Component
         $this->all_banks = $All_banks;
         $this->selectedbanks = [];
     }
-    
+
     public function select_all_banks()
     {
         foreach($this->all_banks as $bank)
@@ -229,5 +233,18 @@ class CustomerSignup extends Component
         ->get();
         $this->all_banks = $All_banks;
         $this->selectedbanks = [];
+    }
+
+    public function fetch_zip_code(){
+        if (Str::length($this->zip_code) >= 5) {
+            $zip = Zip_code::where('zip_code',$this->zip_code)->first();
+            if ($zip != null) {
+                $this->bank_city = Cities::where('name',$zip->city)->pluck('id')->first();
+                $this->bank_state = State::where('name',$zip->state)->pluck('id')->first();
+            }
+        }else{
+            $this->bank_city = "";
+            $this->bank_state = "";
+        }
     }
 }

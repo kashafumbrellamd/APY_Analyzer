@@ -9,6 +9,7 @@ use App\Models\State;
 use App\Models\Cities;
 use App\Models\BankType;
 use Illuminate\Support\Str;
+use App\Models\Zip_code;
 use Livewire\WithFileUploads;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -23,6 +24,9 @@ class ManageBanks extends Component
     public $phone_number = '';
     public $website = '';
     public $msa_code = '';
+    public $cbsa_code = '';
+    public $zip_code = '';
+
     public $bank_type  = '';
     public $cp_name = '';
     public $cp_email = '';
@@ -34,11 +38,7 @@ class ManageBanks extends Component
     {
         $data = Bank::BanksWithStateAndType();
         $states = State::where('country_id','233')->get();
-        if($this->state_id != ''){
-            $cities = Cities::where('state_id',$this->state_id)->get();
-        }else{
-            $cities = [];
-        }
+        $cities = Cities::get();
         $bts = BankType::where('status','1')->get();
         return view('livewire.manage-banks',['data'=>$data,'update'=>$this->update,'states'=>$states,'cities'=>$cities,'bts'=>$bts]);
     }
@@ -54,6 +54,8 @@ class ManageBanks extends Component
                 'website' => $this->website,
                 'city_id' => $this->msa_code,
                 'msa_code' => $this->msa_code,
+                'zip_code' => $this->zip_code,
+                'cbsa_code' => $this->cbsa_code,
                 'bank_type_id' => $this->bank_type,
                 'cp_name' => $this->cp_name,
                 'cp_email' => $this->cp_email,
@@ -78,6 +80,8 @@ class ManageBanks extends Component
         $this->phone_number = $bank->phone_number;
         $this->website = $bank->website;
         $this->msa_code = $bank->msa_code;
+        $this->zip_code = $bank->zip_code;
+        $this->cbsa_code = $bank->cbsa_code;
         $this->bank_type  = $bank->bank_type_id;
         $this->cp_name = $bank->cp_name;
         $this->cp_email = $bank->cp_email;
@@ -96,6 +100,8 @@ class ManageBanks extends Component
                 'website' => $this->website,
                 'msa_code' => $this->msa_code,
                 'city_id' => $this->msa_code,
+                $this->zip_code = $bank->zip_code,
+                $this->cbsa_code = $bank->cbsa_code,
                 'cp_name' => $this->cp_name,
                 'cp_email' => $this->cp_email,
                 'cp_phone' => $this->cp_phone,
@@ -207,5 +213,18 @@ class ManageBanks extends Component
         }
 
         return $data;
+    }
+
+    public function fetch_zip_code(){
+        if (Str::length($this->zip_code) >= 5) {
+            $zip = Zip_code::where('zip_code',$this->zip_code)->first();
+            if ($zip != null) {
+                $this->msa_code = Cities::where('name',$zip->city)->pluck('id')->first();
+                $this->state_id = State::where('name',$zip->state)->pluck('id')->first();
+            }
+        }else{
+            $this->msa_code = "";
+            $this->state_id = "";
+        }
     }
 }

@@ -20,6 +20,8 @@ class Bank extends Model
         'cp_name',
         'cp_email',
         'cp_phone',
+        'cbsa_code',
+        'zip_code',
     ];
 
     public static function BanksWithState()

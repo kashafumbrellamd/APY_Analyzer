@@ -19,7 +19,9 @@ class CustomerBank extends Model
         'state',
         'display_reports',
         'city_id',
-        'charity_id'
+        'charity_id',
+        'zip_code',
+        'cbsa_code',
     ];
 
     public function contract(){
