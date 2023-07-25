@@ -1,7 +1,7 @@
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Customer Bank Users</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Customer Institution Users</h6>
         </div>
         <div class="card-body">
             @error('error')
@@ -13,7 +13,7 @@
                 <div class="container">
                     <!-- Bank's Admin Details -->
                     <div class="mt-2">
-                        <h6 class="m-0 font-weight-bold text-dark mb-2">Customer Bank User's Details</h6>
+                        <h6 class="m-0 font-weight-bold text-dark mb-2">Customer Institution User's Details</h6>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="name">Name</label>
@@ -75,7 +75,7 @@
                             <th>Designation</th>
                             <th>Gender</th>
                             <th>Employee Id</th>
-                            <th>Bank Name</th>
+                            <th>Institution Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>

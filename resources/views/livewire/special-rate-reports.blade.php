@@ -9,7 +9,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Bank Name</th>
+                            <th>Institution Name</th>
                             <th>Rate</th>
                             <th>Description</th>
                         </tr>

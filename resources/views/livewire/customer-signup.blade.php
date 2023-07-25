@@ -3,17 +3,17 @@
         <div class="container-fluid">
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
-                    <h1 class="regiter_heading_h">Register Your Bank</h1>
+                    <h1 class="regiter_heading_h">Register Your Institution</h1>
                     <div class="row">
                         <form wire:submit.prevent="submitForm">
                             <div class="col-md-12">
                                 <div>
-                                    <h5>Bank's Details</h5>
+                                    <h5>Institution's Details</h5>
                                     <div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_name" class="form-label">Enter Bank Name</label>
+                                                    <label for="bank_name" class="form-label">Enter Institution Name</label>
                                                     <input type="name" id="bank_name" name="bank_name" class="form-control" aria-describedby="name" wire:model.lazy="bank_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
@@ -75,7 +75,7 @@
                                 </div>
                                 <hr>
                                 <div>
-                                    <h5>Bank's Admin Details</h5>
+                                    <h5>Institution's Admin Details</h5>
                                     <div>
                                         <div class="row">
                                             <div class="col-md-4">
@@ -157,7 +157,7 @@
                                             <div class="col-md-6">
                                                 <div>
                                                     <div class="mb-3">
-                                                        <label for="bank_name_city" class="form-label">Bank Name , State , City</label>
+                                                        <label for="bank_name_city" class="form-label">Institution Name , State , City</label>
                                                         <input type="text" class="form-control" id="bank_name_city" aria-describedby="emailHelp" wire:model="bank_search" placeholder="Search Banks by Name, State and City...">
                                                         <div class="mt-2">
                                                             <div class="bank_select_divv">
@@ -169,7 +169,7 @@
                                                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
                                                                     wire:click="select_bank({{ $bank->id }})" checked>
                                                                     <label class="form-check-label" for="defaultCheck2">
-                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>                                          
+                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>
                                                                     </label>
                                                                 </div>
                                                                 @php $count++; @endphp
@@ -178,7 +178,7 @@
                                                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
                                                                     wire:click="select_bank({{ $bank->id }})">
                                                                     <label class="form-check-label" for="defaultCheck2">
-                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>                                          
+                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>
                                                                     </label>
                                                                 </div>
                                                                 @endif
@@ -188,7 +188,7 @@
                                                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
                                                                         wire:click="deselect_all_banks()" checked>
                                                                     <label class="form-check-label" for="defaultCheck2">
-                                                                        Select All <span class="state_city_span"></span>                                          
+                                                                        Select All <span class="state_city_span"></span>
                                                                     </label>
                                                                 </div>
                                                                 @else
@@ -196,7 +196,7 @@
                                                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
                                                                         wire:click="select_all_banks()">
                                                                     <label class="form-check-label" for="defaultCheck2">
-                                                                        Select All <span class="state_city_span"></span>                                          
+                                                                        Select All <span class="state_city_span"></span>
                                                                     </label>
                                                                 </div>
                                                                 @endif

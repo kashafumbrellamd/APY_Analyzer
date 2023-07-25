@@ -1,17 +1,17 @@
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Select Bank</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Select Institution</h6>
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-between mb-4">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-2" style="border-right: 5px solid blue;">
-                            <label for="state">Banks</label>
+                            <label for="state">Institution</label>
                             <select class="form-select form-control" aria-label="Default select example"
                                 wire:change="onbankselect($event.target.value)">
-                                <option value="0">Select Bank</option>
+                                <option value="0">Select Institution</option>
                                 @foreach ($data as $d)
                                     <option value="{{ $d->id }}">{{ $d->name }}</option>
                                 @endforeach
@@ -68,7 +68,7 @@
                     data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     <div class="d-flex justify-content-between">
                         <div class="col-md-6">
-                            <h6 class="m-0 font-weight-bold text-primary">Bank Rates</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Institution Rates</h6>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between">
                             <button wire:click="download_xlsx" class="btn btn-primary">Format <i class="fa fa-download" aria-hidden="true"></i></button>
@@ -218,7 +218,7 @@
                 <div class="card-header py-3" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                     <div class="d-flex justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Bank Rates (Special)</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Institution Rates (Special)</h6>
                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                     </div>
                 </div>

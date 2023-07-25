@@ -9,22 +9,22 @@
                     <div class="container">
                         <!-- Bank Details -->
                         <div class="mt-2">
-                            <h6 class="m-0 font-weight-bold text-dark mb-2">Bank's Details</h6>
+                            <h6 class="m-0 font-weight-bold text-dark mb-2">Institution's Details</h6>
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="name">Name</label>
                                     <input type="text" wire:model.lazy="bank_name" class="form-control mr-2"
-                                        placeholder="Enter Bank Name....">
+                                        placeholder="Enter Institution Name....">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="msa_code">Email</label>
                                     <input type="text" wire:model.lazy="bank_email" class="form-control mr-2"
-                                        placeholder="Enter Bank Email....">
+                                        placeholder="Enter Institution Email....">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="name">Phone Number</label>
                                     <input type="text" wire:model.lazy="bank_phone_numebr" class="form-control mr-2"
-                                        placeholder="Enter Bank Phone Number....">
+                                        placeholder="Enter Institution Phone Number....">
                                 </div>
                             </div>
                             <div class="row">
@@ -63,7 +63,7 @@
 
                         <!-- Bank's Admin Details -->
                         <div class="mt-2">
-                            <h6 class="m-0 font-weight-bold text-dark mb-2">Bank's Admin Details</h6>
+                            <h6 class="m-0 font-weight-bold text-dark mb-2">Institution's Admin Details</h6>
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="name">Name</label>
@@ -164,7 +164,7 @@
                                             @if ($this->custom_bank_select != '' && $this->subscription == 'custom')
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="custom_banks" class="form-label">Banks</label>
+                                                        <label for="custom_banks" class="form-label">Institutions</label>
                                                         <div class="d-flex">
                                                             @foreach ($selectedbanks as $key => $item)
                                                                 <p class="border border-secondary rounded">
@@ -208,22 +208,22 @@
                     <div class="container">
                         <!-- Bank Details -->
                         <div class="mt-2">
-                            <h6 class="m-0 font-weight-bold text-dark mb-2">Bank's Details</h6>
+                            <h6 class="m-0 font-weight-bold text-dark mb-2">Institution's Details</h6>
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="name">Name</label>
                                     <input type="text" wire:model.lazy="bank_name" class="form-control mr-2"
-                                        placeholder="Enter Bank Name....">
+                                        placeholder="Enter Institution Name....">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="msa_code">Email</label>
                                     <input type="text" wire:model.lazy="bank_email" class="form-control mr-2"
-                                        placeholder="Enter Bank Email....">
+                                        placeholder="Enter Institution Email....">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="name">Phone Number</label>
                                     <input type="text" wire:model.lazy="bank_phone_numebr"
-                                        class="form-control mr-2" placeholder="Enter Bank Phone Number....">
+                                        class="form-control mr-2" placeholder="Enter Institution Phone Number....">
                                 </div>
                             </div>
                             <div class="row">
@@ -262,7 +262,7 @@
 
                         <!-- Bank's Admin Details -->
                         <div class="mt-2">
-                            <h6 class="m-0 font-weight-bold text-dark mb-2">Bank's Admin Details</h6>
+                            <h6 class="m-0 font-weight-bold text-dark mb-2">Institution's Admin Details</h6>
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="name">First Name</label>
@@ -427,9 +427,9 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Bank Name</th>
-                            <th>Bank Email</th>
-                            <th>Bank Phone Number</th>
+                            <th>Institution Name</th>
+                            <th>Institution Email</th>
+                            <th>Institution Phone Number</th>
                             <th>Website</th>
                             <th>MSA Code</th>
                             <th>State</th>

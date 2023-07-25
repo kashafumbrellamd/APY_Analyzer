@@ -1,7 +1,7 @@
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bank Type</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Institution Type</h6>
         </div>
         <div class="card-body">
             @error('error')
@@ -13,7 +13,7 @@
                 <form wire:submit.prevent="updateForm">
                     <div class="container">
                         <div class="mt-2">
-                            <h6 class="m-0 font-weight-bold text-dark mb-2">Bank Type <h6>
+                            <h6 class="m-0 font-weight-bold text-dark mb-2">Institution Type <h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="name">Name</label>
@@ -36,7 +36,7 @@
                 <form wire:submit.prevent="submitForm">
                     <div class="container">
                         <div class="mt-2">
-                            <h6 class="m-0 font-weight-bold text-dark mb-2">Bank Type <h6>
+                            <h6 class="m-0 font-weight-bold text-dark mb-2">Institution Type <h6>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="name">Name</label>

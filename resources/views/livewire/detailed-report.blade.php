@@ -30,7 +30,7 @@
                 <div class="col-md-3">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
-                        <option value="">Select Bank Type</option>
+                        <option value="">Select Institution Type</option>
                         @foreach ($bankTypes as $bt)
                             <option value="{{ $bt->id }}">{{ $bt->name }}</option>
                         @endforeach
@@ -96,7 +96,7 @@
                     <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <td class="first-col">Bank Name</td>
+                                <td class="first-col">Institution Name</td>
                                 @foreach ($rate_type as $rt)
                                     @if ($columns[$rt->id] == 1)
                                         <th>{{ $rt->name }}</th>

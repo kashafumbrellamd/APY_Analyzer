@@ -29,7 +29,7 @@
                 <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
-                        <option value="">Select Bank Type</option>
+                        <option value="">Select Institution Type</option>
                         @foreach ($bankTypes as $bt)
                             <option value="{{ $bt->id }}">{{ $bt->name }}</option>
                         @endforeach
@@ -100,7 +100,7 @@
                     <thead>
                         <tr>
                             <th class="first-col" style="text-align:center;">Sr.</td>
-                            <th class="first-col" style="text-align:center;">Bank Name</td>
+                            <th class="first-col" style="text-align:center;">Institution Name</td>
                             <th class="first-col" style="text-align:center;">Previous</td>
                             <th class="first-col" style="text-align:center;">APY</td>
                             <th class="first-col" style="text-align:center;">Changes</td>

@@ -13,7 +13,7 @@
                 <div class="container">
                     <!-- Bank's Admin Details -->
                     <div class="mt-2">
-                        <h6 class="m-0 font-weight-bold text-dark mb-2">Bank's Admin Details</h6>
+                        <h6 class="m-0 font-weight-bold text-dark mb-2">Institution's Admin Details</h6>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="name">Name</label>
@@ -54,10 +54,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="name">Bank Name</label>
+                                <label for="name">Institution Name</label>
                                 <select class="form-select form-control"
                                     aria-label="Default select example" wire:model.lazy="bank_id">
-                                    <option value="">Select Bank</option>
+                                    <option value="">Select Institution</option>
                                     @foreach ($banks as $bank)
                                         <option value="{{ $bank->id }}">{{ $bank->bank_name }}</option>
                                     @endforeach
@@ -87,7 +87,7 @@
                             <th>Admin Designation</th>
                             <th>Admin Gender</th>
                             <th>Admin Employee Id</th>
-                            <th>Bank Name</th>
+                            <th>Institution Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>

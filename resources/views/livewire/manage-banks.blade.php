@@ -2,9 +2,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             @if($update)
-            <h6 class="m-0 font-weight-bold text-primary">Edit Bank</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Edit Institution</h6>
             @else
-            <h6 class="m-0 font-weight-bold text-primary">Add New Bank</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Add New Institution</h6>
             @endif
         </div>
         <div class="card-body">
@@ -15,7 +15,7 @@
                                         <div class="col-md-4">
                                             <label for="name">Name</label>
                                             <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
-                                                placeholder="Enter Bank Name...." required>
+                                                placeholder="Enter Institution Name...." required>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="website">Website</label>
@@ -50,10 +50,10 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="bank-type-id">Bank Type</label>
+                                            <label for="bank-type-id">Institution Type</label>
                                             <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
                                                 wire:model="bank_type" required>
-                                                <option value="">Select Bank Type</option>
+                                                <option value="">Select Institution Type</option>
                                                 @foreach ($bts as $bt)
                                                     <option value="{{ $bt->id }}">{{ $bt->name }}</option>
                                                 @endforeach
@@ -89,7 +89,7 @@
                                     <div class="col-md-4">
                                         <label for="name">Name</label>
                                         <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
-                                            placeholder="Enter Bank Name....">
+                                            placeholder="Enter Institution Name....">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="website">Website</label>
@@ -124,10 +124,10 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="bank-type-id">Bank Type Id</label>
+                                        <label for="bank-type-id">Institution Type Id</label>
                                         <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
                                             wire:model="bank_type">
-                                            <option value="">Select Bank Type</option>
+                                            <option value="">Select Institution Type</option>
                                             @foreach ($bts as $bt)
                                                 <option value="{{ $bt->id }}">{{ $bt->name }}</option>
                                             @endforeach
@@ -175,7 +175,7 @@
         <div class="card-header py-3">
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6">
-                    <h5 class="m-0 font-weight-bold text-primary">Banks</h5>
+                    <h5 class="m-0 font-weight-bold text-primary">Institutions</h5>
                 </div>
                 <div class="col-md-6">
                     <button wire:click="download_xlsx" class="btn btn-primary">Format <i class="fa fa-download" aria-hidden="true"></i></button>
@@ -215,7 +215,7 @@
                             <th>Phone Number</th>
                             <th>Website</th>
                             <th>City</th>
-                            <th>Bank Type</th>
+                            <th>Institution Type</th>
                             <th>Contact Person Name</th>
                             <th>Contact Person Email</th>
                             <th>Contact Person Phone</th>
