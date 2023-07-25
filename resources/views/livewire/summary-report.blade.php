@@ -78,6 +78,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Sr.</th>
                                 @foreach ($rate_type as $rt)
                                     @if ($columns[$rt->id] == 1)
                                         <th>{{ $rt->name }}</th>
@@ -95,9 +96,13 @@
                                 }
                             @endphp
 
+                            @php
+                                $count = 1;
+                            @endphp
                             @for ($i = 0; $i < $maxItems; $i++)
                                 <tr>
-                                    @foreach ($rate_type as $rt)
+                                    <td>{{ $count }}</td>
+                                    @foreach ($rate_type as $key => $rt)
                                         @if ($columns[$rt->id] == 1)
                                             @if (isset($rt['data'][$i]))
                                                 @if ($rt['data'][$i]->bk_id != $selected_bank)
@@ -116,6 +121,9 @@
                                         @endif
                                     @endforeach
                                 </tr>
+                                @php
+                                 $count++;
+                                @endphp
                             @endfor
                         </tbody>
                     </table>

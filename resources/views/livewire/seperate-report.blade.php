@@ -99,6 +99,7 @@
                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th class="first-col" style="text-align:center;">Sr.</td>
                             <th class="first-col" style="text-align:center;">Bank Name</td>
                             <th class="first-col" style="text-align:center;">Previous</td>
                             <th class="first-col" style="text-align:center;">APY</td>
@@ -106,23 +107,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($rt['banks'] as $bank)
+                        @forelse ($rt['banks'] as $key => $bank)
                             <tr>
                                 <tbody>
                                     @if ($bank != null)
                                         <tr>
+                                            <td>{{ ++$key }}</td>
+                                            <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
                                             @if ($bank['current_rate'] > $bank['previous_rate'])
-                                                <td class="text-success" style="text-align:center;">{{ $bank['bank_name'] }}</td>
                                                 <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                 <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
                                                 <td class="text-success" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                                             @elseif ($bank['current_rate'] == $bank['previous_rate'])
-                                                <td class="text-dark" style="text-align:center;">{{ $bank['bank_name'] }}</td>
                                                 <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                 <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
                                                 <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
-                                                @else
-                                                <td class="text-danger" style="text-align:center;">{{ $bank['bank_name'] }}</td>
+                                            @else
                                                 <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                 <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
                                                 <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
