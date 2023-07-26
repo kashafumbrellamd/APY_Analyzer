@@ -79,7 +79,7 @@ class CustomerSignup extends Component
         }
         $bank_cities = Cities::get();
         $packages = Packages::get();
-        $bank_types = BankType::get();
+        $bank_types = BankType::where('status',1)->get();
         return view('livewire.customer-signup', ['states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities,'charities'=>$charities,'bank_types'=>$bank_types]);
     }
 
@@ -180,6 +180,8 @@ class CustomerSignup extends Component
         }elseif ($value != '' && $type == '') {
             $All_banks = Bank::join('states','banks.state_id','states.id')
             ->join('cities','banks.city_id','cities.id')
+            ->join('bank_types','banks.bank_type_id','bank_types.id')
+            ->where('bank_types.status',1)
             ->where('banks.name',$value)
             ->orwhere('states.name',$value)
             ->orwhere('cities.name',$value)
@@ -197,6 +199,8 @@ class CustomerSignup extends Component
         }else {
             $All_banks = Bank::join('states','banks.state_id','states.id')
             ->join('cities','banks.city_id','cities.id')
+            ->join('bank_types','banks.bank_type_id','bank_types.id')
+            ->where('bank_types.status',1)
             ->select('banks.*','states.name as state_name','cities.name as city_name')
             ->get();
             $this->all_banks = $All_banks;
