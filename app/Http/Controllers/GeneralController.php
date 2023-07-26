@@ -82,6 +82,11 @@ class GeneralController extends Controller
         return view('customer_bank.summary_reports');
     }
 
+    public function bank_request()
+    {
+        return view('customer_bank.bank_request');
+    }
+
 
     public function bank_login(Request $request)
     {
