@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Bank;
+use App\Models\BankType;
 use App\Models\Contract;
 use App\Models\CustomerBank as CB;
 use App\Models\Role;
@@ -43,6 +44,7 @@ class CustomerSignup extends Component
 
     public $all_banks = null;
     public $bank_search = '';
+    public $bank_type = '';
 
     protected $rules = [
         'bank_name' => 'required',
@@ -71,13 +73,14 @@ class CustomerSignup extends Component
         $states = State::where('country_id', '233')->get();
         $charities = Charity::all();
         if(strlen($this->bank_search) > 0){
-            $this->search_bank($this->bank_search);
+            $this->search_bank($this->bank_search,$this->bank_type);
         }else{
-            $this->search_bank('');
+            $this->search_bank('',$this->bank_type);
         }
         $bank_cities = Cities::get();
         $packages = Packages::get();
-        return view('livewire.customer-signup', ['states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities,'charities'=>$charities]);
+        $bank_types = BankType::get();
+        return view('livewire.customer-signup', ['states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities,'charities'=>$charities,'bank_types'=>$bank_types]);
     }
 
     public function submitForm()
@@ -144,6 +147,7 @@ class CustomerSignup extends Component
         $this->bank_website = '';
         $this->bank_msa = '';
         $this->bank_state = '';
+        $this->bank_charity = null;
         $this->zip_code = '';
         $this->cbsa_code = '';
         $this->admin_first_name = '';
@@ -153,12 +157,27 @@ class CustomerSignup extends Component
         $this->admin_employeeid = '';
         $this->admin_gender = '';
         $this->subscription = '';
+        $this->custom_banks = [];
+        $this->selectedbanks = [];
+        $this->$all_banks = null;
+        $this->$bank_search = '';
+        $this->$bank_type = '';
     }
 
-    public function search_bank($value)
+    public function search_bank($value,$type)
     {
-        if($value != '')
-        {
+        if($value != '' && $type != '') {
+            $All_banks = Bank::join('states','banks.state_id','states.id')
+            ->join('cities','banks.city_id','cities.id')
+            ->where('banks.name',$value)
+            ->orwhere('states.name',$value)
+            ->orwhere('cities.name',$value)
+            ->orwhere('states.state_code',$value)
+            ->where('banks.bank_type_id',$type)
+            ->select('banks.*','states.name as state_name','cities.name as city_name')
+            ->get();
+            $this->all_banks = $All_banks;
+        }elseif ($value != '' && $type == '') {
             $All_banks = Bank::join('states','banks.state_id','states.id')
             ->join('cities','banks.city_id','cities.id')
             ->where('banks.name',$value)
@@ -168,9 +187,14 @@ class CustomerSignup extends Component
             ->select('banks.*','states.name as state_name','cities.name as city_name')
             ->get();
             $this->all_banks = $All_banks;
-        }
-        else
-        {
+        }elseif ($value == '' && $type != '') {
+            $All_banks = Bank::join('states','banks.state_id','states.id')
+            ->join('cities','banks.city_id','cities.id')
+            ->where('banks.bank_type_id',$type)
+            ->select('banks.*','states.name as state_name','cities.name as city_name')
+            ->get();
+            $this->all_banks = $All_banks;
+        }else {
             $All_banks = Bank::join('states','banks.state_id','states.id')
             ->join('cities','banks.city_id','cities.id')
             ->select('banks.*','states.name as state_name','cities.name as city_name')

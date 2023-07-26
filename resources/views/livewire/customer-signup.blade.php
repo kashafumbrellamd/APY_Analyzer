@@ -160,6 +160,19 @@
                                             </div>
                                             @if($this->subscription == 'custom')
                                             <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="bank_type" class="form-label">Select Bank Type</label>
+                                                    <select class="form-select" id="bank_type" name="bank_type" aria-label="Default select example" wire:model="bank_type">
+                                                        <option value="">All Bank Types</option>
+                                                        @foreach($bank_types as $bank_type)
+                                                        <option value="{{$bank_type->id}}">{{$bank_type->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div>
                                                     <div class="mb-3">
                                                         <label for="bank_name_city" class="form-label">Institution Name , State , City</label>
@@ -209,7 +222,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             @endif
