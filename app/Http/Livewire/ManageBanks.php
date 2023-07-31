@@ -132,18 +132,21 @@ class ManageBanks extends Component
                 $bank_check = Bank::where('name',$bank['Bank Name'])->first();
                 if($bank_check==null)
                 {
-                    $bank_state = State::where('name',$bank['State'])->orWhere('state_code',$bank['State'])->where('country_id',233)->first();
-                    $bank_city = Cities::where('name',$bank['City'])->first();
+                    $zip = Zip_code::where('zip_code',$bank['Zip Code'])->first();
                     $bank_type = BankType::where('name',$bank['Bank Type'])->first();
-                    if($bank_state != null && $bank_city != null && $bank_type != null)
+                    if($zip != null && $bank_type != null)
                     {
+                        $state_id = State::where('name',$zip->state)->pluck('id')->first();
+                        $city_id = Cities::where('name',$zip->city)->pluck('id')->first();
                         $new_bank = Bank::create([
                             'name'=>$bank['Bank Name'],
-                            'state_id'=>$bank_state->id,
+                            'state_id'=>$state_id,
                             'phone_number'=>$bank['Phone Number'],
                             'website'=>$bank['Website'],
-                            'msa_code'=>$bank_city->id,
-                            'city_id'=>$bank_city->id,
+                            'msa_code'=>$city_id,
+                            'city_id'=>$city_id,
+                            'zip_code'=>$bank['Zip Code'],
+                            'cbsa_code'=>$bank['CBSA Code'],
                             'cp_name'=>$bank['Contact Person Name'],
                             'cp_email'=>$bank['Contact Person Email'],
                             'cp_phone'=>$bank['Contact Person Phone'],
