@@ -136,31 +136,34 @@ class ManageBanks extends Component
                     $bank_type = BankType::where('name',$bank['Bank Type'])->first();
                     if($zip != null && $bank_type != null)
                     {
-                        $state_id = State::where('name',$zip->state)->pluck('id')->first();
-                        $city_id = Cities::where('name',$zip->city)->pluck('id')->first();
-                        $new_bank = Bank::create([
-                            'name'=>$bank['Bank Name'],
-                            'state_id'=>$state_id,
-                            'phone_number'=>$bank['Phone Number'],
-                            'website'=>$bank['Website'],
-                            'msa_code'=>$city_id,
-                            'city_id'=>$city_id,
-                            'zip_code'=>$bank['Zip Code'],
-                            'cbsa_code'=>$bank['CBSA Code'],
-                            'cp_name'=>$bank['Contact Person Name'],
-                            'cp_email'=>$bank['Contact Person Email'],
-                            'cp_phone'=>$bank['Contact Person Phone'],
-                            'bank_type_id'=>$bank_type->id,
-                        ]);
+                        $state_id = State::where('name',$bank['State'])->pluck('id')->first();
+                        $city_id = Cities::where('name',$bank['City'])->pluck('id')->first();
+                        if($state_id!=null && $city_id!=null)
+                        {
+                            $new_bank = Bank::create([
+                                'name'=>$bank['Bank Name'],
+                                'state_id'=>$state_id,
+                                'phone_number'=>$bank['Phone Number'],
+                                'website'=>$bank['Website'],
+                                'msa_code'=>$city_id,
+                                'city_id'=>$city_id,
+                                'zip_code'=>$bank['Zip Code'],
+                                'cbsa_code'=>$bank['CBSA Code'],
+                                'cp_name'=>$bank['Contact Person Name'],
+                                'cp_email'=>$bank['Contact Person Email'],
+                                'cp_phone'=>$bank['Contact Person Phone'],
+                                'bank_type_id'=>$bank_type->id,
+                            ]);
+                        }
+                        else
+                        {
+                            array_push($this->not_inserted_banks,$bank['Bank Name']);
+                        }
                     }
                     else
                     {
                         array_push($this->not_inserted_banks,$bank['Bank Name']);
                     }
-                }
-                else
-                {
-                    array_push($this->not_inserted_banks,$bank['Bank Name']);
                 }
             }
             if($this->not_inserted_banks!=[])
