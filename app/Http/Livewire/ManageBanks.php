@@ -11,11 +11,13 @@ use App\Models\BankType;
 use Illuminate\Support\Str;
 use App\Models\Zip_code;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ManageBanks extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     public $update = false;
     public $bank_id = '';
@@ -100,8 +102,8 @@ class ManageBanks extends Component
                 'website' => $this->website,
                 'msa_code' => $this->msa_code,
                 'city_id' => $this->msa_code,
-                $this->zip_code = $bank->zip_code,
-                $this->cbsa_code = $bank->cbsa_code,
+                'zip_code' => $this->zip_code,
+                'cbsa_code' => $this->cbsa_code,
                 'cp_name' => $this->cp_name,
                 'cp_email' => $this->cp_email,
                 'cp_phone' => $this->cp_phone,
@@ -197,6 +199,8 @@ class ManageBanks extends Component
         $this->cp_email = '';
         $this->cp_phone = '';
         $this->update = false;
+        $this->zip_code = '';
+        $this->cbsa_code = '';
         $this->render();
     }
 

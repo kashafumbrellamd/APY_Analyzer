@@ -8,9 +8,12 @@ use App\Models\CustomerBank;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
+use Livewire\WithPagination;
 
 class CustomerBankAdmin extends Component
 {
+    use WithPagination;
+
     public $admin_name;
     public $admin_email;
     public $admin_phone_number;
@@ -32,7 +35,7 @@ class CustomerBankAdmin extends Component
     public function render()
     {
         $states = State::where('country_id','233')->get();
-        $data = User::with('banks')->where('bank_id', '!=', null)->where('bank_id', '!=', 9)->where('bank_id', '!=', 11)->get();
+        $data = User::with('banks')->where('bank_id', '!=', null)->where('bank_id', '!=', 9)->where('bank_id', '!=', 11)->paginate(10);
         $banks = CustomerBank::get();
         return view('livewire.customer-bank-admin', ['data'=>$data,'states'=>$states,'banks'=>$banks]);
     }

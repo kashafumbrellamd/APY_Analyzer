@@ -13,9 +13,12 @@ use App\Models\Charity;
 use App\Models\Packages;
 use App\Models\CustomPackageBanks;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CustomerBank extends Component
 {
+    use WithPagination;
+
     public $update = false;
     public $bank_id;
     public $bank_name;
@@ -68,7 +71,7 @@ class CustomerBank extends Component
     {
         $states = State::where('country_id', '233')->get();
         $charities = Charity::all();
-        $data = CB::with('contract','states')->get();
+        $data = CB::with('contract','states')->paginate(10);
         if($this->state != ""){
             $this->bank_cities = Cities::where('state_id',$this->state)->get();
         }else{

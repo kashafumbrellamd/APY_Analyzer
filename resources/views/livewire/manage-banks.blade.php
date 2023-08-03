@@ -12,20 +12,25 @@
                     @if($update)
                         <form wire:submit.prevent="updateForm">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="name">Name</label>
                                             <input type="text" id="name" class="form-control mr-2" wire:model.lazy="name"
                                                 placeholder="Enter Institution Name...." required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="website">Website</label>
                                             <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
                                                 placeholder="Enter Website...." required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="name">Phone Number</label>
                                             <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
                                                 placeholder="Enter Phone Number...." required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="CBSA_CODE" class="form-label">CBSA Code</label>
+                                            <input type="text" id="CBSA_CODE" class="form-control" wire:model.lazy="cbsa_code"
+                                                placeholder="Enter CBSA code.." required>
                                         </div>
                                     </div>
                                     {{-- <div class="row">
@@ -87,7 +92,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="bank-type-id">Institution Type Id</label>
+                                            <label for="bank-type-id">Institution Type</label>
                                             <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
                                                 wire:model="bank_type">
                                                 <option value="">Select Institution Type</option>
@@ -97,10 +102,11 @@
                                             </select>
                                         </div>
                                         <div class="col-md-1">
-                                            <label for="more">(Optional)</label><br>
+
+                                            <!-- <label for="more">(Optional)</label><br>
                                             <a class="btn btn-primary" style="width: 8rem;" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                 Load More
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </div>
                                     <label for="more">Contact Person Details(Optional)</label>
@@ -178,7 +184,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="bank-type-id">Institution Type Id</label>
+                                        <label for="bank-type-id">Institution Type</label>
                                         <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
                                             wire:model="bank_type">
                                             <option value="">Select Institution Type</option>
@@ -298,6 +304,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $data->links('livewire::bootstrap') }}
             </div>
         </div>
     </div>

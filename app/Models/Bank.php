@@ -38,7 +38,7 @@ class Bank extends Model
              ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
              ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
              ->with('cities')
-             ->get();
+             ->paginate(10);
         return $states;
     }
 
