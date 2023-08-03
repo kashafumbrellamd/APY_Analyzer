@@ -244,9 +244,15 @@
                 </div>
             </div>
             @error('upload_error')
+                @php $count = 0; @endphp
                 <div class="mt-3 text-center">
                     @foreach($not_inserted_banks as $bank)
+                    @php $count++; @endphp
                     <span class="alert alert-danger" role="alert">{{ $bank }}</span>
+                    @if($count%5==0)
+                    <br>
+                    <br>
+                    @endif
                     @endforeach
                 </div>
                 <div class="mt-4 text-center">
@@ -270,6 +276,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>S.No</th>
                             <th>Name</th>
                             <th>State</th>
                             <th>Phone Number</th>
@@ -283,8 +290,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $count = 1; @endphp
                         @foreach ($data as $dt)
                             <tr>
+                                <td>{{ $count }}</td>
                                 <td>{{ $dt->name }}</td>
                                 <td>{{ $dt->state_name }}</td>
                                 <td>{{ $dt->phone_number }}</td>
@@ -301,6 +310,7 @@
                                             class="bi bi-trash"></span></button>
                                 </td>
                             </tr>
+                        @php $count++; @endphp
                         @endforeach
                     </tbody>
                 </table>
