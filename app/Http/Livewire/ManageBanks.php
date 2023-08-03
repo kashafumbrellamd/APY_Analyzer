@@ -167,10 +167,6 @@ class ManageBanks extends Component
                         array_push($this->not_inserted_banks,$bank['Bank Name']);
                     }
                 }
-                else
-                {
-                    array_push($this->not_inserted_banks,$bank['Bank Name']);
-                }
             }
             if($this->not_inserted_banks!=[])
             {
