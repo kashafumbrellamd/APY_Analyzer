@@ -15,6 +15,8 @@ class BankRequest extends Model
         'city_id',
         'description',
         'user_id',
+        'email',
+        'phone_number',
     ];
 
     public function state(){

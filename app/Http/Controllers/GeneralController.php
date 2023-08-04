@@ -12,7 +12,7 @@ use App\Models\CustomerBank;
 use App\Models\RateType;
 use App\Models\Packages;
 use App\Models\OTP;
-
+use App\Models\BankRequest;
 
 
 class GeneralController extends Controller
@@ -213,5 +213,26 @@ class GeneralController extends Controller
     public function seperate_reports()
     {
         return view('customer_bank.view_seperate_report');
+    }
+
+    public function bank_request_submit(Request $request){
+        if(Auth::check()){
+           $id = auth()->user()->id;
+        }else{
+            $id = null;
+        }
+
+        BankRequest::create([
+            'name' => $request->name,
+            'state_id' => $request->state_id,
+            'city_id' => $request->city_id,
+            'zip_code' => $request->zip_code,
+            'description' => $request->description,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'user_id' => $id,
+        ]);
+
+        return redirect()->back()->with('success','Bank Request Made Successfully.');
     }
 }

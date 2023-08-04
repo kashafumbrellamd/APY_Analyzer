@@ -417,3 +417,54 @@ body {
   transform: scale(1.06);
 
 }
+
+.card__survey_main{
+    position: absolute;
+    top: 110px;
+    left: 250px;
+  }
+  .slider_image__{
+    height: 400px;
+  }
+  /* --who--we--are----start--- */
+  .nav-item .nav__item_btn{
+    width: 100%;
+    padding: 12px;
+    font-size: 20px;
+    border: 1px solid #278664;
+    color: #278664;
+  }
+  .nav-pills .nav-link.active{
+    background: linear-gradient(#278664, rgb(121 164 113));
+  
+  }
+  .our_product_sub_ul_main .first_ul{
+    margin-left: 20px;
+  }
+  .our_product_sub_ul_main .second_ul{
+    margin-left: 20px;
+  }
+  .our_product_sub_main{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  /* --who--we--are----end--- */
+  
+  /* ---Survey-Modal-Start---- */
+  .modal_header_cus{
+    background: linear-gradient(#278664, rgb(121 164 113));
+    color: #fff;
+  }
+  .survey_submit_btn{
+    background: linear-gradient(#278664, rgb(121 164 113));
+      color: #fff;
+      padding: 6px 40px;
+      transition: 0.3s ease-in;
+  }
+  .survey_submit_btn:hover{
+    background: linear-gradient(rgb(121 164 113),#278664);
+      color: #fff;
+  }
+  /* ---Survey-Modal-Start---- */

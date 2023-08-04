@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Models\Stories;
+use App\Models\State;
+use App\Models\Cities;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,10 +25,12 @@ Route::get('/',function(){
     }
 });
 Route::get('/',function(){
+    $states = State::where('country_id',233)->get();
+    $cities = Cities::where('country_id',233)->get();
     if(!Auth::check()){
-        return view('home_page');
+        return view('home_page',['states'=>$states, 'cities'=>$cities]);
     }else{
-        return view('home_page');
+        return view('home_page',['states'=>$states, 'cities'=>$cities]);
     }
 });
 
@@ -46,6 +50,7 @@ Route::get('/interesting_stories', function () {
     $stories = Stories::where('status','1')->get();
     return view('interesting_stories',['stories'=>$stories]);
 })->name('interesting_stories');
+
 
 Auth::routes();
 Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
@@ -95,3 +100,4 @@ Route::get('/getLabels', [App\Http\Controllers\GeneralController::class,'getLabe
 
 
 Route::get('/add_packages',[App\Http\Controllers\GeneralController::class,'add_packages']);
+Route::post('/bank_request_submit',[App\Http\Controllers\GeneralController::class,'bank_request_submit'])->name('bank_request_submit');
