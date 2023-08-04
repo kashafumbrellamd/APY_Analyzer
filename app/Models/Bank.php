@@ -42,6 +42,17 @@ class Bank extends Model
         return $states;
     }
 
+    public static function BanksWithStateIdAndType($id)
+    {
+        $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+             ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+             ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+             ->where('banks.state_id',$id)
+             ->with('cities')
+             ->paginate(10);
+        return $states;
+    }
+
     public function BankWithState($id)
     {
         $states = Bank::where('banks.id',$id)

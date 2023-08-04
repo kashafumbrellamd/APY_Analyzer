@@ -13,6 +13,7 @@ use App\Models\Zip_code;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use DB;
 
 class ManageBanks extends Component
 {
@@ -36,13 +37,20 @@ class ManageBanks extends Component
     public $file = null;
     public $not_inserted_banks = [];
 
+    public $bank_state_filter = '';
+
     public function render()
     {
-        $data = Bank::BanksWithStateAndType();
+        if($this->bank_state_filter){
+            $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
+        }else{
+            $data = Bank::BanksWithStateAndType();
+        }
         $states = State::where('country_id','233')->get();
         $cities = Cities::get();
         $bts = BankType::where('status','1')->get();
-        return view('livewire.manage-banks',['data'=>$data,'update'=>$this->update,'states'=>$states,'cities'=>$cities,'bts'=>$bts]);
+        $bank_states = $this->getStates();
+        return view('livewire.manage-banks',['data'=>$data,'update'=>$this->update,'states'=>$states,'cities'=>$cities,'bts'=>$bts,'bank_states'=>$bank_states]);
     }
 
     public function submitForm()
@@ -236,5 +244,14 @@ class ManageBanks extends Component
             $this->msa_code = "";
             $this->state_id = "";
         }
+    }
+
+    public function getStates(){
+        $state = DB::table('banks')
+            ->join('states','states.id','banks.state_id')
+            ->select('states.id','states.name')
+            ->groupBy('state_id')
+            ->get();
+        return $state;
     }
 }

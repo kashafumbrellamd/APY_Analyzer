@@ -272,7 +272,15 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-
+                <div class="col-md-4">
+                    <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_state_filter">
+                        <option value="">Select State</option>
+                        @foreach ($bank_states as $state)
+                            <option value="{{ $state->id }}">{{ $state->name }}</option>
+                        @endforeach
+                        <option value="">All Data</option>
+                    </select>
+                </div>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
