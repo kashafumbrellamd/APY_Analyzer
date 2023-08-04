@@ -138,15 +138,16 @@ class ManageBanks extends Component
         if($this->file != null)
         {
             $banks = $this->xlsxToArray($this->file->path());
+            dd($banks);
             foreach ($banks as $key => $bank) {
                 $bank_check = Bank::where('name',$bank['Bank Name'])->first();
-                if($bank_check==null)
+                if($bank_check==null && $bank['Bank Name']!= null)
                 {
                     $zip = Zip_code::where('zip_code',$bank['Zip Code'])->first();
                     $bank_type = BankType::where('name',$bank['Bank Type'])->first();
                     if($zip != null && $bank_type != null)
                     {
-                        $state_id = State::where('name',$bank['State'])->pluck('id')->first();
+                        $state_id = State::where('name',$bank['State'])->orwhere('state_code',$bank['State'])->pluck('id')->first();
                         $city_id = Cities::where('name',$bank['City'])->pluck('id')->first();
                         if($state_id!=null && $city_id!=null)
                         {
