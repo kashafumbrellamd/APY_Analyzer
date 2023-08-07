@@ -11,6 +11,7 @@ use App\Models\SpecializationRates;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use DB;
 
 class AddBankRates extends Component
 {
@@ -158,30 +159,50 @@ class AddBankRates extends Component
                 $bank = Bank::where('name',$dt['Bank Name'])->first();
                 if($bank!=null)
                 {
+                    $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
                     foreach ($head as $key => $hd) {
-                        if($hd!=null && $hd != 'Bank Name')
+                        if($hd!=null && $hd != 'Bank Name' && $hd!='Date (mm/dd/YYYY)')
                         {
                             $rt = RateType::where('name',$hd)->first();
                             if($rt!=null)
                             {
                                 $check = BankPrices::where('bank_id',$bank->id)->where('rate_type_id',$rt->id)->orderby('id','DESC')->first();
                                 if($check==null){
-                                    $p_user = BankPrices::create([
+                                    $p_user = DB::table('bank_prices')->insert([
                                         'bank_id' => $bank->id,
                                         'rate_type_id' => $rt->id,
                                         'rate' => $dt[$hd],
                                         'previous_rate' => $dt[$hd],
                                         'current_rate' => $dt[$hd],
+                                        'created_at' => $date,
+                                        'updated_at' => $date,
                                     ]);
+                                    // $p_user = BankPrices::create([
+                                    //     'bank_id' => $bank->id,
+                                    //     'rate_type_id' => $rt->id,
+                                    //     'rate' => $dt[$hd],
+                                    //     'previous_rate' => $dt[$hd],
+                                    //     'current_rate' => $dt[$hd],
+                                    // ]);
                                 }else{
-                                    $p_user = BankPrices::create([
+                                    $p_user = DB::table('bank_prices')->insert([
                                         'bank_id' => $bank->id,
                                         'rate_type_id' => $rt->id,
                                         'rate' => $check->rate,
                                         'previous_rate' => $check->current_rate,
                                         'current_rate' => $dt[$hd],
                                         'change' => $dt[$hd]-$check->current_rate,
+                                        'created_at' => $date,
+                                        'updated_at' => $date,
                                     ]);
+                                    // $p_user = BankPrices::create([
+                                    //     'bank_id' => $bank->id,
+                                    //     'rate_type_id' => $rt->id,
+                                    //     'rate' => $check->rate,
+                                    //     'previous_rate' => $check->current_rate,
+                                    //     'current_rate' => $dt[$hd],
+                                    //     'change' => $dt[$hd]-$check->current_rate,
+                                    // ]);
                                 }
                             }else{
                                 array_push($this->not_inserted_rt,$hd);
