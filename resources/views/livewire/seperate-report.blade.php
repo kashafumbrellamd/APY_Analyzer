@@ -119,13 +119,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($rt['banks'] as $key => $bank)
+                        @forelse ($rt['banks'] as $key1 => $bank)
                             <tr>
                                 <tbody>
                                     @if ($bank != null)
                                         @if ($selected_bank == $bank['bank_id'])
                                             <tr style="background-color: #e8e7e7;">
-                                                <td>{{ ++$key }}</td>
+                                                <td>{{ ++$key1 }}</td>
                                                 <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
                                                 @if ($bank['current_rate'] > $bank['previous_rate'])
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
@@ -143,7 +143,7 @@
                                             </tr>
                                         @else
                                             <tr>
-                                                <td>{{ ++$key }}</td>
+                                                <td>{{ ++$key1 }}</td>
                                                 <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
                                                 @if ($bank['current_rate'] > $bank['previous_rate'])
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
