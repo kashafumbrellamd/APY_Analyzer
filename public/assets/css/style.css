@@ -1,3 +1,7 @@
+:root {
+  --main-color: #3758d2;
+  --second-color: #3149a4;
+}
 *{
     margin: 0;
     padding: 0;
@@ -10,7 +14,7 @@
     background-color: rgb(245 245 245 / 88%);
 }
 .submit_btn{
-    background: #79a471;
+    background: #f12d2d;
     color: #fff;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -19,7 +23,7 @@
 }
 .regiter_heading_h{
     text-align: center;
-    color: #79a471;
+    color: var(--second-color);
     text-transform: uppercase;
     text-shadow: 2px 2px 2px #79a
 }
@@ -41,7 +45,7 @@ hr{
     align-items: center;
 }
 .signUp_btn{
-    background: #278664;
+    background: var(--main-color);
     color: #fff;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -96,7 +100,7 @@ hr{
     padding: 0px;
 }
 .footer-section {
-  background: #278664;
+  background: var(--main-color);
   position: relative;
 }
 .footer-cta {
@@ -189,7 +193,7 @@ hr{
   bottom: -15px;
   height: 2px;
   width: 50px;
-  background: #79a471;
+  background: var(--second-color);
 }
 .footer-widget ul li {
   display: inline-block;
@@ -198,7 +202,7 @@ hr{
   margin-bottom: 12px;
 }
 .footer-widget ul li a:hover{
-  color: #79a471;
+  color: var(--second-color);
 }
 .footer-widget ul li a {
   color: #fff;
@@ -218,9 +222,9 @@ hr{
 .subscribe-form button {
     position: absolute;
     right: 0;
-    background: #79a471;
+    background: var(--second-color);
     padding: 13px 20px;
-    border: 1px solid #79a471;
+    border: 1px solid var(--second-color);
     top: 0;
 }
 .subscribe-form button i {
@@ -238,14 +242,14 @@ hr{
   color: #878787;
 }
 .copyright-text p a{
-  color: #79a471;
+  color: var(--second-color);
 }
 .footer-menu li {
   display: inline-block;
   margin-left: 20px;
 }
 .footer-menu li:hover a{
-  color: #79a471;
+  color: var(--second-color);
 }
 .footer-menu li a {
   font-size: 14px;
@@ -320,7 +324,7 @@ body {
     content: "";
     width: 100%;
     height: 100%;
-    background: linear-gradient(#278664, rgb(121 164 113));
+    background: linear-gradient(var(--main-color), rgb(121 164 113));
     position: absolute;
     left: 0%;
     top: -98%;
@@ -399,13 +403,13 @@ body {
     overflow-y: auto;
   }
   .state_city_span{
-    color: #79a471;
+    color: var(--second-color);
   }
 
   /* -----News__Page---- */
 @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 .news_card_section{
-  background: linear-gradient(17deg, rgb(121 164 113 / 68%) 18%, rgba(255,255,255,0.9948354341736695) 52%, rgb(39 134 100 / 54%) 80%);
+  background: linear-gradient(17deg, rgb(87 147 234 / 68%) 18%, rgba(255,255,255,0.9948354341736695) 52%, rgb(34 108 195 / 54%) 80%);
 }
 .card_Main{
   cursor: pointer;
@@ -431,11 +435,11 @@ body {
     width: 100%;
     padding: 12px;
     font-size: 20px;
-    border: 1px solid #278664;
-    color: #278664;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
   }
   .nav-pills .nav-link.active{
-    background: linear-gradient(#278664, rgb(121 164 113));
+    background-color: var(--main-color)
   
   }
   .our_product_sub_ul_main .first_ul{
@@ -454,17 +458,22 @@ body {
   
   /* ---Survey-Modal-Start---- */
   .modal_header_cus{
-    background: linear-gradient(#278664, rgb(121 164 113));
+    background: linear-gradient(var(--main-color), var(--second-color));
     color: #fff;
   }
   .survey_submit_btn{
-    background: linear-gradient(#278664, rgb(121 164 113));
+    background: linear-gradient(var(--main-color), var(--second-color));
       color: #fff;
       padding: 6px 40px;
       transition: 0.3s ease-in;
   }
   .survey_submit_btn:hover{
-    background: linear-gradient(rgb(121 164 113),#278664);
+    background: linear-gradient(var(--second-color),var(--main-color));
       color: #fff;
   }
   /* ---Survey-Modal-Start---- */
+  .request_heading{
+    font-weight: 600;
+    color: var(--main-color);
+    text-shadow: 1px 2px 2px var(--second-color);
+  }

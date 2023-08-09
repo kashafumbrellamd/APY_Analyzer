@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">APY_ANALYZER</a>
+                <a class="navbar-brand" href="#">INTELLI-RATE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,12 +33,12 @@
                     </ul>
                     <div class="d-flex">
                         @if (Auth::check())
-                            <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
-                                Dashboard</button>
+                        <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
+                            Dashboard</button>
                         @else
-                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign
-                                Up</button>
-                            <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign
+                            Up</button>
+                        <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
                 </div>
@@ -115,9 +115,9 @@
             </div>
         </section>
         @if(session()->has('success'))
-            <div class="alert alert-success mt-2 text-center">
-                {{ session()->get('success') }}
-            </div>
+        <div class="alert alert-success mt-2 text-center">
+            {{ session()->get('success') }}
+        </div>
         @endif
         <section id="advertisers" class="advertisers-service-sec pt-5 pb-3">
             <div class="container">
@@ -208,14 +208,14 @@
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item col-md-6 p-1" role="presentation">
                             <button class="nav-link active nav__item_btn" id="pills-home-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-home" type="button" role="tab"
-                                aria-controls="pills-home" aria-selected="true">Intelli-Rate report by
+                                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                aria-selected="true">Intelli-Rate report by
                                 BancAnalytics</button>
                         </li>
                         <li class="nav-item col-md-6 p-1" role="presentation">
                             <button class="nav-link nav__item_btn" id="pills-profile-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-profile" type="button" role="tab"
-                                aria-controls="pills-profile" aria-selected="false">Pulse report by
+                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">Pulse report by
                                 BancAnalytics</button>
                         </li>
                     </ul>
@@ -555,19 +555,18 @@
                         <div class="footer-widget">
                             <div class="footer-logo">
                                 <!-- <a href="index.html"><img src="https://i.ibb.co/QDy827D/ak-logo.png" class="img-fluid" alt="logo"></a> -->
-                                <h4>APY_ANALYZER</h4>
+                                <h4>INTELLI-RATE</h4>
                             </div>
                             <div class="footer-text">
-                                <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor
-                                    incididuntut consec
-                                    tetur adipisicing
-                                    elit,Lorem ipsum dolor sit amet.</p>
+                                <p>BancAnalytics was founded in 1995 by experienced banking executives and business
+                                    professionals with a mission of improving data collection and analytical systems to
+                                    help financial institutions make more timely and impactful decisions.</p>
                             </div>
                             <div class="footer-social-icon">
                                 <span>Follow us</span>
-                                <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                                <!-- <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
                                 <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
-                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -578,15 +577,10 @@
                             </div>
                             <ul>
                                 <li><a href="#">Home</a></li>
-                                <li><a href="#">about</a></li>
-                                <li><a href="#">services</a></li>
-                                <li><a href="#">portfolio</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Our Services</a></li>
-                                <li><a href="#">Expert Team</a></li>
-                                <li><a href="#">Contact us</a></li>
-                                <li><a href="#">Latest News</a></li>
+                                <li><a href="#">News</a></li>
+                                <li><a href="#">Our Product</a></li>
+                                <li><a href="#">New Survey</a></li>
+                                <li><a href="#">About</a></li>
                             </ul>
                         </div>
                     </div>
@@ -612,14 +606,14 @@
         <div class="copyright-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                    <div class="col-xl-12 col-lg-12 text-center text-lg-center">
                         <div class="copyright-text">
                             <p>Copyright &copy; 2023, All Right Reserved <a
-                                    href="https://codepen.io/anupkumar92/">APY_ANALYZER</a>
+                                    href="https://codepen.io/anupkumar92/">INTELLI-RATE</a>
                             </p>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                    <!-- <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
                         <div class="footer-menu">
                             <ul>
                                 <li><a href="#">Home</a></li>
@@ -629,15 +623,14 @@
                                 <li><a href="#">Contact</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- ----Survey--Modal-Start----- -->
-    <div class="modal fade" id="survey_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="survey_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal_header_cus">
@@ -646,8 +639,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('bank_request_submit') }}" method="post">
-                    @csrf
-                    <div class="row">
+                        @csrf
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Enter Name</label>
@@ -665,24 +658,25 @@
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1" name="phone_number"
-                                        placeholder="12345678" required>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        name="phone_number" placeholder="12345678" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Enter Zip Code</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1" name="zip_code"
-                                        placeholder="Enter Zip Code." required>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        name="zip_code" placeholder="Enter Zip Code." required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Select State</label>
-                                    <select class="form-select" aria-label="Default select example" name="state_id" required>
+                                    <select class="form-select" aria-label="Default select example" name="state_id"
+                                        required>
                                         <option selected>Open this select State</option>
                                         @foreach ($states as $city)
-                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -690,18 +684,21 @@
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Select City</label>
-                                    <select class="form-select" aria-label="Default select example" name="city_id" required>
+                                    <select class="form-select" aria-label="Default select example" name="city_id"
+                                        required>
                                         <option selected>Open this select City</option>
                                         @foreach ($cities as $city)
-                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-2">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Enter Description</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"></textarea>
+                                    <label for="exampleFormControlTextarea1" class="form-label">Enter
+                                        Description</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="description"
+                                        rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -721,6 +718,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-</script>
+    </script>
 
 </html>

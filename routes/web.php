@@ -38,6 +38,10 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/form', function () {
+    return view('surveyForm');
+})->name('form');
+
 Route::get('/signin', function () {
     return view('landing_page');
 })->name('/signin');

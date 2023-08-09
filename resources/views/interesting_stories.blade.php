@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">APY_ANALYZER</a>
+                <a class="navbar-brand" href="#">INTELLI-RATE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -84,18 +84,18 @@
                         <div class="footer-widget">
                             <div class="footer-logo">
                                 <!-- <a href="index.html"><img src="https://i.ibb.co/QDy827D/ak-logo.png" class="img-fluid" alt="logo"></a> -->
-                                <h4>APY_ANALYZER</h4>
+                                <h4>INTELLI-RATE</h4>
                             </div>
                             <div class="footer-text">
-                                <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor
-                                    incididuntut consec tetur adipisicing
-                                    elit,Lorem ipsum dolor sit amet.</p>
+                                <p>BancAnalytics was founded in 1995 by experienced banking executives and business
+                                    professionals with a mission of improving data collection and analytical systems to
+                                    help financial institutions make more timely and impactful decisions.</p>
                             </div>
                             <div class="footer-social-icon">
                                 <span>Follow us</span>
-                                <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                                <!-- <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
                                 <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
-                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -106,15 +106,10 @@
                             </div>
                             <ul>
                                 <li><a href="#">Home</a></li>
-                                <li><a href="#">about</a></li>
-                                <li><a href="#">services</a></li>
-                                <li><a href="#">portfolio</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Our Services</a></li>
-                                <li><a href="#">Expert Team</a></li>
-                                <li><a href="#">Contact us</a></li>
-                                <li><a href="#">Latest News</a></li>
+                                <li><a href="#">News</a></li>
+                                <li><a href="#">Our Product</a></li>
+                                <li><a href="#">New Survey</a></li>
+                                <li><a href="#">About</a></li>
                             </ul>
                         </div>
                     </div>
@@ -140,13 +135,14 @@
         <div class="copyright-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                    <div class="col-xl-12 col-lg-12 text-center text-lg-center">
                         <div class="copyright-text">
                             <p>Copyright &copy; 2023, All Right Reserved <a
-                                    href="https://codepen.io/anupkumar92/">APY_ANALYZER</a></p>
+                                    href="https://codepen.io/anupkumar92/">INTELLI-RATE</a>
+                            </p>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                    <!-- <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
                         <div class="footer-menu">
                             <ul>
                                 <li><a href="#">Home</a></li>
@@ -156,7 +152,7 @@
                                 <li><a href="#">Contact</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
