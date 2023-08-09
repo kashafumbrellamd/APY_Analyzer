@@ -159,9 +159,9 @@ class CustomerSignup extends Component
         $this->subscription = '';
         $this->custom_banks = [];
         $this->selectedbanks = [];
-        $this->$all_banks = null;
-        $this->$bank_search = '';
-        $this->$bank_type = '';
+        $this->all_banks = null;
+        $this->bank_search = '';
+        $this->bank_type = '';
     }
 
     public function search_bank($value,$type)
