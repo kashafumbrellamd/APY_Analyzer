@@ -161,7 +161,7 @@ class AddBankRates extends Component
                 {
                     $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
                     foreach ($head as $key => $hd) {
-                        if($hd!=null && $hd != 'Bank Name' && $hd!='Date (mm/dd/YYYY)')
+                        if($hd!=null && $hd != 'Bank Name' && $hd!='Date (mm/dd/YYYY)' && $dt[$hd]!=null)
                         {
                             $rt = RateType::where('name',$hd)->first();
                             if($rt!=null)

@@ -38,6 +38,7 @@ class Bank extends Model
              ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
              ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
              ->with('cities')
+             ->orderby('name','ASC')
              ->paginate(10);
         return $states;
     }
@@ -49,6 +50,7 @@ class Bank extends Model
              ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
              ->where('banks.state_id',$id)
              ->with('cities')
+             ->orderby('name','ASC')
              ->paginate(10);
         return $states;
     }
