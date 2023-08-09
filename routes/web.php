@@ -38,9 +38,11 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/form', function () {
-    return view('surveyForm');
-})->name('form');
+Route::get('/Survey/form', function () {
+    $states = State::where('country_id',233)->get();
+    $cities = Cities::where('country_id',233)->get();
+    return view('surveyForm',['states'=>$states, 'cities'=>$cities]);
+})->name('survey_form');
 
 Route::get('/signin', function () {
     return view('landing_page');

@@ -86,8 +86,9 @@
                                         <h5>Intelli-Rate report by BancAnalytics</h5>
                                         <h4>Request For New Survey</h4>
                                         <!-- <p>Open an Elite Money Market account. Dependent on total balance and location.</p> -->
-                                        <button class="btn card_register_btn" data-bs-toggle="modal"
-                                            data-bs-target="#survey_modal">Request For New Survey</button>
+                                        <button class="btn card_register_btn" onclick="window.location.href='/Survey/form'">Request For New Survey</button>
+                                        <!-- <button class="btn card_register_btn" data-bs-toggle="modal"
+                                            data-bs-target="#survey_modal">Request For New Survey</button> -->
                                     </div>
                                 </div>
                             </div>
@@ -114,11 +115,6 @@
                 </div>
             </div>
         </section>
-        @if(session()->has('success'))
-        <div class="alert alert-success mt-2 text-center">
-            {{ session()->get('success') }}
-        </div>
-        @endif
         <section id="advertisers" class="advertisers-service-sec pt-5 pb-3">
             <div class="container">
                 <div class="row">
@@ -638,76 +634,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('bank_request_submit') }}" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Enter Name</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1" name="name"
-                                        placeholder="Enter Name of the Bank." required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1" name="email"
-                                        placeholder="name@example.com" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="phone_number" placeholder="12345678" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Enter Zip Code</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="zip_code" placeholder="Enter Zip Code." required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Select State</label>
-                                    <select class="form-select" aria-label="Default select example" name="state_id"
-                                        required>
-                                        <option selected>Open this select State</option>
-                                        @foreach ($states as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Select City</label>
-                                    <select class="form-select" aria-label="Default select example" name="city_id"
-                                        required>
-                                        <option selected>Open this select City</option>
-                                        @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-2">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Enter
-                                        Description</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="description"
-                                        rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <button type="submit" class="btn survey_submit_btn">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    
                 </div>
             </div>
         </div>

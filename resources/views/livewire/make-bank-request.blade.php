@@ -84,7 +84,6 @@
                                 <th>State</th>
                                 <th>City</th>
                                 <th>Description</th>
-                                <th>Requested By</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,7 +94,6 @@
                                     <td>{{ $dt->state->name }}</td>
                                     <td>{{ $dt->cities->name }}</td>
                                     <td>{{ $dt->description }}</td>
-                                    <td>{{ $dt->user->name }}</td>
                                 </tr>
                             @empty
                                 <tr>
