@@ -78,9 +78,15 @@
                         </div>
                     </div>
                     @error('upload_error')
+                    @php $count = 0; @endphp
                         <div class="mt-3 text-center">
                             @foreach($not_inserted_banks as $bank)
+                            @php $count++; @endphp
                             <span class="alert alert-danger" role="alert">{{ $bank }}</span>
+                            @if($count%4==0)
+                            <br>
+                            <br>
+                            @endif
                             @endforeach
                         </div>
                         <div class="mt-4 text-center">

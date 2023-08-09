@@ -138,7 +138,6 @@ class ManageBanks extends Component
         if($this->file != null)
         {
             $banks = $this->xlsxToArray($this->file->path());
-            dd($banks);
             foreach ($banks as $key => $bank) {
                 $bank_check = Bank::where('name',$bank['Bank Name'])->first();
                 if($bank_check==null && $bank['Bank Name']!= null)
