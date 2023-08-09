@@ -174,6 +174,8 @@ class AddBankRates extends Component
                                         'rate' => $dt[$hd],
                                         'previous_rate' => $dt[$hd],
                                         'current_rate' => $dt[$hd],
+                                        'change' => 0,
+                                        'is_checked' => 1,
                                         'created_at' => $date,
                                         'updated_at' => $date,
                                     ]);
@@ -192,6 +194,7 @@ class AddBankRates extends Component
                                         'previous_rate' => $check->current_rate,
                                         'current_rate' => $dt[$hd],
                                         'change' => $dt[$hd]-$check->current_rate,
+                                        'is_checked' => 1,
                                         'created_at' => $date,
                                         'updated_at' => $date,
                                     ]);

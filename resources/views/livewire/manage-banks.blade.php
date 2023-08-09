@@ -301,7 +301,11 @@
                         @php $count = 1; @endphp
                         @foreach ($data as $dt)
                             <tr>
-                                <td>{{ $count }}</td>
+                                @if($count != 10)
+                                <td>{{$data->currentPage()-1}}{{ $count }}</td>
+                                @else
+                                <td>{{$data->currentPage()}}0</td>
+                                @endif
                                 <td>{{ $dt->name }}</td>
                                 <td>{{ $dt->state_name }}</td>
                                 <td>{{ $dt->phone_number }}</td>

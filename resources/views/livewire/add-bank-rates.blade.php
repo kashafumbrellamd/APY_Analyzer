@@ -94,9 +94,15 @@
                         </div>
                     @enderror
                     @error('upload_rt_error')
+                    @php $count = 0; @endphp
                         <div class="mt-3 text-center">
                             @foreach($not_inserted_rt as $rt)
+                            @php $count++; @endphp
                             <span class="alert alert-danger" role="alert">{{ $rt }}</span>
+                            @if($count%5==0)
+                            <br>
+                            <br>
+                            @endif
                             @endforeach
                         </div>
                         <div class="mt-4 text-center">
@@ -184,16 +190,16 @@
                                         <tr>
                                             <td>{{ $bp->rate_type_name }}</td>
                                             @if (auth()->user()->hasRole('admin'))
-                                                <td>{{ $bp->rate }}</td>
+                                                <td>{{ number_format($bp->rate,2) }}</td>
                                             @endif
-                                            <td>{{ $bp->previous_rate }}</td>
-                                            <td>{{ $bp->current_rate }}</td>
+                                            <td>{{ number_format($bp->previous_rate,2) }}</td>
+                                            <td>{{ number_format($bp->current_rate,2) }}</td>
                                             @if ($bp->current_rate > $bp->previous_rate)
-                                               <td class="text-success">{{ $bp->change }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                               <td class="text-success">{{ number_format($bp->change,2) }}  <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                                             @elseif ($bp->current_rate == $bp->previous_rate)
-                                               <td class="text-dark">{{ $bp->change }}</td>
+                                               <td class="text-dark">{{ number_format($bp->change,2) }}</td>
                                             @else
-                                               <td class="text-danger">{{ $bp->change }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                               <td class="text-danger">{{ number_format($bp->change,2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                             @endif
                                             <td>{{ date('m-d-Y', strtotime(explode(' ', $bp->created_at)[0])) }}
                                                 {{ explode(' ', $bp->created_at)[1] }}</td>
