@@ -34,20 +34,23 @@ class SeperateReport extends Component
         $msa_codes = $this->getmsacodes();
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!='' && $this->state_id!='all'){
-            $this->reports = BankPrices::SeperateReports('state',$this->state_id,$this->selected_bank_type);
-            $this->results = BankPrices::get_min_max_func('state',$this->state_id,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
+            $this->reports = $response['rate_types'];
+            $this->results = BankPrices::get_min_max_func('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $this->reports = BankPrices::SeperateReports('msa',$this->msa_code,$this->selected_bank_type);
-            $this->results = BankPrices::get_min_max_func('msa',$this->msa_code,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type);
+            $this->reports = $response['rate_types'];
+            $this->results = BankPrices::get_min_max_func('msa','all',$this->msa_code,$this->selected_bank_type);
         }else {
-            $this->reports = BankPrices::SeperateReports('all','0',$this->selected_bank_type);
-            $this->results = BankPrices::get_min_max_func('all','0',$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('all','all','0',$this->selected_bank_type);
+            $this->reports = $response['rate_types'];
+            $this->results = BankPrices::get_min_max_func('all','all','0',$this->selected_bank_type);
         }
         if($this->columns == [])
         {
             $this->fill($rt);
         }
-        $banks = Bank::get();
+        $banks = $response['show_banks'];
         $bankTypes = BankType::where('status','1')->get();
         return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes,'banks'=>$banks]);
     }
@@ -83,9 +86,17 @@ class SeperateReport extends Component
 
     public function getmsacodes()
     {
-        $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-        $msa_codes = Bank::where('state_id',$customer_type->state)->groupBy('msa_code')->get();
-        return $msa_codes;
+        if($this->state_id!='' && $this->state_id!='all')
+        {
+            $msa_codes = Bank::with('cities')->where('state_id',$this->state_id)->groupBy('city_id')->get();
+            return $msa_codes;
+        }
+        else
+        {
+            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            return $msa_codes;
+        }
+        
     }
 
     public function selectAll(){
@@ -132,5 +143,12 @@ class SeperateReport extends Component
     {
         $this->state_id = '';
         $this->msa_code = '';
+    }
+
+    public function selectstate($id)
+    {
+        $this->state_id = $id;
+        $this->msa_code = '';
+        $this->render();
     }
 }
