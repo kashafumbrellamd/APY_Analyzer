@@ -7,27 +7,27 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-3 mb-2">
+                <div class="col-md-2 mb-2">
                     @if ($customer_type->display_reports == 'custom')
-                        <select class="form-select form-control" aria-label="Default select example" wire:model="state_id">
+                        <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)">
                             <option value="">Select State</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
                             @endforeach
                             <option value="all">All Data</option>
                         </select>
-                    @elseif($customer_type->display_reports == 'state')
-                        <select class="form-select form-control" aria-label="Default select example"
-                            wire:model="msa_code">
-                            <option value="">Select MSA Code</option>
-                            @foreach ($msa_codes as $code)
-                                <option value="{{ $code->msa_code }}">{{ $code->msa_code }}</option>
-                            @endforeach
-                            <option value="all">All Data</option>
-                        </select>
                     @endif
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="msa_code">
+                        <option value="">Select City</option>
+                        @foreach ($msa_codes as $code)
+                            <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
                         <option value="">Select Institution Type</option>

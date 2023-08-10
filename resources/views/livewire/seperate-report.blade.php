@@ -11,24 +11,24 @@
             <div class="row">
                 <div class="col-md-2 mb-2">
                     @if ($customer_type->display_reports == 'custom')
-                        <select class="form-select form-control" aria-label="Default select example" wire:model="state_id">
+                        <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)">
                             <option value="">Select State</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
                             @endforeach
-                            <option value="all">All Data</option>
-                        </select>
-                    @elseif($customer_type->display_reports == 'state')
-                        <select class="form-select form-control" aria-label="Default select example"
-                            wire:model="msa_code">
-                            <option value="">Select MSA Code</option>
-                            @foreach ($msa_codes as $code)
-                                <option value="{{ $code->msa_code }}">{{ $code->msa_code }}</option>
-                            @endforeach
-                            <option value="all">All Data</option>
                         </select>
                     @endif
                 </div>
+                <div class="col-md-2">
+                    <select class="form-select form-control" aria-label="Default select example"
+                        wire:model="msa_code">
+                        <option value="">Select City</option>
+                        @foreach ($msa_codes as $code)
+                            <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
@@ -48,11 +48,10 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    {{-- <p><span class="text-success">Green: Increase <br></span>
-                       <span class="text-danger">Red: Decrease<br></span>
-                       <span class="text-dark">Black: No Change<br></span></p> --}}
-                </div>
-                <div class="col-md-2">
+                    <!-- <button class="btn btn-primary" style="background-color:#4e73df; color:white; float:right;" type="button">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button> -->
                     <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
                 </div>
                 <div class="col-md-2">
@@ -101,7 +100,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="text-center">
+                <div wire:loading.delay>
+                    <div class="spinner-border text-danger" role="status">
+                    </div>
+                    <br>
+                    <span class="text-danger">Loading...</span>
+                </div>
+            </div>
+            <div class="row" wire:loading.class="invisible">
             @foreach($reports as $key => $rt)
             @if($columns[$rt->id] == 1)
             <div class="col-md-6 mt-3">

@@ -28,7 +28,7 @@ class BankReports extends Component
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
         if($this->state_id!='' && $this->state_id!='all'){
-            $reports = BankPrices::BankReportsWithState($this->state_id,$this->selected_bank_type);
+            $reports = BankPrices::BankReportsWithState($this->state_id,$this->msa_code,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
             $reports = BankPrices::BankReportsWithMsa($this->msa_code,$this->selected_bank_type);
         }else {
@@ -74,9 +74,16 @@ class BankReports extends Component
 
     public function getmsacodes()
     {
-        $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-        $msa_codes = Bank::where('state_id',$customer_type->state)->groupBy('msa_code')->get();
-        return $msa_codes;
+        if($this->state_id!='' && $this->state_id!='all')
+        {
+            $msa_codes = Bank::with('cities')->where('state_id',$this->state_id)->groupBy('city_id')->get();
+            return $msa_codes;
+        }
+        else
+        {
+            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            return $msa_codes;
+        }
     }
 
     public function selectAll(){
@@ -98,5 +105,12 @@ class BankReports extends Component
         $this->state_id = '';
         $this->msa_code = '';
         $this->selected_bank_type = '';
+    }
+
+    public function selectstate($id)
+    {
+        $this->state_id = $id;
+        $this->msa_code = '';
+        $this->render();
     }
 }
