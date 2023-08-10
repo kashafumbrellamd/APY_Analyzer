@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">INTELLI-RATE</a>
+                <a class="navbar-brand header_brand_heading" href="#">INTELLI-RATE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -136,7 +136,7 @@
                     <div class="footer-widget">
                         <div class="footer-logo">
                             <!-- <a href="index.html"><img src="https://i.ibb.co/QDy827D/ak-logo.png" class="img-fluid" alt="logo"></a> -->
-                            <h4>INTELLI-RATE</h4>
+                            <h4 class="footer_brand_heading">INTELLI-RATE</h4>
                         </div>
                         <div class="footer-text">
                             <p>BancAnalytics was founded in 1995 by experienced banking executives and business

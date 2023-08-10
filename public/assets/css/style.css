@@ -477,3 +477,9 @@ body {
     color: var(--main-color);
     text-shadow: 1px 2px 2px var(--second-color);
   }
+  .header_brand_heading{
+    color: var(--main-color) !important;
+  }
+  .footer_brand_heading{
+    color: #fff !important;
+  }
