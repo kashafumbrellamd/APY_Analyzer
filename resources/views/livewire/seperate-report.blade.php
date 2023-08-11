@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-2 mb-2">
                     @if ($customer_type->display_reports == 'custom')
-                        <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)">
+                        <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)" wire:model="state_id">
                             <option value="">Select State</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -99,6 +99,22 @@
                         </ul>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Load Filters</button>
+                </div>
+                @error('filter_error')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                </div>
+                @enderror
+                @error('filter_success')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-success" role="alert">{{ $message }}</span>
+                </div>
+                @enderror
             </div>
             <div class="text-center">
                 <div wire:loading.delay>
@@ -118,7 +134,7 @@
                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="first-col" style="text-align:center;">Sr.</td>
+                            <th class="first-col" style="text-align:center;">Rank</td>
                             <th class="first-col" style="text-align:center;">Institution Name</td>
                             <th class="first-col" style="text-align:center;">Previous</td>
                             <th class="first-col" style="text-align:center;">APY</td>
@@ -141,7 +157,7 @@
                                                 @elseif ($bank['current_rate'] == $bank['previous_rate'])
                                                     <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
+                                                    <td class="text-dark" style="text-align:center;">---</td>
                                                 @else
                                                     <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
@@ -159,7 +175,7 @@
                                                 @elseif ($bank['current_rate'] == $bank['previous_rate'])
                                                     <td class="text-dark" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-dark" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                    <td class="text-dark" style="text-align:center;">{{ number_format($bank['change'],2) }}</td>
+                                                    <td class="text-dark" style="text-align:center;">---</td>
                                                 @else
                                                     <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
@@ -200,38 +216,38 @@
                         <tr>
                             <th></th>
                             <th></th>
-                            <th style="text-align:center;">Current</th>
                             <th style="text-align:center;">Prior</th>
+                            <th style="text-align:center;">Current</th>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Highest APY</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Median</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_med'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Lowest APY</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_min'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Average</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_avg'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Mode</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_mode'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
                         </tr>
                     </tfoot>
                     @endif

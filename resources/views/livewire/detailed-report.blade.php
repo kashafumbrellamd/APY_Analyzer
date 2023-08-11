@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-2 mb-2">
                     @if ($customer_type->display_reports == 'custom')
-                        <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)">
+                        <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)" wire:model="state_id">
                             <option value="">Select State</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -89,9 +89,32 @@
                         </ul>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Load Filters</button>
+                </div>
+                @error('filter_error')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                </div>
+                @enderror
+                @error('filter_success')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-success" role="alert">{{ $message }}</span>
+                </div>
+                @enderror
             </div>
-
-            <div class="table-responsive table__font_style">
+            <div class="text-center">
+                <div wire:loading.delay>
+                    <div class="spinner-border text-danger" role="status">
+                    </div>
+                    <br>
+                    <span class="text-danger">Loading...</span>
+                </div>
+            </div>
+            <div class="table-responsive table__font_style mt-3" wire:loading.class="invisible">
                 <div class="table-wrapper">
                     <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -147,7 +170,7 @@
                                                                 @elseif ($report[$rt->id]['current_rate'] == $report[$rt->id]['previous_rate'])
                                                                     <td class="text-dark">{{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
                                                                     <td class="text-dark">{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
-                                                                    <td class="text-dark">{{ number_format($report[$rt->id]['change'],2) }}</td>
+                                                                    <td class="text-dark">---</td>
                                                                 @else
                                                                     <td class="text-danger">
                                                                         {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
@@ -199,34 +222,34 @@
                                                         cellspacing="0">
                                                         <thead>
                                                             <th></th>
-                                                            <th>Current</th>
                                                             <th>Prior</th>
+                                                            <th>Current</th>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>Highest APY</td>
-                                                                <td>{{ number_format($rt->c_max, 2) }}</td>
                                                                 <td>{{ number_format($rt->p_max, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_max, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Median</td>
-                                                                <td>{{ number_format($rt->c_med, 2) }}</td>
                                                                 <td>{{ number_format($rt->p_med, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_med, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Lowest APY</td>
-                                                                <td>{{ number_format($rt->c_min, 2) }}</td>
                                                                 <td>{{ number_format($rt->p_min, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_min, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Average</td>
-                                                                <td>{{ number_format($rt->c_avg, 2) }}</td>
                                                                 <td>{{ number_format($rt->p_avg, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_avg, 2) }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Mode</td>
-                                                                <td>{{ number_format($rt->c_mode, 2) }}</td>
                                                                 <td>{{ number_format($rt->p_mode, 2) }}</td>
+                                                                <td>{{ number_format($rt->c_mode, 2) }}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

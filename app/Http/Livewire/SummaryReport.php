@@ -7,6 +7,8 @@ use App\Models\RateType;
 use App\Models\BankPrices;
 use App\Models\Bank;
 use App\Models\BankType;
+use App\Models\Filter;
+use App\Models\Column;
 
 
 class SummaryReport extends Component
@@ -61,5 +63,57 @@ class SummaryReport extends Component
                 $this->columns[$key] = 0;
         }
         $this->render();
+    }
+
+    public function save_filters()
+    {
+        $user_id = auth()->user()->id;
+        if($this->selected_bank == '' && $this->selected_bank_type == '' && $this->columns == []){
+            $this->addError('filter_error','No Filter is Selected');
+        }else{
+            $colum = Column::where('user_id',$user_id)->delete();
+            foreach ($this->columns as $key => $value) {
+                if($value==1){
+                    $colum = Column::Create([
+                        'user_id'=>$user_id,
+                        'rate_type_id'=>$key,
+                    ]);
+                }
+            }
+            $filters = Filter::where('user_id',$user_id)->first();
+            if($filters!=null){
+                $filters->bank_type_id = $this->selected_bank_type;
+                $filters->bank_id = $this->selected_bank;
+                $filters->save();
+                $this->addError('filter_success','Filters Updated Successfully');
+            }else{
+                $filters = Filter::Create([
+                    'user_id'=>$user_id,
+                    'bank_type_id'=>$this->selected_bank_type,
+                    'bank_id'=>$this->selected_bank,
+                ]);
+                $this->addError('filter_success','Filters Added Successfully');
+            }
+        }
+    }
+
+    public function load_filters()
+    {
+        $user_id = auth()->user()->id;
+        $colum = Column::where('user_id',$user_id)->get();
+        $filters = Filter::where('user_id',$user_id)->first();
+        if($filters!=null)
+        {
+            $this->deselectAll();
+            foreach ($colum as $col) {
+                $index = $col->rate_type_id;
+                $this->columns[$index] = 1;
+            }
+            $this->selected_bank_type = $filters->bank_type_id;
+            $this->selected_bank = $filters->bank_id;
+        }
+        else{
+            $this->addError('filter_error','No Filter is saved');
+        }
     }
 }

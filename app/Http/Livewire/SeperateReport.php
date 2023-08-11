@@ -10,6 +10,8 @@ use App\Models\CustomPackageBanks;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Role;
+use App\Models\Filter;
+use App\Models\Column;
 use App\Models\RateType;
 use App\Models\BankType;
 use DB;
@@ -21,11 +23,11 @@ class SeperateReport extends Component
     public $columns = [];
     public $reports;
     public $results;
-    public $state_id = '';
-    public $msa_code = '';
-    public $last_updated = '';
-    public $selected_bank = '';
-    public $selected_bank_type = '';
+    public $state_id = "";
+    public $msa_code = "";
+    public $last_updated = "";
+    public $selected_bank = "";
+    public $selected_bank_type = "";
     public function render()
     {
         $rt = RateType::orderby('id','ASC')->get();
@@ -33,11 +35,11 @@ class SeperateReport extends Component
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
-        if($this->state_id!='' && $this->state_id!='all'){
+        if($this->state_id!="" && $this->state_id!='all'){
             $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
             $this->reports = $response['rate_types'];
             $this->results = BankPrices::get_min_max_func('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
-        }elseif ($this->msa_code != '' && $this->msa_code!='all') {
+        }elseif ($this->msa_code != "" && $this->msa_code!='all') {
             $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type);
             $this->reports = $response['rate_types'];
             $this->results = BankPrices::get_min_max_func('msa','all',$this->msa_code,$this->selected_bank_type);
@@ -103,14 +105,12 @@ class SeperateReport extends Component
         foreach ($this->columns as $key => $dt) {
                 $this->columns[$key] = 1;
         }
-        $this->render();
     }
 
     public function deselectAll(){
         foreach ($this->columns as $key => $dt) {
                 $this->columns[$key] = 0;
         }
-        $this->render();
     }
 
     public function print_report()
@@ -141,14 +141,72 @@ class SeperateReport extends Component
 
     public function clear()
     {
-        $this->state_id = '';
-        $this->msa_code = '';
+        $this->state_id = "";
+        $this->msa_code = "";
+        $this->selected_bank_type = "";
+        $this->selected_bank = "";
     }
 
     public function selectstate($id)
     {
-        $this->state_id = $id;
-        $this->msa_code = '';
-        $this->render();
+        $this->msa_code = "";
     }
+
+    public function save_filters()
+    {
+        $user_id = auth()->user()->id;
+        if($this->state_id == '' && $this->msa_code == '' && $this->selected_bank_type == '' && $this->selected_bank == '' && $this->columns == []){
+            $this->addError('filter_error','No Filter is Selected');
+        }else{
+            $colum = Column::where('user_id',$user_id)->delete();
+            foreach ($this->columns as $key => $value) {
+                if($value==1){
+                    $colum = Column::Create([
+                        'user_id'=>$user_id,
+                        'rate_type_id'=>$key,
+                    ]);
+                }
+            }
+            $filters = Filter::where('user_id',$user_id)->first();
+            if($filters!=null){
+                $filters->state_id = $this->state_id;
+                $filters->city_id = $this->msa_code;
+                $filters->bank_type_id = $this->selected_bank_type;
+                $filters->bank_id = $this->selected_bank;
+                $filters->save();
+                $this->addError('filter_success','Filters Updated Successfully');
+            }else{
+                $filters = Filter::Create([
+                    'user_id'=>$user_id,
+                    'state_id'=>$this->state_id,
+                    'city_id'=>$this->msa_code,
+                    'bank_type_id'=>$this->selected_bank_type,
+                    'bank_id'=>$this->selected_bank,
+                ]);
+                $this->addError('filter_success','Filters Added Successfully');
+            }
+        }
+    }
+
+    public function load_filters()
+    {
+        $user_id = auth()->user()->id;
+        $colum = Column::where('user_id',$user_id)->get();
+        $filters = Filter::where('user_id',$user_id)->first();
+        if($filters!=null)
+        {
+            $this->deselectAll();
+            foreach ($colum as $col) {
+                $index = $col->rate_type_id;
+                $this->columns[$index] = 1;
+            }
+            $this->state_id = $filters->state_id;
+            $this->msa_code = $filters->city_id;
+            $this->selected_bank_type = $filters->bank_type_id;
+            $this->selected_bank = $filters->bank_id;
+        }
+        else{
+            $this->addError('filter_error','No Filter is saved');
+        }
+    } 
 }

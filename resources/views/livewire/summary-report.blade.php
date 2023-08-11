@@ -72,13 +72,37 @@
                         </ul>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Load Filters</button>
+                </div>
+                @error('filter_error')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                </div>
+                @enderror
+                @error('filter_success')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-success" role="alert">{{ $message }}</span>
+                </div>
+                @enderror
             </div>
-            <div class="table-responsive table__font_style">
+            <div class="text-center">
+                <div wire:loading.delay>
+                    <div class="spinner-border text-danger" role="status">
+                    </div>
+                    <br>
+                    <span class="text-danger">Loading...</span>
+                </div>
+            </div>
+            <div class="table-responsive table__font_style mt-3" wire:loading.class="invisible">
                 <div class="table-wrapper">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Sr.</th>
+                                <th>Rank.</th>
                                 @foreach ($rate_type as $rt)
                                     @if ($columns[$rt->id] == 1)
                                         <th>{{ $rt->name }}</th>
