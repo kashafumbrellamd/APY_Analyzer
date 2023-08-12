@@ -150,51 +150,95 @@
                             @forelse ($reports as $report)
                                 <tr>
                                     @if($report->id == $my_bank_id)
-                                        <td class="first-col" style="color:#a50101!important;">{{ $report->name }}</td>
+                                        <td class="first-col" style="color:#9d4201!important;">{{ $report->name }}</td>
                                     @else
                                         <td class="first-col">{{ $report->name }}</td>
                                     @endif
                                     @foreach ($rate_type as $rt_key => $rt)
-                                        @if ($columns[$rt->id] == 1)
-                                            <td>
-                                                <table class="table table-bordered" id="dataTable" width="100%"
-                                                    cellspacing="0">
-                                                    <tbody>
-                                                        @if ($report[$rt->id] != null)
-                                                            <tr>
-                                                                @if ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
-                                                                    <td class="text-success">
-                                                                        {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
-                                                                    <td class="text-success">
-                                                                        {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
-                                                                    <td class="text-success">
-                                                                        {{ number_format($report[$rt->id]['change'],2) }} <i
-                                                                            class="fa fa-arrow-up"
-                                                                            aria-hidden="true"></i></td>
-                                                                @elseif ($report[$rt->id]['current_rate'] == $report[$rt->id]['previous_rate'])
-                                                                    <td class="text-dark">{{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
-                                                                    <td class="text-dark">{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
-                                                                    <td class="text-dark">---</td>
-                                                                @else
-                                                                    <td class="text-danger">
-                                                                        {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
-                                                                    <td class="text-danger">
-                                                                        {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
-                                                                    <td class="text-danger">
-                                                                        {{ number_format($report[$rt->id]['change'],2) }} <i
-                                                                            class="fa fa-arrow-down"
-                                                                            aria-hidden="true"></i></td>
-                                                                @endif
-                                                            </tr>
-                                                        @else
-                                                            <tr>
-                                                                <td>---</td>
-                                                                <td>---</td>
-                                                            </tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </td>
+                                        @if($report->id == $my_bank_id)
+                                            @if ($columns[$rt->id] == 1)
+                                                <td>
+                                                    <table class="table table-bordered" id="dataTable" width="100%"
+                                                        cellspacing="0">
+                                                        <tbody>
+                                                            @if ($report[$rt->id] != null)
+                                                                <tr>
+                                                                    @if ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
+                                                                        <td class="text-success" style="color:#9d4201!important;">
+                                                                            {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                        <td class="text-success" style="color:#9d4201!important;">
+                                                                            {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                        <td class="text-success" style="color:#9d4201!important;">
+                                                                            {{ number_format($report[$rt->id]['change'],2) }} <i
+                                                                                class="fa fa-arrow-up"
+                                                                                aria-hidden="true"></i></td>
+                                                                    @elseif ($report[$rt->id]['current_rate'] == $report[$rt->id]['previous_rate'])
+                                                                        <td class="text-dark" style="color:#9d4201!important;">{{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                        <td class="text-dark" style="color:#9d4201!important;">{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                        <td class="text-dark" style="color:#9d4201!important;">---</td>
+                                                                    @else
+                                                                        <td class="text-danger" style="color:#9d4201!important;">
+                                                                            {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                        <td class="text-danger" style="color:#9d4201!important;">
+                                                                            {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                        <td class="text-danger" style="color:#9d4201!important;">
+                                                                            {{ number_format($report[$rt->id]['change'],2) }} <i
+                                                                                class="fa fa-arrow-down"
+                                                                                aria-hidden="true"></i></td>
+                                                                    @endif
+                                                                </tr>
+                                                            @else
+                                                                <tr>
+                                                                    <td>---</td>
+                                                                    <td>---</td>
+                                                                </tr>
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            @endif
+                                        @else
+                                            @if ($columns[$rt->id] == 1)
+                                                <td>
+                                                    <table class="table table-bordered" id="dataTable" width="100%"
+                                                        cellspacing="0">
+                                                        <tbody>
+                                                            @if ($report[$rt->id] != null)
+                                                                <tr>
+                                                                    @if ($report[$rt->id]['current_rate'] > $report[$rt->id]['previous_rate'])
+                                                                        <td class="text-success">
+                                                                            {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                        <td class="text-success">
+                                                                            {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                        <td class="text-success">
+                                                                            {{ number_format($report[$rt->id]['change'],2) }} <i
+                                                                                class="fa fa-arrow-up"
+                                                                                aria-hidden="true"></i></td>
+                                                                    @elseif ($report[$rt->id]['current_rate'] == $report[$rt->id]['previous_rate'])
+                                                                        <td class="text-dark">{{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                        <td class="text-dark">{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                        <td class="text-dark">---</td>
+                                                                    @else
+                                                                        <td class="text-danger">
+                                                                            {{ number_format($report[$rt->id]['previous_rate'],2) }}</td>
+                                                                        <td class="text-danger">
+                                                                            {{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                                                        <td class="text-danger">
+                                                                            {{ number_format($report[$rt->id]['change'],2) }} <i
+                                                                                class="fa fa-arrow-down"
+                                                                                aria-hidden="true"></i></td>
+                                                                    @endif
+                                                                </tr>
+                                                            @else
+                                                                <tr>
+                                                                    <td>---</td>
+                                                                    <td>---</td>
+                                                                </tr>
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            @endif
                                         @endif
                                     @endforeach
                                 </tr>

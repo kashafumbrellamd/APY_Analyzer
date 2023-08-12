@@ -135,16 +135,26 @@
                         @forelse ($reports as $report)
                             <tr>
                                 @if($report->id == $my_bank_id)
-                                    <td class="first-col" style="text-align: left; color:#a50101!important;">{{ $report->name }}</td>
+                                    <td class="first-col" style="text-align: left; color:#9d4201!important;">{{ $report->name }}</td>
                                 @else
                                     <td class="first-col" style="text-align: left;">{{ $report->name }}</td>
                                 @endif
                                 @foreach ($rate_type as $rt_key => $rt)
-                                    @if ($columns[$rt->id] == 1)
-                                        @if ($report[$rt->id] != null)
-                                            <td>{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
-                                        @else
-                                            <td>---</td>
+                                    @if($report->id == $my_bank_id)
+                                        @if ($columns[$rt->id] == 1)
+                                            @if ($report[$rt->id] != null)
+                                                <td style="color:#9d4201!important;">{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                            @else
+                                                <td>---</td>
+                                            @endif
+                                        @endif
+                                    @else
+                                        @if ($columns[$rt->id] == 1)
+                                            @if ($report[$rt->id] != null)
+                                                <td>{{ number_format($report[$rt->id]['current_rate'],2) }}</td>
+                                            @else
+                                                <td>---</td>
+                                            @endif
                                         @endif
                                     @endif
                                 @endforeach

@@ -143,12 +143,12 @@
                                                 @endif
                                             @else
                                                 @if ($rt['data'][$i]->bk_id != $selected_bank)
-                                                    <td style="color:#a50101!important;"
+                                                    <td style="color:#9d4201!important;"
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;Last Updated: {{date('m-d-Y',strtotime(explode(' ',$rt['data'][$i]->created_at)[0]))}}">
                                                         {{ $rt['data'][$i]->bk_name }}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @else
-                                                    <td style="color:#a50101!important;" 
+                                                    <td style="color:#9d4201!important;" 
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;"
                                                         class="text-danger">{{ $rt['data'][$i]->bk_name }}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>

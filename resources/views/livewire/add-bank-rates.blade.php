@@ -239,7 +239,6 @@
                     <div class="container">
                             <form wire:submit.prevent="specialRateSubmit">
                                 <div class="row mb-3">
-                                    @if (auth()->user()->hasRole('data-entry-operator'))
                                         <div class="col-md-4">
                                             <label for="special_rate">New Rate</label>
                                             <input type="text" id="special_rate" class="form-control mr-2"
@@ -253,8 +252,7 @@
                                         <div class="col-md-4 mt-3">
                                             <button type="submit" class="btn btn-primary mt-3">Submit</button>
                                         </div>
-                                    @endif
-                                </div>
+x`                                </div>
                             </form>
                         @error('s_submit')
                             <div class="mt-3 text-center mb-3">
