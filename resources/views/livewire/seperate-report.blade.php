@@ -149,7 +149,11 @@
                                         @if ($selected_bank == $bank['bank_id'])
                                             <tr style="background-color: #e8e7e7;">
                                                 <td>{{ ++$key1 }}</td>
-                                                <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
+                                                @if($bank['bank_id'] == $my_bank_id)
+                                                    <td style="text-align: left; color:#a50101!important;">{{ $bank['bank_name'] }}</td>
+                                                @else
+                                                    <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
+                                                @endif
                                                 @if ($bank['current_rate'] > $bank['previous_rate'])
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
@@ -167,7 +171,11 @@
                                         @else
                                             <tr>
                                                 <td>{{ ++$key1 }}</td>
-                                                <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
+                                                @if($bank['bank_id'] == $my_bank_id)
+                                                    <td style="text-align: left; color:#a50101!important;">{{ $bank['bank_name'] }}</td>
+                                                @else
+                                                    <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
+                                                @endif
                                                 @if ($bank['current_rate'] > $bank['previous_rate'])
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>

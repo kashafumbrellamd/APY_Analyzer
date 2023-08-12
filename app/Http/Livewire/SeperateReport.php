@@ -28,6 +28,7 @@ class SeperateReport extends Component
     public $last_updated = "";
     public $selected_bank = "";
     public $selected_bank_type = "";
+    public $my_bank_id = "";
     public function render()
     {
         $rt = RateType::orderby('id','ASC')->get();
@@ -54,6 +55,8 @@ class SeperateReport extends Component
         }
         $banks = $response['show_banks'];
         $bankTypes = BankType::where('status','1')->get();
+        $my_bank_name = CustomerBank::where('id',auth()->user()->bank_id)->pluck('bank_name')->first();
+        $this->my_bank_id = Bank::where('name','like','%'.$my_bank_name.'%')->pluck('id')->first();
         return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes,'banks'=>$banks]);
     }
 

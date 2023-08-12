@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\RateType;
 use App\Models\BankPrices;
 use App\Models\Bank;
+use App\Models\CustomerBank;
 use App\Models\BankType;
 use App\Models\Filter;
 use App\Models\Column;
@@ -17,6 +18,7 @@ class SummaryReport extends Component
     public $last_updated = '';
     public $selected_bank = '';
     public $selected_bank_type = '';
+    public $my_bank_id = '';
 
     public function render()
     {
@@ -32,6 +34,8 @@ class SummaryReport extends Component
         }
         $banks = Bank::get();
         $bankTypes = BankType::where('status','1')->get();
+        $my_bank_name = CustomerBank::where('id',auth()->user()->bank_id)->pluck('bank_name')->first();
+        $this->my_bank_id = Bank::where('name','like','%'.$my_bank_name.'%')->pluck('id')->first();
         return view('livewire.summary-report',['rate_type'=>$rt,'banks'=>$banks,'bankTypes'=>$bankTypes]);
     }
 

@@ -134,7 +134,11 @@
                     <tbody>
                         @forelse ($reports as $report)
                             <tr>
-                                <td class="first-col" style="text-align: left;">{{ $report->name }}</td>
+                                @if($report->id == $my_bank_id)
+                                    <td class="first-col" style="text-align: left; color:#a50101!important;">{{ $report->name }}</td>
+                                @else
+                                    <td class="first-col" style="text-align: left;">{{ $report->name }}</td>
+                                @endif
                                 @foreach ($rate_type as $rt_key => $rt)
                                     @if ($columns[$rt->id] == 1)
                                         @if ($report[$rt->id] != null)

@@ -22,6 +22,7 @@ class BankReports extends Component
     public $state_id = '';
     public $msa_code = '';
     public $selected_bank_type = '';
+    public $my_bank_id = '';
     public function render()
     {
         $rt = RateType::orderby('id','ASC')->get();
@@ -41,6 +42,8 @@ class BankReports extends Component
             $this->fill($rt);
         }
         $bankTypes = BankType::where('status','1')->get();
+        $my_bank_name = CustomerBank::where('id',auth()->user()->bank_id)->pluck('bank_name')->first();
+        $this->my_bank_id = Bank::where('name','like','%'.$my_bank_name.'%')->pluck('id')->first();
         // $this->clear();
         return view('livewire.bank-reports',['rate_type'=>$rt,'data'=>$data,'reports'=>$reports,'customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes]);
     }
