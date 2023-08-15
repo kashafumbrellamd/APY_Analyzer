@@ -26,6 +26,7 @@ class AddBankRates extends Component
     public $special_rate = '';
     public $special_description = '';
     public $file = null;
+    public $spec_file = null;
     public $not_inserted_banks = [];
     public $not_inserted_rt = [];
 
@@ -146,6 +147,16 @@ class AddBankRates extends Component
         return response()->download($filename, "BankRates.xlsx", $headers);
     }
 
+    public function download_special_xlsx()
+    {
+        $headers = array(
+            'Content-Type' => 'text/xlsx'
+        );
+        $filename =  public_path('BankRates(special).xlsx');
+
+        return response()->download($filename, "BankRates(special).xlsx", $headers);
+    }
+
     public function upload_xlsx()
     {
         $this->not_inserted_banks = [];
@@ -231,6 +242,55 @@ class AddBankRates extends Component
         }
         else{
             $this->addError('file_error','Please select file again');
+        }
+    }
+
+    public function upload_special_xlsx()
+    {
+        $this->not_inserted_banks = [];
+        $this->not_inserted_rt = [];
+        if($this->spec_file != null)
+        {
+            $head = $this->xlsxToArray($this->spec_file->path());
+            $data = $head['file'];
+            $head = $head['headerRow'];
+            foreach ($data as $key => $dt) {
+                $bank = Bank::where('name',$dt['Bank Name'])->first();
+                if($bank!=null)
+                {
+                    $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
+                    if($dt['Rate']!=null)
+                    {
+                        $p_user = DB::table('specialization_rates')->insert([
+                            'bank_id' => $bank->id,
+                            'rate' => $dt['Rate'],
+                            'description' => $dt['Description'],
+                            'created_at' => $date,
+                            'updated_at' => $date,
+                        ]);
+                    }
+                    else{
+                        array_push($this->not_inserted_rt,$dt['Bank Name']);
+                    }
+                }else{
+                    array_push($this->not_inserted_banks,$dt['Bank Name']);
+                }
+            }
+
+            if($this->not_inserted_banks == [] && $this->not_inserted_rt == []){
+                $this->addError('upload_spec_success','All Data inserted successfully');
+            }else{
+                if($this->not_inserted_banks != []){
+                    $this->addError('upload_spec_error','Above Banks Does not exist');
+                }
+                if($this->not_inserted_rt != []){
+                    $this->addError('upload_spec_rt_error','Above Banks Rate are null');
+                }
+            }
+            $this->spec_file = null;
+        }
+        else{
+            $this->addError('spec_file_error','Please select file again');
         }
     }
 

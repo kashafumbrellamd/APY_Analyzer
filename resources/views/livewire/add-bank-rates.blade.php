@@ -230,35 +230,86 @@
                 <div class="card-header py-3" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                     <div class="d-flex justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Institution Rates (Special)</h6>
-                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        <div class="col-md-6">
+                            <h6 class="m-0 font-weight-bold text-primary">Institution Rates (Special)</h6>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-between">
+                            <button wire:click="download_special_xlsx" class="btn btn-primary">Format <i class="fa fa-download" aria-hidden="true"></i></button>
+                            <input type="file" wire:model="spec_file" class="btn btn-primary"/>
+                            <button wire:click="upload_special_xlsx" class="btn btn-primary">Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+                            <i class="fa fa-chevron-down mt-3 pl-2" aria-hidden="true"></i>
+                        </div>
                     </div>
+                    @error('upload_spec_error')
+                    @php $count = 0; @endphp
+                        <div class="mt-3 text-center">
+                            @foreach($not_inserted_banks as $bank)
+                            @php $count++; @endphp
+                            <span class="alert alert-danger" role="alert">{{ $bank }}</span>
+                            @if($count%4==0)
+                            <br>
+                            <br>
+                            @endif
+                            @endforeach
+                        </div>
+                        <div class="mt-4 text-center">
+                            <span class="text-danger">{{$message}}</span>
+                        </div>
+                    @enderror
+                    @error('upload_spec_rt_error')
+                    @php $count = 0; @endphp
+                        <div class="mt-3 text-center">
+                            @foreach($not_inserted_rt as $rt)
+                            @php $count++; @endphp
+                            <span class="alert alert-danger" role="alert">{{ $rt }}</span>
+                            @if($count%5==0)
+                            <br>
+                            <br>
+                            @endif
+                            @endforeach
+                        </div>
+                        <div class="mt-4 text-center">
+                            <span class="text-danger">{{$message}}</span>
+                        </div>
+                    @enderror
+                    @error('spec_file_error')
+                        <div class="mt-4 text-center">
+                            <span class="text-danger">{{$message}}</span>
+                        </div>
+                    @enderror
+                    @error('upload_spec_success')
+                        <div class="mt-4 text-center">
+                            <span class="text-success">{{$message}}</span>
+                        </div>
+                    @enderror
                 </div>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse show card-body"
                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="container">
+                        @if ($bank_id != '' && $bank != null && !auth()->user()->hasRole('data-verification-operator'))
                             <form wire:submit.prevent="specialRateSubmit">
                                 <div class="row mb-3">
-                                        <div class="col-md-4">
-                                            <label for="special_rate">New Rate</label>
-                                            <input type="text" id="special_rate" class="form-control mr-2"
-                                                wire:model="special_rate" placeholder="Enter New Special Rate....">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="special_description">Description</label>
-                                            <input type="text" id="special_description" class="form-control mr-2"
-                                                wire:model="special_description" placeholder="Enter New Special Description....">
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                                        </div>
-x`                                </div>
+                                    <div class="col-md-4">
+                                        <label for="special_rate">New Rate</label>
+                                        <input type="text" id="special_rate" class="form-control mr-2"
+                                            wire:model="special_rate" placeholder="Enter New Special Rate....">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="special_description">Description</label>
+                                        <input type="text" id="special_description" class="form-control mr-2"
+                                            wire:model="special_description" placeholder="Enter New Special Description....">
+                                    </div>
+                                    <div class="col-md-4 mt-3">
+                                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                    </div>
+                                </div>
                             </form>
                         @error('s_submit')
                             <div class="mt-3 text-center mb-3">
                                 <span class="alert alert-danger" role="alert">{{ $message }}</span>
                             </div>
                         @enderror
+                        @endif
                     </div>
                     <div class="table-responsive">
 
