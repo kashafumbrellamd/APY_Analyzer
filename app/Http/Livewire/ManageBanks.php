@@ -38,11 +38,16 @@ class ManageBanks extends Component
     public $not_inserted_banks = [];
 
     public $bank_state_filter = '';
+    public $bank_city_filter = '';
 
     public function render()
     {
-        if($this->bank_state_filter){
+        if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
             $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
+        }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
+            $data = Bank::BanksWithStateIdAndType('',$this->bank_city_filter);
+        }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
+            $data = Bank::BanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
         }else{
             $data = Bank::BanksWithStateAndType();
         }
@@ -50,7 +55,8 @@ class ManageBanks extends Component
         $cities = Cities::get();
         $bts = BankType::where('status','1')->get();
         $bank_states = $this->getStates();
-        return view('livewire.manage-banks',['data'=>$data,'update'=>$this->update,'states'=>$states,'cities'=>$cities,'bts'=>$bts,'bank_states'=>$bank_states]);
+        $bank_cities = $this->getCities();
+        return view('livewire.manage-banks',['data'=>$data,'update'=>$this->update,'states'=>$states,'cities'=>$cities,'bts'=>$bts,'bank_states'=>$bank_states,'bank_cities'=>$bank_cities]);
     }
 
     public function submitForm()
@@ -253,5 +259,25 @@ class ManageBanks extends Component
             ->groupBy('state_id')
             ->get();
         return $state;
+    }
+
+    public function getCities()
+    {
+        if($this->bank_state_filter!='' && $this->bank_state_filter!='all')
+        {
+            $msa_codes = Bank::with('cities')->where('state_id',$this->bank_state_filter)->groupBy('city_id')->get();
+            return $msa_codes;
+        }
+        else
+        {
+            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            return $msa_codes;
+        }
+
+    }
+
+    public function selectstate($id)
+    {
+        $this->bank_city_filter = "";
     }
 }
