@@ -129,28 +129,28 @@
                                     @foreach ($rate_type as $key => $rt)
                                         @if ($columns[$rt->id] == 1)
                                             @if (isset($rt['data'][$i]))
-                                            @if ($rt['data'][$i]->bk_id != $my_bank_id)
-                                                @if ($rt['data'][$i]->bk_id != $selected_bank)
-                                                    <td 
+                                            @if ($rt['data'][$i]->bank_id != $my_bank_id)
+                                                @if ($rt['data'][$i]->bank_id != $selected_bank)
+                                                    <td
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;Last Updated: {{date('m-d-Y',strtotime(explode(' ',$rt['data'][$i]->created_at)[0]))}}">
-                                                        {{ $rt['data'][$i]->bk_name }}
+                                                        {{ $rt['data'][$i]->bank_name }}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @else
                                                     <td
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;"
-                                                        class="text-danger">{{ $rt['data'][$i]->bk_name }}
+                                                        class="text-danger">{{ $rt['data'][$i]->bank_name }}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @endif
                                             @else
-                                                @if ($rt['data'][$i]->bk_id != $selected_bank)
+                                                @if ($rt['data'][$i]->bank_id != $selected_bank)
                                                     <td style="color:#9d4201!important;"
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;Last Updated: {{date('m-d-Y',strtotime(explode(' ',$rt['data'][$i]->created_at)[0]))}}">
-                                                        {{ $rt['data'][$i]->bk_name }}
+                                                        {{ $rt['data'][$i]->bank_name }}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @else
-                                                    <td style="color:#9d4201!important;" 
+                                                    <td style="color:#9d4201!important;"
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;"
-                                                        class="text-danger">{{ $rt['data'][$i]->bk_name }}
+                                                        class="text-danger">{{ $rt['data'][$i]->bank_name }}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @endif
                                             @endif
