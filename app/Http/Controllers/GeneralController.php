@@ -131,7 +131,7 @@ class GeneralController extends Controller
         }elseif ($customer_type->display_reports == 'msa') {
             $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
         }else {
-            $data = BankPrices::get_min_max_func('all','0',"");
+            $data = BankPrices::get_min_max_func('all','0',"","");
         }
         foreach ($data as $key => $value) {
             if(in_array($value->id,$ids)){
@@ -155,7 +155,7 @@ class GeneralController extends Controller
         }elseif ($customer_type->display_reports == 'msa') {
             $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
         }else {
-            $data = BankPrices::get_min_max_func('all','0',"");
+            $data = BankPrices::get_min_max_func('all','0',"","");
         }
 
         foreach ($data as $key => $value) {

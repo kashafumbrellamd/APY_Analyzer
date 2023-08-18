@@ -434,8 +434,8 @@
                             <th>MSA Code</th>
                             <th>State</th>
                             {{-- <th>Contract Start</th>
-                            <th>Contract End</th> --}}
-                            <th>Charges</th>
+                            <th>Contract End</th>
+                             <th>Charges</th> --}}
                             <th>Reports</th>
                             <th>Action</th>
                         </tr>
@@ -450,8 +450,8 @@
                                 <td>{{ $dt->msa_code }}</td>
                                 <td>{{ $dt->states->name }}</td>
                                 {{-- <td>{{ date('m-d-Y', strtotime($dt->contract->contract_start)) }}</td>
-                                <td>{{ date('m-d-Y', strtotime($dt->contract->contract_end)) }}</td> --}}
-                                <td>{{ number_format($dt->contract->charges, 2) }}</td>
+                                <td>{{ date('m-d-Y', strtotime($dt->contract->contract_end)) }}</td>
+                                <td>{{ number_format($dt->contract->charges, 2) }}</td> --}}
                                 <td>{{ Str::ucfirst($dt->display_reports) }}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn"
