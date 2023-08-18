@@ -286,13 +286,13 @@ class ManageBanks extends Component
 
     public function downloadData(){
             if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
-                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
+                $data = Bank::ToExcelFilteredInsertedData($this->bank_state_filter);
             }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
-                $data = Bank::BanksWithStateIdAndType('',$this->bank_city_filter);
+                $data = Bank::ToExcelFilteredInsertedData('',$this->bank_city_filter);
             }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
-                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
+                $data = Bank::ToExcelFilteredInsertedData($this->bank_state_filter,$this->bank_city_filter);
             }else{
-                $data = Bank::BanksWithStateAndType();
+                $data = Bank::ToExcelInsertedData();
             }
 
             $spreadsheet = new Spreadsheet();
