@@ -3,7 +3,15 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Special Rates Report</h6>
         </div>
-        <div class="card-body">
+        <div class="text-center my-3" wire:loading.delay>
+            <div>
+                <div class="spinner-border text-danger" role="status">
+                </div>
+                <br>
+                <span class="text-danger">Loading...</span>
+            </div>
+        </div>
+        <div class="card-body" wire:loading.remove>
             <div class="row">
                 <div class="col-md-4">
                     <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_state_filter" wire:change="selectstate($event.target.value)">
