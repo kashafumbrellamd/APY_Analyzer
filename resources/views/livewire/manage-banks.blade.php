@@ -234,13 +234,14 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="row d-flex justify-content-between">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h5 class="m-0 font-weight-bold text-primary">Institutions</h5>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8 d-flex justify-content-around">
                     <button wire:click="download_xlsx" class="btn btn-primary">Format <i class="fa fa-download" aria-hidden="true"></i></button>
                     <input type="file" wire:model="file" class="btn btn-primary"/>
                     <button wire:click="upload_xlsx" class="btn btn-primary">Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+                    <button wire:click="downloadData" class="btn btn-primary">Download Data in Excel</button>
                 </div>
             </div>
             @error('upload_error')

@@ -13,6 +13,9 @@ use App\Models\Zip_code;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\SpreadSheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Response;
 use DB;
 
 class ManageBanks extends Component
@@ -279,5 +282,54 @@ class ManageBanks extends Component
     public function selectstate($id)
     {
         $this->bank_city_filter = "";
+    }
+
+    public function downloadData(){
+            if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
+                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
+            }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
+                $data = Bank::BanksWithStateIdAndType('',$this->bank_city_filter);
+            }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
+                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
+            }else{
+                $data = Bank::BanksWithStateAndType();
+            }
+
+            $spreadsheet = new Spreadsheet();
+            $activeWorksheet = $spreadsheet->getActiveSheet();
+            $activeWorksheet->setCellValue('A1', 'Name');
+            $activeWorksheet->setCellValue('B1', 'State');
+            $activeWorksheet->setCellValue('C1', 'Phone Number');
+            $activeWorksheet->setCellValue('D1', 'Website');
+            $activeWorksheet->setCellValue('E1', 'Institution Type');
+            $activeWorksheet->setCellValue('F1', 'Contact Person Name');
+            $activeWorksheet->setCellValue('G1', 'Contact Person Email');
+            $activeWorksheet->setCellValue('H1', 'Contact Person Phone');
+
+            $number = 2;
+            foreach ($data as $key => $value) {
+                $activeWorksheet->setCellValue('A'.$number, $value->name);
+                $activeWorksheet->setCellValue('B'.$number, $value->state_name);
+                $activeWorksheet->setCellValue('C'.$number, $value->phone_number);
+                $activeWorksheet->setCellValue('D'.$number, $value->website);
+                $activeWorksheet->setCellValue('E'.$number, $value->type_name);
+                $activeWorksheet->setCellValue('F'.$number, $value->cp_name);
+                $activeWorksheet->setCellValue('G'.$number, $value->cp_email);
+                $activeWorksheet->setCellValue('H'.$number, $value->cp_phone);
+                $number++;
+            }
+
+            $writer = new Xlsx($spreadsheet);
+
+            $headers = [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="hello_world.xlsx"',
+            ];
+
+            $callback = function () use ($writer) {
+                $writer->save('php://output');
+            };
+
+            return Response::stream($callback, 200, $headers);
     }
 }
