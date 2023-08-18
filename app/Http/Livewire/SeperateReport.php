@@ -101,7 +101,7 @@ class SeperateReport extends Component
             $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
             return $msa_codes;
         }
-        
+
     }
 
     public function selectAll(){
@@ -120,14 +120,17 @@ class SeperateReport extends Component
     {
         $rt = RateType::orderby('id','ASC')->get();
         if($this->state_id!='' && $this->state_id!='all'){
-            $reports = BankPrices::SeperateReports('state',$this->state_id,$this->selected_bank_type);
-            $results = BankPrices::get_min_max_func('state',$this->state_id,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
+            $reports = $response['rate_types'];
+            $results = BankPrices::get_min_max_func('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $reports = BankPrices::SeperateReports('msa',$this->msa_code,$this->selected_bank_type);
-            $results = BankPrices::get_min_max_func('msa',$this->msa_code,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type);
+            $reports = $response['rate_types'];
+            $results = BankPrices::get_min_max_func('msa','all',$this->msa_code,$this->selected_bank_type);
         }else {
-            $reports = BankPrices::SeperateReports('all','0',$this->selected_bank_type);
-            $results = BankPrices::get_min_max_func('all','0',$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('all','all','0',$this->selected_bank_type);
+            $reports = $response['rate_types'];
+            $results = BankPrices::get_min_max_func('all','all','0',$this->selected_bank_type);
         }
         if($this->columns == [])
         {
@@ -211,5 +214,5 @@ class SeperateReport extends Component
         else{
             $this->addError('filter_error','No Filter is saved');
         }
-    } 
+    }
 }
