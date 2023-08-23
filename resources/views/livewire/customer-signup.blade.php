@@ -295,6 +295,23 @@
                                                             </div> --}}
                                                             <div class="mt-2">
                                                             <div class="bank_select_divv">
+                                                                @if (count($this->custom_banks) == count($this->all_banks))
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheckall"
+                                                                        wire:click="deselect_all_banks()" checked>
+                                                                    <label class="form-check-label" for="defaultCheckall">
+                                                                        Deselect All <span class="state_city_span"></span>
+                                                                    </label>
+                                                                </div>
+                                                                @else
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheckall"
+                                                                        wire:click="select_all_banks()">
+                                                                    <label class="form-check-label" for="defaultCheckall">
+                                                                        Select All <span class="state_city_span"></span>
+                                                                    </label>
+                                                                </div>
+                                                                @endif
                                                                 @if(count($this->all_banks)!=0)
                                                                 @php $count = 0; @endphp
                                                                 @foreach ($this->all_banks as $bank)
