@@ -82,6 +82,7 @@ Route::get('/view/seperate/reports', [App\Http\Controllers\GeneralController::cl
 Route::get('/view/summary/reports', [App\Http\Controllers\GeneralController::class,'summary_reports']);
 Route::get('/view/bank/request', [App\Http\Controllers\GeneralController::class,'bank_request']);
 //Route::get('/managee/charity', App\Http\Livewire\ManageCharity::class);
+Route::get('/manage/packages', [App\Http\Controllers\GeneralController::class,'manage_packages']);
 
 
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);

@@ -77,6 +77,11 @@ class GeneralController extends Controller
         return view('stories');
     }
 
+    public function manage_packages()
+    {
+        return view('packages');
+    }
+
     public function summary_reports()
     {
         return view('customer_bank.summary_reports');

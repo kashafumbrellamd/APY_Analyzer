@@ -14,5 +14,7 @@ class Packages extends Model
         'description',
         'duration',
         'package_type',
+        'additional_price',
+        'number_of_units',
     ];
 }

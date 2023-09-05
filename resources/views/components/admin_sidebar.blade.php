@@ -97,6 +97,13 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Manage Charity</span></a>
         </li>
+        <hr class="sidebar-divider">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url('/manage/packages') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Manage Packages</span></a>
+        </li>
     @endif
 
 
