@@ -1,5 +1,5 @@
 <div>
-<section class="back_sign__ py-3">
+    <section class="back_sign__ py-3">
         <div class="container-fluid">
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
@@ -13,50 +13,66 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_name" class="form-label">Enter Institution Name</label>
-                                                    <input type="name" id="bank_name" name="bank_name" class="form-control" aria-describedby="name" wire:model.lazy="bank_name" required>
+                                                    <label for="bank_name" class="form-label">Enter Institution
+                                                        Name</label>
+                                                    <input type="name" id="bank_name" name="bank_name"
+                                                        class="form-control" aria-describedby="name"
+                                                        wire:model.lazy="bank_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_email" class="form-label">Email</label>
-                                                    <input type="email" id="bank_email" name="bank_email" class="form-control" aria-describedby="email" wire:model.lazy="bank_email" required>
+                                                    <input type="email" id="bank_email" name="bank_email"
+                                                        class="form-control" aria-describedby="email"
+                                                        wire:model.lazy="bank_email" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_phone" class="form-label">Phone Number</label>
-                                                    <input type="number" id="bank_phone" name="bank_phone" class="form-control" aria-describedby="phone" wire:model.lazy="bank_phone" required>
+                                                    <input type="number" id="bank_phone" name="bank_phone"
+                                                        class="form-control" aria-describedby="phone"
+                                                        wire:model.lazy="bank_phone" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_website" class="form-label">Website</label>
-                                                    <input type="text" id="bank_website" name="bank_website" class="form-control" aria-describedby="website" wire:model.lazy="bank_website" required>
+                                                    <input type="text" id="bank_website" name="bank_website"
+                                                        class="form-control" aria-describedby="website"
+                                                        wire:model.lazy="bank_website" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="CBSA_CODE" class="form-label">CBSA Code</label>
-                                                    <input type="text" id="CBSA_CODE" name="CBSA_CODE" class="form-control" aria-describedby="website" wire:model.lazy="cbsa_code" required>
+                                                    <input type="text" id="CBSA_CODE" name="CBSA_CODE"
+                                                        class="form-control" aria-describedby="website"
+                                                        wire:model.lazy="cbsa_code" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="zip_code" class="form-label">Zip Code</label>
-                                                    <input type="text" id="zip_code" name="zip_code" class="form-control" aria-describedby="website" wire:model="zip_code" wire:keyup="fetch_zip_code" required>
+                                                    <input type="text" id="zip_code" name="zip_code"
+                                                        class="form-control" aria-describedby="website"
+                                                        wire:model="zip_code" wire:keyup="fetch_zip_code" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">State</label>
-                                                    <select class="form-select" id="bank_state" name="bank_state" aria-label="Default select example" wire:model.lazy="bank_state" required>
+                                                    <select class="form-select" id="bank_state" name="bank_state"
+                                                        aria-label="Default select example" wire:model.lazy="bank_state"
+                                                        required>
                                                         <option value="">Select State</option>
-                                                        @foreach($states as $state)
-                                                        <option value="{{$state->id}}">{{$state->name}}</option>
+                                                        @foreach ($states as $state)
+                                                            <option value="{{ $state->id }}">{{ $state->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -64,11 +80,14 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">City</label>
-                                                    <select class="form-select" id="bank_city" name="bank_city" aria-label="Default select example" wire:model.lazy="bank_city" required>
+                                                    <select class="form-select" id="bank_city" name="bank_city"
+                                                        aria-label="Default select example" wire:model.lazy="bank_city"
+                                                        required>
                                                         <option value="">Select City</option>
                                                         @if ($bank_cities != null)
-                                                            @foreach($bank_cities as $city)
-                                                                <option value="{{$city->id}}">{{$city->name}}</option>
+                                                            @foreach ($bank_cities as $city)
+                                                                <option value="{{ $city->id }}">{{ $city->name }}
+                                                                </option>
                                                             @endforeach
                                                         @endif
                                                     </select>
@@ -86,35 +105,47 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_first_name" class="form-label">First Name</label>
-                                                    <input type="name" id="admin_first_name" name="admin_first_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_first_name" required>
+                                                    <input type="name" id="admin_first_name"
+                                                        name="admin_first_name" class="form-control"
+                                                        aria-describedby="name" wire:model.lazy="admin_first_name"
+                                                        required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_last_name" class="form-label">Last Name</label>
-                                                    <input type="name" id="admin_last_name" name="admin_last_name" class="form-control" aria-describedby="name" wire:model.lazy="admin_last_name" required>
+                                                    <input type="name" id="admin_last_name" name="admin_last_name"
+                                                        class="form-control" aria-describedby="name"
+                                                        wire:model.lazy="admin_last_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_email" class="form-label">Email</label>
-                                                    <input type="email" id="admin_email" name="admin_email" class="form-control" aria-describedby="email" wire:model.lazy="admin_email" required>
+                                                    <input type="email" id="admin_email" name="admin_email"
+                                                        class="form-control" aria-describedby="email"
+                                                        wire:model.lazy="admin_email" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_phone" class="form-label">Phone Number</label>
-                                                    <input type="number" id="admin_phone" name="admin_phone" class="form-control" aria-describedby="phone" wire:model.lazy="admin_phone" required>
+                                                    <input type="number" id="admin_phone" name="admin_phone"
+                                                        class="form-control" aria-describedby="phone"
+                                                        wire:model.lazy="admin_phone" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="admin_designation" class="form-label">Title</label>
-                                                    <input type="text" id="admin_designation" name="admin_designation" class="form-control" aria-describedby="Designation" wire:model.lazy="admin_designation" required>
+                                                    <input type="text" id="admin_designation"
+                                                        name="admin_designation" class="form-control"
+                                                        aria-describedby="Designation"
+                                                        wire:model.lazy="admin_designation" required>
 
                                                 </div>
                                             </div>
@@ -141,53 +172,68 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div>
+                                {{-- <div>
                                     <h5>Choose Subscription Plan (One year)</h5>
                                     <div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    @foreach($packages as $package)
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio{{$package->id}}" value="{{$package->package_type}}" wire:model.lazy="subscription">
-                                                        <label class="form-check-label" for="inlineRadio{{$package->id}}">{{$package->name}} ({{ $package->package_type }})</label>
-                                                    </div>
-                                                    <br>
+                                                    @foreach ($packages as $package)
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="inlineRadioOptions"
+                                                                id="inlineRadio{{ $package->id }}"
+                                                                value="{{ $package->package_type }}"
+                                                                wire:model.lazy="subscription">
+                                                            <label class="form-check-label"
+                                                                for="inlineRadio{{ $package->id }}">{{ $package->name }}
+                                                                ({{ $package->package_type }})
+                                                            </label>
+                                                        </div>
+                                                        <br>
                                                     @endforeach
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                             </div>
-                                            @if($this->subscription == 'custom')
-                                            <div class="text-center">
-                                                <div wire:loading.delay>
-                                                    <div class="spinner-border text-danger" role="status">
-                                                    </div>
-                                                    <br>
-                                                    <span class="text-danger">Loading...</span>
-                                                </div>
-                                            </div>
-                                            <div wire:loading.class="invisible">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label for="bank_type" class="form-label">Select Bank Type</label>
-                                                        <select class="form-select" id="bank_type" name="bank_type" aria-label="Default select example" wire:model="bank_type" wire:change="selectbanktype($event.target.value)">
-                                                            <option value="">All Bank Types</option>
-                                                            @foreach($bank_types as $bank_type)
-                                                            <option value="{{$bank_type->id}}">{{$bank_type->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                            @if ($this->subscription == 'custom')
+                                                <div class="text-center">
+                                                    <div wire:loading.delay>
+                                                        <div class="spinner-border text-danger" role="status">
+                                                        </div>
+                                                        <br>
+                                                        <span class="text-danger">Loading...</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                </div>
-                                                <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <div>
-                                                        @foreach ($bank_state_filter_name as $key => $filtered_state)
-                                                        <span class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_state }}
-                                                        <button type="button" wire:click="deleteState({{ $key }})">
-                                                            <span style="position: absolute;
+                                                <div wire:loading.class="invisible">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="bank_type" class="form-label">Select Bank
+                                                                Type</label>
+                                                            <select class="form-select" id="bank_type"
+                                                                name="bank_type" aria-label="Default select example"
+                                                                wire:model="bank_type"
+                                                                wire:change="selectbanktype($event.target.value)">
+                                                                <option value="">All Bank Types</option>
+                                                                @foreach ($bank_types as $bank_type)
+                                                                    <option value="{{ $bank_type->id }}">
+                                                                        {{ $bank_type->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <div>
+                                                                @foreach ($bank_state_filter_name as $key => $filtered_state)
+                                                                    <span
+                                                                        class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_state }}
+                                                                        <button type="button"
+                                                                            wire:click="deleteState({{ $key }})">
+                                                                            <span
+                                                                                style="position: absolute;
                                                             font-size: 14px;
                                                             background-color: #f12d2d;
                                                             padding: 0px 7px;
@@ -196,29 +242,37 @@
                                                             right: -12px;
                                                             color: #fff;
                                                             font-weight: 600;">x</span>
-                                                        </button>
-                                                        </span>
-                                                        @endforeach
+                                                                        </button>
+                                                                    </span>
+                                                                @endforeach
+                                                            </div>
+                                                            <label for="bank_type" class="form-label">Select Bank
+                                                                State</label>
+                                                            <select class="form-select form-control mb-3"
+                                                                aria-label="Default select example"
+                                                                wire:model="selected_state_now"
+                                                                wire:change="selectstate($event.target.value)">
+                                                                <option value="">Select State</option>
+                                                                @foreach ($avaiable_states as $state)
+                                                                    <option value="{{ $state->id }}">
+                                                                        {{ $state->name }}</option>
+                                                                @endforeach
+                                                                <option value="all">All Data</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                    <label for="bank_type" class="form-label">Select Bank State</label>
-                                                    <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="selected_state_now" wire:change="selectstate($event.target.value)">
-                                                        <option value="">Select State</option>
-                                                        @foreach ($avaiable_states as $state)
-                                                            <option value="{{ $state->id }}">{{ $state->name }}</option>
-                                                        @endforeach
-                                                        <option value="all">All Data</option>
-                                                    </select>
-                                                </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                </div>
-                                                <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <div>
-                                                    @foreach ($bank_city_filter_name as $key => $filtered_city)
-                                                        <span class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
-                                                        <button type="button" wire:click="deleteCity({{ $key }})">
-                                                            <span style="position: absolute;
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <div>
+                                                                @foreach ($bank_city_filter_name as $key => $filtered_city)
+                                                                    <span
+                                                                        class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
+                                                                        <button type="button"
+                                                                            wire:click="deleteCity({{ $key }})">
+                                                                            <span
+                                                                                style="position: absolute;
                                                             font-size: 14px;
                                                             background-color: red;
                                                             padding: 0px 7px;
@@ -227,155 +281,138 @@
                                                             right: -12px;
                                                             color: #fff;
                                                             font-weight: 600;">x</span>
-                                                        </button>
-                                                        </span>
-                                                    @endforeach
-                                                    </div>
-                                                    <label for="bank_type" class="form-label">Select Bank City</label>
-                                                    <select class="form-select form-control mb-3 " aria-label="Default select example" wire:model="selected_city_now" wire:change="selectcity($event.target.value)">
-                                                        <option value="">Select City</option>
-                                                        @foreach ($avaiable_cities as $city)
-                                                            <option value="{{ $city->city_id }}">{{ $city->cities->name }}</option>
-                                                            {{-- <option value="{{ $city->id }}">{{ $city->name }}</option> --}}
-                                                        @endforeach
-                                                        <option value="all">All Data</option>
-                                                    </select>
-                                                </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div>
-                                                        <div class="mb-3">
-                                                            <label for="bank_name_city" class="form-label">Institution Name , State , City</label>
-                                                            {{-- <input type="text" class="form-control" id="bank_name_city" aria-describedby="emailHelp" wire:model="bank_search" placeholder="Search Banks by Name, State and City...">
-                                                            <div class="mt-2">
-                                                                <div class="bank_select_divv">
-                                                                    @if(count($this->all_banks)!=0)
-                                                                    @php $count = 0; @endphp
-                                                                    @foreach ($this->all_banks as $bank)
-                                                                    @if(in_array($bank->id,$this->custom_banks))
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck{{ $bank->id }}"
-                                                                        wire:click="select_bank({{ $bank->id }})" checked>
-                                                                        <label class="form-check-label" for="defaultCheck{{ $bank->id }}">
-                                                                            {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>
-                                                                        </label>
-                                                                    </div>
-                                                                    @php $count++; @endphp
-                                                                    @else
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck{{ $bank->id }}"
-                                                                        wire:click="select_bank({{ $bank->id }})">
-                                                                        <label class="form-check-label" for="defaultCheck{{ $bank->id }}">
-                                                                            {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>
-                                                                        </label>
-                                                                    </div>
-                                                                    @endif
-                                                                    @endforeach
-                                                                    @if($count == count($this->all_banks) && $count!=0)
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
-                                                                            wire:click="deselect_all_banks()" checked>
-                                                                        <label class="form-check-label" for="defaultCheck2">
-                                                                            Select All <span class="state_city_span"></span>
-                                                                        </label>
-                                                                    </div>
-                                                                    @else
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
-                                                                            wire:click="select_all_banks()">
-                                                                        <label class="form-check-label" for="defaultCheck2">
-                                                                            Select All <span class="state_city_span"></span>
-                                                                        </label>
-                                                                    </div>
-                                                                    @endif
-                                                                    @endif
-                                                                </div>
-                                                            </div> --}}
-                                                            <div class="mt-2">
-                                                            <div class="bank_select_divv">
-                                                                @if (count($this->custom_banks) == count($this->all_banks))
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheckall"
-                                                                        wire:click="deselect_all_banks()" checked>
-                                                                    <label class="form-check-label" for="defaultCheckall">
-                                                                        Deselect All <span class="state_city_span"></span>
-                                                                    </label>
-                                                                </div>
-                                                                @else
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheckall"
-                                                                        wire:click="select_all_banks()">
-                                                                    <label class="form-check-label" for="defaultCheckall">
-                                                                        Select All <span class="state_city_span"></span>
-                                                                    </label>
-                                                                </div>
-                                                                @endif
-                                                                @if(count($this->all_banks)!=0)
-                                                                @php $count = 0; @endphp
-                                                                @foreach ($this->all_banks as $bank)
-                                                                @if(in_array($bank->id,$this->custom_banks))
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck{{ $bank->id }}"
-                                                                    wire:click="select_bank({{ $bank->id }})" checked>
-                                                                    <label class="form-check-label" for="defaultCheck{{ $bank->id }}">
-                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>
-                                                                    </label>
-                                                                </div>
-                                                                @php $count++; @endphp
-                                                                @else
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck{{ $bank->id }}"
-                                                                    wire:click="select_bank({{ $bank->id }})">
-                                                                    <label class="form-check-label" for="defaultCheck{{ $bank->id }}">
-                                                                        {{$bank->name}} <span class="state_city_span">({{$bank->state_name}}, &nbsp;{{$bank->city_name}})</span>
-                                                                    </label>
-                                                                </div>
-                                                                @endif
+                                                                        </button>
+                                                                    </span>
                                                                 @endforeach
-                                                                @endif
+                                                            </div>
+                                                            <label for="bank_type" class="form-label">Select Bank
+                                                                City</label>
+                                                            <select class="form-select form-control mb-3 "
+                                                                aria-label="Default select example"
+                                                                wire:model="selected_city_now"
+                                                                wire:change="selectcity($event.target.value)">
+                                                                <option value="">Select City</option>
+                                                                @foreach ($avaiable_cities as $city)
+                                                                    <option value="{{ $city->city_id }}">
+                                                                        {{ $city->cities->name }}</option>
+                                                                @endforeach
+                                                                <option value="all">All Data</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <div class="mb-3">
+                                                                <label for="bank_name_city"
+                                                                    class="form-label">Institution Name , State ,
+                                                                    City</label>
+                                                                <div class="mt-2">
+                                                                    <div class="bank_select_divv">
+                                                                        @if (count($this->custom_banks) == count($this->all_banks))
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input"
+                                                                                    type="checkbox" value=""
+                                                                                    id="defaultCheckall"
+                                                                                    wire:click="deselect_all_banks()"
+                                                                                    checked>
+                                                                                <label class="form-check-label"
+                                                                                    for="defaultCheckall">
+                                                                                    Deselect All <span
+                                                                                        class="state_city_span"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input"
+                                                                                    type="checkbox" value=""
+                                                                                    id="defaultCheckall"
+                                                                                    wire:click="select_all_banks()">
+                                                                                <label class="form-check-label"
+                                                                                    for="defaultCheckall">
+                                                                                    Select All <span
+                                                                                        class="state_city_span"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                        @endif
+                                                                        @if (count($this->all_banks) != 0)
+                                                                            @php $count = 0; @endphp
+                                                                            @foreach ($this->all_banks as $bank)
+                                                                                @if (in_array($bank->id, $this->custom_banks))
+                                                                                    <div class="form-check">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            value=""
+                                                                                            id="defaultCheck{{ $bank->id }}"
+                                                                                            wire:click="select_bank({{ $bank->id }})"
+                                                                                            checked>
+                                                                                        <label class="form-check-label"
+                                                                                            for="defaultCheck{{ $bank->id }}">
+                                                                                            {{ $bank->name }} <span
+                                                                                                class="state_city_span">({{ $bank->state_name }},
+                                                                                                &nbsp;{{ $bank->city_name }})</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    @php $count++; @endphp
+                                                                                @else
+                                                                                    <div class="form-check">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            value=""
+                                                                                            id="defaultCheck{{ $bank->id }}"
+                                                                                            wire:click="select_bank({{ $bank->id }})">
+                                                                                        <label class="form-check-label"
+                                                                                            for="defaultCheck{{ $bank->id }}">
+                                                                                            {{ $bank->name }} <span
+                                                                                                class="state_city_span">({{ $bank->state_name }},
+                                                                                                &nbsp;{{ $bank->city_name }})</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>--}}
+
+                                                <div>
+                                                    <h5>Charity Details</h5>
+                                                    <div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3">
+                                                                    <select class="form-select" id="bank_charity"
+                                                                        name="bank_charity"
+                                                                        aria-label="Default select example"
+                                                                        wire:model.lazy="bank_charity">
+                                                                        <option value="">Select Charity</option>
+                                                                        @foreach ($charities as $charity)
+                                                                            <option value="{{ $charity->id }}">
+                                                                                {{ $charity->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            @error('customer_banks')
+                                                                <div class="mt-3 text-center mb-5">
+                                                                    <span class="alert alert-danger"
+                                                                        role="alert">{{ $message }}</span>
+                                                                </div>
+                                                            @enderror
+                                                            <div class="col-md-12">
+                                                                <div class="mb-3 text-center">
+                                                                    <button type="submit"
+                                                                        class="btn submit_btn">Submit</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            @endif
                                         </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div>
-                                    <h5>Charity Details</h5>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="mb-3">
-                                                    <!-- <label for="bank_charity" class="form-label">Charity Options</label> -->
-                                                    <select class="form-select" id="bank_charity" name="bank_charity" aria-label="Default select example" wire:model.lazy="bank_charity">
-                                                        <option value="">Select Charity</option>
-                                                        @foreach($charities as $charity)
-                                                        <option value="{{$charity->id}}">{{$charity->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            @error('customer_banks')
-                                                <div class="mt-3 text-center mb-5">
-                                                    <span class="alert alert-danger" role="alert">{{ $message }}</span>
-                                                </div>
-                                            @enderror
-                                            <div class="col-md-12">
-                                                <div class="mb-3 text-center">
-                                                    <button type="submit" class="btn submit_btn">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
                         <div class="col-md-6"></div>
                     </div>

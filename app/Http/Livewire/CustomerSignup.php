@@ -72,20 +72,12 @@ class CustomerSignup extends Component
         // 'admin_gender' => 'required',
         'subscription' => 'required',
     ];
-    protected $listeners = [
-        'selected'
-     ];
 
     public function render()
     {
         $states = State::where('country_id', '233')->get();
         $charities = Charity::all();
         $this->all_banks = $this->fetch_banks();
-        // if(strlen($this->bank_search) > 0){
-        //     $this->search_bank($this->bank_search,$this->bank_type);
-        // }else{
-        //     $this->search_bank('',$this->bank_type);
-        // }
         $bank_cities = Cities::get();
         $packages = Packages::get();
         $bank_types = BankType::where('status',1)->get();
@@ -97,10 +89,7 @@ class CustomerSignup extends Component
 
     public function submitForm()
     {
-        if($this->subscription == 'custom' && $this->custom_banks == []){
-            $this->addError('customer_banks', 'You have to Select atleast 1 bank');
-        }else{
-            $bank = CB::create([
+        $bank = CB::create([
             'bank_name' => $this->bank_name,
             'bank_email' => $this->bank_email,
             'bank_phone_numebr' => $this->bank_phone,
@@ -111,38 +100,37 @@ class CustomerSignup extends Component
             'zip_code' => $this->zip_code,
             'cbsa_code' => $this->cbsa_code,
             'display_reports' => $this->subscription,
-            ]);
-            $user = User::create([
-                'name' => $this->admin_first_name,
-                'last_name' => $this->admin_last_name,
-                'email' => $this->admin_email,
-                'phone_number' => $this->admin_phone,
-                'designation' => $this->admin_designation,
-                // 'employee_id' => $this->admin_employeeid,
-                // 'gender' => $this->admin_gender,
-                'password' => bcrypt($this->admin_phone),
-                'bank_id' => $bank->id,
-            ]);
-            if($this->subscription == 'custom'){
-                foreach($this->custom_banks as $key => $custom_bank) {
-                    $custom_selected_banks = CustomPackageBanks::create([
-                        'bank_id' => $bank->id,
-                        'customer_selected_bank_id' => $custom_bank,
-                    ]);
-                }
-            }
-            $charges = Packages::where('package_type',$this->subscription)->first();
-            $contract = Contract::create([
-                'contract_start' => date('Y-m-d'),
-                'contract_end' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 year')),
-                'charges' => $charges->price,
-                'bank_id' => $bank->id,
-            ]);
-            $role = Role::where('slug', 'bank-admin')->first();
-            $user->roles()->attach($role);
-            $this->clear();
-            return redirect(url('/signin'));
-        }
+        ]);
+        $user = User::create([
+            'name' => $this->admin_first_name,
+            'last_name' => $this->admin_last_name,
+            'email' => $this->admin_email,
+            'phone_number' => $this->admin_phone,
+            'designation' => $this->admin_designation,
+            // 'employee_id' => $this->admin_employeeid,
+            // 'gender' => $this->admin_gender,
+            'password' => bcrypt($this->admin_phone),
+            'bank_id' => $bank->id,
+        ]);
+        // if($this->subscription == 'custom'){
+        //     foreach($this->custom_banks as $key => $custom_bank) {
+        //         $custom_selected_banks = CustomPackageBanks::create([
+        //             'bank_id' => $bank->id,
+        //             'customer_selected_bank_id' => $custom_bank,
+        //         ]);
+        //     }
+        // }
+        // $charges = Packages::where('package_type',$this->subscription)->first();
+        // $contract = Contract::create([
+        //     'contract_start' => date('Y-m-d'),
+        //     'contract_end' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 year')),
+        //     'charges' => $charges->price,
+        //     'bank_id' => $bank->id,
+        // ]);
+        // $role = Role::where('slug', 'bank-admin')->first();
+        // $user->roles()->attach($role);
+        $this->clear();
+        return redirect(url('/customerPackage/'.$bank->id));
         $this->render();
     }
 
