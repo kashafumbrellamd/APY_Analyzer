@@ -13,6 +13,7 @@ use App\Models\Contract;
 use App\Models\Role;
 use App\Models\User;
 use DB;
+use Auth;
 use Livewire\Component;
 
 class CustomerPackage extends Component
@@ -261,9 +262,10 @@ class CustomerPackage extends Component
                 'bank_id' => $this->bank->id,
             ]);
         }
-        $user = User::where('bank_id',$this->bank->id)->first();
-        $role = Role::where('slug', 'bank-admin')->first();
-        $user->roles()->attach($role);
-        return redirect(url('/signin'));
+        if(!Auth::check()){
+            return redirect(url('/signin'));
+        }else{
+            return redirect(url('/home'));
+        }
     }
 }

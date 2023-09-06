@@ -34,9 +34,11 @@ Route::get('/',function(){
     }
 });
 
-Route::get('/home', function () {
-    return view('welcome');
-})->name('home');
+Route::middleware(['packages'])->group(function () {
+    Route::get('/home', function () {
+        return view('welcome');
+    })->name('home');
+});
 
 Route::get('/Survey/form', function () {
     $states = State::where('country_id',233)->get();
@@ -63,6 +65,8 @@ Route::get('/interesting_stories', function () {
 
 
 Auth::routes();
+Route::get('/update/prices/{id}', [App\Http\Controllers\GeneralController::class,'update_price']);
+Route::post('/update/prices', [App\Http\Controllers\GeneralController::class,'post_update_price'])->name('update_price');
 Route::get('/role/permissions', [App\Http\Controllers\RolesController::class,'role_permission']);
 Route::resource('role', App\Http\Controllers\RolesController::class);
 Route::get('/abc', [App\Http\Controllers\HomeController::class, 'index'])->name('abc');

@@ -99,7 +99,7 @@ class CustomerSignup extends Component
             'state' => $this->bank_state,
             'zip_code' => $this->zip_code,
             'cbsa_code' => $this->cbsa_code,
-            'display_reports' => $this->subscription,
+            'display_reports' => "custom",
         ]);
         $user = User::create([
             'name' => $this->admin_first_name,
@@ -127,8 +127,8 @@ class CustomerSignup extends Component
         //     'charges' => $charges->price,
         //     'bank_id' => $bank->id,
         // ]);
-        // $role = Role::where('slug', 'bank-admin')->first();
-        // $user->roles()->attach($role);
+        $role = Role::where('slug', 'bank-admin')->first();
+        $user->roles()->attach($role);
         $this->clear();
         return redirect(url('/customerPackage/'.$bank->id));
         $this->render();
