@@ -30,6 +30,7 @@ class CustomerPackage extends Component
     public $bank_state_filter_name = [];
     public $bank_city_filter = [];
     public $bank_city_filter_name = [];
+    public $bank_cbsa_filter = [];
     public $selected_state_now = '';
     public $selected_city_now = '';
     public $subscription = 'custom';
@@ -50,6 +51,7 @@ class CustomerPackage extends Component
         $bank_types = BankType::where('status', 1)->get();
         $available_states = $this->getStates();
         $available_cities = $this->getCities();
+        // $available_bcsa = $this->getCBSA();
         return view('livewire.customer-package', compact('packages', 'bank_types', 'available_states', 'available_cities', 'states', 'bank_cities'));
     }
 
@@ -151,6 +153,29 @@ class CustomerPackage extends Component
         return $msa_codes;
 
     }
+
+    // public function getCBSA()
+    // {
+    //     if ($this->bank_state_filter != '' && $this->bank_state_filter != 'all' && $this->bank_type != "") {
+    //         $cbsa_codes = Bank::whereIn('state_id', $this->bank_state_filter)
+    //             ->where('bank_type_id', $this->bank_type)
+    //             ->groupBy('city_id')
+    //             ->get();
+    //     } elseif ($this->bank_state_filter == '' && $this->bank_state_filter == 'all' && $this->bank_type != "") {
+    //         $cbsa_codes = Bank::with('cities')
+    //             ->where('bank_type_id', $this->bank_type)
+    //             ->groupBy('city_id')
+    //             ->get();
+    //     } elseif ($this->bank_state_filter != '' && $this->bank_state_filter != 'all' && $this->bank_type == "") {
+    //         $cbsa_codes = Bank::with('cities')
+    //             ->whereIn('state_id', $this->bank_state_filter)
+    //             ->groupBy('city_id')
+    //             ->get();
+    //     } elseif ($this->bank_state_filter == '' && $this->bank_state_filter == 'all' && $this->bank_type == "") {
+    //         $cbsa_codes = Bank::with('cities')->groupBy('city_id')->get();
+    //     }
+    //     return $cbsa_codes;
+    // }
 
     public function selectstate($id)
     {
@@ -267,5 +292,20 @@ class CustomerPackage extends Component
         }else{
             return redirect(url('/home'));
         }
+    }
+
+    public function deleteState($item){
+        $state = State::where('name',$this->bank_state_filter_name[$item])->first();
+        unset($this->bank_state_filter[array_search($state->id,$this->bank_state_filter)]);
+        unset($this->bank_state_filter_name[$item]);
+        $this->bank_city_filter = [];
+        $this->bank_city_filter_name = [];
+        // $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
+    }
+
+    public function deleteCity($item){
+        $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
+        unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
+        unset($this->bank_city_filter_name[$item]);
     }
 }
