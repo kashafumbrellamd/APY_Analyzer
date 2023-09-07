@@ -242,47 +242,51 @@ class GeneralController extends Controller
     }
 
     public function update_price($id){
-        $rt = RateType::orderby('id','ASC')->get();
-        $prices = [];
-        foreach ($rt as $key => $rate) {
-            $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name','rate_types.name')
-            ->join('banks', 'bank_prices.bank_id', 'banks.id')
-            ->join('rate_types', 'rate_types.id', 'bank_prices.rate_type_id')
-            ->whereIn('bank_prices.created_at', function ($query) use ($id,$rate) {
-                $query->selectRaw('MAX(created_at)')
-                    ->from('bank_prices')
-                    ->where('rate_type_id', $rate->id)
-                    ->where('is_checked', 1)
-                    ->where('bank_id', $id)
-                    ->groupBy('bank_id');
-            })
-            ->where('rate_type_id', $rate->id)
-            ->where('is_checked', 1)
-            ->where('bank_id', $id) // Assuming $banks is an array containing selected bank IDs
-            ->groupBy('bank_id') // Group by bank_id to get the latest rate for each bank in the current rate type
-            ->orderBy('current_rate', 'DESC')
-            ->first();
-            array_push($prices,$data);
+        if(Auth::check()){
+            $rt = RateType::orderby('id','ASC')->get();
+            $prices = [];
+            foreach ($rt as $key => $rate) {
+                $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name','rate_types.name')
+                ->join('banks', 'bank_prices.bank_id', 'banks.id')
+                ->join('rate_types', 'rate_types.id', 'bank_prices.rate_type_id')
+                ->whereIn('bank_prices.created_at', function ($query) use ($id,$rate) {
+                    $query->selectRaw('MAX(created_at)')
+                        ->from('bank_prices')
+                        ->where('rate_type_id', $rate->id)
+                        ->where('is_checked', 1)
+                        ->where('bank_id', $id)
+                        ->groupBy('bank_id');
+                })
+                ->where('rate_type_id', $rate->id)
+                ->where('is_checked', 1)
+                ->where('bank_id', $id) // Assuming $banks is an array containing selected bank IDs
+                ->groupBy('bank_id') // Group by bank_id to get the latest rate for each bank in the current rate type
+                ->orderBy('current_rate', 'DESC')
+                ->first();
+                array_push($prices,$data);
+            }
+            return view('update_price',compact('id','prices'));
+        }else{
+            return redirect(url('/signin'));
         }
-        return view('update_price',compact('id','prices'));
     }
 
     public function post_update_price(Request $request){
-        foreach ($request->rate_type_id as $key => $value) {
-            $check = BankPrices::where('bank_id',$request->bank_id)->where('rate_type_id',$value)->where('is_checked','1')->orderBy('id','desc')->first();
-            if($check != null){
-                if($check->current_rate != $request->current_rate[$key]){
-                    BankPrices::create([
-                        'bank_id' => $request->bank_id,
-                        'rate_type_id' => $value,
-                        'rate' => $check->rate,
-                        'previous_rate' => $check->current_rate,
-                        'current_rate' => $request->current_rate[$key],
-                        'change' => $check->rate-$request->current_rate[$key],
-                    ]);
+            foreach ($request->rate_type_id as $key => $value) {
+                $check = BankPrices::where('bank_id',$request->bank_id)->where('rate_type_id',$value)->where('is_checked','1')->orderBy('id','desc')->first();
+                if($check != null){
+                    if($check->current_rate != $request->current_rate[$key]){
+                        BankPrices::create([
+                            'bank_id' => $request->bank_id,
+                            'rate_type_id' => $value,
+                            'rate' => $check->rate,
+                            'previous_rate' => $check->current_rate,
+                            'current_rate' => $request->current_rate[$key],
+                            'change' => $check->rate-$request->current_rate[$key],
+                        ]);
+                    }
                 }
             }
-        }
-        return redirect(url('/'));
+            return redirect(url('/'));
     }
 }

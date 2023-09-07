@@ -40,7 +40,7 @@ hr{
     font-weight: 600;
 }
 .login__{
-    /* height: 100vh; */
+    height: 100vh;
     display: flex;
     align-items: center;
 }
