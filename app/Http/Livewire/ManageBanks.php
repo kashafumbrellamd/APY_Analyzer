@@ -31,6 +31,7 @@ class ManageBanks extends Component
     public $website = '';
     public $msa_code = '';
     public $cbsa_code = '';
+    public $cbsa_name = '';
     public $zip_code = '';
 
     public $bank_type  = '';
@@ -75,6 +76,7 @@ class ManageBanks extends Component
                 'msa_code' => $this->msa_code,
                 'zip_code' => $this->zip_code,
                 'cbsa_code' => $this->cbsa_code,
+                'cbsa_name' => $this->cbsa_name,
                 'bank_type_id' => $this->bank_type,
                 'cp_name' => $this->cp_name,
                 'cp_email' => $this->cp_email,
@@ -101,6 +103,7 @@ class ManageBanks extends Component
         $this->msa_code = $bank->msa_code;
         $this->zip_code = $bank->zip_code;
         $this->cbsa_code = $bank->cbsa_code;
+        $this->cbsa_name = $bank->cbsa_name;
         $this->bank_type  = $bank->bank_type_id;
         $this->cp_name = $bank->cp_name;
         $this->cp_email = $bank->cp_email;
@@ -121,6 +124,7 @@ class ManageBanks extends Component
                 'city_id' => $this->msa_code,
                 'zip_code' => $this->zip_code,
                 'cbsa_code' => $this->cbsa_code,
+                'cbsa_name' => $this->cbsa_name,
                 'cp_name' => $this->cp_name,
                 'cp_email' => $this->cp_email,
                 'cp_phone' => $this->cp_phone,
@@ -168,6 +172,7 @@ class ManageBanks extends Component
                                 'city_id'=>$city_id,
                                 'zip_code'=>$bank['Zip Code'],
                                 'cbsa_code'=>$bank['CBSA Code'],
+                                'cbsa_name'=>$bank['CBSA Name'],
                                 'cp_name'=>$bank['Contact Person Name'],
                                 'cp_email'=>$bank['Contact Person Email'],
                                 'cp_phone'=>$bank['Contact Person Phone'],
@@ -218,6 +223,7 @@ class ManageBanks extends Component
         $this->update = false;
         $this->zip_code = '';
         $this->cbsa_code = '';
+        $this->cbsa_name = '';
         $this->render();
     }
 

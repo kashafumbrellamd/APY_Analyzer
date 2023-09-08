@@ -22,15 +22,20 @@
                                             <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
                                                 placeholder="Enter Website...." required>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="name">Phone Number</label>
                                             <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
                                                 placeholder="Enter Phone Number...." required>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="CBSA_CODE" class="form-label">CBSA Code</label>
                                             <input type="text" id="CBSA_CODE" class="form-control" wire:model.lazy="cbsa_code"
                                                 placeholder="Enter CBSA code.." required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="CBSA_name" class="form-label">CBSA name</label>
+                                            <input type="text" id="cbsa_name" class="form-control" wire:model.lazy="cbsa_name"
+                                                placeholder="Enter CBSA name.." required>
                                         </div>
                                     </div>
                                     {{-- <div class="row">
@@ -145,16 +150,20 @@
                                         <input type="text" id="website" class="form-control mr-2" wire:model.lazy="website"
                                             placeholder="Enter Website....">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="name">Phone Number</label>
                                         <input type="text" id="phone_number" class="form-control mr-2" wire:model.lazy="phone_number"
                                             placeholder="Enter Phone Number....">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="CBSA_CODE" class="form-label">CBSA Code</label>
                                         <input type="text" id="CBSA_CODE" class="form-control" wire:model.lazy="cbsa_code"
                                             placeholder="Enter CBSA code.." required>
-
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="CBSA_name" class="form-label">CBSA name</label>
+                                        <input type="text" id="cbsa_name" class="form-control" wire:model.lazy="cbsa_name"
+                                            placeholder="Enter CBSA name.." required>
                                     </div>
                                 </div>
                                 <div class="row">
