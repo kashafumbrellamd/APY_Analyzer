@@ -21,6 +21,7 @@ class Bank extends Model
         'cp_email',
         'cp_phone',
         'cbsa_code',
+        'cbsa_name',
         'zip_code',
     ];
 

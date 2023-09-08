@@ -57,6 +57,14 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
+                                                    <label for="cbsa_name" class="form-label">CBSA Name</label>
+                                                    <input type="text" id="cbsa_name" name="cbsa_name"
+                                                        class="form-control" aria-describedby="cbsa_name"
+                                                        wire:model="cbsa_name" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
                                                     <label for="zip_code" class="form-label">Zip Code</label>
                                                     <input type="text" id="zip_code" name="zip_code"
                                                         class="form-control" aria-describedby="website"

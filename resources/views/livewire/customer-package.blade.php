@@ -129,6 +129,42 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <div>
+                                                    @foreach ($bank_cbsa_filter_name as $key => $filtered_city)
+                                                        <span
+                                                            class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
+                                                            <button type="button"
+                                                                wire:click="deleteCbsa({{ $key }})">
+                                                                <span
+                                                                    style="position: absolute;
+                                                            font-size: 14px;
+                                                            background-color: red;
+                                                            padding: 0px 7px;
+                                                            border-radius: 13px;
+                                                            top: -12px;
+                                                            right: -12px;
+                                                            color: #fff;
+                                                            font-weight: 600;">x</span>
+                                                            </button>
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                                <label for="bank_type" class="form-label">Select Bank
+                                                    CBSA</label>
+                                                <select class="form-select form-control mb-3 "
+                                                    aria-label="Default select example" wire:model="selected_city_now"
+                                                    wire:change="selectcbsa($event.target.value)">
+                                                    <option value="">Select CBSA</option>
+                                                    @foreach ($available_cbsa as $city)
+                                                        <option value="{{ $city->cbsa_code }}">
+                                                            {{ $city->cbsa_name }}</option>
+                                                    @endforeach
+                                                    <option value="all">All Data</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                         </div>
                                         <div class="col-md-6">
                                             <div>

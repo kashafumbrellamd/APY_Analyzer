@@ -22,6 +22,7 @@ class CustomerBank extends Model
         'charity_id',
         'zip_code',
         'cbsa_code',
+        'cbsa_name',
     ];
 
     public function contract(){

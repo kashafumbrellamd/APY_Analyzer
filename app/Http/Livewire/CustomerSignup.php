@@ -26,6 +26,7 @@ class CustomerSignup extends Component
     public $bank_website = '';
     public $bank_msa = '';
     public $cbsa_code = '';
+    public $cbsa_name = '';
     public $zip_code = '';
     public $bank_state = '';
     public $bank_city = '';
@@ -99,6 +100,7 @@ class CustomerSignup extends Component
             'state' => $this->bank_state,
             'zip_code' => $this->zip_code,
             'cbsa_code' => $this->cbsa_code,
+            'cbsa_name' => $this->cbsa_name,
             'display_reports' => "custom",
         ]);
         $user = User::create([
@@ -107,26 +109,9 @@ class CustomerSignup extends Component
             'email' => $this->admin_email,
             'phone_number' => $this->admin_phone,
             'designation' => $this->admin_designation,
-            // 'employee_id' => $this->admin_employeeid,
-            // 'gender' => $this->admin_gender,
             'password' => bcrypt($this->admin_phone),
             'bank_id' => $bank->id,
         ]);
-        // if($this->subscription == 'custom'){
-        //     foreach($this->custom_banks as $key => $custom_bank) {
-        //         $custom_selected_banks = CustomPackageBanks::create([
-        //             'bank_id' => $bank->id,
-        //             'customer_selected_bank_id' => $custom_bank,
-        //         ]);
-        //     }
-        // }
-        // $charges = Packages::where('package_type',$this->subscription)->first();
-        // $contract = Contract::create([
-        //     'contract_start' => date('Y-m-d'),
-        //     'contract_end' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 year')),
-        //     'charges' => $charges->price,
-        //     'bank_id' => $bank->id,
-        // ]);
         $role = Role::where('slug', 'bank-admin')->first();
         $user->roles()->attach($role);
         $this->clear();
@@ -145,6 +130,7 @@ class CustomerSignup extends Component
         $this->bank_charity = null;
         $this->zip_code = '';
         $this->cbsa_code = '';
+        $this->cbsa_name = '';
         $this->admin_first_name = '';
         $this->admin_email = '';
         $this->admin_phone = '';
