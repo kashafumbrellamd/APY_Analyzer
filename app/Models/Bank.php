@@ -23,6 +23,7 @@ class Bank extends Model
         'cbsa_code',
         'cbsa_name',
         'zip_code',
+        'surveyed',
     ];
 
     public static function BanksWithState()

@@ -156,28 +156,42 @@ class ManageBanks extends Component
                 if($bank_check==null && $bank['Bank Name']!= null)
                 {
                     $zip = Zip_code::where('zip_code',$bank['Zip Code'])->first();
-                    $bank_type = BankType::where('name',$bank['Bank Type'])->first();
+                    if($bank['Bank Type'] == "SMB" || $bank['Bank Type'] == "NMB" || $bank['Bank Type'] == "NAT"){
+                        $temp_type = "Bank";
+                    }elseif($bank['Bank Type'] == "SAL"){
+                        $temp_type = "Saving & Loan";
+                    }elseif($bank['Bank Type'] == "SSB" || $bank['Bank Type'] == "FSB"){
+                        $temp_type = "Savings Bank";
+                    }elseif($bank['Bank Type'] == "SCU" || $bank['Bank Type'] == "FCU"){
+                        $temp_type = "Credit Union";
+                    }
+                    $bank_type = BankType::where('name',$temp_type)->first();
                     if($zip != null && $bank_type != null)
                     {
                         $state_id = State::where('name',$bank['State'])->orwhere('state_code',$bank['State'])->pluck('id')->first();
                         $city_id = Cities::where('name',$bank['City'])->pluck('id')->first();
                         if($state_id!=null && $city_id!=null)
                         {
-                            $new_bank = Bank::create([
-                                'name'=>$bank['Bank Name'],
-                                'state_id'=>$state_id,
-                                'phone_number'=>$bank['Phone Number'],
-                                'website'=>$bank['Website'],
-                                'msa_code'=>$city_id,
-                                'city_id'=>$city_id,
-                                'zip_code'=>$bank['Zip Code'],
-                                'cbsa_code'=>$bank['CBSA Code'],
-                                'cbsa_name'=>$bank['CBSA Name'],
-                                'cp_name'=>$bank['Contact Person Name'],
-                                'cp_email'=>$bank['Contact Person Email'],
-                                'cp_phone'=>$bank['Contact Person Phone'],
-                                'bank_type_id'=>$bank_type->id,
-                            ]);
+                            if($bank['CBSA Code'] != 0 && $bank['CBSA'] != null){
+                                $new_bank = Bank::create([
+                                    'name'=>$bank['Bank Name'],
+                                    'state_id'=>$state_id,
+                                    'phone_number'=>$bank['Phone Number'],
+                                    'website'=>$bank['Website'],
+                                    'msa_code'=>$city_id,
+                                    'city_id'=>$city_id,
+                                    'zip_code'=>$bank['Zip Code'],
+                                    'cbsa_code'=>$bank['CBSA Code'],
+                                    'cbsa_name'=>$bank['CBSA'],
+                                    'cp_name'=>$bank['Contact Person Name'],
+                                    'cp_email'=>$bank['Contact Person Email'],
+                                    'cp_phone'=>$bank['Contact Person Phone'],
+                                    'surveyed'=>$bank['is_survey'],
+                                    'bank_type_id'=>$bank_type->id,
+                                ]);
+                            }else{
+                                array_push($this->not_inserted_banks,$bank['Bank Name']);
+                            }
                         }
                         else
                         {

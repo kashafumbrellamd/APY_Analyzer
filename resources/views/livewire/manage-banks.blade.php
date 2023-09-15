@@ -324,6 +324,7 @@
                             <th>Contact Person Name</th>
                             <th>Contact Person Email</th>
                             <th>Contact Person Phone</th>
+                            <th>Surveyed</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -345,6 +346,7 @@
                                 <td>{{ $dt->cp_name }}</td>
                                 <td>{{ $dt->cp_email }}</td>
                                 <td>{{ $dt->cp_phone }}</td>
+                                <td>{{ $dt->surveyed }}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
                                             class="bi bi-pen"></span></button>
