@@ -124,6 +124,8 @@ class CustomerPackage extends Component
         $this->bank_state_filter_name = [];
         $this->bank_city_filter = [];
         $this->bank_city_filter_name = [];
+        $this->bank_cbsa_filter = [];
+        $this->bank_cbsa_filter_name = [];
     }
 
     public function getStates()
