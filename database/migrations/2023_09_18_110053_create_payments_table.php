@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->string('bank_name');
             $table->string('status');
 
-            $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade');
+            $table->foreign('bank_id')->references('id')->on('customer_bank')->onDelete('cascade');
 
             $table->timestamps();
         });

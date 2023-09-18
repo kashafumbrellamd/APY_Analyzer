@@ -266,4 +266,8 @@ class CustomerBank extends Component
         unset($this->custom_banks[array_search($bank->id,$this->custom_banks)]);
         unset($this->selectedbanks[$item]);
     }
+
+    public function view($id){
+        return redirect(url('/view/detailed/customer/bank/'.$id));
+    }
 }

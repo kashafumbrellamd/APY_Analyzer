@@ -98,6 +98,11 @@ class GeneralController extends Controller
         return view('customer_bank.view_registered_bank');
     }
 
+    public function view_detailed_customer_bank($id)
+    {
+        return view('customer_bank.view_detailed_customer_bank',compact('id'));
+    }
+
 
     public function bank_login(Request $request)
     {

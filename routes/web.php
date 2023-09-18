@@ -84,6 +84,7 @@ Route::get('/manage/rate/types', [App\Http\Controllers\GeneralController::class,
 Route::get('/add/customer/bank', [App\Http\Controllers\GeneralController::class,'add_customer_bank']);
 Route::get('/view/customer/bank/admin', [App\Http\Controllers\GeneralController::class,'customer_bank_admin']);
 Route::get('/customer/bank/user', [App\Http\Controllers\GeneralController::class,'customer_bank_user']);
+Route::get('/view/detailed/customer/bank/{id}', [App\Http\Controllers\GeneralController::class,'view_detailed_customer_bank']);
 Route::get('/view/bank/reports', [App\Http\Controllers\GeneralController::class,'view_bank_reports']);
 Route::get('/view/detailed/reports', [App\Http\Controllers\GeneralController::class,'view_detailed_reports']);
 Route::get('/view/special/reports', [App\Http\Controllers\GeneralController::class,'view_speical_reports']);

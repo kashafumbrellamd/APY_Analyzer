@@ -285,6 +285,7 @@ class CustomerPackage extends Component
 
     public function submitForm()
     {
+
         if ($this->subscription == 'custom') {
             foreach ($this->custom_banks as $key => $custom_bank) {
                 $check = Bank::find($custom_bank);
@@ -300,7 +301,6 @@ class CustomerPackage extends Component
                         'email' => null,
                         'phone_number' => null,
                     ]);
-                    dd($check);
                 }
                 $custom_selected_banks = CustomPackageBanks::create([
                     'bank_id' => $this->bank->id,
@@ -321,7 +321,7 @@ class CustomerPackage extends Component
             $contract = Contract::create([
                 'contract_start' => date('Y-m-d'),
                 'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
-                'charges' => $charges->price,
+                'charges' => $amount_charged,
                 'bank_id' => $this->bank->id,
             ]);
         }

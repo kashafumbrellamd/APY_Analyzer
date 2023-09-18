@@ -453,7 +453,10 @@
                                 <td>{{ date('m-d-Y', strtotime($dt->contract->contract_end)) }}</td>
                                 <td>{{ number_format($dt->contract->charges, 2) }}</td> --}}
                                 <td>{{ Str::ucfirst($dt->display_reports) }}</td>
-                                <td class="text-center">
+                                <td class="d-flex" height="75px">
+                                    <button type="button" class="btn"
+                                        wire:click="view({{ $dt->id }})"><span
+                                            class="bi bi-eye-fill"></span></button>
                                     <button type="button" class="btn"
                                         wire:click="edit({{ $dt->id }})"><span
                                             class="bi bi-pen"></span></button>
