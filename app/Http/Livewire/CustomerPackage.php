@@ -12,6 +12,7 @@ use App\Models\CustomPackageBanks;
 use App\Models\Contract;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\BankRequest;
 use DB;
 use Auth;
 use Livewire\Component;
@@ -286,6 +287,21 @@ class CustomerPackage extends Component
     {
         if ($this->subscription == 'custom') {
             foreach ($this->custom_banks as $key => $custom_bank) {
+                $check = Bank::find($custom_bank);
+                if($check->surveyed == "0"){
+                    $user = User::where('bank_id',$this->bank->id)->first();
+                    BankRequest::create([
+                        'name' => $check->name,
+                        'zip_code' => "null",
+                        'state_id' => $check->state_id,
+                        'city_id' => $check->city_id,
+                        'description' => null,
+                        'user_id' => $user->id,
+                        'email' => null,
+                        'phone_number' => null,
+                    ]);
+                    dd($check);
+                }
                 $custom_selected_banks = CustomPackageBanks::create([
                     'bank_id' => $this->bank->id,
                     'customer_selected_bank_id' => $custom_bank,
