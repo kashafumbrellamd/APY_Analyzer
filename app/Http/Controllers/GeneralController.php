@@ -11,6 +11,7 @@ use App\Models\BankPrices;
 use App\Models\CustomerBank;
 use App\Models\RateType;
 use App\Models\Packages;
+use App\Models\Payment;
 use App\Models\OTP;
 use App\Models\BankRequest;
 
@@ -92,6 +93,11 @@ class GeneralController extends Controller
         return view('customer_bank.bank_request');
     }
 
+    public function view_registered_bank()
+    {
+        return view('customer_bank.view_registered_bank');
+    }
+
 
     public function bank_login(Request $request)
     {
@@ -99,25 +105,36 @@ class GeneralController extends Controller
         if ($user == null) {
             return redirect()->back();
         }
-        $code = rand(111111, 999999);
-        $otp = OTP::updateOrCreate(
-            ['user_id' => $user->id],
-            ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
-        );
-        Mail::to($user->email)->send(new OtpMail($otp));
-        return redirect()->route('otp_apply',['id'=>$user->id]);
+
+        $payment = Payment::where('bank_id',$user->bank_id)->first();
+        if($payment->status == "1"){
+            $code = rand(111111, 999999);
+            $otp = OTP::updateOrCreate(
+                ['user_id' => $user->id],
+                ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
+            );
+            Mail::to($user->email)->send(new OtpMail($otp));
+            return redirect()->route('otp_apply',['id'=>$user->id]);
+        }else{
+            return redirect()->back()->with('success','Please wait for the Admin Approval to Proceed');
+        }
     }
 
     public function verify_login(Request $request)
     {
         $user = User::find($request->id);
+        $payment = Payment::where('bank_id',$user->bank_id)->first();
         if(isset($user)){
-            $otp = OTP::where('user_id',$request->id)->first();
-            if($otp->opt == $request->otp){
-                Auth::login($user, $remember = true);
-                return redirect()->route('home');
+            if($payment->status == "1"){
+                $otp = OTP::where('user_id',$request->id)->first();
+                if($otp->opt == $request->otp){
+                    Auth::login($user, $remember = true);
+                    return redirect()->route('home');
+                }else{
+                    return redirect()->back();
+                }
             }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Please wait for the Admin Approval to Proceed');
             }
         }else{
             return redirect()->back();

@@ -17,12 +17,19 @@
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
                     <h1 class="regiter_heading_h">Login</h1>
+                    @if (session('success'))
+                        <div class="col-sm-12">
+                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-12">
                             <form action="{{ route('verify_login') }}" class="login-form" method="post">
                                 @csrf
                                 <div>
-                                    
+
                                     <div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
@@ -43,7 +50,7 @@
 
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div>
                                         <div class="row">
@@ -65,7 +72,7 @@
             </div>
         </div>
     </section>
-      
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </html>

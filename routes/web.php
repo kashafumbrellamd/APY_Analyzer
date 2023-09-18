@@ -93,6 +93,7 @@ Route::get('/manage/charity', [App\Http\Controllers\GeneralController::class,'ma
 Route::get('/view/seperate/reports', [App\Http\Controllers\GeneralController::class,'seperate_reports']);
 Route::get('/view/summary/reports', [App\Http\Controllers\GeneralController::class,'summary_reports']);
 Route::get('/view/bank/request', [App\Http\Controllers\GeneralController::class,'bank_request']);
+Route::get('/view/registered/bank', [App\Http\Controllers\GeneralController::class,'view_registered_bank']);
 //Route::get('/managee/charity', App\Http\Livewire\ManageCharity::class);
 Route::get('/manage/packages', [App\Http\Controllers\GeneralController::class,'manage_packages']);
 
