@@ -58,6 +58,10 @@ Route::get('/customerPackage/{id}', function ($id) {
     return view('customer_bank.customer_package',compact('id'));
 })->name('customer_package');
 
+Route::get('/payment/{id}', function ($id) {
+    return view('customer_bank.payment',compact('id'));
+})->name('payment');
+
 Route::get('/interesting_stories', function () {
     $stories = Stories::where('status','1')->get();
     return view('interesting_stories',['stories'=>$stories]);

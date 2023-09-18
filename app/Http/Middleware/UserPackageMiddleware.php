@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Models\CustomerBank;
+use App\Models\Payment;
 use DB;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,12 @@ class UserPackageMiddleware
             if($bank->display_reports == 'custom'){
                 $custom_package_banks = DB::table('custom_package_banks')->where('bank_id',$bank->id)->first();
                 if($custom_package_banks != null){
-                    return $next($request);
+                    $payment = Payment::where('bank_id',$bank->id)->where('status','1')->first();
+                    if($payment != null){
+                        return $next($request);
+                    }else{
+                        return redirect(url('payment/'.$bank->id));
+                    }
                 }else{
                     return redirect(url('customerPackage/'.$bank->id));
                 }

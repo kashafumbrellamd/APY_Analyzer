@@ -158,7 +158,7 @@
                                                     <option value="">Select CBSA</option>
                                                     @foreach ($available_cbsa as $city)
                                                         <option value="{{ $city->cbsa_code }}">
-                                                            {{ $city->cbsa_name }}</option>
+                                                            {{ $city->cbsa_code }}</option>
                                                     @endforeach
                                                     <option value="all">All Data</option>
                                                 </select>

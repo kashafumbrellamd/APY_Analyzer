@@ -307,11 +307,8 @@ class CustomerPackage extends Component
                 'bank_id' => $this->bank->id,
             ]);
         }
-        if(!Auth::check()){
-            return redirect(url('/signin'));
-        }else{
-            return redirect(url('/home'));
-        }
+
+        return redirect()->route('payment',['id'=>$this->bank->id]);
     }
 
     public function deleteState($item){
