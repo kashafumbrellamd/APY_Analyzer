@@ -12,6 +12,7 @@ use App\Models\CustomerBank;
 use App\Models\RateType;
 use App\Models\Packages;
 use App\Models\Payment;
+use App\Models\Contract;
 use App\Models\OTP;
 use App\Models\BankRequest;
 
@@ -111,17 +112,22 @@ class GeneralController extends Controller
             return redirect()->back();
         }
 
-        $payment = Payment::where('bank_id',$user->bank_id)->first();
-        if($payment->status == "1"){
-            $code = rand(111111, 999999);
-            $otp = OTP::updateOrCreate(
-                ['user_id' => $user->id],
-                ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
-            );
-            Mail::to($user->email)->send(new OtpMail($otp));
-            return redirect()->route('otp_apply',['id'=>$user->id]);
+        $contract = Contract::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
+        if($contract->contract_end >= date('Y-m-d')){
+            $payment = Payment::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
+            if($payment->status == "1"){
+                $code = rand(111111, 999999);
+                $otp = OTP::updateOrCreate(
+                    ['user_id' => $user->id],
+                    ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
+                );
+                Mail::to($user->email)->send(new OtpMail($otp));
+                return redirect()->route('otp_apply',['id'=>$user->id]);
+            }else{
+                return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+            }
         }else{
-            return redirect()->back()->with('success','Please wait for the Admin Approval to Proceed');
+            return redirect()->route('payment',['id'=>$user->bank_id])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
         }
     }
 

@@ -40,6 +40,15 @@ class Payment extends Component
     public function submitForm(){
         $path = $this->photo->store('images', 'public');
 
+        $contract = Contract::where('bank_id',$this->bank->id)->orderby('id','desc')->first();
+        if(date('Y-m-d') > $contract->contract_end){
+            $contract = Contract::create([
+                'contract_start' => date('Y-m-d'),
+                'contract_end' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 year')),
+                'charges' => $this->amount,
+                'bank_id' => $this->bank->id,
+            ]);
+        }
         $pay = Pay::create([
             'bank_id' => $this->bank->id,
             'cheque_number' => $this->cheque_number,

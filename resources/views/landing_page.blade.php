@@ -17,10 +17,10 @@
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
                     <h1 class="regiter_heading_h">Login</h1>
-                    @if (session('success'))
+                    @if (session('approval'))
                         <div class="col-sm-12">
                             <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                                {{ session('success') }}
+                                {{ session('approval') }}
                             </div>
                         </div>
                     @endif

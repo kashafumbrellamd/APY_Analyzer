@@ -5,7 +5,13 @@
                 <h2 class="mb-5 text-center">Intelli-Rate</h2>
                 <div class="main_signUp">
                     <div>
-
+                    @if (session('contract'))
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                {{ session('contract') }}
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
