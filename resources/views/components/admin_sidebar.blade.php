@@ -153,6 +153,12 @@
         </li>
         <hr class="sidebar-divider">
         <li class="nav-item active">
+            <a class="nav-link" href="{{ url('/customize/packages') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Customize My Package</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item active">
             <a class="nav-link" href="{{ url('/view/bank/request') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Bank Request</span></a>
