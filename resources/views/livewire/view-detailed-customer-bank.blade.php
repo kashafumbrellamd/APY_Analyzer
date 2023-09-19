@@ -149,7 +149,7 @@
                                     <td><a href="{{ env('APP_URL')."storage/".$pay->cheque_image }}" target="_blank">
                                         <button class="btn btn-primary"> View</button>
                                     </a></td>
-                                    <td>{{ $pay->status }}</td>
+                                    <td>{{ $pay->status == "1" ?"Approved":"Not Approved Yet" }}</td>
                                 </tr>
                             @empty
                                 <tr>
