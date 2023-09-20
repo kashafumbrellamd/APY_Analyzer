@@ -24,7 +24,7 @@ class Payment extends Component
     {
         $this->type = $type;
         $this->bank = CustomerBank::findOrFail($id);
-        $this->amount = Contract::where('bank_id',$id)->where('contract_type',$type)->first()->charges;
+        $this->amount = Contract::where('bank_id',$id)->where('contract_type',$type)->orderBy('id','desc')->first()->charges;
     }
 
     public function render()

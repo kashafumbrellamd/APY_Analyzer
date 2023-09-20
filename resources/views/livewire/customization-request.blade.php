@@ -13,14 +13,16 @@
                                     <div type="button" class="accordion-button collapsed d-flex justify-content-between"
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $key }}" aria-expanded="false"
                                         aria-controls="flush-collapse{{ $key }}">
-                                        <h6><strong>Bank Name: </strong>{{ $dt->bank_name }}</h6>
+                                        <h6><strong>Bank Name: </strong>{{ $dt->bank_name=="null"?"":$dt->bank_name }}</h6>
 
-                                        <h6><strong>Cheque Number: </strong>{{ $dt->cheque_number }}</h6>
+                                        <h6><strong>Cheque Number: </strong>{{ $dt->cheque_number=="null"?"No Payment required":$dt->cheque_number }}</h6>
 
-                                        <span><strong>View Cheque: </strong><a href="{{ env('APP_URL') . 'storage/' . $dt->cheque_image }}"
-                                            target="_blank">
-                                            <button class="btn btn-primary"> View</button>
-                                        </a></span>
+                                        @if($dt->cheque_image != "null")
+                                            <span><strong>View Cheque: </strong><a href="{{ env('APP_URL') . 'storage/' . $dt->cheque_image }}"
+                                                target="_blank">
+                                                <button class="btn btn-primary"> View</button>
+                                            </a></span>
+                                        @endif
 
                                         <button class="btn btn-success"
                                             wire:click="approved({{ $dt->id }})">

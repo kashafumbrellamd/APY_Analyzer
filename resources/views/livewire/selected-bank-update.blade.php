@@ -57,6 +57,11 @@
                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
                 </div>
             @enderror
+            @error('request')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-success" role="alert">{{ $message }}</span>
+                </div>
+            @enderror
             <h5>Choose Subscription Plan (One year)</h5>
             <div class="text-center">
                 <div wire:loading.delay>

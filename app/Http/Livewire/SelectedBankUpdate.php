@@ -321,6 +321,7 @@ class SelectedBankUpdate extends Component
                 "updated_at" => NOW(),
             ]);
         }
+        $this->addError('request','The Delete Request Has been Successfully Submitted.');
     }
 
     public function submitForm()
@@ -329,7 +330,7 @@ class SelectedBankUpdate extends Component
         if($payment == null){
             $toBeAdded = array_diff($this->custom_banks,$this->already);
             foreach ($toBeAdded as $key => $custom_bank) {
-                $check = DB::table('temp_custom_bank')->where('bank_id',Auth::user()->bank_id)
+                $check = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)
                 ->where('customer_selected_bank_id',$custom_bank)
                 ->first();
                 if($check == null){
@@ -344,23 +345,34 @@ class SelectedBankUpdate extends Component
             }
 
             $charges = Packages::where('package_type', $this->subscription)->first();
+            $contract = Contract::where('bank_id',Auth::user()->bank_id)->orderBy('id','desc')->first();
 
             if(count($this->custom_banks) <= $charges->number_of_units){
-                $contract = Contract::create([
+                 Contract::create([
                     'contract_start' => $contract->contract_start,
                     'contract_end' => $contract->contract_end,
                     'charges' => 0,
                     'bank_id' => $contract->bank_id,
                     'contract_type' => 'partial',
                 ]);
+                Payment::create([
+                    'bank_id' => $contract->bank_id,
+                    'cheque_number' => "null",
+                    'cheque_image' => "null",
+                    'amount' => 0,
+                    'bank_name' => "null",
+                    'status' => "0",
+                    'payment_type' => "partial",
+                ]);
+                $this->addError('request','The Request Has been Successfully Submitted.');
+
             }else{
-                $contract = Contract::where('bank_id',Auth::user()->bank_id)->orderBy('id','desc')->first();
                 $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
                 $months_remain = (int)($difference/(60*60*24*30));
 
                 $price = $charges->additional_price;
-                $priceToBePaid = round(($price/12)*$months_remain,2);
-                $contract = Contract::create([
+                $priceToBePaid = round(($price/12)*$months_remain,2)*(count($toBeAdded));
+                Contract::create([
                     'contract_start' => $contract->contract_start,
                     'contract_end' => $contract->contract_end,
                     'charges' => $priceToBePaid,
