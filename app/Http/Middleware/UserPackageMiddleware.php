@@ -24,7 +24,7 @@ class UserPackageMiddleware
             if($bank->display_reports == 'custom'){
                 $custom_package_banks = DB::table('custom_package_banks')->where('bank_id',$bank->id)->first();
                 if($custom_package_banks != null){
-                    $payment = Payment::where('bank_id',$bank->id)->where('status','1')->first();
+                    $payment = Payment::where('bank_id',$bank->id)->where('status','1')->where('payment_type','complete')->first();
                     if($payment != null){
                         return $next($request);
                     }else{

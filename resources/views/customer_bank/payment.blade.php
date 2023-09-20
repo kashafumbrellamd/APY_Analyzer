@@ -13,7 +13,7 @@
     @livewireStyles
   </head>
   <body>
-    @livewire('payment',['id'=>$id])
+    @livewire('payment',['id'=>$id,'type'=>$type])
     @livewireScripts
 
 </body>

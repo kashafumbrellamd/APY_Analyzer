@@ -119,7 +119,7 @@ class GeneralController extends Controller
 
         $contract = Contract::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
         if($contract->contract_end >= date('Y-m-d')){
-            $payment = Payment::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
+            $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
             if($payment->status == "1"){
                 $code = rand(111111, 999999);
                 $otp = OTP::updateOrCreate(
@@ -132,7 +132,7 @@ class GeneralController extends Controller
                 return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
             }
         }else{
-            return redirect()->route('payment',['id'=>$user->bank_id])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
+            return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
         }
     }
 

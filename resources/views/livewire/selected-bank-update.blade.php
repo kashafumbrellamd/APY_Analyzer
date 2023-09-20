@@ -31,7 +31,7 @@
                                         <td>{{ $dt->website }}</td>
                                         <td>
                                             <button type="button" class="btn"
-                                                wire:click="delete({{ $dt->id }})"><span
+                                                wire:click="deleteRequest({{ $dt->cpb_id }})"><span
                                                     class="bi bi-trash"></span></button>
                                         </td>
                                     </tr>
@@ -251,7 +251,7 @@
                                                             type="checkbox" value=""
                                                             id="defaultCheck{{ $bank->id }}"
                                                             wire:click="select_bank({{ $bank->id }})"
-                                                            checked>
+                                                            checked {{ in_array($bank->id, $this->already)?'disabled':'' }}>
                                                         <label class="form-check-label"
                                                             for="defaultCheck{{ $bank->id }}">
                                                             {{ $bank->name }} <span

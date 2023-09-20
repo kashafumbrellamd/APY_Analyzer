@@ -326,7 +326,7 @@ class CustomerPackage extends Component
             ]);
         }
 
-        return redirect()->route('payment',['id'=>$this->bank->id]);
+        return redirect()->route('payment',['id'=>$this->bank->id, 'type'=>'complete']);
     }
 
     public function deleteState($item){

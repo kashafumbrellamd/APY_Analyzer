@@ -14,5 +14,6 @@ class Contract extends Model
         'contract_end',
         'charges',
         'bank_id',
+        'contract_type',
     ];
 }

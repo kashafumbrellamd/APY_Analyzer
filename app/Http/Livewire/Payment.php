@@ -13,16 +13,18 @@ class Payment extends Component
 {
     use WithFileUploads;
 
+    public $type = '';
     public $bank = '';
     public $amount = '';
     public $photo;
     public $cheque_number = '';
     public $bank_name = '';
 
-    public function mount($id)
+    public function mount($id,$type)
     {
+        $this->type = $type;
         $this->bank = CustomerBank::findOrFail($id);
-        $this->amount = Contract::where('bank_id',$id)->first()->charges;
+        $this->amount = Contract::where('bank_id',$id)->where('contract_type',$type)->first()->charges;
     }
 
     public function render()
@@ -56,6 +58,7 @@ class Payment extends Component
             'amount' => $this->amount,
             'bank_name' => $this->bank_name,
             'status' => "0",
+            'payment_type' => $this->type,
         ]);
 
         if(!Auth::check()){

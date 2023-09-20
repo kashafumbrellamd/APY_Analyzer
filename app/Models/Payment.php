@@ -16,5 +16,6 @@ class Payment extends Model
         'amount',
         'bank_name',
         'status',
+        'payment_type',
     ];
 }

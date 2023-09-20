@@ -20,6 +20,7 @@ use Livewire\Component;
 class SelectedBankUpdate extends Component
 {
     public $subscription = 'custom';
+    public $already;
 
     public $bank_type = '';
 
@@ -48,7 +49,7 @@ class SelectedBankUpdate extends Component
         $states = State::where('country_id', '233')->get();
         $data = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)
             ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
-            ->select('banks.*')
+            ->select('custom_package_banks.id as cpb_id','banks.*')
             ->get();
         $this->all_banks = $this->fetch_banks();
         $bank_cities = Cities::get();
@@ -62,8 +63,8 @@ class SelectedBankUpdate extends Component
     }
 
     public function addSelected(){
-       $already =  CustomPackageBanks::where('bank_id',Auth::user()->bank_id)->pluck('customer_selected_bank_id')->toArray();
-       $this->custom_banks = $already;
+       $this->already =  CustomPackageBanks::where('bank_id',Auth::user()->bank_id)->pluck('customer_selected_bank_id')->toArray();
+       $this->custom_banks = $this->already;
     }
 
     public function selectbanktype($id)
@@ -305,5 +306,66 @@ class SelectedBankUpdate extends Component
             ->get();
         $this->all_banks = $All_banks;
         $this->selectedbanks = [];
+    }
+
+    public function deleteRequest($id){
+        $details = CustomPackageBanks::find($id);
+        $check = DB::table('temp_custom_bank')->where('bank_id',$details->bank_id)->where('customer_selected_bank_id',$details->customer_selected_bank_id)->first();
+        if($check == null){
+            DB::table('temp_custom_bank')->insert([
+                "bank_id" => $details->bank_id,
+                "customer_selected_bank_id" => $details->customer_selected_bank_id,
+                "type" => "remove",
+                "created_at" => NOW(),
+                "updated_at" => NOW(),
+            ]);
+        }
+    }
+
+    public function submitForm()
+    {
+        $toBeAdded = array_diff($this->custom_banks,$this->already);
+        foreach ($toBeAdded as $key => $custom_bank) {
+            $check = DB::table('temp_custom_bank')->where('bank_id',Auth::user()->bank_id)
+            ->where('customer_selected_bank_id',$custom_bank)
+            ->first();
+            if($check == null){
+                DB::table('temp_custom_bank')->insert([
+                    "bank_id" => Auth::user()->bank_id,
+                    "customer_selected_bank_id" => $custom_bank,
+                    "type" => "add",
+                    "created_at" => NOW(),
+                    "updated_at" => NOW(),
+                ]);
+            }
+        }
+
+        $charges = Packages::where('package_type', $this->subscription)->first();
+
+        if(count($this->custom_banks) <= $charges->number_of_units){
+            $contract = Contract::create([
+                'contract_start' => $contract->contract_start,
+                'contract_end' => $contract->contract_end,
+                'charges' => 0,
+                'bank_id' => $contract->bank_id,
+                'contract_type' => 'partial',
+            ]);
+        }else{
+            $contract = Contract::where('bank_id',Auth::user()->bank_id)->orderBy('id','desc')->first();
+            $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
+            $months_remain = (int)($difference/(60*60*24*30));
+
+            $price = $charges->additional_price;
+            $priceToBePaid = round(($price/12)*$months_remain,2);
+            $contract = Contract::create([
+                'contract_start' => $contract->contract_start,
+                'contract_end' => $contract->contract_end,
+                'charges' => $priceToBePaid,
+                'bank_id' => $contract->bank_id,
+                'contract_type' => 'partial',
+            ]);
+            return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+        }
+
     }
 }
