@@ -13,6 +13,7 @@ use App\Models\Contract;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\BankRequest;
+use App\Models\Payment;
 use DB;
 use Auth;
 use Livewire\Component;
@@ -324,47 +325,52 @@ class SelectedBankUpdate extends Component
 
     public function submitForm()
     {
-        $toBeAdded = array_diff($this->custom_banks,$this->already);
-        foreach ($toBeAdded as $key => $custom_bank) {
-            $check = DB::table('temp_custom_bank')->where('bank_id',Auth::user()->bank_id)
-            ->where('customer_selected_bank_id',$custom_bank)
-            ->first();
-            if($check == null){
-                DB::table('temp_custom_bank')->insert([
-                    "bank_id" => Auth::user()->bank_id,
-                    "customer_selected_bank_id" => $custom_bank,
-                    "type" => "add",
-                    "created_at" => NOW(),
-                    "updated_at" => NOW(),
-                ]);
+        $payment = Payment::where('bank_id',Auth::user()->bank_id)->where('status','0')->first();
+        if($payment == null){
+            $toBeAdded = array_diff($this->custom_banks,$this->already);
+            foreach ($toBeAdded as $key => $custom_bank) {
+                $check = DB::table('temp_custom_bank')->where('bank_id',Auth::user()->bank_id)
+                ->where('customer_selected_bank_id',$custom_bank)
+                ->first();
+                if($check == null){
+                    DB::table('temp_custom_bank')->insert([
+                        "bank_id" => Auth::user()->bank_id,
+                        "customer_selected_bank_id" => $custom_bank,
+                        "type" => "add",
+                        "created_at" => NOW(),
+                        "updated_at" => NOW(),
+                    ]);
+                }
             }
-        }
 
-        $charges = Packages::where('package_type', $this->subscription)->first();
+            $charges = Packages::where('package_type', $this->subscription)->first();
 
-        if(count($this->custom_banks) <= $charges->number_of_units){
-            $contract = Contract::create([
-                'contract_start' => $contract->contract_start,
-                'contract_end' => $contract->contract_end,
-                'charges' => 0,
-                'bank_id' => $contract->bank_id,
-                'contract_type' => 'partial',
-            ]);
+            if(count($this->custom_banks) <= $charges->number_of_units){
+                $contract = Contract::create([
+                    'contract_start' => $contract->contract_start,
+                    'contract_end' => $contract->contract_end,
+                    'charges' => 0,
+                    'bank_id' => $contract->bank_id,
+                    'contract_type' => 'partial',
+                ]);
+            }else{
+                $contract = Contract::where('bank_id',Auth::user()->bank_id)->orderBy('id','desc')->first();
+                $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
+                $months_remain = (int)($difference/(60*60*24*30));
+
+                $price = $charges->additional_price;
+                $priceToBePaid = round(($price/12)*$months_remain,2);
+                $contract = Contract::create([
+                    'contract_start' => $contract->contract_start,
+                    'contract_end' => $contract->contract_end,
+                    'charges' => $priceToBePaid,
+                    'bank_id' => $contract->bank_id,
+                    'contract_type' => 'partial',
+                ]);
+                return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+            }
         }else{
-            $contract = Contract::where('bank_id',Auth::user()->bank_id)->orderBy('id','desc')->first();
-            $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
-            $months_remain = (int)($difference/(60*60*24*30));
-
-            $price = $charges->additional_price;
-            $priceToBePaid = round(($price/12)*$months_remain,2);
-            $contract = Contract::create([
-                'contract_start' => $contract->contract_start,
-                'contract_end' => $contract->contract_end,
-                'charges' => $priceToBePaid,
-                'bank_id' => $contract->bank_id,
-                'contract_type' => 'partial',
-            ]);
-            return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+            $this->addError('payment','Please Wait for the Previous Request to be completed before Changing');
         }
 
     }

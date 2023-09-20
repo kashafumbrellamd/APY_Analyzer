@@ -52,6 +52,11 @@
             <h6 class="m-0 font-weight-bold text-primary">Customize My Package</h6>
         </div>
         <div class="card-body">
+            @error('payment')
+                <div class="mt-3 text-center">
+                    <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                </div>
+            @enderror
             <h5>Choose Subscription Plan (One year)</h5>
             <div class="text-center">
                 <div wire:loading.delay>

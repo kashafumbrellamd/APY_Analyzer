@@ -98,6 +98,7 @@ Route::get('/view/registered/bank', [App\Http\Controllers\GeneralController::cla
 //Route::get('/managee/charity', App\Http\Livewire\ManageCharity::class);
 Route::get('/manage/packages', [App\Http\Controllers\GeneralController::class,'manage_packages']);
 Route::get('/customize/packages', [App\Http\Controllers\GeneralController::class,'customize_packages']);
+Route::get('/view/customization/requests', [App\Http\Controllers\GeneralController::class,'view_customization_requests']);
 
 
 Route::get('/verify/{code}', [App\Http\Controllers\PermissionController::class,'verify_email']);

@@ -9,7 +9,7 @@ class RegisteredBanksForApproval extends Component
 {
     public function render()
     {
-        $data = Payment::where('status','0')->get();
+        $data = Payment::where('payment_type','complete')->where('status','0')->get();
         return view('livewire.registered-banks-for-approval',compact('data'));
     }
 

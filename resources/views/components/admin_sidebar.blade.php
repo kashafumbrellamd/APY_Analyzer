@@ -45,6 +45,14 @@
         <hr class="sidebar-divider">
 
         <li class="nav-item active">
+            <a class="nav-link" href="{{ url('/view/customization/requests') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>View Customization Request</span></a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <li class="nav-item active">
             <a class="nav-link" href="{{ url('/view/bank/request') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Bank Request</span></a>

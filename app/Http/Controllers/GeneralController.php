@@ -109,6 +109,11 @@ class GeneralController extends Controller
         return view('customer_bank.customize_packages');
     }
 
+    public function view_customization_requests()
+    {
+        return view('customer_bank.view_customization_requests');
+    }
+
 
     public function bank_login(Request $request)
     {
