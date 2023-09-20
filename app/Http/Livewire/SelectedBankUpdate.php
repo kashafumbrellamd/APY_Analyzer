@@ -371,7 +371,7 @@ class SelectedBankUpdate extends Component
                 $months_remain = (int)($difference/(60*60*24*30));
 
                 $price = $charges->additional_price;
-                $priceToBePaid = round(($price/12)*$months_remain,2)*(count($toBeAdded));
+                $priceToBePaid = round(($price/12)*$months_remain,2)*(abs(count($this->custom_banks)+count($toBeAdded)-$charges->number_of_units));
                 Contract::create([
                     'contract_start' => $contract->contract_start,
                     'contract_end' => $contract->contract_end,
