@@ -346,7 +346,6 @@ class SelectedBankUpdate extends Component
 
             $charges = Packages::where('package_type', $this->subscription)->first();
             $contract = Contract::where('bank_id',Auth::user()->bank_id)->orderBy('id','desc')->first();
-
             if(count($this->custom_banks) <= $charges->number_of_units){
                  Contract::create([
                     'contract_start' => $contract->contract_start,
@@ -366,12 +365,12 @@ class SelectedBankUpdate extends Component
                 ]);
                 $this->addError('request','The Request Has been Successfully Submitted.');
 
-            }else{
+            }elseif(count($this->already) <= $charges->number_of_units){
                 $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
                 $months_remain = (int)($difference/(60*60*24*30));
 
                 $price = $charges->additional_price;
-                $priceToBePaid = round(($price/12)*$months_remain,2)*(abs(count($this->custom_banks)+count($toBeAdded)-$charges->number_of_units));
+                $priceToBePaid = round(($price/12)*$months_remain,2)*(abs(count($this->already)+count($toBeAdded)-$charges->number_of_units));
                 Contract::create([
                     'contract_start' => $contract->contract_start,
                     'contract_end' => $contract->contract_end,
@@ -380,6 +379,21 @@ class SelectedBankUpdate extends Component
                     'contract_type' => 'partial',
                 ]);
                 return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+            }else{
+                $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
+                $months_remain = (int)($difference/(60*60*24*30));
+
+                $price = $charges->additional_price;
+                $priceToBePaid = round(($price/12)*$months_remain,2)*(abs(count($toBeAdded)));
+                Contract::create([
+                    'contract_start' => $contract->contract_start,
+                    'contract_end' => $contract->contract_end,
+                    'charges' => $priceToBePaid,
+                    'bank_id' => $contract->bank_id,
+                    'contract_type' => 'partial',
+                ]);
+                return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+
             }
         }else{
             $this->addError('payment','Please Wait for the Previous Request to be completed before Changing');

@@ -168,17 +168,18 @@ class CustomerPackage extends Component
         if ($this->bank_state_filter != '' && $this->bank_state_filter != 'all' && $this->bank_type != "") {
             $cbsa_codes = Bank::whereIn('state_id', $this->bank_state_filter)
                 ->where('bank_type_id', $this->bank_type)
-                ->groupBy('city_id')
+                ->groupBy('cbsa_code')
                 ->get();
         } elseif ($this->bank_state_filter == '' && $this->bank_state_filter == 'all' && $this->bank_type != "") {
             $cbsa_codes = Bank::with('cities')
                 ->where('bank_type_id', $this->bank_type)
-                ->groupBy('city_id')
+                ->groupBy('cbsa_code')
                 ->get();
         } elseif ($this->bank_state_filter != '' && $this->bank_state_filter != 'all' && $this->bank_type == "") {
             $cbsa_codes = Bank::with('cities')
                 ->whereIn('state_id', $this->bank_state_filter)
-                ->groupBy('city_id')
+                ->groupBy('cbsa_code')
+                ->select('cbsa_code')
                 ->get();
         } elseif ($this->bank_state_filter == '' && $this->bank_state_filter == 'all' && $this->bank_type == "") {
             $cbsa_codes = Bank::select('cbsa_code','cbsa_name')->get();

@@ -36,7 +36,6 @@
                                                     cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>Bank Name</th>
                                                             <th>Requested Bank</th>
                                                             <th>Type</th>
                                                         </tr>
@@ -44,8 +43,7 @@
                                                     <tbody>
                                                         @forelse ($dt->request_banks as $dtrb)
                                                             <tr>
-                                                                <td>{{ $dtrb->bank_id }}</td>
-                                                                <td>{{ $dtrb->customer_selected_bank_id }}</td>
+                                                                <td>{{ $dtrb->name }}</td>
                                                                 <td>{{ $dtrb->type }}</td>
                                                             </tr>
                                                         @empty

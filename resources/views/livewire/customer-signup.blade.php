@@ -75,7 +75,7 @@
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">State</label>
                                                     <select class="form-select" id="bank_state" name="bank_state"
-                                                        aria-label="Default select example" wire:model.lazy="bank_state"
+                                                        aria-label="Default select example" wire:model.lazy="bank_state" disabled
                                                         required>
                                                         <option value="">Select State</option>
                                                         @foreach ($states as $state)
@@ -89,7 +89,7 @@
                                                 <div class="mb-3">
                                                     <label for="bank_state" class="form-label">City</label>
                                                     <select class="form-select" id="bank_city" name="bank_city"
-                                                        aria-label="Default select example" wire:model.lazy="bank_city"
+                                                        aria-label="Default select example" wire:model.lazy="bank_city" disabled
                                                         required>
                                                         <option value="">Select City</option>
                                                         @if ($bank_cities != null)
