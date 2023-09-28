@@ -90,32 +90,37 @@ class CustomerSignup extends Component
 
     public function submitForm()
     {
-        $bank = CB::create([
-            'bank_name' => $this->bank_name,
-            'bank_email' => $this->bank_email,
-            'bank_phone_numebr' => $this->bank_phone,
-            'website' => $this->bank_website,
-            'city_id' => $this->bank_city,
-            'charity_id' => $this->bank_charity,
-            'state' => $this->bank_state,
-            'zip_code' => $this->zip_code,
-            'cbsa_code' => $this->cbsa_code,
-            'cbsa_name' => $this->cbsa_name,
-            'display_reports' => "custom",
-        ]);
-        $user = User::create([
-            'name' => $this->admin_first_name,
-            'last_name' => $this->admin_last_name,
-            'email' => $this->admin_email,
-            'phone_number' => $this->admin_phone,
-            'designation' => $this->admin_designation,
-            'password' => bcrypt($this->admin_phone),
-            'bank_id' => $bank->id,
-        ]);
-        $role = Role::where('slug', 'bank-admin')->first();
-        $user->roles()->attach($role);
-        $this->clear();
-        return redirect(url('/customerPackage/'.$bank->id));
+        $check = User::where('email',$this->admin_email)->first();
+        if($check == null){
+            $bank = CB::create([
+                'bank_name' => $this->bank_name,
+                'bank_email' => $this->bank_email,
+                'bank_phone_numebr' => $this->bank_phone,
+                'website' => $this->bank_website,
+                'city_id' => $this->bank_city,
+                'charity_id' => $this->bank_charity,
+                'state' => $this->bank_state,
+                'zip_code' => $this->zip_code,
+                'cbsa_code' => $this->cbsa_code,
+                'cbsa_name' => $this->cbsa_name,
+                'display_reports' => "custom",
+            ]);
+            $user = User::create([
+                'name' => $this->admin_first_name,
+                'last_name' => $this->admin_last_name,
+                'email' => $this->admin_email,
+                'phone_number' => $this->admin_phone,
+                'designation' => $this->admin_designation,
+                'password' => bcrypt($this->admin_phone),
+                'bank_id' => $bank->id,
+            ]);
+            $role = Role::where('slug', 'bank-admin')->first();
+            $user->roles()->attach($role);
+            $this->clear();
+            return redirect(url('/customerPackage/'.$bank->id));
+        }else{
+            $this->addError('error','User with this Email Address already exists');
+        }
         $this->render();
     }
 

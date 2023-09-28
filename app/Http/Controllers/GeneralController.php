@@ -123,21 +123,25 @@ class GeneralController extends Controller
         }
 
         $contract = Contract::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
-        if($contract->contract_end >= date('Y-m-d')){
-            $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
-            if($payment->status == "1"){
-                $code = rand(111111, 999999);
-                $otp = OTP::updateOrCreate(
-                    ['user_id' => $user->id],
-                    ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
-                );
-                Mail::to($user->email)->send(new OtpMail($otp));
-                return redirect()->route('otp_apply',['id'=>$user->id]);
+        if($contract != null){
+            if($contract->contract_end >= date('Y-m-d')){
+                $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
+                if($payment->status == "1"){
+                    $code = rand(111111, 999999);
+                    $otp = OTP::updateOrCreate(
+                        ['user_id' => $user->id],
+                        ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
+                    );
+                    Mail::to($user->email)->send(new OtpMail($otp));
+                    return redirect()->route('otp_apply',['id'=>$user->id]);
+                }else{
+                    return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+                }
             }else{
-                return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+                return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
             }
         }else{
-            return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
+            return redirect()->route('customer_package',['id'=>$user->bank_id]);
         }
     }
 

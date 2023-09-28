@@ -40,7 +40,7 @@ class CustomerPackage extends Component
     public $selected_city_now = '';
     public $selected_cbsa_now = '';
 
-    public $subscription = 'custom';
+    public $subscription = '';
     public $selected_package = [];
 
 
@@ -165,12 +165,14 @@ class CustomerPackage extends Component
                 ->select('states.id', 'states.name')
                 ->where('banks.bank_type_id', $this->bank_type)
                 ->groupBy('state_id')
+                ->orderBy('name')
                 ->get();
         } else {
             $state = DB::table('banks')
                 ->join('states', 'states.id', 'banks.state_id')
                 ->select('states.id', 'states.name')
                 ->groupBy('state_id')
+                ->orderBy('states.name')
                 ->get();
         }
         return $state;
@@ -187,7 +189,6 @@ class CustomerPackage extends Component
         if (!empty($this->bank_state_filter) && $this->bank_state_filter !== 'all') {
             $query->whereIn('state_id', $this->bank_state_filter);
         }
-
         return $query->get();
     }
 

@@ -35,7 +35,7 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3 text-center">
                                                 <input type="hidden" name="id" value="{{ $id }}">
-                                                    <label for="email" class="form-label">Apply Otp</label>
+                                                    <label for="email" class="form-label">Apply OTP</label>
                                                     <input class="form-control" name="otp" placeholder="Enter otp..." type="otp" id="otp"
                                                         class="@error('otp') is-invalid @enderror" value="{{ old('otp') }}" required
                                                         autocomplete="otp" autofocus>

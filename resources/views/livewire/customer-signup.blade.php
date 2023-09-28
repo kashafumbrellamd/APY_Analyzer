@@ -4,6 +4,11 @@
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
                     <h1 class="regiter_heading_h">Register Your Institution</h1>
+                    @error('error')
+                        <div class="mt-4 text-center">
+                            <span class="alert alert-danger">{{$message}}</span>
+                        </div>
+                    @enderror
                     <div class="row">
                         <form wire:submit.prevent="submitForm">
                             <div class="col-md-12">
@@ -47,7 +52,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            {{-- <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="CBSA_CODE" class="form-label">CBSA Code</label>
                                                     <input type="text" id="CBSA_CODE" name="CBSA_CODE"
@@ -62,7 +67,7 @@
                                                         class="form-control" aria-describedby="cbsa_name"
                                                         wire:model="cbsa_name" required>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="zip_code" class="form-label">Zip Code</label>
@@ -388,10 +393,10 @@
                                                 </div>--}}
 
                                                 <div>
-                                                    <h5>Charity Details</h5>
+                                                    {{-- <h5>Charity Details</h5> --}}
                                                     <div>
                                                         <div class="row">
-                                                            <div class="col-md-4">
+                                                            {{-- <div class="col-md-4">
                                                                 <div class="mb-3">
                                                                     <select class="form-select" id="bank_charity"
                                                                         name="bank_charity"
@@ -404,7 +409,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                             @error('customer_banks')
                                                                 <div class="mt-3 text-center mb-5">
                                                                     <span class="alert alert-danger"
