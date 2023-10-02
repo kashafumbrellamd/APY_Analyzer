@@ -14,7 +14,7 @@
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="inlineRadioOptions"
                                                     id="inlineRadio{{ $package->id }}"
-                                                    value="{{ $package->package_type }}" wire:model.lazy="subscription">
+                                                    value="{{ $package->package_type }}" wire:model.lazy="subscription" wire:change="subscription_changed">
                                                 <label class="form-check-label"
                                                     for="inlineRadio{{ $package->id }}">{{ $package->name }}
                                                     (${{ $package->price }})
@@ -238,6 +238,46 @@
                                                             @endif
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif ($this->subscription == 'state')
+                                    <div class="col-md-6" wire:loading.class="invisible">
+                                        <div >
+                                            <div>
+                                                <div class="mb-3">
+                                                    <div>
+                                                        @foreach ($bank_city_filter_name as $key => $filtered_city)
+                                                            <span
+                                                                class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
+                                                                <button type="button"
+                                                                    wire:click="deleteCity({{ $key }})">
+                                                                    <span
+                                                                        style="position: absolute;
+                                                                font-size: 14px;
+                                                                background-color: red;
+                                                                padding: 0px 7px;
+                                                                border-radius: 13px;
+                                                                top: -12px;
+                                                                right: -12px;
+                                                                color: #fff;
+                                                                font-weight: 600;">x</span>
+                                                                </button>
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                    <label for="bank_type" class="form-label">Select Institution
+                                                        City</label>
+                                                    <select class="form-select form-control mb-3 "
+                                                        aria-label="Default select example" wire:model="selected_city_now"
+                                                        wire:change="selectcity($event.target.value)">
+                                                        <option value="">Select City</option>
+                                                        <option value="119383">Kansas City</option>
+                                                        <option value="125680">Saint Louis</option>
+                                                        <option value="121746">Miami</option>
+                                                        <option value="127546">Texas</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

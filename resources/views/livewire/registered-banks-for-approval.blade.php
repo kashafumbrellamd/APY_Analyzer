@@ -36,7 +36,11 @@
                                                     cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>Requested Bank</th>
+                                                            @if ($dt->display_reports == 'custom')
+                                                                <th>Requested Bank</th>
+                                                            @elseif ($dt->display_reports == 'state')
+                                                                <th>Requested States</th>
+                                                            @endif
                                                         </tr>
                                                     </thead>
                                                     <tbody>

@@ -58,6 +58,10 @@ Route::get('/customerPackage/{id}', function ($id) {
     return view('customer_bank.customer_package',compact('id'));
 })->name('customer_package');
 
+Route::get('/invoice/{id}/{type}', function ($id,$type) {
+    return view('customer_bank.invoice',compact('id','type'));
+})->name('invoice');
+
 Route::get('/payment/{id}/{type}', function ($id,$type) {
     return view('customer_bank.payment',compact('id','type'));
 })->name('payment');

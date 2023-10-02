@@ -13,9 +13,11 @@ use App\Models\Contract;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\BankRequest;
+use App\Models\BankSelectedCity;
 use DB;
 use Auth;
 use Livewire\Component;
+
 
 class CustomerPackage extends Component
 {
@@ -42,6 +44,8 @@ class CustomerPackage extends Component
 
     public $subscription = '';
     public $selected_package = [];
+
+    public $state_state;
 
 
     public function mount($id)
@@ -148,6 +152,16 @@ class CustomerPackage extends Component
 
 
     public function selectbanktype($id)
+    {
+        $this->bank_state_filter = [];
+        $this->bank_state_filter_name = [];
+        $this->bank_city_filter = [];
+        $this->bank_city_filter_name = [];
+        $this->bank_cbsa_filter = [];
+        $this->bank_cbsa_filter_name = [];
+    }
+
+    public function subscription_changed()
     {
         $this->bank_state_filter = [];
         $this->bank_state_filter_name = [];
@@ -336,26 +350,43 @@ class CustomerPackage extends Component
                     'customer_selected_bank_id' => $custom_bank,
                 ]);
             }
-        }
-        $charges = Packages::where('package_type', $this->subscription)->first();
-        if(count($this->custom_banks) <= $charges->number_of_units){
+            $charges = Packages::where('package_type', $this->subscription)->first();
+            if(count($this->custom_banks) <= $charges->number_of_units){
+                $contract = Contract::create([
+                    'contract_start' => date('Y-m-d'),
+                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
+                    'charges' => $charges->price,
+                    'bank_id' => $this->bank->id,
+                ]);
+            }else{
+                $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
+                $contract = Contract::create([
+                    'contract_start' => date('Y-m-d'),
+                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
+                    'charges' => $amount_charged,
+                    'bank_id' => $this->bank->id,
+                ]);
+            }
+        }elseif($this->subscription == 'state'){
+            $bank = CustomerBank::find($this->bank->id);
+            $bank->display_reports = $this->subscription;
+            $bank->save();
+            foreach ($this->bank_city_filter as $key => $city) {
+                BankSelectedCity::create([
+                    'bank_id' => $this->bank->id,
+                    'city_id' => $city,
+                ]);
+            }
+            $charges = Packages::where('package_type', $this->subscription)->first();
             $contract = Contract::create([
                 'contract_start' => date('Y-m-d'),
                 'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
-                'charges' => $charges->price,
-                'bank_id' => $this->bank->id,
-            ]);
-        }else{
-            $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
-            $contract = Contract::create([
-                'contract_start' => date('Y-m-d'),
-                'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
-                'charges' => $amount_charged,
+                'charges' => $charges->price*count($this->bank_city_filter),
                 'bank_id' => $this->bank->id,
             ]);
         }
 
-        return redirect()->route('payment',['id'=>$this->bank->id, 'type'=>'complete']);
+        return redirect()->route('invoice',['id'=>$this->bank->id, 'type'=>'complete']);
     }
 
     public function deleteState($item){
