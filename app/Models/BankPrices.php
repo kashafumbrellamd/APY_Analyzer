@@ -140,7 +140,14 @@ class BankPrices extends Model
         $bankQuery = Bank::query();
 
         if ($type == 'state') {
-            $bankQuery->where('state_id', $state);
+            $filter = CustomerBank::where('id', auth()->user()->bank_id)->first();
+            if($filter->display_reports == "custom"){
+                $bankQuery = $bankQuery->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+                ->where('custom_package_banks.bank_id', $filter->id)
+                ->where('banks.state_id', $state);
+            }else{
+                $bankQuery->where('state_id', $state);
+            }
 
             if ($selected_bank_type != "") {
                 $bankQuery->where('bank_type_id', $selected_bank_type);
@@ -149,7 +156,8 @@ class BankPrices extends Model
             if ($code != "") {
                 $bankQuery->where('msa_code', $code);
             }
-            $banks = $bankQuery->pluck('id')->toArray();
+
+            $banks = $bankQuery->pluck('banks.id')->toArray();
         } elseif ($type == 'msa') {
             $bankQuery->where('msa_code', $code);
 

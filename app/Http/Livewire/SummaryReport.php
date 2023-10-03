@@ -11,6 +11,7 @@ use App\Models\BankType;
 use App\Models\Filter;
 use App\Models\Column;
 use App\Models\BankSelectedCity;
+use App\Models\CustomPackageBanks;
 
 
 class SummaryReport extends Component
@@ -38,7 +39,7 @@ class SummaryReport extends Component
         $bankTypes = BankType::where('status','1')->get();
         $this->my_bank_id = Bank::where('name','like','%'.$customer_bank->bank_name.'%')->pluck('id')->first();
         if($customer_bank->display_reports == "custom"){
-            $banks = CustomPackageBanks::where('bank_id',$filter->id)
+            $banks = CustomPackageBanks::where('bank_id',auth()->user()->bank_id)
             ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
             ->select('banks.*')
             ->get();
