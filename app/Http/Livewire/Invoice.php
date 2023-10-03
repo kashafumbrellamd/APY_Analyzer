@@ -6,6 +6,7 @@ use PDF;
 use App\Models\CustomerBank;
 use App\Models\Contract;
 use Livewire\Component;
+use Auth;
 
 class Invoice extends Component
 {
@@ -36,6 +37,11 @@ class Invoice extends Component
     }
 
     public function next(){
-        return redirect()->route('payment',['id'=>$this->bank->id, 'type'=>$this->type]);
+        if(!Auth::check()){
+            return redirect(url('/signin'));
+        }else{
+            return redirect(url('/home'));
+        }
+        // return redirect()->route('payment',['id'=>$this->bank->id, 'type'=>$this->type]);
     }
 }

@@ -125,18 +125,23 @@ class GeneralController extends Controller
         $contract = Contract::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
         if($contract != null){
             if($contract->contract_end >= date('Y-m-d')){
-                $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
-                if($payment->status == "1"){
-                    $code = rand(111111, 999999);
-                    $otp = OTP::updateOrCreate(
-                        ['user_id' => $user->id],
-                        ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
-                    );
-                    Mail::to($user->email)->send(new OtpMail($otp));
-                    return redirect()->route('otp_apply',['id'=>$user->id]);
-                }else{
-                    return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
-                }
+                // $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
+                // if($payment != null){
+                //     if($payment->status == "1"){
+                        $code = rand(111111, 999999);
+                        $otp = OTP::updateOrCreate(
+                            ['user_id' => $user->id],
+                            ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
+                        );
+                        Mail::to($user->email)->send(new OtpMail($otp));
+                        return redirect()->route('otp_apply',['id'=>$user->id]);
+                //     }else{
+                //         return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+                //     }
+                // }else{
+
+                // }
+
             }else{
                 return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
             }
@@ -150,7 +155,7 @@ class GeneralController extends Controller
         $user = User::find($request->id);
         $payment = Payment::where('bank_id',$user->bank_id)->first();
         if(isset($user)){
-            if($payment->status == "1"){
+            // if($payment->status == "1"){
                 $otp = OTP::where('user_id',$request->id)->first();
                 if($otp->opt == $request->otp){
                     Auth::login($user, $remember = true);
@@ -158,9 +163,9 @@ class GeneralController extends Controller
                 }else{
                     return redirect()->back();
                 }
-            }else{
-                return redirect()->back()->with('success','Please wait for the Admin Approval to Proceed');
-            }
+            // }else{
+                // return redirect()->back()->with('success','Please wait for the Admin Approval to Proceed');
+            // }
         }else{
             return redirect()->back();
         }
