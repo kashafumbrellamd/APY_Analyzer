@@ -174,7 +174,7 @@ class GeneralController extends Controller
         $ids = array_column($rate_cd, 'id');
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($customer_type->display_reports=='state'){
-            $data = BankPrices::get_min_max_func('state',$customer_type->state,"");
+            $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
         }elseif ($customer_type->display_reports == 'msa') {
             $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
         }else {
@@ -198,7 +198,7 @@ class GeneralController extends Controller
 
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($customer_type->display_reports=='state'){
-            $data = BankPrices::get_min_max_func('state',$customer_type->state,"");
+            $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
         }elseif ($customer_type->display_reports == 'msa') {
             $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
         }else {

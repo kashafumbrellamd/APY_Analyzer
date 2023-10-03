@@ -10,6 +10,7 @@ use App\Models\CustomerBank;
 use App\Models\BankType;
 use App\Models\Filter;
 use App\Models\Column;
+use App\Models\BankSelectedCity;
 
 
 class SummaryReport extends Component
@@ -32,10 +33,21 @@ class SummaryReport extends Component
         {
             $this->fill($rt);
         }
-        $banks = Bank::get();
+
+        $customer_bank = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $bankTypes = BankType::where('status','1')->get();
-        $my_bank_name = CustomerBank::where('id',auth()->user()->bank_id)->pluck('bank_name')->first();
-        $this->my_bank_id = Bank::where('name','like','%'.$my_bank_name.'%')->pluck('id')->first();
+        $this->my_bank_id = Bank::where('name','like','%'.$customer_bank->bank_name.'%')->pluck('id')->first();
+        if($customer_bank->display_reports == "custom"){
+            $banks = CustomPackageBanks::where('bank_id',$filter->id)
+            ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
+            ->select('banks.*')
+            ->get();
+        }elseif($customer_bank->display_reports == "state"){
+            $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
+            $banks = Bank::whereIn('city_id',$cities)->get();
+        }else{
+            $banks = Bank::get();
+        }
         return view('livewire.summary-report',['rate_type'=>$rt,'banks'=>$banks,'bankTypes'=>$bankTypes]);
     }
 

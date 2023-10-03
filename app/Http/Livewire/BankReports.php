@@ -79,6 +79,7 @@ class BankReports extends Component
 
     public function getmsacodes()
     {
+        $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($this->state_id!='' && $this->state_id!='all')
         {
             $msa_codes = Bank::with('cities')->where('state_id',$this->state_id)->groupBy('city_id')->get();
@@ -86,7 +87,12 @@ class BankReports extends Component
         }
         else
         {
-            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            if($filter->display_report == 'state'){
+                $cities = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
+                $msa_codes = Bank::with('cities')->whereIn('city_id',$cities)->groupBy('city_id')->get();
+            }else{
+                $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            }
             return $msa_codes;
         }
     }

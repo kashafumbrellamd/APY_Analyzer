@@ -19,6 +19,7 @@
                     @endif
                 </div>
                 <div class="col-md-2">
+                    @if ($customer_type->display_reports == 'custom')
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="msa_code">
                         <option value="">Select City</option>
@@ -26,6 +27,7 @@
                             <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
                         @endforeach
                     </select>
+                    @endif
                 </div>
                 <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"

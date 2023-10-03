@@ -20,6 +20,7 @@
                     @endif
                 </div>
                 <div class="col-md-2">
+                    @if ($customer_type->display_reports == 'custom')
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="msa_code">
                         <option value="">Select City</option>
@@ -27,6 +28,7 @@
                             <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
                         @endforeach
                     </select>
+                    @endif
                 </div>
 
                 <div class="col-md-2">
@@ -201,7 +203,7 @@
                                                         <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
                                                         <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                                     @endif
-                                                @endif                                             
+                                                @endif
                                             </tr>
                                         @endif
                                     @else
