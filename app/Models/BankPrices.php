@@ -57,21 +57,31 @@ class BankPrices extends Model
         $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
         if($filter->display_reports == 'state' && $selected_bank_type == ""){
             $cities = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-            $banks = Bank::whereIn('city_id',$cities)->get();
+            $banks = Bank::join('bank_prices','bank_prices.bank_id','banks.id')
+                ->select('banks.*')
+                ->groupBy('banks.id')
+                ->whereIn('city_id',$cities)->get();
         }
         elseif ($filter->display_reports == 'msa' && $selected_bank_type == ""){
             $banks = Bank::where('msa_code',$filter->msa_code)->get();
         }
         elseif ($filter->display_reports == 'state' && $selected_bank_type != ""){
             $cities = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-            $banks = Bank::whereIn('city_id',$cities)->where('bank_type_id',$selected_bank_type)->get();
+            $banks = Bank::join('bank_prices','bank_prices.bank_id','banks.id')
+                ->select('banks.*')
+                ->groupBy('banks.id')
+                ->whereIn('city_id',$cities)->where('bank_type_id',$selected_bank_type)->get();
         }
         elseif ($filter->display_reports == 'msa' && $selected_bank_type != ""){
             $banks = Bank::where('msa_code',$filter->msa_code)->where('bank_type_id',$selected_bank_type)->get();
         }
         elseif($filter->display_reports == 'custom' && $selected_bank_type == ""){
             $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
-            $banks = Bank::whereIn('id',$selected_banks)->get();
+            $banks = Bank::join('bank_prices','bank_prices.bank_id','banks.id')
+                ->select('banks.*')
+                ->groupBy('banks.id')
+                ->whereIn('banks.id',$selected_banks)
+                ->get();
         }
         else{
             $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)
@@ -79,7 +89,11 @@ class BankPrices extends Model
                 ->where('banks.bank_type_id',$selected_bank_type)
                 ->pluck('customer_selected_bank_id')
                 ->toArray();
-            $banks = Bank::whereIn('id',$selected_banks)->get();
+            $banks = Bank::join('bank_prices','bank_prices.bank_id','banks.id')
+                ->select('banks.*')
+                ->groupBy('banks.id')
+                ->whereIn('banks.id',$selected_banks)
+                ->get();
         }
         $rate_types = RateType::orderby('id','ASC')->get();
         foreach ($banks as $key => $bank) {
@@ -220,6 +234,7 @@ class BankPrices extends Model
         if($selected_bank_type == ""){
             if($code!=""){
                 $banks = Bank::where('state_id',$state_id)
+                ->join('bank_prices','bank_prices.bank_id','banks.id')
                 ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
                 ->where('banks.msa_code',$code)
                 ->where('custom_package_banks.bank_id',auth()->user()->bank_id)
@@ -228,6 +243,7 @@ class BankPrices extends Model
                 ->get();
             }else{
                 $banks = Bank::where('state_id',$state_id)
+                ->join('bank_prices','bank_prices.bank_id','banks.id')
                 ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
                 ->where('custom_package_banks.bank_id',auth()->user()->bank_id)
                 ->groupBy('custom_package_banks.customer_selected_bank_id')
@@ -238,6 +254,7 @@ class BankPrices extends Model
             if($code!=""){
                 $banks = Bank::where('state_id',$state_id)
                 ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+                ->join('bank_prices','bank_prices.bank_id','banks.id')
                 ->where('banks.bank_type_id',$selected_bank_type)
                 ->where('banks.msa_code',$code)
                 ->where('custom_package_banks.bank_id',auth()->user()->bank_id)
@@ -247,6 +264,7 @@ class BankPrices extends Model
             }else{
                 $banks = Bank::where('state_id',$state_id)
                 ->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+                ->join('bank_prices','bank_prices.bank_id','banks.id')
                 ->where('banks.bank_type_id',$selected_bank_type)
                 ->where('custom_package_banks.bank_id',auth()->user()->bank_id)
                 ->groupBy('custom_package_banks.customer_selected_bank_id')
