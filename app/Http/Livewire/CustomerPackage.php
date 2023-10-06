@@ -47,6 +47,7 @@ class CustomerPackage extends Component
 
     public $state_state;
 
+    public $current_amount;
 
     public function mount($id)
     {
@@ -63,6 +64,7 @@ class CustomerPackage extends Component
         $available_states = $this->getStates();
         $available_cities = $this->getCities();
         $available_cbsa = $this->getCBSA();
+        $this->current_amount = $this->calulate_current_amount();
         return view('livewire.customer-package', compact('packages', 'bank_types', 'available_states', 'available_cities', 'states', 'bank_cities','available_cbsa'));
     }
 
@@ -411,5 +413,22 @@ class CustomerPackage extends Component
     public function deleteCbsa($item){
         unset($this->bank_cbsa_filter[$item]);
         unset($this->bank_cbsa_filter_name[$item]);
+    }
+
+    public function calulate_current_amount(){
+        if($this->subscription == ''){
+            return 0;
+        }elseif($this->subscription == 'custom'){
+            $charges = Packages::where('package_type', $this->subscription)->first();
+            if(count($this->custom_banks) <= $charges->number_of_units){
+                return $charges->price;
+            }else{
+                $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
+                return $amount_charged;
+            }
+        }elseif($this->subscription == 'state'){
+            $charges = Packages::where('package_type', $this->subscription)->first();
+            return $charges->price*count($this->bank_city_filter);
+        }
     }
 }

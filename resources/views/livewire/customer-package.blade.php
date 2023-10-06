@@ -17,7 +17,7 @@
                                                     value="{{ $package->package_type }}" wire:model.lazy="subscription" wire:change="subscription_changed">
                                                 <label class="form-check-label"
                                                     for="inlineRadio{{ $package->id }}">{{ $package->name }}
-                                                    (${{ $package->price }})
+                                                    (${{ $package->price }} annually)
                                                 </label>
                                                 @if ($package->additional_price != 0)
                                                     <span class="text-sm-start">(For Each Additional Institute: ${{ $package->additional_price }})</span>
@@ -35,6 +35,9 @@
                                         <span class="text-danger">Loading...</span>
                                     </div>
                                 </div>
+                                @if ($this->current_amount != 0)
+                                    <p wire:loading.class="invisible" class="text-danger fw-bold">Total Amount: ${{ $this->current_amount }}</p>
+                                @endif
                                 @if ($this->subscription == 'custom')
                                     <div class="col-md-6" wire:loading.class="invisible">
                                         <div >

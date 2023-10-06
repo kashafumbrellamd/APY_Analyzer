@@ -171,7 +171,7 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Bank Request</span></a>
         </li>
-        <hr class="sidebar-divider">
+        {{-- <hr class="sidebar-divider">
         <li class="nav-item active">
             <a class="nav-link" href="{{ url('/view/bank/reports') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -182,7 +182,7 @@
             <a class="nav-link" href="{{ url('/view/detailed/reports') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>View Detailed Reports</span></a>
-        </li>
+        </li> --}}
         <hr class="sidebar-divider">
         <li class="nav-item active">
             <a class="nav-link" href="{{ url('/view/special/reports') }}">
