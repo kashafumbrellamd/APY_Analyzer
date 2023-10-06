@@ -29,29 +29,34 @@ class BankUser extends Component
 
     public function render()
     {
-        $data = User::where('bank_id', auth()->user()->bank_id)->where('id','!=',auth()->user()->id)->get();
+        $data = User::with('banks')->where('bank_id', auth()->user()->bank_id)->where('id','!=',auth()->user()->id)->get();
         $banks = CustomerBank::get();
         return view('livewire.bank-user',['data'=>$data,'banks'=>$banks]);
     }
 
     public function submitForm(){
         $this->validate();
-        $user = User::create([
-            'name' => $this->admin_name,
-            'email' => $this->admin_email,
-            'phone_number' => $this->admin_phone_number,
-            'designation' => $this->designation,
-            'employee_id' => $this->employee_id,
-            'gender' => $this->gender,
-            'bank_id' => auth()->user()->bank_id,
-            'password' => bcrypt($this->admin_phone_number),
-            'status' => "1",
-        ]);
-        $role = Role::where('slug','bank-user')->first();
-        $user->roles()->attach($role);
-
-        $this->clear();
+        $check = User::where('email',$this->admin_email)->first();
+        if($check == null){
+            $user = User::create([
+                'name' => $this->admin_name,
+                'email' => $this->admin_email,
+                'phone_number' => $this->admin_phone_number,
+                'designation' => $this->designation,
+                'employee_id' => $this->employee_id,
+                'gender' => $this->gender,
+                'bank_id' => auth()->user()->bank_id,
+                'password' => bcrypt($this->admin_phone_number),
+                'status' => "1",
+            ]);
+            $role = Role::where('slug','bank-user')->first();
+            $user->roles()->attach($role);
+            $this->clear();
+        }else{
+            $this->addError('error','User with this Email Address already exists');
+        }
         $this->render();
+
     }
 
     public function delete($id){
