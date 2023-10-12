@@ -34,10 +34,10 @@ Route::get('/',function(){
     }
 });
 
+Route::get('/home', function () {
+    return view('welcome');
+})->name('home');
 Route::middleware(['packages'])->group(function () {
-    Route::get('/home', function () {
-        return view('welcome');
-    })->name('home');
 });
 
 Route::get('/Survey/form', function () {

@@ -205,13 +205,13 @@
                         <li class="nav-item col-md-6 p-1" role="presentation">
                             <button class="nav-link active nav__item_btn" id="pills-home-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                aria-selected="true">Intelli-Rate report by
+                                aria-selected="true">Intelli-Rate Report by
                                 BancAnalytics</button>
                         </li>
                         <li class="nav-item col-md-6 p-1" role="presentation">
                             <button class="nav-link nav__item_btn" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                                aria-selected="false">Pulse report by
+                                aria-selected="false">Pulse Report by
                                 BancAnalytics</button>
                         </li>
                     </ul>
@@ -634,7 +634,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+
                 </div>
             </div>
         </div>
