@@ -78,14 +78,8 @@ class CustomerSignup extends Component
     {
         $states = State::where('country_id', '233')->get();
         $charities = Charity::all();
-        $this->all_banks = $this->fetch_banks();
         $bank_cities = Cities::get();
-        $packages = Packages::get();
-        $bank_types = BankType::where('status',1)->get();
-        $avaiable_states = $this->getStates();
-        $avaiable_cities = $this->getCities();
-
-        return view('livewire.customer-signup', ['avaiable_states'=>$avaiable_states,'avaiable_cities'=>$avaiable_cities,'states'=>$states,'packages'=>$packages,'bank_cities'=>$bank_cities,'charities'=>$charities,'bank_types'=>$bank_types]);
+        return view('livewire.customer-signup', ['states'=>$states,'bank_cities'=>$bank_cities,'charities'=>$charities]);
     }
 
     public function submitForm()
@@ -150,48 +144,48 @@ class CustomerSignup extends Component
         $this->bank_type = '';
     }
 
-    public function search_bank($value,$type)
-    {
-        if($value != '' && $type != '') {
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->where('banks.name',$value)
-            ->orwhere('states.name',$value)
-            ->orwhere('cities.name',$value)
-            ->orwhere('states.state_code',$value)
-            ->where('banks.bank_type_id',$type)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-            $this->all_banks = $All_banks;
-        }elseif ($value != '' && $type == '') {
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->where('banks.name',$value)
-            ->orwhere('states.name',$value)
-            ->orwhere('cities.name',$value)
-            ->orwhere('states.state_code',$value)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-            $this->all_banks = $All_banks;
-        }elseif ($value == '' && $type != '') {
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->where('banks.bank_type_id',$type)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-            $this->all_banks = $All_banks;
-        }else {
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-            $this->all_banks = $All_banks;
-        }
-    }
+    // public function search_bank($value,$type)
+    // {
+    //     if($value != '' && $type != '') {
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->where('banks.name',$value)
+    //         ->orwhere('states.name',$value)
+    //         ->orwhere('cities.name',$value)
+    //         ->orwhere('states.state_code',$value)
+    //         ->where('banks.bank_type_id',$type)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //         $this->all_banks = $All_banks;
+    //     }elseif ($value != '' && $type == '') {
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->where('banks.name',$value)
+    //         ->orwhere('states.name',$value)
+    //         ->orwhere('cities.name',$value)
+    //         ->orwhere('states.state_code',$value)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //         $this->all_banks = $All_banks;
+    //     }elseif ($value == '' && $type != '') {
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->where('banks.bank_type_id',$type)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //         $this->all_banks = $All_banks;
+    //     }else {
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //         $this->all_banks = $All_banks;
+    //     }
+    // }
 
     // public function select_bank($id)
     // {
@@ -262,38 +256,38 @@ class CustomerSignup extends Component
         }
     }
 
-    public function getStates(){
-        if($this->bank_type != ""){
-            $state = DB::table('banks')
-                ->join('states','states.id','banks.state_id')
-                ->select('states.id','states.name')
-                ->where('banks.bank_type_id',$this->bank_type)
-                ->groupBy('state_id')
-                ->get();
-        }else{
-            $state = DB::table('banks')
-                ->join('states','states.id','banks.state_id')
-                ->select('states.id','states.name')
-                ->groupBy('state_id')
-                ->get();
-        }
-        return $state;
-    }
+    // public function getStates(){
+    //     if($this->bank_type != ""){
+    //         $state = DB::table('banks')
+    //             ->join('states','states.id','banks.state_id')
+    //             ->select('states.id','states.name')
+    //             ->where('banks.bank_type_id',$this->bank_type)
+    //             ->groupBy('state_id')
+    //             ->get();
+    //     }else{
+    //         $state = DB::table('banks')
+    //             ->join('states','states.id','banks.state_id')
+    //             ->select('states.id','states.name')
+    //             ->groupBy('state_id')
+    //             ->get();
+    //     }
+    //     return $state;
+    // }
 
-    public function getCities()
-    {
-        if($this->bank_state_filter!='' && $this->bank_state_filter!='all' && $this->bank_type != ""){
-            $msa_codes = Bank::with('cities')->whereIn('state_id',$this->bank_state_filter)->where('bank_type_id',$this->bank_type)->groupBy('city_id')->get();
-        }elseif($this->bank_state_filter=='' && $this->bank_state_filter=='all' && $this->bank_type != ""){
-            $msa_codes = Bank::with('cities')->where('bank_type_id',$this->bank_type)->groupBy('city_id')->get();
-        }elseif($this->bank_state_filter!='' && $this->bank_state_filter!='all' && $this->bank_type == ""){
-            $msa_codes = Bank::with('cities')->whereIn('state_id',$this->bank_state_filter)->groupBy('city_id')->get();
-        }elseif($this->bank_state_filter=='' && $this->bank_state_filter=='all' && $this->bank_type == ""){
-            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
-        }
-        return $msa_codes;
+    // public function getCities()
+    // {
+    //     if($this->bank_state_filter!='' && $this->bank_state_filter!='all' && $this->bank_type != ""){
+    //         $msa_codes = Bank::with('cities')->whereIn('state_id',$this->bank_state_filter)->where('bank_type_id',$this->bank_type)->groupBy('city_id')->get();
+    //     }elseif($this->bank_state_filter=='' && $this->bank_state_filter=='all' && $this->bank_type != ""){
+    //         $msa_codes = Bank::with('cities')->where('bank_type_id',$this->bank_type)->groupBy('city_id')->get();
+    //     }elseif($this->bank_state_filter!='' && $this->bank_state_filter!='all' && $this->bank_type == ""){
+    //         $msa_codes = Bank::with('cities')->whereIn('state_id',$this->bank_state_filter)->groupBy('city_id')->get();
+    //     }elseif($this->bank_state_filter=='' && $this->bank_state_filter=='all' && $this->bank_type == ""){
+    //         $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+    //     }
+    //     return $msa_codes;
 
-    }
+    // }
 
     // public function selectstate($id)
     // {
@@ -332,75 +326,75 @@ class CustomerSignup extends Component
     //         $this->bank_city_filter_name = [];
     // }
 
-    public function fetch_banks(){
-        // $bank_type
-        if($this->bank_state_filter != [] && $this->bank_city_filter != [] && $this->bank_type != ""){
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->whereIn('banks.state_id',$this->bank_state_filter)
-            ->whereIn('banks.city_id',$this->bank_city_filter)
-            ->where('banks.bank_type_id',$this->bank_type)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-        }elseif($this->bank_state_filter != [] && $this->bank_city_filter == [] && $this->bank_type != ""){
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->whereIn('banks.state_id',$this->bank_state_filter)
-            ->where('banks.bank_type_id',$this->bank_type)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-        }elseif($this->bank_state_filter == [] && $this->bank_city_filter == [] && $this->bank_type != ""){
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->where('banks.bank_type_id',$this->bank_type)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-        }elseif($this->bank_state_filter != [] && $this->bank_city_filter != [] && $this->bank_type == ""){
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->whereIn('banks.state_id',$this->bank_state_filter)
-            ->whereIn('banks.city_id',$this->bank_city_filter)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-        }elseif($this->bank_state_filter != [] && $this->bank_city_filter == [] && $this->bank_type == ""){
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->whereIn('banks.state_id',$this->bank_state_filter)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-        }elseif($this->bank_state_filter == [] && $this->bank_city_filter == [] && $this->bank_type == ""){
-            $All_banks = Bank::join('states','banks.state_id','states.id')
-            ->join('cities','banks.city_id','cities.id')
-            ->join('bank_types','banks.bank_type_id','bank_types.id')
-            ->where('bank_types.status',1)
-            ->select('banks.*','states.name as state_name','cities.name as city_name')
-            ->get();
-        }
-        return $All_banks;
-    }
+    // public function fetch_banks(){
+    //     // $bank_type
+    //     if($this->bank_state_filter != [] && $this->bank_city_filter != [] && $this->bank_type != ""){
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->whereIn('banks.state_id',$this->bank_state_filter)
+    //         ->whereIn('banks.city_id',$this->bank_city_filter)
+    //         ->where('banks.bank_type_id',$this->bank_type)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //     }elseif($this->bank_state_filter != [] && $this->bank_city_filter == [] && $this->bank_type != ""){
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->whereIn('banks.state_id',$this->bank_state_filter)
+    //         ->where('banks.bank_type_id',$this->bank_type)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //     }elseif($this->bank_state_filter == [] && $this->bank_city_filter == [] && $this->bank_type != ""){
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->where('banks.bank_type_id',$this->bank_type)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //     }elseif($this->bank_state_filter != [] && $this->bank_city_filter != [] && $this->bank_type == ""){
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->whereIn('banks.state_id',$this->bank_state_filter)
+    //         ->whereIn('banks.city_id',$this->bank_city_filter)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //     }elseif($this->bank_state_filter != [] && $this->bank_city_filter == [] && $this->bank_type == ""){
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->whereIn('banks.state_id',$this->bank_state_filter)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //     }elseif($this->bank_state_filter == [] && $this->bank_city_filter == [] && $this->bank_type == ""){
+    //         $All_banks = Bank::join('states','banks.state_id','states.id')
+    //         ->join('cities','banks.city_id','cities.id')
+    //         ->join('bank_types','banks.bank_type_id','bank_types.id')
+    //         ->where('bank_types.status',1)
+    //         ->select('banks.*','states.name as state_name','cities.name as city_name')
+    //         ->get();
+    //     }
+    //     return $All_banks;
+    // }
 
-    public function deleteState($item){
-        $state = State::where('name',$this->bank_state_filter_name[$item])->first();
-        unset($this->bank_state_filter[array_search($state->id,$this->bank_state_filter)]);
-        unset($this->bank_state_filter_name[$item]);
-        $this->bank_city_filter = [];
-        $this->bank_city_filter_name = [];
-        // $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
-    }
+    // public function deleteState($item){
+    //     $state = State::where('name',$this->bank_state_filter_name[$item])->first();
+    //     unset($this->bank_state_filter[array_search($state->id,$this->bank_state_filter)]);
+    //     unset($this->bank_state_filter_name[$item]);
+    //     $this->bank_city_filter = [];
+    //     $this->bank_city_filter_name = [];
+    //     // $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
+    // }
 
-    public function deleteCity($item){
-        $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
-        unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
-        unset($this->bank_city_filter_name[$item]);
-    }
+    // public function deleteCity($item){
+    //     $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
+    //     unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
+    //     unset($this->bank_city_filter_name[$item]);
+    // }
 }

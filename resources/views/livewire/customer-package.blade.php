@@ -183,7 +183,7 @@
                                                     </div>
                                                     <div class="mt-2">
                                                         <div class="bank_select_divv">
-                                                            @if (count($this->custom_banks) == count($this->all_banks))
+                                                            {{-- @if (count($this->custom_banks) == count($this->all_banks))
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox"
                                                                         value="" id="defaultCheckall"
@@ -204,7 +204,7 @@
                                                                         Select All <span class="state_city_span"></span>
                                                                     </label>
                                                                 </div>
-                                                            @endif
+                                                            @endif --}}
                                                             @if (count($this->all_banks) != 0)
                                                                 @php $count = 0; @endphp
                                                                 @foreach ($this->all_banks as $bank)
@@ -239,6 +239,9 @@
                                                                     @endif
                                                                 @endforeach
                                                             @endif
+                                                        </div>
+                                                        <div class="text-center text-primary">
+                                                            <a wire:click="loadMore">Load More</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -298,3 +301,4 @@
                     </div>
     </section>
 </div>
+

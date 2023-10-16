@@ -48,6 +48,7 @@ class CustomerPackage extends Component
     public $state_state;
 
     public $current_amount;
+    public $page = 1;
 
     public function mount($id)
     {
@@ -55,9 +56,12 @@ class CustomerPackage extends Component
     }
     public function render()
     {
-        $states = State::where('country_id', '233')->get();
-        $this->all_banks = $this->fetch_banks();
-        $bank_cities = Cities::get();
+        $newData = $this->fetch_banks($this->page);
+        if($this->all_banks != null){
+            $this->all_banks = $this->all_banks->concat($newData);
+        }else{
+            $this->all_banks = $newData;
+        }
         $packages = Packages::get();
         $this->selected_package = Packages::where('package_type',$this->subscription)->first();
         $bank_types = BankType::where('status', 1)->get();
@@ -65,67 +69,10 @@ class CustomerPackage extends Component
         $available_cities = $this->getCities();
         $available_cbsa = $this->getCBSA();
         $this->current_amount = $this->calulate_current_amount();
-        return view('livewire.customer-package', compact('packages', 'bank_types', 'available_states', 'available_cities', 'states', 'bank_cities','available_cbsa'));
+        return view('livewire.customer-package', compact('packages', 'bank_types', 'available_states', 'available_cities','available_cbsa'));
     }
 
-    // public function fetch_banks()
-    // {
-    //     if ($this->bank_state_filter != [] && $this->bank_city_filter != [] && $this->bank_type != "") {
-    //         $All_banks = Bank::join('states', 'banks.state_id', 'states.id')
-    //             ->join('cities', 'banks.city_id', 'cities.id')
-    //             ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
-    //             ->where('bank_types.status', 1)
-    //             ->whereIn('banks.state_id', $this->bank_state_filter)
-    //             ->whereIn('banks.city_id', $this->bank_city_filter)
-    //             ->where('banks.bank_type_id', $this->bank_type)
-    //             ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-    //             ->get();
-    //     } elseif ($this->bank_state_filter != [] && $this->bank_city_filter == [] && $this->bank_type != "") {
-    //         $All_banks = Bank::join('states', 'banks.state_id', 'states.id')
-    //             ->join('cities', 'banks.city_id', 'cities.id')
-    //             ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
-    //             ->where('bank_types.status', 1)
-    //             ->whereIn('banks.state_id', $this->bank_state_filter)
-    //             ->where('banks.bank_type_id', $this->bank_type)
-    //             ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-    //             ->get();
-    //     } elseif ($this->bank_state_filter == [] && $this->bank_city_filter == [] && $this->bank_type != "") {
-    //         $All_banks = Bank::join('states', 'banks.state_id', 'states.id')
-    //             ->join('cities', 'banks.city_id', 'cities.id')
-    //             ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
-    //             ->where('bank_types.status', 1)
-    //             ->where('banks.bank_type_id', $this->bank_type)
-    //             ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-    //             ->get();
-    //     } elseif ($this->bank_state_filter != [] && $this->bank_city_filter != [] && $this->bank_type == "") {
-    //         $All_banks = Bank::join('states', 'banks.state_id', 'states.id')
-    //             ->join('cities', 'banks.city_id', 'cities.id')
-    //             ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
-    //             ->where('bank_types.status', 1)
-    //             ->whereIn('banks.state_id', $this->bank_state_filter)
-    //             ->whereIn('banks.city_id', $this->bank_city_filter)
-    //             ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-    //             ->get();
-    //     } elseif ($this->bank_state_filter != [] && $this->bank_city_filter == [] && $this->bank_type == "") {
-    //         $All_banks = Bank::join('states', 'banks.state_id', 'states.id')
-    //             ->join('cities', 'banks.city_id', 'cities.id')
-    //             ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
-    //             ->where('bank_types.status', 1)
-    //             ->whereIn('banks.state_id', $this->bank_state_filter)
-    //             ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-    //             ->get();
-    //     } elseif ($this->bank_state_filter == [] && $this->bank_city_filter == [] && $this->bank_type == "") {
-    //         $All_banks = Bank::join('states', 'banks.state_id', 'states.id')
-    //             ->join('cities', 'banks.city_id', 'cities.id')
-    //             ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
-    //             ->where('bank_types.status', 1)
-    //             ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-    //             ->get();
-    //     }
-    //     return $All_banks;
-    // }
-
-    public function fetch_banks()
+    public function fetch_banks($page)
     {
         $query = Bank::join('states', 'banks.state_id', 'states.id')
                     ->join('cities', 'banks.city_id', 'cities.id')
@@ -148,13 +95,13 @@ class CustomerPackage extends Component
         if (!empty($this->bank_cbsa_filter)) {
             $query->whereIn('banks.cbsa_code', $this->bank_cbsa_filter);
         }
-
-        return $query->get();
+        return $query->skip(($page-1)*50)->take(50)->get();
+        // return $query->paginate(10)->items();
     }
-
 
     public function selectbanktype($id)
     {
+        $this->all_banks = null;
         $this->bank_state_filter = [];
         $this->bank_state_filter_name = [];
         $this->bank_city_filter = [];
@@ -165,6 +112,7 @@ class CustomerPackage extends Component
 
     public function subscription_changed()
     {
+        $this->all_banks = null;
         $this->bank_state_filter = [];
         $this->bank_state_filter_name = [];
         $this->bank_city_filter = [];
@@ -175,23 +123,16 @@ class CustomerPackage extends Component
 
     public function getStates()
     {
-        if ($this->bank_type != "") {
-            $state = DB::table('banks')
-                ->join('states', 'states.id', 'banks.state_id')
-                ->select('states.id', 'states.name')
-                ->where('banks.bank_type_id', $this->bank_type)
-                ->groupBy('state_id')
-                ->orderBy('name')
-                ->get();
-        } else {
-            $state = DB::table('banks')
-                ->join('states', 'states.id', 'banks.state_id')
-                ->select('states.id', 'states.name')
-                ->groupBy('state_id')
-                ->orderBy('states.name')
-                ->get();
+        $state = DB::table('banks')
+            ->join('states', 'states.id', 'banks.state_id')
+            ->select('states.id', 'states.name')
+            ->groupBy('state_id')
+            ->orderBy('states.name');
+
+        if(!empty($this->bank_type)) {
+            $state->where('banks.bank_type_id', $this->bank_type);
         }
-        return $state;
+        return $state->get();
     }
 
     public function getCities()
@@ -238,6 +179,7 @@ class CustomerPackage extends Component
                 array_push($this->bank_state_filter_name, State::find($id)->name);
             }
         }
+        $this->all_banks = null;
         $this->selected_state_now = '';
         $this->bank_city_filter = [];
         $this->bank_city_filter_name = [];
@@ -256,6 +198,7 @@ class CustomerPackage extends Component
                 array_push($this->bank_city_filter_name, Cities::find($id)->name);
             }
         }
+        $this->all_banks = null;
         $this->selected_city_now = '';
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
@@ -272,6 +215,7 @@ class CustomerPackage extends Component
                 array_push($this->bank_cbsa_filter_name, $id);
             }
         }
+        $this->all_banks = null;
         $this->selected_city_now = '';
     }
 
@@ -395,6 +339,7 @@ class CustomerPackage extends Component
         $state = State::where('name',$this->bank_state_filter_name[$item])->first();
         unset($this->bank_state_filter[array_search($state->id,$this->bank_state_filter)]);
         unset($this->bank_state_filter_name[$item]);
+        $this->all_banks = null;
         $this->bank_city_filter = [];
         $this->bank_city_filter_name = [];
         $this->bank_cbsa_filter = [];
@@ -406,11 +351,13 @@ class CustomerPackage extends Component
         $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
         unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
         unset($this->bank_city_filter_name[$item]);
+        $this->all_banks = null;
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
     }
 
     public function deleteCbsa($item){
+        $this->all_banks = null;
         unset($this->bank_cbsa_filter[$item]);
         unset($this->bank_cbsa_filter_name[$item]);
     }
@@ -431,4 +378,12 @@ class CustomerPackage extends Component
             return $charges->price*count($this->bank_city_filter);
         }
     }
+
+    public function loadMore(){
+        $this->page++;
+        // $newData = $this->fetch_banks(++$this->page);
+        // $this->all_banks = $this->all_banks->concat($newData);
+        $this->render();
+    }
+
 }
