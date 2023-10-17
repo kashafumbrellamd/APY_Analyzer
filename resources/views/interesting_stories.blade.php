@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand header_brand_heading" href="#">INTELLI-RATE</a>
+                <a class="navbar-brand header_brand_heading" href="{{ url('/') }}">INTELLI-RATE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -105,11 +105,11 @@
                                 <h3>Useful Links</h3>
                             </div>
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">News</a></li>
-                                <li><a href="#">Our Product</a></li>
+                                <li><a href="{{ url('/') }}">Home</a></li>
+                                <li><a href="{{ url('/interesting_stories') }}">News</a></li>
+                                {{-- <li><a href="#">Our Product</a></li>
                                 <li><a href="#">New Survey</a></li>
-                                <li><a href="#">About</a></li>
+                                <li><a href="#">About</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                                 <h3>Subscribe</h3>
                             </div>
                             <div class="footer-text mb-25">
-                                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                                <p>Don’t miss out. Subscribe to our feeds.  Fill out the form below.</p>
                             </div>
                             <div class="subscribe-form">
                                 <form action="#">

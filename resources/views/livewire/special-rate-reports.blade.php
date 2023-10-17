@@ -14,6 +14,7 @@
         <div class="card-body" wire:loading.remove>
             <div class="row">
                 <div class="col-md-4">
+                    <label for="state">Select State</label>
                     <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_state_filter" wire:change="selectstate($event.target.value)">
                         <option value="">Select State</option>
                         @foreach ($bank_states as $state)
@@ -23,7 +24,8 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_city_filter">
+                    <label for="city"> Select City</label>
+                    <select class="form-select form-control mb-3" id="city" aria-label="Default select example" wire:model="bank_city_filter">
                         <option value="">Select City</option>
                         @foreach ($bank_cities as $city)
                             <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -46,9 +48,9 @@
                     <tbody>
                         @forelse ($specialization_rates as $dt)
                             <tr>
-                                <td>{{ $dt->bank->name }}</td>
+                                <td style="text-align: left;">{{ $dt->bank->name }}</td>
                                 <td>{{ number_format($dt->rate,2) }}</td>
-                                <td>{{ $dt->description }}</td>
+                                <td style="text-align: left;">{{ $dt->description }}</td>
                             </tr>
                         @empty
                             <tr>

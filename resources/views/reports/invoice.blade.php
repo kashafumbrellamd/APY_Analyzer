@@ -1,6 +1,6 @@
 <div class="container">
     <h2 class="text-primary text-center">Intelli-Rate</h2>
     <div class="row">
-            The Charges for this packages is calculated as: $ {{ $reports->charges }}
+        The annual charge for this Subscription Plan is ${{ number_format($reports->charges) }}.
     </div>
 </div>

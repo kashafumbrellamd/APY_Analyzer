@@ -424,9 +424,9 @@ body {
 
 .card__survey_main{
     position: absolute;
-    top: 110px;
-    left: 250px;
-  }
+    top: 43%;
+    left: 38%;
+}
   .slider_image__{
     height: 400px;
   }

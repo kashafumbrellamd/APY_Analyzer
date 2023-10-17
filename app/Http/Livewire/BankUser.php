@@ -11,7 +11,8 @@ use App\Models\Role;
 
 class BankUser extends Component
 {
-    public $admin_name;
+    public $first_admin_name;
+    public $last_admin_name;
     public $admin_email;
     public $admin_phone_number;
     public $designation;
@@ -19,12 +20,11 @@ class BankUser extends Component
     public $gender;
 
     protected $rules = [
-        'admin_name' => 'required',
+        'first_admin_name' => 'required',
+        'last_admin_name' => 'required',
         'admin_email' => 'required',
         'admin_phone_number' => 'required',
         'designation' => 'required',
-        'employee_id' => 'required',
-        'gender' => 'required',
     ];
 
     public function render()
@@ -39,7 +39,8 @@ class BankUser extends Component
         $check = User::where('email',$this->admin_email)->first();
         if($check == null){
             $user = User::create([
-                'name' => $this->admin_name,
+                'name' => $this->first_admin_name,
+                'last_name' => $this->last_admin_name,
                 'email' => $this->admin_email,
                 'phone_number' => $this->admin_phone_number,
                 'designation' => $this->designation,
@@ -65,7 +66,8 @@ class BankUser extends Component
     }
 
     public function clear(){
-        $this->admin_name = '';
+        $this->first_admin_name = '';
+        $this->last_admin_name = '';
         $this->admin_email = '';
         $this->admin_phone_number = '';
         $this->designation = '';

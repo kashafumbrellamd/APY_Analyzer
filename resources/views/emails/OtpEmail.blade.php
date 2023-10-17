@@ -1,7 +1,4 @@
 <div>
-
     Hello!!
-    This is the opt that will expire after 120 seconds:{{ $data[0]->opt }}
-    {{-- <a href="{{ env('APP_URL') }}verify/{{ $mailData->verification_code }}">Click Me</a> --}}
-
+    This is One Time Password that will expire after 2 Minutes:{{ $data[0]->opt }}
 </div>

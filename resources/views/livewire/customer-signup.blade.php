@@ -18,10 +18,9 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_name" class="form-label">Enter Institution
-                                                        Name</label>
+                                                    <label for="bank_name" class="form-label">Financial Institution Name</label>
                                                     <input type="name" id="bank_name" name="bank_name"
-                                                        class="form-control" aria-describedby="name"
+                                                        class="form-control" aria-describedby="name" placeholder="BancAnalytics"
                                                         wire:model.lazy="bank_name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
@@ -30,25 +29,25 @@
                                                 <div class="mb-3">
                                                     <label for="bank_email" class="form-label">Email</label>
                                                     <input type="email" id="bank_email" name="bank_email"
-                                                        class="form-control" aria-describedby="email"
+                                                        class="form-control" aria-describedby="email" placeholder="Email Address"
                                                         wire:model.lazy="bank_email" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_phone" class="form-label">Phone Number</label>
+                                                    <label for="bank_phone" class="form-label">Main Phone Number</label>
                                                     <input type="text" id="bank_phone" name="bank_phone"
                                                         class="form-control" aria-describedby="phone" pattern="\d*" maxlength="10"
-                                                        wire:model.lazy="bank_phone" required>
+                                                        wire:model.lazy="bank_phone" required  placeholder="9496563133">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_website" class="form-label">Website</label>
+                                                    <label for="bank_website" class="form-label">Website Address</label>
                                                     <input type="text" id="bank_website" name="bank_website"
                                                         class="form-control" aria-describedby="website"
-                                                        wire:model.lazy="bank_website" required>
+                                                        wire:model.lazy="bank_website" required  placeholder="Your Website">
 
                                                 </div>
                                             </div>
@@ -73,7 +72,7 @@
                                                     <label for="zip_code" class="form-label">Zip Code</label>
                                                     <input type="text" id="zip_code" name="zip_code"
                                                         class="form-control" aria-describedby="website"
-                                                        wire:model="zip_code" wire:keyup="fetch_zip_code" required>
+                                                        wire:model="zip_code" wire:keyup="fetch_zip_code" required  placeholder="Your Zip Code">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -82,7 +81,7 @@
                                                     <select class="form-select" id="bank_state" name="bank_state"
                                                         aria-label="Default select example" wire:model.lazy="bank_state" disabled
                                                         required>
-                                                        <option value="">Select State</option>
+                                                        <option value=""> </option>
                                                         @foreach ($states as $state)
                                                             <option value="{{ $state->id }}">{{ $state->name }}
                                                             </option>
@@ -96,7 +95,7 @@
                                                     <select class="form-select" id="bank_city" name="bank_city"
                                                         aria-label="Default select example" wire:model.lazy="bank_city" disabled
                                                         required>
-                                                        <option value="">Select City</option>
+                                                        <option value=""> </option>
                                                         @if ($bank_cities != null)
                                                             @foreach ($bank_cities as $city)
                                                                 <option value="{{ $city->id }}">{{ $city->name }}
@@ -121,7 +120,7 @@
                                                     <input type="name" id="admin_first_name"
                                                         name="admin_first_name" class="form-control"
                                                         aria-describedby="name" wire:model.lazy="admin_first_name"
-                                                        required>
+                                                        required  placeholder="John">
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
@@ -130,34 +129,34 @@
                                                     <label for="admin_last_name" class="form-label">Last Name</label>
                                                     <input type="name" id="admin_last_name" name="admin_last_name"
                                                         class="form-control" aria-describedby="name"
-                                                        wire:model.lazy="admin_last_name" required>
+                                                        wire:model.lazy="admin_last_name"  placeholder="Doe" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_email" class="form-label">Email</label>
+                                                    <label for="admin_email" class="form-label">Email Address</label>
                                                     <input type="email" id="admin_email" name="admin_email"
-                                                        class="form-control" aria-describedby="email"
+                                                        class="form-control" aria-describedby="email"  placeholder="Contact Person Email Address"
                                                         wire:model.lazy="admin_email" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_phone" class="form-label">Phone Number</label>
+                                                    <label for="admin_phone" class="form-label">Contact Phone Number</label>
                                                     <input type="text" id="admin_phone" name="admin_phone"
                                                         class="form-control" aria-describedby="phone" pattern="\d*" maxlength="10"
-                                                        wire:model.lazy="admin_phone" required>
+                                                        wire:model.lazy="admin_phone" required  placeholder="9496563133">
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_designation" class="form-label">Title</label>
+                                                    <label for="admin_designation" class="form-label">Job Title</label>
                                                     <input type="text" id="admin_designation"
                                                         name="admin_designation" class="form-control"
-                                                        aria-describedby="Designation"
+                                                        aria-describedby="Designation" placeholder="Job Title"
                                                         wire:model.lazy="admin_designation" required>
 
                                                 </div>

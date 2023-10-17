@@ -24,6 +24,13 @@
                             </div>
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-12">
                             <form action="{{ route('bank_login') }}" class="login-form" id="UserLoginForm" method="post">

@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand header_brand_heading" href="#">INTELLI-RATE</a>
+                <a class="navbar-brand header_brand_heading" href="{{ url('/') }}">INTELLI-RATE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -70,10 +70,10 @@
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
                             class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        {{-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
                             aria-label="Slide 2"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+                            aria-label="Slide 3"></button> --}}
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -81,28 +81,28 @@
 
                                 <img src="{{ asset('assets/images/banner_land_apy.png') }}"
                                     class="d-block w-100 slider_image__" alt="...">
-                                <div class="col-md-4 card__survey_main">
+                                <div class="col-md-3 card__survey_main">
                                     <div class="card_container">
-                                        <h5>Intelli-Rate report by BancAnalytics</h5>
-                                        <h4>Request For New Survey</h4>
+                                        <h5>Intelli-Rate report by <strong>BancAnalytics</strong></h5>
+                                        {{-- <h4>Request For New Survey</h4> --}}
                                         <!-- <p>Open an Elite Money Market account. Dependent on total balance and location.</p> -->
-                                        <button class="btn card_register_btn" onclick="window.location.href='/Survey/form'">Request For New Survey</button>
+                                        {{-- <button class="btn card_register_btn" onclick="window.location.href='/Survey/form'">Request For New Survey</button> --}}
                                         <!-- <button class="btn card_register_btn" data-bs-toggle="modal"
                                             data-bs-target="#survey_modal">Request For New Survey</button> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
+                        {{-- <div class="carousel-item">
                             <img src="{{ asset('assets/images/banner_land_apy2.png') }}"
                                 class="d-block w-100 slider_image__" alt="...">
                         </div>
                         <div class="carousel-item">
                             <img src="{{ asset('assets/images/banner_land_apy3.png') }}"
                                 class="d-block w-100 slider_image__" alt="...">
-                        </div>
+                        </div> --}}
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    {{-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
@@ -111,7 +111,7 @@
                         data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
-                    </button>
+                    </button> --}}
                 </div>
             </div>
         </section>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-center">BancAnalytics was founded in 1995 by experienced banking executives and
+                    <p class="text-center fs-5">BancAnalytics was founded in 1995 by experienced banking executives and
                         business
                         professionals with a mission of improving data collection and analytical systems to help
                         financial
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-center">BanAnalytics offers several solutions in two core areas. The first is rate
+                    <p class="text-center fs-5">BanAnalytics offers several solutions in two core areas. The first is rate
                         intelligence
                         reports which provide users with timely, accurate data on competitor rates and how their
                         financial
@@ -154,7 +154,7 @@
                         decide they want a more narrow focus, we can tailor affordable, customized solutions to meet
                         their needs.
                         Learn more about Intelli-Rate formerly known as Money Monitor.</p>
-                    <p>
+                    <p class="text-center fs-5">
                         The second core area we focus on is financial analysis. Our quarterly Pulse report helps
                         financial
                         executives quickly review financial results, benchmark current and historical performance,
@@ -175,7 +175,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-center">There are other companies that provide data collection and some that provide
+                    <p class="text-center fs-5">There are other companies that provide data collection and some that provide
                         templates
                         for completing data analysis tasks. What sets BancAnalytics apart is the experience we bring as
                         financial
@@ -209,10 +209,9 @@
                                 BancAnalytics</button>
                         </li>
                         <li class="nav-item col-md-6 p-1" role="presentation">
-                            <button class="nav-link nav__item_btn" id="pills-profile-tab" data-bs-toggle="pill"
+                            <button class="nav-link nav__item_btn disabled text-danger" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                                aria-selected="false">Pulse Report by
-                                BancAnalytics</button>
+                                aria-selected="false">Coming Soon...</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
@@ -572,11 +571,11 @@
                                 <h3>Useful Links</h3>
                             </div>
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#our_product">News</a></li>
-                                <li><a href="#">Our Product</a></li>
+                                <li><a href="{{ url('/') }}">Home</a></li>
+                                <li><a href="{{ url('/interesting_stories') }}">News</a></li>
+                                {{-- <li><a href="#">Our Product</a></li>
                                 <li><a href="#">New Survey</a></li>
-                                <li><a href="#">About</a></li>
+                                <li><a href="#">About</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -586,7 +585,7 @@
                                 <h3>Subscribe</h3>
                             </div>
                             <div class="footer-text mb-25">
-                                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                                <p>Don’t miss out. Subscribe to our feeds.  Fill out the form below.</p>
                             </div>
                             <div class="subscribe-form">
                                 <form action="#">

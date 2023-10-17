@@ -14,6 +14,7 @@ class Invoice extends Component
     public $bank = '';
     public $pdt = '';
     public $pdf;
+    public $tandc = false;
 
     public function mount($id,$type)
     {
@@ -37,10 +38,12 @@ class Invoice extends Component
     }
 
     public function next(){
-        if(!Auth::check()){
-            return redirect(url('/signin'));
-        }else{
-            return redirect(url('/home'));
+        if($this->tandc){
+            if(!Auth::check()){
+                return redirect(url('/signin'));
+            }else{
+                return redirect(url('/home'));
+            }
         }
         // return redirect()->route('payment',['id'=>$this->bank->id, 'type'=>$this->type]);
     }

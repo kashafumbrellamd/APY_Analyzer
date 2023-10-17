@@ -119,7 +119,7 @@ class GeneralController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if ($user == null) {
-            return redirect()->back();
+            return redirect()->back()->with('error','Sorry This Email is not Registered.');
         }
 
         $contract = Contract::where('bank_id',$user->bank_id)->orderby('id','desc')->first();

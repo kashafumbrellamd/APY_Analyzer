@@ -644,14 +644,26 @@
                                   </p>
                             </div>
                         </div>
+                        <form onsubmit="event.preventDefault()">
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" wire:model="tandc" id="flexCheckDefault" required>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Check here to indicate that you have read and agree to our Terms & Condidtions.</label>
+                              </div>
+                            {{-- <div class="col-md-2">
+                            <input type="checkbox" class="form-control" name="terms" required>
+                        </div>
+                            <div class="col-md-10">
+                                <p>Check here to indicate that you have read and agree to our Terms & Condidtions.</p>
+                            </div> --}}
                     </div>
-                </div>
-                <div class="col-md-12 mt-3">
-                    <div class="mb-3 text-center">
-                        <button type="submit"
-                            class="btn submit_btn" wire:click="next">Next</button>
+                    <div class="col-md-12 mt-3">
+                        <div class="mb-3 text-center">
+                            <button type="submit"
+                                class="btn submit_btn" wire:click="next">Next</button>
+                        </div>
                     </div>
-                </div>
+                </form>
                 </div>
             </div>
         </div>

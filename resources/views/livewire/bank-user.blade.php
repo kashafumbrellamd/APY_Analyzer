@@ -16,40 +16,31 @@
                         <h6 class="m-0 font-weight-bold text-dark mb-2">Customer Institution User's Details</h6>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="name">Name</label>
-                                <input type="text" wire:model.lazy="admin_name" class="form-control mr-2"
+                                <label for="name">First Name</label>
+                                <input type="text" wire:model.lazy="first_admin_name" class="form-control mr-2"
                                     placeholder="Enter Name....">
                             </div>
                             <div class="col-md-4">
-                                <label for="name">Email</label>
+                                <label for="name">Last Name</label>
+                                <input type="text" wire:model.lazy="last_admin_name" class="form-control mr-2"
+                                    placeholder="Enter Name....">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="name">Email Adress</label>
                                 <input type="text" wire:model.lazy="admin_email" class="form-control mr-2"
                                     placeholder="Enter Email....">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <label for="name">Phone Number</label>
                                 <input type="text" wire:model.lazy="admin_phone_number" class="form-control mr-2"
                                     placeholder="Enter Phone Number....">
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-4">
-                                <label for="name">Designation</label>
+                                <label for="name">Job Title</label>
                                 <input type="text" wire:model.lazy="designation" class="form-control mr-2"
                                     placeholder="Enter Designation....">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="name">Employee Id</label>
-                                <input type="text" wire:model.lazy="employee_id" class="form-control mr-2"
-                                    placeholder="Enter Employee Id....">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="name">Gender</label>
-                                <select class="form-select form-control" aria-label="Default select example"
-                                    wire:model.lazy="gender">
-                                    <option value="">Select Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -61,7 +52,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Roles</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Users List</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -72,9 +63,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone Number</th>
-                            <th>Designation</th>
-                            <th>Gender</th>
-                            <th>Employee Id</th>
+                            <th>Job Title</th>
                             <th>Institution Name</th>
                             <th>Action</th>
                         </tr>
@@ -86,8 +75,6 @@
                                 <td>{{ $dt->email }}</td>
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->designation }}</td>
-                                <td>{{ $dt->gender }}</td>
-                                <td>{{ $dt->employee_id }}</td>
                                 <td>{{ $dt->banks->bank_name }}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn"

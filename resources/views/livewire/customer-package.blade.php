@@ -17,11 +17,10 @@
                                                     value="{{ $package->package_type }}" wire:model.lazy="subscription" wire:change="subscription_changed">
                                                 <label class="form-check-label"
                                                     for="inlineRadio{{ $package->id }}">{{ $package->name }}
-                                                    (${{ $package->price }} annually)
                                                 </label>
-                                                @if ($package->additional_price != 0)
-                                                    <span class="text-sm-start">(For Each Additional Institute: ${{ $package->additional_price }})</span>
-                                                @endif
+                                            </div>
+                                            <div class="bank_select_divv h-100">
+                                                {{ $package->description }}
                                             </div>
                                             <br>
                                         @endforeach
@@ -239,10 +238,10 @@
                                                                     @endif
                                                                 @endforeach
                                                             @endif
+                                                            <a wire:click="loadMore" style="cursor:pointer; display: block; text-align: center;" class="">Load More</a>
                                                         </div>
-                                                        <div class="text-center text-primary">
-                                                            <a wire:click="loadMore">Load More</a>
-                                                        </div>
+                                                        {{-- <div class="text-center text-primary">
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                             </div>
