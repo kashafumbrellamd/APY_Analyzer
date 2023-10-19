@@ -9,6 +9,9 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <title>Sign Up</title>
 </head>
@@ -36,8 +39,7 @@
                         <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
                             Dashboard</button>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign
-                            Up</button>
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
                         <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -144,10 +146,15 @@
                                 help financial institutions make more timely and impactful decisions.</p>
                         </div>
                         <div class="footer-social-icon">
-                            <span>Follow us</span>
-                            <!-- <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                            <span>Contact Us</span>
+                            <div class="footer-text">
+                                <p>BancAnalytics Corporation <br>
+                                PO Box 510385 <br>
+                                St. Louis, MO 63151</p>
+                            </div>
+                            <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
                             <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a> -->
+                            <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
                         </div>
                     </div>
                 </div>

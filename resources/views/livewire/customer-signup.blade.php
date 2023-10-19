@@ -1,4 +1,34 @@
 <div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand header_brand_heading" href="{{ url('/') }}">INTELLI-RATE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('interesting_stories') }}">News</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        @if (Auth::check())
+                        <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
+                            Dashboard</button>
+                        @else
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
+                        <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
     <section class="back_sign__ py-3">
         <div class="container-fluid">
             <div class="col-md-8  m-auto">
@@ -25,7 +55,7 @@
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            {{-- <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_email" class="form-label">Email</label>
                                                     <input type="email" id="bank_email" name="bank_email"
@@ -33,7 +63,7 @@
                                                         wire:model.lazy="bank_email" required>
 
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="bank_phone" class="form-label">Main Phone Number</label>
