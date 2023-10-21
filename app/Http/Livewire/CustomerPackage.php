@@ -207,12 +207,13 @@ class CustomerPackage extends Component
     public function selectcbsa($id)
     {
         if ($id == "all") {
-            $this->bank_city_filter = [];
-            $this->bank_city_filter_name = [];
+            $this->bank_cbsa_filter = [];
+            $this->bank_cbsa_filter_name = [];
         } else {
             if (!in_array($id, $this->bank_cbsa_filter)) {
                 array_push($this->bank_cbsa_filter, $id);
-                array_push($this->bank_cbsa_filter_name, $id);
+                $cbsssa_name = Bank::where('cbsa_code',$id)->select('cbsa_name')->first();
+                array_push($this->bank_cbsa_filter_name, $cbsssa_name->cbsa_name);
             }
         }
         $this->all_banks = null;
