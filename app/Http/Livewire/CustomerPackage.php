@@ -151,7 +151,7 @@ class CustomerPackage extends Component
 
     public function getCBSA()
     {
-        $query = Bank::groupBy('cbsa_code');
+        $query = Bank::groupBy('cbsa_code')->where('cbsa_name','!=','');
 
         if (!empty($this->bank_type)) {
             $query->where('bank_type_id', $this->bank_type);
