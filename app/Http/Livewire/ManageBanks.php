@@ -172,7 +172,6 @@ class ManageBanks extends Component
                         $city_id = Cities::where('name',$bank['City'])->pluck('id')->first();
                         if($state_id!=null && $city_id!=null)
                         {
-                            if($bank['CBSA Code'] != 0 && $bank['CBSA'] != null){
                                 $new_bank = Bank::create([
                                     'name'=>$bank['Bank Name'],
                                     'state_id'=>$state_id,
@@ -189,9 +188,6 @@ class ManageBanks extends Component
                                     'surveyed'=>$bank['is_survey'],
                                     'bank_type_id'=>$bank_type->id,
                                 ]);
-                            }else{
-                                array_push($this->not_inserted_banks,$bank['Bank Name']);
-                            }
                         }
                         else
                         {
