@@ -87,7 +87,7 @@
                                     class="d-block w-100 slider_image__" alt="...">
                                 <div class="col-md-3 card__survey_main">
                                     <div class="card_container">
-                                        <h5>Intelli-Rate report by <strong>BancAnalytics</strong></h5>
+                                        <h5>Intelli-Rate Report by <strong>BancAnalytics</strong></h5>
                                         {{-- <h4>Request For New Survey</h4> --}}
                                         <!-- <p>Open an Elite Money Market account. Dependent on total balance and location.</p> -->
                                         {{-- <button class="btn card_register_btn" onclick="window.location.href='/Survey/form'">Request For New Survey</button> --}}

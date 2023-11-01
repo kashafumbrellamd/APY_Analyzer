@@ -300,7 +300,7 @@ class CustomerPackage extends Component
             $charges = Packages::where('package_type', $this->subscription)->first();
             if(count($this->custom_banks) <= $charges->number_of_units){
                 $contract = Contract::create([
-                    'contract_start' => date('Y-m-d'),
+                    'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 month')),
                     'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
                     'charges' => $charges->price,
                     'bank_id' => $this->bank->id,
@@ -308,7 +308,7 @@ class CustomerPackage extends Component
             }else{
                 $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
                 $contract = Contract::create([
-                    'contract_start' => date('Y-m-d'),
+                    'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 month')),
                     'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
                     'charges' => $amount_charged,
                     'bank_id' => $this->bank->id,
@@ -326,7 +326,7 @@ class CustomerPackage extends Component
             }
             $charges = Packages::where('package_type', $this->subscription)->first();
             $contract = Contract::create([
-                'contract_start' => date('Y-m-d'),
+                'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 month')),
                 'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
                 'charges' => $charges->price*count($this->bank_city_filter),
                 'bank_id' => $this->bank->id,

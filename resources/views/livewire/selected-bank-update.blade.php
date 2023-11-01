@@ -78,17 +78,24 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions"
                                     id="inlineRadio{{ $package->id }}" value="{{ $package->package_type }}"
-                                    wire:model.lazy="subscription">
+                                    wire:model.lazy="subscription" disabled>
                                 <label class="form-check-label" style="margin-bottom: 12px;"
                                     for="inlineRadio{{ $package->id }}">{{ $package->name }}
-                                    (${{ $package->price }})
-                                    <span class="text-sm-start">(For Per Additional Bank:
-                                        ${{ $package->additional_price }})</span>
                                 </label>
+                            </div>
+                            <div class="bank_select_divv h-100">
+                                {{ $package->description }}
                             </div>
                             <br>
                         @endforeach
                     </div>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                    @if ($this->current_amount != 0)
+                        <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
+                            ${{ number_format($this->current_amount) }}</p>
+                    @endif
                 </div>
                 <div class="col-md-6"></div>
                 @if ($this->subscription == 'custom')
@@ -114,8 +121,8 @@
                                 @foreach ($bank_state_filter_name as $key => $filtered_state)
                                     <span
                                         class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_state }}
-                                            <span wire:click="deleteState({{ $key }})"
-                                                style="position: absolute;
+                                        <span wire:click="deleteState({{ $key }})"
+                                            style="position: absolute;
                                         font-size: 14px;
                                         background-color: #f12d2d;
                                         padding: 0px 7px;
@@ -124,15 +131,14 @@
                                         cursor:pointer;
                                         right: -12px;
                                         color: #fff;
-                                        font-weight: 600;" >x</span>
+                                        font-weight: 600;">x</span>
                                     </span>
                                 @endforeach
                             </div>
                             <label for="bank_type" class="form-label">Select Bank
                                 State</label>
-                            <select class="form-select form-control mb-3"
-                                aria-label="Default select example" wire:model="selected_state_now"
-                                wire:change="selectstate($event.target.value)">
+                            <select class="form-select form-control mb-3" aria-label="Default select example"
+                                wire:model="selected_state_now" wire:change="selectstate($event.target.value)">
                                 <option value="">Select State</option>
                                 @foreach ($available_states as $state)
                                     <option value="{{ $state->id }}">
@@ -150,8 +156,8 @@
                                 @foreach ($bank_city_filter_name as $key => $filtered_city)
                                     <span
                                         class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
-                                            <span wire:click="deleteCity({{ $key }})"
-                                                style="position: absolute;
+                                        <span wire:click="deleteCity({{ $key }})"
+                                            style="position: absolute;
                                         font-size: 14px;
                                         background-color: red;
                                         padding: 0px 7px;
@@ -165,9 +171,8 @@
                             </div>
                             <label for="bank_type" class="form-label">Select Bank
                                 City</label>
-                            <select class="form-select form-control mb-3 "
-                                aria-label="Default select example" wire:model="selected_city_now"
-                                wire:change="selectcity($event.target.value)">
+                            <select class="form-select form-control mb-3 " aria-label="Default select example"
+                                wire:model="selected_city_now" wire:change="selectcity($event.target.value)">
                                 <option value="">Select City</option>
                                 @foreach ($available_cities as $city)
                                     <option value="{{ $city->city_id }}">
@@ -185,8 +190,8 @@
                                 @foreach ($bank_cbsa_filter_name as $key => $filtered_city)
                                     <span
                                         class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
-                                            <span wire:click="deleteCbsa({{ $key }})"
-                                                style="position: absolute;
+                                        <span wire:click="deleteCbsa({{ $key }})"
+                                            style="position: absolute;
                                         font-size: 14px;
                                         background-color: red;
                                         padding: 0px 7px;
@@ -200,13 +205,12 @@
                             </div>
                             <label for="bank_type" class="form-label">Select Bank
                                 CBSA</label>
-                            <select class="form-select form-control mb-3 "
-                                aria-label="Default select example" wire:model="selected_city_now"
-                                wire:change="selectcbsa($event.target.value)">
+                            <select class="form-select form-control mb-3 " aria-label="Default select example"
+                                wire:model="selected_city_now" wire:change="selectcbsa($event.target.value)">
                                 <option value="">Select CBSA</option>
                                 @foreach ($available_cbsa as $city)
                                     <option value="{{ $city->cbsa_code }}">
-                                        {{ $city->cbsa_code }}</option>
+                                        {{ $city->cbsa_name }}</option>
                                 @endforeach
                                 <option value="all">All Data</option>
                             </select>
@@ -225,29 +229,27 @@
                                     @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
                                         <label>{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
                                     @else
-                                        <label class="text-danger">{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
+                                        <label
+                                            class="text-danger">{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
                                     @endif
                                 </div>
                                 <div class="mt-2">
                                     <div class="bank_select_divv">
                                         @if (count($this->custom_banks) == count($this->all_banks))
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" style="position: relative;"
-                                                    value="" id="defaultCheckall"
+                                                <input class="form-check-input" type="checkbox"
+                                                    style="position: relative;" value="" id="defaultCheckall"
                                                     wire:click="deselect_all_banks()" checked>
-                                                <label class="form-check-label"
-                                                    for="defaultCheckall">
-                                                    Deselect All <span
-                                                        class="state_city_span"></span>
+                                                <label class="form-check-label" for="defaultCheckall">
+                                                    Deselect All <span class="state_city_span"></span>
                                                 </label>
                                             </div>
                                         @else
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" style="position: relative;"
-                                                    value="" id="defaultCheckall"
+                                                <input class="form-check-input" type="checkbox"
+                                                    style="position: relative;" value="" id="defaultCheckall"
                                                     wire:click="select_all_banks()">
-                                                <label class="form-check-label"
-                                                    for="defaultCheckall">
+                                                <label class="form-check-label" for="defaultCheckall">
                                                     Select All <span class="state_city_span"></span>
                                                 </label>
                                             </div>
@@ -260,8 +262,8 @@
                                                         <input class="form-check-input" style="position: relative;"
                                                             type="checkbox" value=""
                                                             id="defaultCheck{{ $bank->id }}"
-                                                            wire:click="select_bank({{ $bank->id }})"
-                                                            checked {{ in_array($bank->id, $this->already)?'disabled':'' }}>
+                                                            wire:click="select_bank({{ $bank->id }})" checked
+                                                            {{ in_array($bank->id, $this->already) ? 'disabled' : '' }}>
                                                         <label class="form-check-label"
                                                             for="defaultCheck{{ $bank->id }}">
                                                             {{ $bank->name }} <span
@@ -286,19 +288,68 @@
                                                 @endif
                                             @endforeach
                                         @endif
+                                        <a wire:click="loadMore"
+                                            style="cursor:pointer; display: block; text-align: center;"
+                                            class="">Load More</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-12">
-                        <div class="mb-3 text-center">
-                            <button type="submit"
-                                class="btn btn-primary" wire:click="submitForm">Submit</button>
+                @elseif ($this->subscription == 'state')
+                    <div class="col-md-6" wire:loading.class="invisible">
+                        <div>
+                            <div>
+                                <div class="mb-3">
+                                    <div>
+                                        @foreach ($bank_city_filter_name as $key => $filtered_city)
+                                            <span
+                                                class="border border-dark p-1 rounded position-relative me-3 mb-2">{{ $filtered_city }}
+                                                <button type="button" wire:click="deleteCity({{ $key }})">
+                                                    <span
+                                                        style="position: absolute;
+                                                font-size: 14px;
+                                                background-color: red;
+                                                padding: 0px 7px;
+                                                border-radius: 13px;
+                                                top: -12px;
+                                                right: -12px;
+                                                color: #fff;
+                                                font-weight: 600;">x</span>
+                                                </button>
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                        <?php
+                                            $check_city = App\Models\BankSelectedCity::where('bank_id',Auth::user()->bank_id)->pluck('city_id')->toArray();
+                                        ?>
+                                    <label for="bank_type" class="form-label">Select Institution
+                                        City And State</label>
+                                    <select class="form-select form-control mb-3 " aria-label="Default select example"
+                                        wire:model="selected_city_now" wire:change="selectcity($event.target.value)">
+                                        <option value="">Select City</option>
+                                        {{-- <option value="119383">Kansas City</option> --}}
+                                        @if (!in_array('125680',$check_city))
+                                            <option value="125680">Saint Louis, Missouri</option>
+                                        @endif
+                                        @if (!in_array('121746',$check_city))
+                                            <option value="121746">Miami, Florida</option>
+                                        @endif
+                                        @if (!in_array('127407',$check_city))
+                                            <option value="127407">Tampa, Florida</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endif
+                <div class="col-md-12">
+                    <div class="mb-3 text-center">
+                        <button type="submit"
+                            class="btn btn-primary" wire:click="submitForm">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

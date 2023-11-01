@@ -68,8 +68,8 @@
                                                 <div class="mb-3">
                                                     <label for="bank_phone" class="form-label">Main Phone Number</label>
                                                     <input type="text" id="bank_phone" name="bank_phone"
-                                                        class="form-control" aria-describedby="phone" pattern="\d*" maxlength="10"
-                                                        wire:model.lazy="bank_phone" required  placeholder="9496563133">
+                                                        class="form-control" aria-describedby="phone" maxlength="12"
+                                                        wire:model.lazy="bank_phone" required  placeholder="949-656-3133">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -176,8 +176,8 @@
                                                 <div class="mb-3">
                                                     <label for="admin_phone" class="form-label">Contact Phone Number</label>
                                                     <input type="text" id="admin_phone" name="admin_phone"
-                                                        class="form-control" aria-describedby="phone" pattern="\d*" maxlength="10"
-                                                        wire:model.lazy="admin_phone" required  placeholder="9496563133">
+                                                        class="form-control" aria-describedby="phone" maxlength="12"
+                                                        wire:model.lazy="admin_phone" required  placeholder="949-656-3133">
 
                                                 </div>
                                             </div>

@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 @if ($this->current_amount != 0)
-                                    <p wire:loading.class="invisible" class="text-danger fw-bold">Total Amount: ${{ $this->current_amount }}</p>
+                                    <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount: ${{ number_format($this->current_amount) }}</p>
                                 @endif
                                 @if ($this->subscription == 'custom')
                                     <div class="col-md-6" wire:loading.class="invisible">
@@ -303,15 +303,16 @@
                                                         @endforeach
                                                     </div>
                                                     <label for="bank_type" class="form-label">Select Institution
-                                                        City</label>
+                                                        City And State</label>
                                                     <select class="form-select form-control mb-3 "
                                                         aria-label="Default select example" wire:model="selected_city_now"
                                                         wire:change="selectcity($event.target.value)">
                                                         <option value="">Select City</option>
-                                                        <option value="119383">Kansas City</option>
-                                                        <option value="125680">Saint Louis</option>
-                                                        <option value="121746">Miami</option>
-                                                        <option value="127546">Texas</option>
+                                                        {{-- <option value="119383">Kansas City</option> --}}
+                                                        <option value="125680">Saint Louis, Missouri</option>
+                                                        <option value="121746">Miami, Florida</option>
+                                                        <option value="127407">Tampa, Florida</option>
+                                                        {{-- <option value="127546">Texas</option> --}}
                                                     </select>
                                                 </div>
                                             </div>
