@@ -5,7 +5,11 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\SpecializationRates;
 use DB;
+use Auth;
 use App\Models\Bank;
+use App\Models\CustomerBank;
+use App\Models\CustomPackageBanks;
+use App\Models\BankSelectedCity;
 use App\Models\State;
 use App\Models\Cities;
 
@@ -16,22 +20,26 @@ class SpecialRateReports extends Component
 
     public function render()
     {
-        if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
-            $specialization_rates = SpecializationRates::join('banks','banks.id','specialization_rates.bank_id')
-                ->where('banks.state_id',$this->bank_state_filter)
-                ->get();
-        }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
-            $specialization_rates = SpecializationRates::join('banks','banks.id','specialization_rates.bank_id')
-                ->where('banks.city_id',$this->bank_city_filter)
-                ->get();
-        }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
-            $specialization_rates = SpecializationRates::join('banks','banks.id','specialization_rates.bank_id')
-                ->where('banks.state_id',$this->bank_state_filter)
-                ->where('banks.city_id',$this->bank_city_filter)
-                ->get();
-        }else{
-            $specialization_rates = SpecializationRates::with('bank')->get();
+        $customer_bank = CustomerBank::find(Auth::user()->bank_id);
+        if($customer_bank->display_reports == "state"){
+            $city_id = BankSelectedCity::where('bank_id',Auth::user()->bank_id)->pluck('city_id');
+            $bank_ids = Bank::whereIn('city_id',$city_id)->pluck('id');
+        }elseif($customer_bank->display_reports == "custom"){
+            $bank_ids = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)->pluck('customer_selected_bank_id');
         }
+
+        $specialization_rates = SpecializationRates::join('banks', 'banks.id', '=', 'specialization_rates.bank_id')
+            ->whereIn('banks.id', $bank_ids)
+            ->select('specialization_rates.*')
+            ->whereRaw('specialization_rates.id = (SELECT MAX(id) FROM specialization_rates AS sr WHERE sr.bank_id = specialization_rates.bank_id)');
+
+        if(!empty($this->bank_state_filter)){
+            $specialization_rates->where('banks.state_id',$this->bank_state_filter);
+        }
+        if(!empty($this->bank_city_filter)){
+            $specialization_rates->where('banks.city_id',$this->bank_city_filter);
+        }
+        $specialization_rates = $specialization_rates->get();
         $bank_states = $this->getStates();
         $bank_cities = $this->getCities();
         return view('livewire.special-rate-reports', ['specialization_rates'=>$specialization_rates,'bank_states'=>$bank_states,'bank_cities'=>$bank_cities]);

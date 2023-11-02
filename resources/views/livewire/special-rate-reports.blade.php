@@ -13,6 +13,10 @@
         </div>
         <div class="card-body" wire:loading.remove>
             <div class="row">
+                @php
+                    $bank = \app\Models\CustomerBank::where('id',Auth::user()->bank_id)->first();
+                @endphp
+            @if($bank->display_reports == 'custom')
                 <div class="col-md-4">
                     <label for="state">Select State</label>
                     <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_state_filter" wire:change="selectstate($event.target.value)">
@@ -34,6 +38,7 @@
                         <option value="">All Data</option>
                     </select>
                 </div>
+            @endif
             </div>
             <div class="table-responsive">
 
