@@ -27,6 +27,12 @@
     text-transform: uppercase;
     text-shadow: 2px 2px 2px #79a
 }
+.regiter_heading_main{
+    text-align: center;
+    color: var(--second-color);
+    text-transform: uppercase;
+    /* text-shadow: 2px 2px 2px #79a */
+}
 hr{
     margin: 0.5rem 0 !important;
 }
@@ -425,7 +431,7 @@ body {
 .card__survey_main{
     position: absolute;
     top: 43%;
-    left: 38%;
+    left: 35%;
 }
   .slider_image__{
     height: 400px;

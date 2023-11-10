@@ -33,7 +33,7 @@
         <div class="container-fluid">
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
-                    <h1 class="regiter_heading_h">Register Your Institution</h1>
+                    <h1 class="regiter_heading_main">Register Your Institution</h1>
                     @error('error')
                         <div class="mt-4 text-center">
                             <span class="alert alert-danger">{{$message}}</span>

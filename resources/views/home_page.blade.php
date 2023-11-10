@@ -14,7 +14,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css?n=1') }}">
     <title>Intelli Rate</title>
 </head>
 
@@ -85,9 +85,9 @@
 
                                 <img src="{{ asset('assets/images/banner_land_apy.png') }}"
                                     class="d-block w-100 slider_image__" alt="...">
-                                <div class="col-md-3 card__survey_main">
+                                <div class="col-md-4 card__survey_main">
                                     <div class="card_container">
-                                        <h5>Intelli-Rate Report by <strong>BancAnalytics</strong></h5>
+                                        <h3>Intelli-Rate Report by <strong>BancAnalytics</strong></h3>
                                         {{-- <h4>Request For New Survey</h4> --}}
                                         <!-- <p>Open an Elite Money Market account. Dependent on total balance and location.</p> -->
                                         {{-- <button class="btn card_register_btn" onclick="window.location.href='/Survey/form'">Request For New Survey</button> --}}
@@ -123,13 +123,13 @@
             <div class="container">
                 <div class="row">
                     <div class="section-header text-center">
-                        <h2 class="fw-bold fs-1">
+                        <h2 class="fw-bold fs-2">
                             Who We Are
                         </h2>
                     </div>
                 </div>
                 <div>
-                    <p class="text-center fs-5">BancAnalytics was founded in 1995 by experienced banking executives and
+                    <p class="text-center fs-6">BancAnalytics was founded in 1995 by experienced banking executives and
                         business
                         professionals with a mission of improving data collection and analytical systems to help
                         financial
@@ -141,30 +141,18 @@
             <div class="container">
                 <div class="row">
                     <div class="section-header text-center">
-                        <h2 class="fw-bold fs-1">
+                        <h2 class="fw-bold fs-2">
                             What We Do
                         </h2>
                     </div>
                 </div>
                 <div>
-                    <p class="text-center fs-5">BanAnalytics offers several solutions in two core areas. The first is rate
-                        intelligence
-                        reports which provide users with timely, accurate data on competitor rates and how their
-                        financial
-                        institution’s rates compare to the market. We offer broad market analyses by metropolitan area
-                        and encourage
-                        our clients to take time to consider who they are truly competing with in that area and beyond.
-                        If clients
-                        decide they want a more narrow focus, we can tailor affordable, customized solutions to meet
-                        their needs.
-                        Learn more about Intelli-Rate formerly known as Money Monitor.</p>
-                    <p class="text-center fs-5">
-                        The second core area we focus on is financial analysis. Our quarterly Pulse report helps
-                        financial
-                        executives quickly review financial results, benchmark current and historical performance,
-                        effectively
-                        communicate findings and develop targets to improve performance going forward. Learn more about
-                        Pulse.
+                    <p class="text-center fs-6">BancAnalytics offers rate intelligence reports that provide users with timely,
+                         accurate data on competitor rates and how their financial institution’s rates compare to the market.
+                         We offer broad market analyses by metropolitan area and encourage our clients to take time to consider who they are truly
+                         competing with in that area and beyond.  If clients decide they want a more narrow focus, we can tailor affordable,
+                         customized solutions to meet their needs.  Learn more about Intelli-Rate formerly known as Money Monitor in the details
+                         below.
                     </p>
                 </div>
             </div>
@@ -173,13 +161,13 @@
             <div class="container">
                 <div class="row">
                     <div class="section-header text-center">
-                        <h2 class="fw-bold fs-1">
+                        <h2 class="fw-bold fs-2">
                             What Sets Us Apart
                         </h2>
                     </div>
                 </div>
                 <div>
-                    <p class="text-center fs-5">There are other companies that provide data collection and some that provide
+                    <p class="text-center fs-6">There are other companies that provide data collection and some that provide
                         templates
                         for completing data analysis tasks. What sets BancAnalytics apart is the experience we bring as
                         financial
@@ -201,8 +189,8 @@
             <div class="container" id="our_product">
                 <div>
                     <div class="section-header text-center">
-                        <h2 class="fw-bold fs-1">
-                            Our Products
+                        <h2 class="fw-bold fs-2">
+                            Product Details
                         </h2>
                     </div>
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -482,7 +470,7 @@
       <div class="container">
         <div class="row">
           <div class="section-header text-center">
-            <h2 class="fw-bold fs-1">
+            <h2 class="fw-bold fs-2">
               Why
               <span class="b-class-secondary">Choose </span>
             </h2>

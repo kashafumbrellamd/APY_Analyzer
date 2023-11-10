@@ -36,12 +36,12 @@
                 <div class="main_signUp">
                     <div>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class=" border border-3 border-dark p-3">
                                 @include('reports.invoice',compact('reports'))
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-12 mt-3">
                             <div class="mb-3 text-center">
                                 <button type="submit"
                                     class="btn submit_btn" wire:click="download">Download Invoice</button>

@@ -58,7 +58,9 @@ class CustomerPackage extends Component
     {
         $newData = $this->fetch_banks($this->page);
         if($this->all_banks != null){
-            $this->all_banks = $this->all_banks->concat($newData);
+            if($this->all_banks != $newData){
+                $this->all_banks = $this->all_banks->concat($newData);
+            }
         }else{
             $this->all_banks = $newData;
         }

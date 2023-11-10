@@ -121,7 +121,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div>
+                                            {{-- <div>
                                                 <div class="mb-3">
                                                     <div>
                                                         @foreach ($bank_city_filter_name as $key => $filtered_city)
@@ -156,7 +156,7 @@
                                                         <option value="all">All Data</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div>
                                                 <div class="mb-3">
                                                     <div>
@@ -179,12 +179,11 @@
                                                             </span>
                                                         @endforeach
                                                     </div>
-                                                    <label for="bank_type" class="form-label">Select Institution
-                                                        CBSA</label>
+                                                    <label for="bank_type" class="form-label">Select Metropolitician Area</label>
                                                     <select class="form-select form-control mb-3 "
                                                         aria-label="Default select example" wire:model="selected_city_now"
                                                         wire:change="selectcbsa($event.target.value)">
-                                                        <option value="">Select CBSA</option>
+                                                        <option value="">Select Metropolitician Area</option>
                                                         @foreach ($available_cbsa as $city)
                                                             <option value="{{ $city->cbsa_code }}">
                                                                 {{ $city->cbsa_name }}</option>
