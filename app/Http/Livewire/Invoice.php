@@ -25,7 +25,8 @@ class Invoice extends Component
     public function render()
     {
         $reports = Contract::where('bank_id', $this->bank->id)->orderBy('id','desc')->first();
-        return view('livewire.invoice',compact('reports'));
+        $bank = $this->bank;
+        return view('livewire.invoice',compact('reports','bank'));
     }
 
     public function download(){

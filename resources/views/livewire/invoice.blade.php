@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class=" border border-3 border-dark p-3">
-                                @include('reports.invoice',compact('reports'))
+                                @include('reports.invoice',compact('reports','bank'))
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">

@@ -36,4 +36,8 @@ class CustomerBank extends Model
     public function states(){
        return $this->belongsTo(State::class,'state','id');
     }
+
+    public function cities(){
+       return $this->belongsTo(Cities::class,'city_id','id');
+    }
 }

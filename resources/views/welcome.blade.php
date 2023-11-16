@@ -102,7 +102,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Market Highs And Lows</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Market Highs and Lows</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -116,7 +116,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Market Averages And Medians</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Market Averages and Medians</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
