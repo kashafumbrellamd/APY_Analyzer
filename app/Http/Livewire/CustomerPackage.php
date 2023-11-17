@@ -214,7 +214,7 @@ class CustomerPackage extends Component
         } else {
             if (!in_array($id, $this->bank_cbsa_filter)) {
                 array_push($this->bank_cbsa_filter, $id);
-                $cbsssa_name = Bank::where('cbsa_code',$id)->select('cbsa_name')->first();
+                $cbsssa_name = Bank::where('cbsa_code',$id)->where('cbsa_name','!=','')->select('cbsa_name')->first();
                 array_push($this->bank_cbsa_filter_name, $cbsssa_name->cbsa_name);
             }
         }
