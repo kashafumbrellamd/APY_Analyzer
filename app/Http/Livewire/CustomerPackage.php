@@ -38,6 +38,8 @@ class CustomerPackage extends Component
     public $bank_cbsa_filter = [];
     public $bank_cbsa_filter_name = [];
 
+    public $selected_banks_name = [];
+
     public $selected_state_now = '';
     public $selected_city_now = '';
     public $selected_cbsa_now = '';
@@ -260,8 +262,19 @@ class CustomerPackage extends Component
     {
         if (in_array($id, $this->custom_banks)) {
             unset($this->custom_banks[array_search($id, $this->custom_banks)]);
+            $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+            foreach ($this->selected_banks_name as $index => $item) {
+                if ($item['name'] == $bank_name_now['name']) {
+                    $key = $index;
+                    break;
+                }
+            }
+            unset($this->selected_banks_name[$key]);
+            $this->selected_banks_name = array_values($this->selected_banks_name);
         } else {
             array_push($this->custom_banks, $id);
+            $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+            array_push($this->selected_banks_name,$bank_name_now);
         }
         foreach ($this->all_banks as $bank) {
             array_push($this->selectedbanks, $bank->id);

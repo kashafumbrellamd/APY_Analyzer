@@ -21,6 +21,35 @@
     padding: 6px 25px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 }
+
+.list__style__customer{
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 8px;
+    width: 99%;
+    margin: 3px;
+    border: 1px solid rgb(208, 207, 207);
+}
+.list__style__customer:nth-child(even){
+    background-color: rgb(238, 238, 238);
+}
+
+.order__list{
+    max-height: 300px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #ffffffcf;
+    list-style-type: disc;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+
+
+.width__100{
+    width: 100%;
+}
+
 .regiter_heading_h{
     text-align: center;
     color: var(--second-color);

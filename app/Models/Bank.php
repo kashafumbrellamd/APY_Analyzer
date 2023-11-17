@@ -89,6 +89,10 @@ class Bank extends Model
         return $this->belongsTo(Cities::class,'city_id','id');
     }
 
+    public function states(){
+        return $this->belongsTo(State::class,'state_id','id');
+     }
+
     public static function ToExcelInsertedData()
     {
         $states = Bank::join('states', 'banks.state_id', '=', 'states.id')

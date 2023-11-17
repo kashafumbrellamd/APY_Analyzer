@@ -68,7 +68,8 @@
                                     <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount: ${{ number_format($this->current_amount) }}</p>
                                 @endif
                                 @if ($this->subscription == 'custom')
-                                    <div class="col-md-6" wire:loading.class="invisible">
+
+                                    <div class="col-md-7" style="width: 100% !important" wire:loading.class="invisible">
                                         <div >
                                             <div>
                                                 <div class="mb-3">
@@ -194,6 +195,9 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
                                     <div class="col-md-6" wire:loading.class="invisible">
                                         <div>
                                             <div>
@@ -275,6 +279,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-6 d-flex align-items-start pt-5 justify-content-start"  wire:loading.class="invisible">
+                                        {{-- <div class="d-flex align-items-center justify-content-center width__100"> --}}
+                                        @if(count($selected_banks_name) != 0)
+                                            <ul class="width__100 order__list">
+                                                @forelse ($selected_banks_name as $item)
+                                                {{-- <li class="">{{ $item['name'] }}</li> --}}
+                                                <li class=""><b>{{ $item['name'] }}</b> ({{ $item['states']['name'] }},{{ $item['cities']['name'] }})</li>
+                                                @empty
+                                                @endforelse
+                                            </ul>
+                                        @endif
+                                         {{-- </div> --}}
                                     </div>
                                 @elseif ($this->subscription == 'state')
                                     <div class="col-md-6" wire:loading.class="invisible">
