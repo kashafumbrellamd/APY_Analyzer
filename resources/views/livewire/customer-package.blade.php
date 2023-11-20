@@ -264,8 +264,8 @@
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
                                                                                 {{ $bank->name }} <span
-                                                                                    class="state_city_span">({{ $bank->state_name }},
-                                                                                    &nbsp;{{ $bank->city_name }})</span>
+                                                                                    class="state_city_span">({{ $bank->states->name }},
+                                                                                    &nbsp;{{ $bank->cities->name }})</span>
                                                                             </label>
                                                                         </div>
                                                                     @endif

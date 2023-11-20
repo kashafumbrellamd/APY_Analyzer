@@ -78,11 +78,14 @@ class CustomerPackage extends Component
 
     public function fetch_banks($page)
     {
-        $query = Bank::join('states', 'banks.state_id', 'states.id')
-                    ->join('cities', 'banks.city_id', 'cities.id')
+        $query = Bank::with('states','cities')
+        // join('states', 'banks.state_id', 'states.id')
+        //             ->join('cities', 'banks.city_id', 'cities.id')
                     ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
                     ->where('bank_types.status', 1)
-                    ->select('banks.*', 'states.name as state_name', 'cities.name as city_name');
+                    ->select('banks.*',
+                    // 'states.name as state_name', 'cities.name as city_name'
+                    );
 
         if (!empty($this->bank_type)) {
             $query->where('banks.bank_type_id', $this->bank_type);
@@ -397,9 +400,6 @@ class CustomerPackage extends Component
 
     public function loadMore(){
         $this->page++;
-        // $newData = $this->fetch_banks(++$this->page);
-        // $this->all_banks = $this->all_banks->concat($newData);
-        $this->render();
     }
 
 }
