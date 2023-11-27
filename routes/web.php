@@ -6,6 +6,7 @@ use App\Mail\TestMail;
 use App\Models\Stories;
 use App\Models\State;
 use App\Models\Cities;
+use App\Models\Packages;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,13 +26,10 @@ Route::get('/',function(){
     }
 });
 Route::get('/',function(){
-    $states = State::where('country_id',233)->get();
-    $cities = Cities::where('country_id',233)->get();
-    if(!Auth::check()){
-        return view('home_page',['states'=>$states, 'cities'=>$cities]);
-    }else{
-        return view('home_page',['states'=>$states, 'cities'=>$cities]);
-    }
+    // $states = State::where('country_id',233)->get();
+    // $cities = Cities::where('country_id',233)->get();
+    $packages = Packages::get();
+    return view('home_page',compact('packages'));
 });
 
 Route::get('/home', function () {

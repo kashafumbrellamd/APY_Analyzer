@@ -38,11 +38,12 @@
                     </ul>
                     <div class="d-flex">
                         @if (Auth::check())
-                        <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
-                            Dashboard</button>
+                            <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
+                                Dashboard</button>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
-                        <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
+                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for
+                                free</button>
+                            <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
                 </div>
@@ -147,12 +148,17 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-center fs-6">BancAnalytics offers rate intelligence reports that provide users with timely,
-                         accurate data on competitor rates and how their financial institution’s rates compare to the market.
-                         We offer broad market analyses by metropolitan area and encourage our clients to take time to consider who they are truly
-                         competing with in that area and beyond.  If clients decide they want a more narrow focus, we can tailor affordable,
-                         customized solutions to meet their needs.  Learn more about Intelli-Rate formerly known as Money Monitor in the details
-                         below.
+                    <p class="text-center fs-6">BancAnalytics offers rate intelligence reports that provide users with
+                        timely,
+                        accurate data on competitor rates and how their financial institution’s rates compare to the
+                        market.
+                        We offer broad market analyses by metropolitan area and encourage our clients to take time to
+                        consider who they are truly
+                        competing with in that area and beyond. If clients decide they want a more narrow focus, we can
+                        tailor affordable,
+                        customized solutions to meet their needs. Learn more about Intelli-Rate formerly known as Money
+                        Monitor in the details
+                        below.
                     </p>
                 </div>
             </div>
@@ -167,7 +173,8 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-center fs-6">There are other companies that provide data collection and some that provide
+                    <p class="text-center fs-6">There are other companies that provide data collection and some that
+                        provide
                         templates
                         for completing data analysis tasks. What sets BancAnalytics apart is the experience we bring as
                         financial
@@ -184,6 +191,79 @@
             </div>
         </section>
 
+        <section class="show_box">
+
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- first card starts here -->
+            <div class="container-fluid"
+                style="background: #f5f5f5;">
+
+                <div class="container p-5">
+
+                    <div class="row">
+                        <div class="section-header text-center  pb-5">
+                            <h2 class="fw-bold fs-2 ">
+                                Choose Your Plan
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @foreach ($packages as $package)
+                            <div class="col-lg-6 col-md-12 mb-6">
+                                <div class="card h-100 shadow-lg">
+                                    <div class="card-body">
+                                        <div class="text-center p-3">
+                                            <h5 class="card-title h2">{{ $package->name }}</h5>
+                                            <br><br>
+                                            <span class="h1">${{ number_format($package->price) }}</span>/Annually
+                                            <br><br>
+                                        </div>
+                                        <p class="card-text">{{ $package->description }}</p>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        @if (Auth::check())
+                                            <button class="btn btn-outline-primary btn-lg"
+                                                style="border-radius:20px" onclick='window.location.href="/home"'>Select</button>
+                                        @else
+                                            <button class="btn btn-outline-primary btn-lg"
+                                                style="border-radius:20px" onclick='window.location.href="/signup"'>Select</button>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <!-- first card ends here -->
+                        {{-- <!-- second card starts here  -->
+                        <div class="col-lg-6 col-md-12 mb-6">
+                            <div class="card h-100 shadow-lg">
+                                <div class="card-body">
+                                    <div class="text-center p-3">
+                                        <h5 class="card-title h2">Premium</h5>
+                                        <br><br>
+                                        <span class="h1">$40</span>/month
+                                        <br><br>
+                                    </div>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's content.</p>
+                                </div>
+
+                                <div class="card-body text-center">
+                                    <button class="btn btn-outline-primary btn-lg"
+                                        style="border-radius:20px">Select</button>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+
+                <!-- first card ends here -->
+
+                <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+        </section>
+
         <!-- ----Our-Products-Start----- -->
         <section id="advertisers" class="advertisers-service-sec pt-3 pb-5">
             <div class="container" id="our_product">
@@ -196,8 +276,8 @@
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item col-md-12 p-1" role="presentation">
                             <button class="nav-link active nav__item_btn" id="pills-home-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                aria-selected="true">Intelli-Rate Report by
+                                data-bs-target="#pills-home" type="button" role="tab"
+                                aria-controls="pills-home" aria-selected="true">Intelli-Rate Report by
                                 BancAnalytics</button>
                         </li>
                         {{-- <li class="nav-item col-md-6 p-1" role="presentation">
@@ -553,8 +633,8 @@
                                 <span>Contact Us</span>
                                 <div class="footer-text">
                                     <p>BancAnalytics Corporation <br>
-                                    PO Box 510385 <br>
-                                    St. Louis, MO 63151</p>
+                                        PO Box 510385 <br>
+                                        St. Louis, MO 63151</p>
                                 </div>
                                 <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
                                 <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
@@ -582,7 +662,7 @@
                                 <h3>Subscribe</h3>
                             </div>
                             <div class="footer-text mb-25">
-                                <p>Don’t miss out. Subscribe to our feeds.  Fill out the form below.</p>
+                                <p>Don’t miss out. Subscribe to our feeds. Fill out the form below.</p>
                             </div>
                             <div class="subscribe-form">
                                 <form action="#">
@@ -622,7 +702,8 @@
     </footer>
 
     <!-- ----Survey--Modal-Start----- -->
-    <div class="modal fade" id="survey_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="survey_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal_header_cus">
@@ -641,6 +722,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+</script>
 
 </html>
