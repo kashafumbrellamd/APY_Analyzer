@@ -117,8 +117,9 @@ class CustomerPackage extends Component
         $this->bank_cbsa_filter_name = [];
     }
 
-    public function subscription_changed()
+    public function subscription_changed($value)
     {
+        $this->subscription = $value;
         $this->all_banks = null;
         $this->bank_state_filter = [];
         $this->bank_state_filter_name = [];

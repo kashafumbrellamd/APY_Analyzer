@@ -18,11 +18,12 @@
                     </ul>
                     <div class="d-flex">
                         @if (Auth::check())
-                        <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
-                            Dashboard</button>
+                            <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
+                                Dashboard</button>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
-                        <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
+                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for
+                                free</button>
+                            <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
                 </div>
@@ -39,7 +40,7 @@
                         <div>
                             <div class="row">
                                 <div>
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         @foreach ($packages as $package)
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="inlineRadioOptions"
@@ -54,7 +55,48 @@
                                             </div>
                                             <br>
                                         @endforeach
-                                    </div>
+                                    </div> --}}
+                                    <section class="show_box">
+                                        <div class="container-fluid">
+                                            <div class="container p-5">
+                                                <div class="row">
+                                                    <div class="section-header text-center  pb-5">
+                                                        <h2 class="fw-bold fs-2 ">
+                                                            Select Your Plan
+                                                        </h2>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    @foreach ($packages as $package)
+                                                        <div class="col-lg-6 col-md-12 mb-6">
+                                                            <div class="card card_2 h-100 shadow-lg mb-3"
+                                                                style="min-height: 320px;">
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-3">
+                                                                        <h5 class="card-title h3"
+                                                                            style="font-weight: 600;">
+                                                                            {{ $package->name }}</h5>
+                                                                        <span
+                                                                            class="h3">${{ $package->price }}</span>/Annually
+                                                                    </div>
+                                                                    <p class="card-text2"
+                                                                        style="text-align: justify; margin-bottom: 0px;">
+                                                                        {{ $package->description }} </p>
+                                                                </div>
+                                                                <div class="card-body text-center">
+                                                                    <button class="btn btn-outline-primary btn-md"
+                                                                        style="border-radius:10px"
+                                                                        wire:click="subscription_changed('{{ $package->package_type }}')">
+                                                                        Select</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                    </section>
                                 </div>
                                 <div class="text-center">
                                     <div wire:loading.delay>
@@ -65,12 +107,13 @@
                                     </div>
                                 </div>
                                 @if ($this->current_amount != 0)
-                                    <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount: ${{ number_format($this->current_amount) }}</p>
+                                    <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
+                                        ${{ number_format($this->current_amount) }}</p>
                                 @endif
                                 @if ($this->subscription == 'custom')
 
                                     <div class="col-md-7" style="width: 100% !important" wire:loading.class="invisible">
-                                        <div >
+                                        <div>
                                             <div>
                                                 <div class="mb-3">
                                                     <label for="bank_type" class="form-label">Select Institution
@@ -111,7 +154,8 @@
                                                     <label for="bank_type" class="form-label">Select Institution
                                                         State</label>
                                                     <select class="form-select form-control mb-3"
-                                                        aria-label="Default select example" wire:model="selected_state_now"
+                                                        aria-label="Default select example"
+                                                        wire:model="selected_state_now"
                                                         wire:change="selectstate($event.target.value)">
                                                         <option value="">Select State</option>
                                                         @foreach ($available_states as $state)
@@ -180,9 +224,11 @@
                                                             </span>
                                                         @endforeach
                                                     </div>
-                                                    <label for="bank_type" class="form-label">Select Metropolitician Area</label>
+                                                    <label for="bank_type" class="form-label">Select Metropolitician
+                                                        Area</label>
                                                     <select class="form-select form-control mb-3 "
-                                                        aria-label="Default select example" wire:model="selected_city_now"
+                                                        aria-label="Default select example"
+                                                        wire:model="selected_city_now"
                                                         wire:change="selectcbsa($event.target.value)">
                                                         <option value="">Select Metropolitician Area</option>
                                                         @foreach ($available_cbsa as $city)
@@ -203,14 +249,16 @@
                                             <div>
                                                 <div class="mb-3">
                                                     <div class="d-flex justify-content-between">
-                                                        <label for="bank_name_city" class="form-label">Institution Name ,
+                                                        <label for="bank_name_city" class="form-label">Institution
+                                                            Name ,
                                                             State ,
                                                             City
                                                         </label>
                                                         @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
                                                             <label>{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
                                                         @else
-                                                            <label class="text-danger">{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
+                                                            <label
+                                                                class="text-danger">{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
                                                         @endif
                                                     </div>
                                                     <div class="mt-2">
@@ -271,7 +319,9 @@
                                                                     @endif
                                                                 @endforeach
                                                             @endif
-                                                            <a wire:click="loadMore" style="cursor:pointer; display: block; text-align: center;" class="">Load More</a>
+                                                            <a wire:click="loadMore"
+                                                                style="cursor:pointer; display: block; text-align: center;"
+                                                                class="">Load More</a>
                                                         </div>
                                                         {{-- <div class="text-center text-primary">
                                                         </div> --}}
@@ -281,22 +331,25 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 d-flex align-items-start pt-5 justify-content-start"  wire:loading.class="invisible">
+                                    <div class="col-md-6 d-flex align-items-start pt-5 justify-content-start"
+                                        wire:loading.class="invisible">
                                         {{-- <div class="d-flex align-items-center justify-content-center width__100"> --}}
-                                        @if(count($selected_banks_name) != 0)
+                                        @if (count($selected_banks_name) != 0)
                                             <ul class="width__100 order__list">
                                                 @forelse ($selected_banks_name as $item)
-                                                {{-- <li class="">{{ $item['name'] }}</li> --}}
-                                                <li class=""><b>{{ $item['name'] }}</b> ({{ $item['states']['name'] }},{{ $item['cities']['name'] }})</li>
+                                                    {{-- <li class="">{{ $item['name'] }}</li> --}}
+                                                    <li class=""><b>{{ $item['name'] }}</b>
+                                                        ({{ $item['states']['name'] }},{{ $item['cities']['name'] }})
+                                                    </li>
                                                 @empty
                                                 @endforelse
                                             </ul>
                                         @endif
-                                         {{-- </div> --}}
+                                        {{-- </div> --}}
                                     </div>
                                 @elseif ($this->subscription == 'state')
-                                    <div class="col-md-6" wire:loading.class="invisible">
-                                        <div >
+                                    <div class="col-md-12" wire:loading.class="invisible">
+                                        <div>
                                             <div>
                                                 <div class="mb-3">
                                                     <div>
@@ -322,7 +375,8 @@
                                                     <label for="bank_type" class="form-label">Select Institution
                                                         City And State</label>
                                                     <select class="form-select form-control mb-3 "
-                                                        aria-label="Default select example" wire:model="selected_city_now"
+                                                        aria-label="Default select example"
+                                                        wire:model="selected_city_now"
                                                         wire:change="selectcity($event.target.value)">
                                                         <option value="">Select City</option>
                                                         {{-- <option value="119383">Kansas City</option> --}}
@@ -340,12 +394,11 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3 text-center">
-                                    <button type="submit"
-                                        class="btn submit_btn" wire:click="submitForm">Submit</button>
+                                    <button type="submit" class="btn submit_btn"
+                                        wire:click="submitForm">Submit</button>
                                 </div>
                             </div>
                         </div>
                     </div>
     </section>
 </div>
-

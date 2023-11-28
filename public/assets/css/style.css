@@ -528,6 +528,13 @@
         border:none;
         padding: 10px 50px;
       }
+      .card_2 {
+        border:none;
+        padding: 0px !important;
+        height: max-content !important;
+      }
+
+
   
       .card::after {
         position: absolute;
@@ -537,6 +544,10 @@
         transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
   
+      .card-text2{
+        font-size: 14px;
+      }
+
       .card:hover {
   
   
