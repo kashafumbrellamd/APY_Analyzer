@@ -191,78 +191,6 @@
             </div>
         </section>
 
-        <section class="show_box">
-
-
-            <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- first card starts here -->
-            <div class="container-fluid"
-                style="background: #f5f5f5;">
-
-                <div class="container p-5">
-
-                    <div class="row">
-                        <div class="section-header text-center  pb-5">
-                            <h2 class="fw-bold fs-2 ">
-                                Choose Your Plan
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        @foreach ($packages as $package)
-                            <div class="col-lg-6 col-md-12 mb-6">
-                                <div class="card h-100 shadow-lg">
-                                    <div class="card-body">
-                                        <div class="text-center p-3">
-                                            <h5 class="card-title h2">{{ $package->name }}</h5>
-                                            <br><br>
-                                            <span class="h1">${{ number_format($package->price) }}</span>/Annually
-                                            <br><br>
-                                        </div>
-                                        <p class="card-text">{{ $package->description }}</p>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        @if (Auth::check())
-                                            <button class="btn btn-outline-primary btn-lg"
-                                                style="border-radius:20px" onclick='window.location.href="/home"'>Select</button>
-                                        @else
-                                            <button class="btn btn-outline-primary btn-lg"
-                                                style="border-radius:20px" onclick='window.location.href="/signup"'>Select</button>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        <!-- first card ends here -->
-                        {{-- <!-- second card starts here  -->
-                        <div class="col-lg-6 col-md-12 mb-6">
-                            <div class="card h-100 shadow-lg">
-                                <div class="card-body">
-                                    <div class="text-center p-3">
-                                        <h5 class="card-title h2">Premium</h5>
-                                        <br><br>
-                                        <span class="h1">$40</span>/month
-                                        <br><br>
-                                    </div>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                </div>
-
-                                <div class="card-body text-center">
-                                    <button class="btn btn-outline-primary btn-lg"
-                                        style="border-radius:20px">Select</button>
-                                </div>
-                            </div>
-                        </div> --}}
-                    </div>
-                </div>
-
-                <!-- first card ends here -->
-
-                <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
-
-        </section>
 
         <!-- ----Our-Products-Start----- -->
         <section id="advertisers" class="advertisers-service-sec pt-3 pb-5">
@@ -545,6 +473,51 @@
 
         </section>
         <!-- ----Our-Products-End----- -->
+
+        <!-- ----Packages-Details-Start----- -->
+        <section class="show_box">
+            <div class="container-fluid"
+                style="background: #f5f5f5;">
+
+                <div class="container p-5">
+                    <div class="row">
+                        <div class="section-header text-center  pb-5">
+                            <h2 class="fw-bold fs-2 ">
+                                Choose Your Plan
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach ($packages as $package)
+                            <div class="col-lg-6 col-md-12 mb-6">
+                                <div class="card h-100 shadow-lg">
+                                    <div class="card-body">
+                                        <div class="text-center p-3">
+                                            <h5 class="card-title h2">{{ $package->name }}</h5>
+                                            <br><br>
+                                            <span class="h1">${{ number_format($package->price) }}</span>/Annually
+                                            <br><br>
+                                        </div>
+                                        <p class="card-text">{{ $package->description }}</p>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        @if (Auth::check())
+                                            <button class="btn btn-outline-primary btn-lg"
+                                                style="border-radius:20px" onclick='window.location.href="/home"'>Select</button>
+                                        @else
+                                            <button class="btn btn-outline-primary btn-lg"
+                                                style="border-radius:20px" onclick='window.location.href="/signup"'>Select</button>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+        </section>
+        <!-- ----Packages-Details-End----- -->
+
+
         <!-- ADVERTISERS SERVICE CARD -->
         <!-- <section id="advertisers" class="advertisers-service-sec pt-3 pb-3">
       <div class="container">
