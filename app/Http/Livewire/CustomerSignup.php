@@ -66,7 +66,6 @@ class CustomerSignup extends Component
         'admin_email' => 'required',
         'admin_phone' => 'required',
         'admin_designation' => 'required',
-        'subscription' => 'required',
     ];
 
     public function render()
