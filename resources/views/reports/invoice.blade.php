@@ -263,7 +263,7 @@
         <!-- invoice single line text -->
 
         <p class="red_para">Please make checks payable to: BancAnalytics Corporation</p>
-        <p class="blue_para">Please make checks payable to: BancAnalytics Corporation</p>
+        <p class="blue_para">(Detach bottom portion of invoice to include with payment)</p>
 
         <div class="blue_line"></div>
 
@@ -295,11 +295,15 @@
                         <td>Survey</td>
                     </tr>
                     <tr>
-                        <th>Product Desc.</th>
+                        <th>Terms(Mos.)</th>
+                        <td>{{ $fromDate->diffInMonths($toDate); }}</td>
+                    </tr>
+                    <tr>
+                        <th>Different Terms:</th>
                         <td>______________________</td>
                     </tr>
                     <tr>
-                        <th>Product Desc.</th>
+                        <th>Different Product:</th>
                         <td>______________________</td>
                     </tr>
                 </table>

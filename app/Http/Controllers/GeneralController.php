@@ -148,7 +148,7 @@ class GeneralController extends Controller
                         return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
                     }
                 }else{
-                    return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','1 Month of Free trial has ended. Kindly Clear the payment and wait for the Admin Approval.');
+                    return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Four-Week Free Trial has ended.  Please make the payment and wait for Admin approval.  Thank you.');
                 }
             }else{
                 return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
