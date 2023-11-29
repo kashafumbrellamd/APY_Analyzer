@@ -57,20 +57,15 @@ class CustomerSignup extends Component
 
     protected $rules = [
         'bank_name' => 'required',
-        'bank_email' => 'required',
         'bank_phone' => 'required',
         'bank_website' => 'required',
-        // 'bank_msa' => 'required',
         'bank_state' => 'required',
         'bank_city' => 'required',
-        'bank_state' => 'required',
         'admin_first_name' => 'required',
         'admin_last_name' => 'required',
         'admin_email' => 'required',
         'admin_phone' => 'required',
         'admin_designation' => 'required',
-        // 'admin_employeeid' => 'required',
-        // 'admin_gender' => 'required',
         'subscription' => 'required',
     ];
 
@@ -86,6 +81,7 @@ class CustomerSignup extends Component
     {
         $check = User::where('email',$this->admin_email)->first();
         if($check == null){
+            $this->validate();
             $bank = CB::create([
                 'bank_name' => $this->bank_name,
                 'bank_email' => $this->bank_email,
@@ -245,10 +241,18 @@ class CustomerSignup extends Component
 
     public function fetch_zip_code(){
         if (Str::length($this->zip_code) >= 5) {
-            $zip = Zip_code::where('zip_code',$this->zip_code)->first();
+            // $zip = Zip_code::where('zip_code',$this->zip_code)->first();
+            $zip = DB::table('tbl_zip_codes_cities')
+                ->join('states','tbl_zip_codes_cities.state','states.name')
+                ->join('cities','tbl_zip_codes_cities.city','cities.name')
+                ->where('tbl_zip_codes_cities.zip_code',$this->zip_code)
+                ->select('tbl_zip_codes_cities.*','states.id as state_id','cities.id as city_id')
+                ->first();
             if ($zip != null) {
-                $this->bank_city = Cities::where('name',$zip->city)->pluck('id')->first();
-                $this->bank_state = State::where('name',$zip->state)->pluck('id')->first();
+                // $this->bank_city = Cities::where('name',$zip->city)->pluck('id')->first();
+                // $this->bank_state = State::where('name',$zip->state)->pluck('id')->first();
+                $this->bank_city = $zip->city_id;
+                $this->bank_state = $zip->state_id;
             }
         }else{
             $this->bank_city = "";
