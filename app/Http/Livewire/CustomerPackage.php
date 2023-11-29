@@ -105,6 +105,7 @@ class CustomerPackage extends Component
 
     public function selectbanktype($id)
     {
+        $this->page = 1;
         $this->all_banks = null;
         $this->bank_state_filter = [];
         $this->bank_state_filter_name = [];
@@ -116,6 +117,7 @@ class CustomerPackage extends Component
 
     public function subscription_changed($value)
     {
+        $this->page = 1;
         $this->subscription = $value;
         $this->all_banks = null;
         $this->bank_state_filter = [];
@@ -184,6 +186,7 @@ class CustomerPackage extends Component
                 array_push($this->bank_state_filter_name, State::find($id)->name);
             }
         }
+        $this->page = 1;
         $this->all_banks = null;
         $this->selected_state_now = '';
         $this->bank_city_filter = [];
@@ -203,6 +206,7 @@ class CustomerPackage extends Component
                 array_push($this->bank_city_filter_name, Cities::find($id)->name);
             }
         }
+        $this->page = 1;
         $this->all_banks = null;
         $this->selected_city_now = '';
         $this->bank_cbsa_filter = [];
@@ -221,6 +225,7 @@ class CustomerPackage extends Component
                 array_push($this->bank_cbsa_filter_name, $cbsssa_name->cbsa_name);
             }
         }
+        $this->page = 1;
         $this->all_banks = null;
         $this->selected_city_now = '';
     }
