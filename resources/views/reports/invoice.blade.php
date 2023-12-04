@@ -164,7 +164,7 @@
         <div class="invoice_header">
             <div class="invoice_header_details">
                 <h1>BancAnalytics Corporation</h1>
-                <p>Bancanalytics.com</p>
+                <p>Intelli-rate.com</p>
                 <p>PO Box 510385</p>
                 <p>St. Louis, MO 63151</p>
             </div>
@@ -185,13 +185,16 @@
                     <td>{{ $bank->bank_name }}</td>
                 </tr>
                 <tr>
-                    <td>ATTN Accounts Payable</td>
-                </tr>
-                <tr>
-                    <td>{{ $bank->zip_code }}</td>
+                    @if ($bank->billing_address != null)
+                        <td>{{ $bank->billing_address }}</td>
+                    @endif
+                    {{-- <td>ATTN Accounts Payable</td> --}}
                 </tr>
                 <tr>
                     <td>{{ $bank->cities->name }},{{ $bank->states->name }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $bank->zip_code }}</td>
                 </tr>
             </table>
 
@@ -206,11 +209,7 @@
             <table class="client_details">
                 <tr>
                     <th>Invoice No</th>
-                    <td>{{ $reports->id }}</td>
-                </tr>
-                <tr>
-                    <th>PO Number</th>
-                    <td>510385</td>
+                    <td>IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</td>
                 </tr>
                 <tr>
                     <th>Product Type</th>
@@ -272,7 +271,7 @@
         <div class="invoice_header">
             <div class="invoice_header_details">
                 <h1>BancAnalytics Corporation</h1>
-                <p>Bancanalytics.com</p>
+                <p>Intelli-rate.com</p>
                 <p>PO Box 510385</p>
                 <p>St. Louis, MO 63151</p>
             </div>
@@ -280,11 +279,7 @@
                 <table class="client_details">
                     <tr>
                         <th>Invoice No</th>
-                        <td>{{ $reports->id }}</td>
-                    </tr>
-                    <tr>
-                        <th>PO Number</th>
-                        <td>510385</td>
+                        <td>IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</td>
                     </tr>
                     <tr>
                         <th>Product Type</th>
@@ -315,7 +310,7 @@
 
             <div class="three_divs">
                 <p>{{ $bank->bank_name }}</p>
-                <p>ATTN: Accounts Payable</p>
+                {{-- <p>ATTN: Accounts Payable</p> --}}
                 <p>{{ $bank->zip_code }}</p>
                 <p>{{ $bank->cities->name }},{{ $bank->states->name }}</p>
                 <p>Phone: {{ $bank->bank_phone_numebr }} </p>

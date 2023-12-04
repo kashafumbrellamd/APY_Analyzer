@@ -1,7 +1,7 @@
 <div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Customer Institution Users</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Add a User</h6>
         </div>
         <div class="card-body">
             @error('error')
@@ -13,7 +13,6 @@
                 <div class="container">
                     <!-- Bank's Admin Details -->
                     <div class="mt-2">
-                        <h6 class="m-0 font-weight-bold text-dark mb-2">Customer Institution User's Details</h6>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="name">First Name</label>
@@ -38,7 +37,7 @@
                                     placeholder="Enter Phone Number....">
                             </div>
                             <div class="col-md-4">
-                                <label for="name">Job Title</label>
+                                <label for="name"> Title</label>
                                 <input type="text" wire:model.lazy="designation" class="form-control mr-2"
                                     placeholder="Enter Designation....">
                             </div>
@@ -52,7 +51,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Users List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Authorized Users</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -60,10 +59,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone Number</th>
-                            <th>Job Title</th>
+                            <th>Title</th>
                             <th>Institution Name</th>
                             <th>Action</th>
                         </tr>
@@ -72,6 +72,7 @@
                         @forelse ($data as $dt)
                             <tr>
                                 <td>{{ $dt->name }}</td>
+                                <td>{{ $dt->last_name }}</td>
                                 <td>{{ $dt->email }}</td>
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->designation }}</td>

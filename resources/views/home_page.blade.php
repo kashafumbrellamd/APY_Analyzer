@@ -40,9 +40,18 @@
                         @if (Auth::check())
                             <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
                                 Dashboard</button>
+                            <button class="btn btn-danger mx-4">
+                                <a href="{{ route('logout') }}" style="text-decoration: none; !important; color:white;"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                            </button>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         @else
-                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for
-                                free</button>
+                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
                             <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -86,9 +95,9 @@
 
                                 <img src="{{ asset('assets/images/banner_land_apy.png') }}"
                                     class="d-block w-100 slider_image__" alt="...">
-                                <div class="col-md-4 card__survey_main">
+                                <div class="col-md-3 card__survey_main" style="width: 28%;">
                                     <div class="card_container">
-                                        <h3>Intelli-Rate Report by <strong>BancAnalytics</strong></h3>
+                                        <h3>Intelli-Rate by <strong>BancAnalytics</strong></h3>
                                         {{-- <h4>Request For New Survey</h4> --}}
                                         <!-- <p>Open an Elite Money Market account. Dependent on total balance and location.</p> -->
                                         {{-- <button class="btn card_register_btn" onclick="window.location.href='/Survey/form'">Request For New Survey</button> --}}
@@ -253,6 +262,9 @@
                                             </li>
                                             <li>
                                                 Custom reports are available anywhere in the nation.
+                                            </li>
+                                            <li>
+                                                Available in selected Metropolitan Areas.
                                             </li>
                                         </ul>
                                     </div>
@@ -482,9 +494,15 @@
                 <div class="container p-5">
                     <div class="row">
                         <div class="section-header text-center  pb-5">
-                            <h2 class="fw-bold fs-2 ">
-                                Choose Your Plan
-                            </h2>
+                            <button onclick='window.location.href="/signup"'
+                                style="    border: none;
+                                cursor: pointer;
+                                color: #3758d2;
+                                background-color: whitesmoke;">
+                                <h2 class="fw-bold fs-2 ">
+                                    Get Started Now
+                                </h2>
+                            </button>
                         </div>
                     </div>
                     <div class="row">
@@ -635,7 +653,7 @@
                                 <h3>Subscribe</h3>
                             </div>
                             <div class="footer-text mb-25">
-                                <p>Don’t miss out. Subscribe to our feeds. Fill out the form below.</p>
+                                <p>Don’t miss out. Subscribe to our feeds. Enter your email address below.</p>
                             </div>
                             <div class="subscribe-form">
                                 <form action="#">

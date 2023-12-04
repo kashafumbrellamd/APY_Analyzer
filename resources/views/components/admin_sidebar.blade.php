@@ -193,8 +193,8 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Reports:</h6>
-                        <a class="collapse-item" href="{{ url('/view/special/reports') }}">Special Reports</a>
-                        <a class="collapse-item" href="{{ url('/view/seperate/reports') }}">Seperate Reports</a>
+                        <a class="collapse-item" href="{{ url('/view/special/reports') }}">Current Specials</a>
+                        <a class="collapse-item" href="{{ url('/view/seperate/reports') }}">APY Rankings</a>
                         <a class="collapse-item" href="{{ url('/view/summary/reports') }}">Summary Reports</a>
                 </div>
             </div>

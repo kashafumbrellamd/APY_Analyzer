@@ -20,8 +20,18 @@
                         @if (Auth::check())
                         <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
                             Dashboard</button>
+                        <button class="btn btn-danger mx-4">
+                            <a href="{{ route('logout') }}" style="text-decoration: none; !important; color:white;"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                        </button>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
                         <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -33,7 +43,7 @@
         <div class="container-fluid">
             <div class="col-md-8  m-auto">
                 <div class="main_signUp">
-                    <h1 class="regiter_heading_main">Register Your Institution</h1>
+                    <h1 class="regiter_heading_main">Tell Us About You</h1>
                     @error('error')
                         <div class="mt-4 text-center">
                             <span class="alert alert-danger">{{$message}}</span>
@@ -43,12 +53,12 @@
                         <form wire:submit.prevent="submitForm">
                             <div class="col-md-12">
                                 <div>
-                                    <h5>Institution's Details</h5>
+                                    {{-- <h5>Institution's Details</h5> --}}
                                     <div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_name" class="form-label">Financial Institution Name</label>
+                                                    <label for="bank_name" class="form-label">Institution Name</label>
                                                     <input type="name" id="bank_name" name="bank_name"
                                                         class="form-control" aria-describedby="name" placeholder="BancAnalytics"
                                                         wire:model.lazy="bank_name" required>
@@ -74,7 +84,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="bank_website" class="form-label">Website Address</label>
+                                                    <label for="bank_website" class="form-label">Website </label>
                                                     <input type="text" id="bank_website" name="bank_website"
                                                         class="form-control" aria-describedby="website"
                                                         wire:model.lazy="bank_website" required  placeholder="Your Website">
@@ -135,13 +145,21 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="zip_code" class="form-label">Billing Address</label>
+                                                    <input type="text" id="billing_address" name="billing_address"
+                                                        class="form-control" aria-describedby="website"
+                                                        wire:model="billing_address" required  placeholder="Street / PO Box">
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
                                 </div>
                                 <hr>
                                 <div>
-                                    <h5>Institution's Admin Details</h5>
+                                    <h5>Administrator Information</h5>
                                     <div>
                                         <div class="row">
                                             <div class="col-md-4">
@@ -174,7 +192,8 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_phone" class="form-label">Contact Phone Number</label>
+                                                    <label for="admin_phone" class="form-label">Direct Phone
+                                                        Number</label>
                                                     <input type="text" id="admin_phone" name="admin_phone"
                                                         class="form-control" aria-describedby="phone" maxlength="12"
                                                         wire:model.lazy="admin_phone" required  placeholder="949-656-3133">
@@ -183,7 +202,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="admin_designation" class="form-label">Job Title</label>
+                                                    <label for="admin_designation" class="form-label"> Title</label>
                                                     <input type="text" id="admin_designation"
                                                         name="admin_designation" class="form-control"
                                                         aria-describedby="Designation" placeholder="Job Title"
@@ -448,7 +467,7 @@
                                                             <div class="col-md-12">
                                                                 <div class="mb-3 text-center">
                                                                     <button type="submit"
-                                                                        class="btn submit_btn">Submit</button>
+                                                                        class="btn submit_btn">Next</button>
                                                                 </div>
                                                             </div>
                                                         </div>

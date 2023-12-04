@@ -32,6 +32,8 @@ class CustomerSignup extends Component
     public $bank_city = '';
     public $bank_charity = null;
 
+    public $billing_address = '';
+
     public $admin_first_name = '';
     public $admin_last_name = '';
     public $admin_email = '';
@@ -61,6 +63,7 @@ class CustomerSignup extends Component
         'bank_website' => 'required',
         'bank_state' => 'required',
         'bank_city' => 'required',
+        'billing_address' => 'required',
         'admin_first_name' => 'required',
         'admin_last_name' => 'required',
         'admin_email' => 'required',
@@ -92,6 +95,7 @@ class CustomerSignup extends Component
                 'zip_code' => $this->zip_code,
                 'cbsa_code' => $this->cbsa_code,
                 'cbsa_name' => $this->cbsa_name,
+                'billing_address' => $this->billing_address,
                 'display_reports' => "custom",
             ]);
             $user = User::create([
@@ -125,6 +129,7 @@ class CustomerSignup extends Component
         $this->zip_code = '';
         $this->cbsa_code = '';
         $this->cbsa_name = '';
+        $this->billing_address = '';
         $this->admin_first_name = '';
         $this->admin_email = '';
         $this->admin_phone = '';
@@ -242,9 +247,9 @@ class CustomerSignup extends Component
         if (Str::length($this->zip_code) >= 5) {
             // $zip = Zip_code::where('zip_code',$this->zip_code)->first();
             $zip = DB::table('tbl_zip_codes_cities')
+                ->where('tbl_zip_codes_cities.zip_code',$this->zip_code)
                 ->join('states','tbl_zip_codes_cities.state','states.name')
                 ->join('cities','tbl_zip_codes_cities.city','cities.name')
-                ->where('tbl_zip_codes_cities.zip_code',$this->zip_code)
                 ->select('tbl_zip_codes_cities.*','states.id as state_id','cities.id as city_id')
                 ->first();
             if ($zip != null) {

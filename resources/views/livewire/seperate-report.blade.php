@@ -2,9 +2,10 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="d-flex font-weight-bold justify-content-between m-0 text-primary">Reports &nbsp;&nbsp; (Last Updated On: {{ $last_updated }}) updated on weekly basis
-                <span class="text-success">Green: Increase </span>
+                {{-- <span class="text-success">Green: Increase </span>
                     <span class="text-danger">Red: Decrease</span>
-                    <span class="text-dark">Black: No Change</span></h6>
+                    <span class="text-dark">Black: No Change</span> --}}
+                </h6>
 
         </div>
         <div class="card-body">
@@ -20,20 +21,21 @@
                     @endif
                 </div>
                 <div class="col-md-2">
-                    @if ($customer_type->display_reports == 'custom')
+                    {{-- @if ($customer_type->display_reports == 'custom') --}}
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="msa_code">
-                        <option value="">Select City</option>
+                        <option value="">Select Metropolitan Area</option>
                         @foreach ($msa_codes as $code)
                             <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
                         @endforeach
                     </select>
-                    @endif
+                    {{-- @endif --}}
                 </div>
 
                 <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
+                        <option value="">Select All</option>
                         <option value="">Select Institution Type</option>
                         @foreach ($bankTypes as $bt)
                             <option value="{{ $bt->id }}">{{ $bt->name }}</option>
@@ -105,7 +107,7 @@
                     <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Load Filters</button>
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
                 </div>
                 @error('filter_error')
                 <div class="mt-3 text-center">

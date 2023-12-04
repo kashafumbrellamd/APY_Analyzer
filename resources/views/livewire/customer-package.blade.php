@@ -20,9 +20,18 @@
                         @if (Auth::check())
                             <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
                                 Dashboard</button>
+                            <button class="btn btn-danger mx-4">
+                                <a href="{{ route('logout') }}" style="text-decoration: none; !important; color:white;"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                            </button>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         @else
-                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for
-                                free</button>
+                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
                             <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -372,13 +381,12 @@
                                                             </span>
                                                         @endforeach
                                                     </div>
-                                                    <label for="bank_type" class="form-label">Select Institution
-                                                        City And State</label>
+                                                    <label for="bank_type" class="form-label">Select Metropolitan Area</label>
                                                     <select class="form-select form-control mb-3 "
                                                         aria-label="Default select example"
                                                         wire:model="selected_city_now"
                                                         wire:change="selectcity($event.target.value)">
-                                                        <option value="">Select City</option>
+                                                        <option value="">Select Metropolitan Area</option>
                                                         {{-- <option value="119383">Kansas City</option> --}}
                                                         <option value="125680">Saint Louis, Missouri</option>
                                                         <option value="121746">Miami, Florida</option>
@@ -395,7 +403,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3 text-center">
                                     <button type="submit" class="btn submit_btn"
-                                        wire:click="submitForm">Submit</button>
+                                        wire:click="submitForm">Next</button>
                                 </div>
                             </div>
                         </div>

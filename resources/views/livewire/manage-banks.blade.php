@@ -100,6 +100,7 @@
                                             <label for="bank-type-id">Institution Type</label>
                                             <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
                                                 wire:model="bank_type">
+                                                <option value="">Select All</option>
                                                 <option value="">Select Institution Type</option>
                                                 @foreach ($bts as $bt)
                                                     <option value="{{ $bt->id }}">{{ $bt->name }}</option>
@@ -196,6 +197,7 @@
                                         <label for="bank-type-id">Institution Type</label>
                                         <select class="form-select form-control" id="bank-type-id" aria-label="Default select example"
                                             wire:model="bank_type">
+                                            <option value="">Select All</option>
                                             <option value="">Select Institution Type</option>
                                             @foreach ($bts as $bt)
                                                 <option value="{{ $bt->id }}">{{ $bt->name }}</option>

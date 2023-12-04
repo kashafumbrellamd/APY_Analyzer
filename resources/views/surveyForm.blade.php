@@ -38,8 +38,18 @@
                         @if (Auth::check())
                         <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
                             Dashboard</button>
+                        <button class="btn btn-danger mx-4">
+                            <a href="{{ route('logout') }}" style="text-decoration: none; !important; color:white;"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                        </button>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
                         <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -178,7 +188,7 @@
                             <h3>Subscribe</h3>
                         </div>
                         <div class="footer-text mb-25">
-                            <p>Don’t miss out. Subscribe to our feeds.  Fill out the form below.</p>
+                            <p>Don’t miss out. Subscribe to our feeds. Enter your email address below.</p>
                         </div>
                         <div class="subscribe-form">
                             <form action="#">

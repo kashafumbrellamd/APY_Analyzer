@@ -33,8 +33,18 @@
                         @if (Auth::check())
                         <button onclick="window.location.href='/home'" class="btn submit_btn">Go To
                             Dashboard</button>
+                        <button class="btn btn-danger mx-4">
+                            <a href="{{ route('logout') }}" style="text-decoration: none; !important; color:white;"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                        </button>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign up for free</button>
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
                         <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -93,13 +103,13 @@
 
                                             <div class="col-md-12">
                                                 <div class="mb-3 text-center">
-                                                    <button type="submit" class="btn submit_btn">Login</button>
+                                                    <button type="submit" class="btn submit_btn">Next</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-center mb-3">
+                                        {{-- <div class="text-center mb-3">
                                             <a href="{{ route('signup') }}"> Create Account </a>
-                                        </div>
+                                        </div> --}}
                                         <!-- <div class="text-center">
                                             <a href="{{ route('login') }}"> Go To Admin Login </a>
                                         </div> -->

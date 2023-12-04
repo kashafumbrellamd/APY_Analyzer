@@ -30,6 +30,7 @@
                 <div class="col-md-2">
                     <select class="form-select form-control" aria-label="Default select example"
                         wire:model="selected_bank_type">
+                        <option value="">Select All</option>
                         <option value="">Select Institution Type</option>
                         @foreach ($bankTypes as $bt)
                             <option value="{{ $bt->id }}">{{ $bt->name }}</option>
@@ -85,7 +86,7 @@
                     <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Load Filters</button>
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
                 </div>
                 @error('filter_error')
                 <div class="mt-3 text-center">

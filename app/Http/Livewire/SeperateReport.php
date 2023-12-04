@@ -98,8 +98,15 @@ class SeperateReport extends Component
         }
         else
         {
-            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
-            return $msa_codes;
+            $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+            if($customer_type->display_reports == 'state'){
+                $banks_city = DB::table('bank_selected_city')->where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
+                $msa_codes = Bank::with('cities')->whereIn('city_id',$banks_city)->groupBy('city_id')->get();
+                return $msa_codes;
+            }elseif($customer_type->display_reports == 'custom'){
+                $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+                return $msa_codes;
+            }
         }
 
     }
