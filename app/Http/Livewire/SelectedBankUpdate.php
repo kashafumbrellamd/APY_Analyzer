@@ -43,8 +43,11 @@ class SelectedBankUpdate extends Component
     public $custom_banks = [];
     public $selectedbanks = [];
 
+    public $selected_banks_name = [];
+
     public $current_amount = '';
     public $page = 1;
+    public $update = true;
 
     public function mount(){
         $this->addSelected();
@@ -52,21 +55,16 @@ class SelectedBankUpdate extends Component
 
     public function render()
     {
-        $states = State::where('country_id', '233')->get();
-        $data = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)
-            ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
-            ->select('custom_package_banks.id as cpb_id','banks.*')
-            ->get();
         $newData = $this->fetch_banks($this->page);
         if($this->all_banks != null){
-            if($this->all_banks != $newData){
+            if($this->update){
                 $this->all_banks = $this->all_banks->concat($newData);
+                $this->update = false;
             }
         }else{
             $this->all_banks = $newData;
+            $this->update = false;
         }
-        // $this->all_banks = $this->fetch_banks();
-        $bank_cities = Cities::get();
         $packages = Packages::get();
         $this->subscription = CustomerBank::where('id',Auth::user()->bank_id)->pluck('display_reports')->first();
         $this->selected_package = Packages::where('package_type',$this->subscription)->first();
@@ -75,7 +73,12 @@ class SelectedBankUpdate extends Component
         $available_cities = $this->getCities();
         $available_cbsa = $this->getCBSA();
         $this->current_amount = $this->calulate_current_amount();
-        return view('livewire.selected-bank-update', compact('data','packages', 'bank_types', 'bank_cities','available_states','available_cities','available_cbsa'));
+
+        $data = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)
+            ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
+            ->select('custom_package_banks.id as cpb_id','banks.*')
+            ->get();
+        return view('livewire.selected-bank-update', compact('data','packages', 'bank_types', 'available_states','available_cities','available_cbsa'));
     }
 
     public function addSelected(){
@@ -85,12 +88,15 @@ class SelectedBankUpdate extends Component
 
     public function selectbanktype($id)
     {
+        $this->page = 1;
+        $this->all_banks = null;
         $this->bank_state_filter = [];
         $this->bank_state_filter_name = [];
         $this->bank_city_filter = [];
         $this->bank_city_filter_name = [];
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
+
     }
 
     public function getStates()
@@ -157,6 +163,7 @@ class SelectedBankUpdate extends Component
         $this->bank_city_filter_name = [];
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
+        $this->page = 1;
     }
 
     public function selectcity($id)
@@ -174,6 +181,7 @@ class SelectedBankUpdate extends Component
         $this->selected_city_now = '';
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
+        $this->page = 1;
     }
 
     public function selectcbsa($id)
@@ -190,6 +198,7 @@ class SelectedBankUpdate extends Component
         }
         $this->all_banks = null;
         $this->selected_city_now = '';
+        $this->page = 1;
     }
 
     public function deleteState($item){
@@ -202,6 +211,7 @@ class SelectedBankUpdate extends Component
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
         // $this->custom_bank_select = Bank::whereIn('state_id',$this->custom_states)->get();
+        $this->page = 1;
     }
 
     public function deleteCity($item){
@@ -211,21 +221,23 @@ class SelectedBankUpdate extends Component
         $this->all_banks = null;
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
+        $this->page = 1;
     }
 
     public function deleteCbsa($item){
         $this->all_banks = null;
         unset($this->bank_cbsa_filter[$item]);
         unset($this->bank_cbsa_filter_name[$item]);
+        $this->page = 1;
     }
 
     public function fetch_banks($page)
     {
-        $query = Bank::join('states', 'banks.state_id', 'states.id')
-                    ->join('cities', 'banks.city_id', 'cities.id')
+        $query = Bank::with('states','cities')
                     ->join('bank_types', 'banks.bank_type_id', 'bank_types.id')
                     ->where('bank_types.status', 1)
-                    ->select('banks.*', 'states.name as state_name', 'cities.name as city_name');
+                    ->orderBy('banks.name')
+                    ->select('banks.*');
 
         if (!empty($this->bank_type)) {
             $query->where('banks.bank_type_id', $this->bank_type);
@@ -243,7 +255,6 @@ class SelectedBankUpdate extends Component
             $query->whereIn('banks.cbsa_code', $this->bank_cbsa_filter);
         }
         return $query->skip(($page-1)*50)->take(50)->get();
-        // return $query->paginate(10)->items();
     }
 
     public function select_all_banks()
@@ -284,8 +295,19 @@ class SelectedBankUpdate extends Component
     {
         if (in_array($id, $this->custom_banks)) {
             unset($this->custom_banks[array_search($id, $this->custom_banks)]);
+            $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+            foreach ($this->selected_banks_name as $index => $item) {
+                if ($item['name'] == $bank_name_now['name']) {
+                    $key = $index;
+                    break;
+                }
+            }
+            unset($this->selected_banks_name[$key]);
+            $this->selected_banks_name = array_values($this->selected_banks_name);
         } else {
             array_push($this->custom_banks, $id);
+            $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+            array_push($this->selected_banks_name,$bank_name_now);
         }
         foreach ($this->all_banks as $bank) {
             array_push($this->selectedbanks, $bank->id);
@@ -355,6 +377,7 @@ class SelectedBankUpdate extends Component
                         'payment_type' => "partial",
                     ]);
                     $this->addError('request','The Request Has been Successfully Submitted.');
+                    $this->clear();
 
                 }elseif(count($this->already) <= $charges->number_of_units){
                     $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
@@ -421,25 +444,6 @@ class SelectedBankUpdate extends Component
     }
 
     public function calulate_current_amount(){
-        // $charges = Packages::where('package_type', $this->subscription)->first();
-        // if(count($this->custom_banks) <= $charges->number_of_units){
-        //     $contract = Contract::create([
-        //         'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 month')),
-        //         'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
-        //         'charges' => $charges->price,
-        //         'bank_id' => Auth::user()->bank_id,
-        //     ]);
-        // }else{
-        //     $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
-        //     $contract = Contract::create([
-        //         'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 month')),
-        //         'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year')),
-        //         'charges' => $amount_charged,
-        //         'bank_id' => Auth::user()->bank_id,
-        //     ]);
-        // }
-        // $charges = Packages::where('package_type', $this->subscription)->first();
-        // 'charges' => $charges->price*count($this->bank_city_filter),
         if($this->subscription == 'custom'){
             $charges = Packages::where('package_type', $this->subscription)->first();
             if(count($this->custom_banks) <= $charges->number_of_units){
@@ -456,6 +460,25 @@ class SelectedBankUpdate extends Component
 
     public function loadMore(){
         $this->page++;
-        $this->render();
+        $this->update = true;
+    }
+
+    public function clear(){
+        $this->bank_state_filter = [];
+        $this->bank_state_filter_name = [];
+
+        $this->bank_city_filter = [];
+        $this->bank_city_filter_name = [];
+
+        $this->bank_cbsa_filter = [];
+        $this->bank_cbsa_filter_name = [];
+
+        $this->selected_state_now = '';
+        $this->selected_city_now = '';
+        $this->selected_cbsa_now = '';
+
+        $this->selectedbanks = [];
+
+        $this->selected_banks_name = [];
     }
 }

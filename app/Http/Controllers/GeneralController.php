@@ -227,8 +227,65 @@ class GeneralController extends Controller
         return response()->json(['med'=>$med,'avg'=>$avg]);
     }
 
+    public function mhlChartNonCD(){
+        $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
+        $ids = [];
+        $max = [];
+        $min = [];
+        $ids = array_column($rate_cd, 'id');
+        $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($customer_type->display_reports=='state'){
+            $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
+        }elseif ($customer_type->display_reports == 'msa') {
+            $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+        }else {
+            $data = BankPrices::get_min_max_func('all','0',"","");
+        }
+        foreach ($data as $key => $value) {
+            if(in_array($value->id,$ids)){
+                array_push($max,$value->c_max);
+                array_push($min,$value->c_min);
+            }
+        }
+        return response()->json(['max'=>$max,'min'=>$min]);
+    }
+
+    public function mamChartNonCD(){
+        $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
+        $ids = [];
+        $med = [];
+        $avg = [];
+        $ids = array_column($rate_cd, 'id');
+
+        $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($customer_type->display_reports=='state'){
+            $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
+        }elseif ($customer_type->display_reports == 'msa') {
+            $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+        }else {
+            $data = BankPrices::get_min_max_func('all','0',"","");
+        }
+
+        foreach ($data as $key => $value) {
+            if(in_array($value->id,$ids)){
+                array_push($med,$value->c_med);
+                array_push($avg,$value->c_avg);
+            }
+        }
+        return response()->json(['med'=>$med,'avg'=>$avg]);
+    }
+
     public function getLabels(){
         $rate_cd = RateType::where('name','like','%CD%')->select('name')->get()->toArray();
+        $ids = [];
+        $med = [];
+        $avg = [];
+        $ids = array_column($rate_cd, 'name');
+        return response()->json($ids);
+    }
+
+    public function getNonCDLabels(){
+        $rate_cd = RateType::where('name','not like','%CD%')->select('name')->get()->toArray();
         $ids = [];
         $med = [];
         $avg = [];

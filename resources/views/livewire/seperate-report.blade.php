@@ -243,36 +243,42 @@
                             <th></th>
                             <th style="text-align:center;">Prior</th>
                             <th style="text-align:center;">Current</th>
+                            <th style="text-align:center;">Change</th>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Highest APY</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Median</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_med'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Lowest APY</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_min'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Average</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_avg'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Mode</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_mode'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }}</td>
                         </tr>
                     </tfoot>
                     @endif

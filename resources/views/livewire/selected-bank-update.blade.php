@@ -72,8 +72,8 @@
                 </div>
             </div>
             <div class="row" wire:loading.remove>
-                <div class="col-md-6">
-                    <div class="mb-3">
+                <div>
+                    {{-- <div class="mb-3">
                         @foreach ($packages as $package)
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions"
@@ -88,25 +88,56 @@
                             </div>
                             <br>
                         @endforeach
-                    </div>
+                    </div> --}}
+
+                    <section class="show_box">
+                        <div class="container-fluid">
+                            <div class="container p-5">
+                                <div class="row">
+                                    @foreach ($packages as $package)
+                                        <div class="col-lg-6 col-md-12 mb-6">
+                                            <div class="card card_2 h-100 shadow-lg mb-3"
+                                                style="min-height: 320px;">
+                                                <div class="card-body">
+                                                    <div class="text-center p-3">
+                                                        <h5 class="card-title h3"
+                                                            style="font-weight: 600;">
+                                                            {{ $package->name }}</h5>
+                                                        <span
+                                                            class="h3">${{ $package->price }}</span>/Annually
+                                                    </div>
+                                                    <p class="card-text2"
+                                                        style="text-align: justify; margin-bottom: 0px;">
+                                                        {{ $package->description }} </p>
+                                                </div>
+                                                <div class="card-body text-center">
+                                                    <button class="btn btn-outline-primary btn-md"
+                                                        style="border-radius:10px"
+                                                        >
+                                                        Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                    </section>
                 </div>
                 <div class="col-md-6"></div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     @if ($this->current_amount != 0)
                         <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
                             ${{ number_format($this->current_amount) }}</p>
                     @endif
                 </div>
-                <div class="col-md-6"></div>
                 @if ($this->subscription == 'custom')
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="bank_type" class="form-label">Select Bank
-                                Type</label>
+                            <label for="bank_type" class="form-label">Select Institution Type</label>
                             <select class="form-control" id="bank_type" name="bank_type"
                                 aria-label="Default select example" wire:model="bank_type"
                                 wire:change="selectbanktype($event.target.value)">
-                                <option value="">All Bank Types</option>
+                                <option value="">All Institution Type</option>
                                 @foreach ($bank_types as $bank_type)
                                     <option value="{{ $bank_type->id }}">
                                         {{ $bank_type->name }}</option>
@@ -114,8 +145,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6"></div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="mb-3">
                             <div>
                                 @foreach ($bank_state_filter_name as $key => $filtered_state)
@@ -135,11 +165,10 @@
                                     </span>
                                 @endforeach
                             </div>
-                            <label for="bank_type" class="form-label">Select Bank
-                                State</label>
+                            <label for="bank_type" class="form-label">Select Institution State</label>
                             <select class="form-select form-control mb-3" aria-label="Default select example"
                                 wire:model="selected_state_now" wire:change="selectstate($event.target.value)">
-                                <option value="">Select State</option>
+                                <option value="">Select Institution State</option>
                                 @foreach ($available_states as $state)
                                     <option value="{{ $state->id }}">
                                         {{ $state->name }}</option>
@@ -148,9 +177,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6"></div>
-
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-12">
                         <div class="mb-3">
                             <div>
                                 @foreach ($bank_city_filter_name as $key => $filtered_city)
@@ -181,10 +208,8 @@
                                 <option value="all">All Data</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-6"></div>
-
-                    <div class="col-md-6">
+                    </div> --}}
+                    <div class="col-md-12">
                         <div class="mb-3">
                             <div>
                                 @foreach ($bank_cbsa_filter_name as $key => $filtered_city)
@@ -203,11 +228,10 @@
                                     </span>
                                 @endforeach
                             </div>
-                            <label for="bank_type" class="form-label">Select Bank
-                                CBSA</label>
+                            <label for="bank_type" class="form-label">Select Metropolitician Area</label>
                             <select class="form-select form-control mb-3 " aria-label="Default select example"
                                 wire:model="selected_city_now" wire:change="selectcbsa($event.target.value)">
-                                <option value="">Select CBSA</option>
+                                <option value="">Select Metropolitician Area</option>
                                 @foreach ($available_cbsa as $city)
                                     <option value="{{ $city->cbsa_code }}">
                                         {{ $city->cbsa_name }}</option>
@@ -216,8 +240,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6"></div>
-
                     <div class="col-md-6">
                         <div>
                             <div class="mb-3">
@@ -235,25 +257,6 @@
                                 </div>
                                 <div class="mt-2">
                                     <div class="bank_select_divv">
-                                        @if (count($this->custom_banks) == count($this->all_banks))
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    style="position: relative;" value="" id="defaultCheckall"
-                                                    wire:click="deselect_all_banks()" checked>
-                                                <label class="form-check-label" for="defaultCheckall">
-                                                    Deselect All <span class="state_city_span"></span>
-                                                </label>
-                                            </div>
-                                        @else
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    style="position: relative;" value="" id="defaultCheckall"
-                                                    wire:click="select_all_banks()">
-                                                <label class="form-check-label" for="defaultCheckall">
-                                                    Select All <span class="state_city_span"></span>
-                                                </label>
-                                            </div>
-                                        @endif
                                         @if (count($this->all_banks) != 0)
                                             @php $count = 0; @endphp
                                             @foreach ($this->all_banks as $bank)
@@ -267,8 +270,8 @@
                                                         <label class="form-check-label"
                                                             for="defaultCheck{{ $bank->id }}">
                                                             {{ $bank->name }} <span
-                                                                class="state_city_span">({{ $bank->state_name }},
-                                                                &nbsp;{{ $bank->city_name }})</span>
+                                                                class="state_city_span">({{ $bank->states->name }},
+                                                                &nbsp;{{ $bank->cities->name }})</span>
                                                         </label>
                                                     </div>
                                                     @php $count++; @endphp
@@ -281,8 +284,8 @@
                                                         <label class="form-check-label"
                                                             for="defaultCheck{{ $bank->id }}">
                                                             {{ $bank->name }} <span
-                                                                class="state_city_span">({{ $bank->state_name }},
-                                                                &nbsp;{{ $bank->city_name }})</span>
+                                                                class="state_city_span">({{ $bank->states->name }},
+                                                                &nbsp;{{ $bank->cities->name }})</span>
                                                         </label>
                                                     </div>
                                                 @endif
@@ -296,8 +299,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 d-flex align-items-start pt-5 justify-content-start"
+                        wire:loading.class="invisible">
+                        {{-- <div class="d-flex align-items-center justify-content-center width__100"> --}}
+                        @if (count($selected_banks_name) != 0)
+                            <ul class="width__100 order__list">
+                                @forelse ($selected_banks_name as $item)
+                                    {{-- <li class="">{{ $item['name'] }}</li> --}}
+                                    <li class=""><b>{{ $item['name'] }}</b>
+                                        ({{ $item['states']['name'] }},{{ $item['cities']['name'] }})
+                                    </li>
+                                @empty
+                                @endforelse
+                            </ul>
+                        @endif
+                        {{-- </div> --}}
+                    </div>
                 @elseif ($this->subscription == 'state')
-                    <div class="col-md-6" wire:loading.class="invisible">
+                    <div class="col-md-12" wire:loading.class="invisible">
                         <div>
                             <div>
                                 <div class="mb-3">
@@ -323,11 +342,10 @@
                                         <?php
                                             $check_city = App\Models\BankSelectedCity::where('bank_id',Auth::user()->bank_id)->pluck('city_id')->toArray();
                                         ?>
-                                    <label for="bank_type" class="form-label">Select Institution
-                                        City And State</label>
+                                    <label for="bank_type" class="form-label">Select Metropolitan Area</label>
                                     <select class="form-select form-control mb-3 " aria-label="Default select example"
                                         wire:model="selected_city_now" wire:change="selectcity($event.target.value)">
-                                        <option value="">Select City</option>
+                                        <option value="">Select Metropolitan Area</option>
                                         {{-- <option value="119383">Kansas City</option> --}}
                                         @if (!in_array('125680',$check_city))
                                             <option value="125680">Saint Louis, Missouri</option>
@@ -347,7 +365,7 @@
                 <div class="col-md-12">
                     <div class="mb-3 text-center">
                         <button type="submit"
-                            class="btn btn-primary" wire:click="submitForm">Submit</button>
+                            class="btn btn-primary" wire:click="submitForm">Next</button>
                     </div>
                 </div>
             </div>

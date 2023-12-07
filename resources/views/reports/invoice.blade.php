@@ -4,339 +4,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BancAnalytics Corporation Invoice</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+        /* .invoice {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        } */
 
-        .wax_width {
-            width: max-content;
-        }
-
-        /* header css */
-
-        .invoice_header {
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: space-between !important;
+        .header {
+            background-color: #333399;
+            color: #fff;
             padding: 20px;
-        }
-
-        .invoice_header_details>h1 {
-            font-style: italic;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-weight: 900;
-            color: rgb(55 55 155);
-        }
-
-        .invoice_header_details>p {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .invoice_date {
-            display: flex !important;
-            align-items: center !important;
-            flex-direction: column !important;
-            padding: 20px;
-        }
-
-        .invoice_date>h3 {
-            font-size: 25px;
-            padding: 5px;
-        }
-
-        /* client section css  */
-
-        .invoice_client {
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            padding: 20px;
-            width: 85%;
-            margin-left: 60px;
-            margin-bottom: 20px;
-            border: 2px solid blue;
-        }
-
-        .client_heading {
-            margin-right: 50px;
-            width: 100px;
-        }
-
-        /* service section css  */
-
-        .invoice_service {
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            padding: 20px;
-            width: 85%;
-            margin-left: 60px;
-            margin-bottom: 20px;
-            border: 2px solid blue;
-        }
-
-        .service_heading {
-            margin-right: 50px;
-            width: 100px;
-        }
-
-        th {
             text-align: left;
-            width: 150px;
-            font-size: 13px;
         }
 
+        .color_blue {
+            color: #333399;
+            font-style: italic;
+            margin: 10px 0px;
+        }
+
+        .header h1 {
+            font-style: italic;
+        }
+
+        .client-details,
+        .services,
+        .message {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
         td {
-            font-size: 13px;
+            border: 1px solid #ddd;
         }
 
-        /* message section css  */
-
-        .invoice_message {
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            padding: 20px;
-            width: 85%;
-            margin-left: 60px;
-            margin-bottom: 20px;
-            border: 2px solid blue;
-        }
-
-        .message_heading {
-            margin-right: 50px;
-            width: 100px;
-
-        }
 
         th,
         td {
-            font-size: 13px;
+            padding: 8px;
+            text-align: left;
         }
 
-        .blue_line {
-            height: 2px;
-            background-color: blue;
-            width: 90%;
-            margin-left: 60px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .first_table th {
+            width: 40%;
         }
 
-        /* single line para css para css  */
-
-        .red_para {
-            text-align: center;
+        .details_blow_text {
             color: red;
-            padding: 5px;
-        }
-
-        .blue_para {
             text-align: center;
-            color: blue;
-            font-size: 12px;
-            padding: 5px;
+            font-style: italic;
         }
 
+        .details_blow_text_blue {
+            color: blue;
+            text-align: center;
+            font-size: 12px;
+        }
 
-        /* footer section css  */
+        .border_none {
+            border: none;
+        }
 
+        .detached_blow_line {
+            width: 80%;
+            height: 2px;
+            background-color: #333399;
+            text-align: center;
+            margin: auto auto;
+        }
 
+        .margin_0 {
+            margin: 2px 0px;
+        }
 
-        .invoice_footer {
-            padding: 20px;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
+        .align_center {
+            text-align: center;
+        }
+
+        .align_right {
+            text-align: right;
+        }
+
+        .invoice_heading {
+            color: #333399;
+            text-align: center;
+            margin: 10px 0px;
+            font-size: 25px;
         }
     </style>
 </head>
 
 <body>
-    <div class="invoice_pdf">
+    <div class="invoice">
+        <div class="header">
+            <h1><u>BancAnalytics Corporation</u></h1>
+            <p class="margin_0 align_right"><strong>Date: </strong>{{ date('m-d-Y') }}</p>
+            <p class="margin_0">Intelli-rate.com</p>
+            <p class="margin_0">PO Box 510385</p>
+            <p class="margin_0">St. Louis, MO 63151 </p>
 
-        <!-- invoice header -->
-        <div class="invoice_header">
-            <div class="invoice_header_details">
-                <h1>BancAnalytics Corporation</h1>
-                <p>Intelli-rate.com</p>
-                <p>PO Box 510385</p>
-                <p>St. Louis, MO 63151</p>
-            </div>
-            <div class="invoice_date">
-                <h3>Invoice</h3>
-                <p><b>Date : </b>{{ date('m-d-Y') }}</p>
-            </div>
-        </div>
-
-        <!-- invoice client -->
-
-        <div class="invoice_client">
-            <div class="client_heading">
-                <h3 class="wax_width">Client</h3>
-            </div>
-            <table class="client_details">
-                <tr>
-                    <td>{{ $bank->bank_name }}</td>
-                </tr>
-                <tr>
-                    @if ($bank->billing_address != null)
-                        <td>{{ $bank->billing_address }}</td>
-                    @endif
-                    {{-- <td>ATTN Accounts Payable</td> --}}
-                </tr>
-                <tr>
-                    <td>{{ $bank->cities->name }},{{ $bank->states->name }}</td>
-                </tr>
-                <tr>
-                    <td>{{ $bank->zip_code }}</td>
-                </tr>
-            </table>
 
         </div>
 
-        <!-- Service client -->
+        <h3 class="invoice_heading">Invoice</h3>
 
-        <div class="invoice_service">
-            <div class="service_heading">
-                <h3 class="wax_width">Service : </h3>
-            </div>
-            <table class="client_details">
-                <tr>
-                    <th>Invoice No</th>
-                    <td>IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</td>
-                </tr>
-                <tr>
-                    <th>Product Type</th>
-                    <td>Intelli-Rate Report.</td>
-                </tr>
-                <tr>
-                    <th>Product Desc.</th>
-                    <td>Survey</td>
-                </tr>
-                <tr>
-                    <th>Order/Renewal Date</th>
-                    <td>{{ date("m-d-Y") }}</td>
-                </tr>
-                <tr>
-                    <th>Start Date</th>
-                    <td>{{ date("m-d-Y", strtotime($reports->contract_start)) }}</td>
-                </tr>
-                <tr>
-                    <th>Term(in Months)</th>
-                    @php
-                        $toDate = \Carbon\Carbon::parse($reports->contract_start);
-                        $fromDate = \Carbon\Carbon::parse($reports->contract_end);
-                    @endphp
-                    <td>{{ $fromDate->diffInMonths($toDate); }}</td>
-                </tr>
-                <tr>
-                    <th>End Date</th>
-                    <td>{{ date("m-d-Y", strtotime($reports->contract_end)) }}</td>
-                </tr>
-                <tr>
-                    <th>Price</th>
-                    <td>${{ $reports->charges }}</td>
-                </tr>
-            </table>
-
+        <div class="client-details ">
+            <h2>Client:</h2>
+            <p class="margin_0"><strong>Bank Name: </strong>{{ $bank->bank_name }}</p>
+            @if ($bank->billing_address != null)
+                <p class="margin_0"><strong>Address: </strong> {{ $bank->billing_address }}</p>
+            @endif
+            <p class="margin_0"><strong>City / State / Zip Code: </strong> {{ $bank->cities->name }}, {{ $bank->states->name }} {{ $bank->zip_code }}</p>
         </div>
 
-        <!-- invoice message -->
+        <div class="services">
+            <h2>Service:</h2>
+            <table class="first_table">
+                <tbody>
 
-        <div class="invoice_message">
-            <div class="message_heading">
-                <h3 class="wax_width">Message : </h3>
-            </div>
-            <div class="invoice_message_details">
-                <p></p>
-            </div>
-
-        </div>
-
-        <!-- invoice single line text -->
-
-        <p class="red_para">Please make checks payable to: BancAnalytics Corporation</p>
-        <p class="blue_para">(Detach bottom portion of invoice to include with payment)</p>
-
-        <div class="blue_line"></div>
-
-        <!-- invoice service details -->
-
-        <div class="invoice_header">
-            <div class="invoice_header_details">
-                <h1>BancAnalytics Corporation</h1>
-                <p>Intelli-rate.com</p>
-                <p>PO Box 510385</p>
-                <p>St. Louis, MO 63151</p>
-            </div>
-            <div class="invoice_date">
-                <table class="client_details">
                     <tr>
-                        <th>Invoice No</th>
+                        <th>Invoice No.</th>
                         <td>IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</td>
                     </tr>
+
                     <tr>
                         <th>Product Type</th>
                         <td>Intelli-Rate Report.</td>
                     </tr>
+
                     <tr>
                         <th>Product Desc.</th>
                         <td>Survey</td>
                     </tr>
+
                     <tr>
-                        <th>Terms(Mos.)</th>
+                        <th>Order/Renewal Date</th>
+                        <td>{{ date("m-d-Y") }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Start Date</th>
+                        <td>{{ date("m-d-Y", strtotime($reports->contract_start)) }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Term(in Months)</th>
+                        @php
+                            $toDate = \Carbon\Carbon::parse($reports->contract_start);
+                            $fromDate = \Carbon\Carbon::parse($reports->contract_end);
+                        @endphp
                         <td>{{ $fromDate->diffInMonths($toDate); }}</td>
                     </tr>
+
                     <tr>
-                        <th>Different Terms:</th>
-                        <td>______________________</td>
+                        <th>End Date</th>
+                        <td>{{ date("m-d-Y", strtotime($reports->contract_end)) }}</td>
                     </tr>
+
                     <tr>
-                        <th>Different Product:</th>
-                        <td>______________________</td>
+                        <th>Price</th>
+                        <td>${{ $reports->charges }}</td>
                     </tr>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
-        <!-- invoice footer -->
 
-        <div class="invoice_footer">
-
-            <div class="three_divs">
-                <p>{{ $bank->bank_name }}</p>
-                {{-- <p>ATTN: Accounts Payable</p> --}}
-                <p>{{ $bank->zip_code }}</p>
-                <p>{{ $bank->cities->name }},{{ $bank->states->name }}</p>
-                <p>Phone: {{ $bank->bank_phone_numebr }} </p>
-            </div>
-
-            <div class="three_divs">
-                <p>Please note changes here</p>
-                <p>________________________</p>
-                <p>________________________</p>
-                <p>________________________</p>
-                <p>________________________</p>
-            </div>
-
-            <div class="three_divs">
-                <table>
-                    <tr>
-                        <th>Amount Enclosed:</th>
-                        <td>______________</td>
-                    </tr>
-                    <tr>
-                        <th>Check Number::</th>
-                        <td>______________</td>
-                    </tr>
-                </table>
-            </div>
+        <div class="message ">
+            <h2>Message:</h2>
+            <p></p>
         </div>
+
+        <p class="details_blow_text">Please make checks payable to: BancAnalytics Corporation</p>
+        <p class="details_blow_text_blue">(Detach bottom portion of invoice to include with payment)
+        </p>
+
+        <p class="detached_blow_line"></p>
+
+        <div class="services">
+
+            <table>
+                <tbody>
+                    <tr>
+
+                        <td class="border_none">
+                            <h3 class="color_blue"><u>BancAnalytics Corporation</u></h3>
+                            <p class="margin_0">Intelli-rate.com</p>
+                            <p class="margin_0">PO Box 510385</p>
+                            <p class="margin_0">St. Louis, MO 63151 </p>
+                        </td>
+
+                        <td class="align_right border_none">
+                            <p><strong>Invoice No:</strong> IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</p>
+                            <p><strong>Product Type:</strong> Intelli-Rate Report.</p>
+                            <p><strong>Product Desc.</strong> Survey</p>
+                            <p><strong>Terms(Mos.)</strong> {{ $fromDate->diffInMonths($toDate); }}</p>
+                            <p><strong>Different Terms:</strong> ______________________</p>
+                            <p><strong>Different Product:</strong> ______________________</p>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="third_table border_none">
+                <tbody>
+                    <tr>
+                        <td class="border_none">
+                            <p class="margin_0">{{ $bank->bank_name }}</p>
+                            @if ($bank->billing_address != null)
+                                <p class="margin_0"> {{ $bank->billing_address }}</p>
+                            @endif
+                            <p class="margin_0">{{ $bank->cities->name }}, {{ $bank->states->name }} {{ $bank->zip_code }}</p>
+                            <p class="margin_0"><strong>Phone:</strong>{{ $bank->bank_phone_numebr }}</p>
+                        </td>
+
+                        <td class="border_none align_center">
+                            <p class="margin_0">Please note changes here</p>
+                            <p class="margin_0">____________________</p>
+                            <p class="margin_0">____________________</p>
+                            <p class="margin_0">____________________</p>
+                        </td>
+
+                        <td class="border_none align_right">
+                            <p class="margin_0"><strong>Amount Enclosed:</strong>__________</p>
+                            <p class="margin_0"><strong>Check Number:</strong>__________</p>
+
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
     </div>
 </body>
 

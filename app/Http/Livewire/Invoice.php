@@ -31,7 +31,8 @@ class Invoice extends Component
 
     public function download(){
         $reports = Contract::where('bank_id', $this->bank->id)->orderBy('id','desc')->first();
-        $this->pdf = PDF::loadView('reports.invoice', compact('reports'))->output();
+        $bank = $this->bank;
+        $this->pdf = PDF::loadView('reports.invoice', compact('reports','bank'))->output();
         return response()->streamDownload(
             fn () => print($this->pdf),
             "Invoice.pdf"

@@ -51,6 +51,7 @@ class CustomerPackage extends Component
 
     public $current_amount;
     public $page = 1;
+    public $update = true;
 
     public function mount($id)
     {
@@ -60,8 +61,9 @@ class CustomerPackage extends Component
     {
         $newData = $this->fetch_banks($this->page);
         if($this->all_banks != null){
-            if($this->all_banks != $newData){
+            if($this->update){
                 $this->all_banks = $this->all_banks->concat($newData);
+                $this->update = false;
             }
         }else{
             $this->all_banks = $newData;
@@ -361,6 +363,7 @@ class CustomerPackage extends Component
         $state = State::where('name',$this->bank_state_filter_name[$item])->first();
         unset($this->bank_state_filter[array_search($state->id,$this->bank_state_filter)]);
         unset($this->bank_state_filter_name[$item]);
+        $this->page = 1;
         $this->all_banks = null;
         $this->bank_city_filter = [];
         $this->bank_city_filter_name = [];
@@ -373,6 +376,7 @@ class CustomerPackage extends Component
         $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
         unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
         unset($this->bank_city_filter_name[$item]);
+        $this->page = 1;
         $this->all_banks = null;
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
@@ -380,6 +384,7 @@ class CustomerPackage extends Component
 
     public function deleteCbsa($item){
         $this->all_banks = null;
+        $this->page = 1;
         unset($this->bank_cbsa_filter[$item]);
         unset($this->bank_cbsa_filter_name[$item]);
     }
@@ -403,6 +408,7 @@ class CustomerPackage extends Component
 
     public function loadMore(){
         $this->page++;
+        $this->update = true;
     }
 
 }

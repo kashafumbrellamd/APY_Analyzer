@@ -217,14 +217,10 @@
                                 aria-controls="pills-home" aria-selected="true">Intelli-Rate Report by
                                 BancAnalytics</button>
                         </li>
-                        {{-- <li class="nav-item col-md-6 p-1" role="presentation">
-                            <button class="nav-link nav__item_btn disabled text-danger" id="pills-profile-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                                aria-selected="false">Coming Soon...</button>
-                        </li> --}}
+
                     </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                    <div class="tab-content row" id="pills-tabContent">
+                        <div class="tab-pane fade show active col-md-6" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab">
                             <div>
                                 <div class="our_product_sub_main">
@@ -299,186 +295,11 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                            aria-labelledby="pills-profile-tab">
-                            <div>
-                                <div class="our_product_sub_main">
-                                    <h5>More Meaningful Peer Groups :</h5>
-                                    <div class="our_product_sub_ul_main">
-                                        <ul class="first_ul">
-                                            <li>
-                                                Powerful benchmarking tool that lets you compare your bank’s condition
-                                                and performance to:
-                                                <ul class="second_ul">
-                                                    <li>A national peer group based on your bank’s asset size
-                                                        <ul class="second_ul">
-                                                            <li>Dynamic peer group that constantly changes with changes
-                                                                in your bank’s size</li>
-                                                            <li>Superior to the “bucket” concept employed by FFIEC and
-                                                                other vendors because
-                                                                differences do not “erupt” when you move from one peer
-                                                                bucket to the next</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>A custom peer group you define.
-                                                        <ul class="second_ul">
-                                                            <li>Up to 25 banks</li>
-                                                            <li>Any size, condition or location</li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>For each of the more than 130 condition and performance measures, you
-                                                can see the actual data
-                                                for each of your custom peers, rather than just the aggregate data for
-                                                the group. This allows
-                                                you to focus on the condition and operating performance of a particular
-                                                peer and compare it
-                                                directly to your results.</li>
-                                            <li>
-                                                For each condition and performance measure, your bank and each custom
-                                                peer is ranked within the
-                                                group for each period. This allows you to quickly determine where your
-                                                bank’s performance falls
-                                                within the group, and how your performance has improved or deteriorated
-                                                over time relative to
-                                                the group as a whole.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="our_product_sub_main">
-                                    <h5>More Accurate and Meaningful Averages and Operating Results :</h5>
-                                    <div class="our_product_sub_ul_main">
-                                        <ul class="first_ul">
-                                            <li>
-                                                Balance sheet averages are the average of quarter-end balances for past
-                                                5 quarters rather than
-                                                year-to-date averages. Year-to-date averages are arbitrary, subject to
-                                                effects of any
-                                                seasonality, and can cause inaccurate and unnecessary spikes in data
-                                                early in the year.
-                                            </li>
-                                            <li>
-                                                Income data is presented as total for the preceding 4 quarters rather
-                                                than year-to-date total.
-                                                Year-to-date income totals are subject to amplification of errors,
-                                                particularly earlier in the
-                                                year. For example, in FFIEC reports and reports of other vendors, if
-                                                your bank experienced an
-                                                unusually large charge-off in the first quarter, this charge-off gets
-                                                multiplied by 4 in the
-                                                first quarter, 2 in the second quarter, and 4/3 in the third quarter
-                                                when computing charge-offs
-                                                as a percentage of average loans. While many analysts and managers
-                                                understand the math behind
-                                                the ratios, the ratios are still presented inaccurately and make it
-                                                nearly impossible to compare
-                                                operating results from one period to the next.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="our_product_sub_main">
-                                    <h5>Moving Averages for Better Period-to-Period Comparisons and Trend Recognition :
-                                    </h5>
-                                    <div class="our_product_sub_ul_main">
-                                        <ul class="first_ul">
-                                            <li>
-                                                The graphs in our reports include not only current data, but also a
-                                                four-quarter moving average
-                                                (4QMA) for each measure. The 4QMA is extremely helpful in smoothing the
-                                                data and making it
-                                                easier to identify trends. The 4QMA is also beneficial to use for
-                                                budgeting purposes.
-                                            </li>
-                                            <li>
-                                                All of our efforts to smooth data, remove seasonality, and minimize the
-                                                amplification of data
-                                                anomalies, results in the most highly-useful data set for comparing your
-                                                condition and operating
-                                                results to prior periods, as well as to the condition and operating
-                                                results of your national and
-                                                custom peer groups.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="our_product_sub_main">
-                                    <h5>Objective Rating System for Condition & Performance Measures, Safety & Soundness
-                                        Categories and
-                                        Composite Condition </h5>
-                                    <div class="our_product_sub_ul_main">
-                                        <ul class="first_ul">
-                                            <li>
-                                                Our report includes objective ratings using a time series
-                                                weighted-average system, in
-                                                conjunction with trend and national peer data.
-                                            </li>
-                                            <li>
-                                                These ratings allow you to quickly measure changes in your condition and
-                                                performance, and to
-                                                quickly identify areas of strength and weakness relative to a large
-                                                national peer group.
-                                            </li>
-                                            <li>
-                                                Our rating system is an ideal management and supervision tool that
-                                                provides and independent,
-                                                third-party assessment of your bank’s condition and performance.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="our_product_sub_main">
-                                    <h5>Condition & Performance Measure Summaries :</h5>
-                                    <div class="our_product_sub_ul_main">
-                                        <ul class="first_ul">
-                                            <li>
-                                                Summary pages allow you to quickly scan more than 130 performance
-                                                measures to see changes in
-                                                ratings, changes in condition and performance relative to peer groups
-                                                from the prior period, as
-                                                well as areas of strength or weakness.
-                                            </li>
-                                            <li>
-                                                These summary pages are ideal for inclusion in Board and/or ALCO
-                                                packages.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="our_product_sub_main">
-                                    <h5>Ease of Use :</h5>
-                                    <div class="our_product_sub_ul_main">
-                                        <ul class="first_ul">
-                                            <li>
-                                                Our report is comprehensive and thorough, but easy to read and follow.
-                                            </li>
-                                            <li>
-                                                Includes commentary for inclusion in Board and/or ALCO reports. The
-                                                commentary is designed for
-                                                directors, committee members and/or managers that want a summary of the
-                                                bank’s condition and
-                                                performance without getting too deep into the wealth of information
-                                                contained in the report.
-                                            </li>
-                                            <li>
-                                                Areas of weakness or potential concern are highlighted in red to allow
-                                                users to quickly identify
-                                                areas of condition and performance that could benefit from further,
-                                                in-depth discussion with
-                                                financial managers.
-                                            </li>
-                                            <li>
-                                                Graphs include a color bar to the left that may be highlighted in yellow
-                                                or red to indicate a
-                                                measure that should be discussed further with financial managers.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+                        <div class="col-md-6">
+                        <img class="set_width mt-3" src="{{ asset('img/graph1.png') }}" alt="">
+                        <img class="set_width mt-3" src="{{ asset('img/graph2.png') }}" alt="">
+                        <img class="set_width mt-3" src="{{ asset('img/list.png') }}" alt="">
+                    </div>
                     </div>
                 </div>
             </div>

@@ -120,8 +120,11 @@ Route::get('/email',function(){
 
 Route::get('/mhlChart', [App\Http\Controllers\GeneralController::class,'mhlChart']);
 Route::get('/mamChart', [App\Http\Controllers\GeneralController::class,'mamChart']);
+Route::get('/mhlChartNonCD', [App\Http\Controllers\GeneralController::class,'mhlChartNonCD']);
+Route::get('/mamChartNonCD', [App\Http\Controllers\GeneralController::class,'mamChartNonCD']);
 
 Route::get('/getLabels', [App\Http\Controllers\GeneralController::class,'getLabels']);
+Route::get('/getNonCDLabels', [App\Http\Controllers\GeneralController::class,'getNonCDLabels']);
 
 
 Route::get('/add_packages',[App\Http\Controllers\GeneralController::class,'add_packages']);
