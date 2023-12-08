@@ -126,12 +126,12 @@
                     </section>
                 </div>
                 <div class="col-md-6"></div>
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     @if ($this->current_amount != 0)
                         <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
                             ${{ number_format($this->current_amount) }}</p>
                     @endif
-                </div>
+                </div> --}}
                 @if ($this->subscription == 'custom')
                     <div class="col-md-12">
                         <div class="mb-3">
@@ -250,6 +250,10 @@
                                         State ,
                                         City
                                     </label>
+                                    @if ($this->current_amount != 0)
+                                        <label wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
+                                            ${{ number_format($this->current_amount) }}</label>
+                                    @endif
                                     @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
                                         <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
                                     @else

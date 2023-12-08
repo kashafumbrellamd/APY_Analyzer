@@ -395,7 +395,18 @@ class SelectedBankUpdate extends Component
                         'bank_id' => $contract->bank_id,
                         'contract_type' => 'partial',
                     ]);
-                    return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+                    // return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+                    Payment::create([
+                        'bank_id' => $contract->bank_id,
+                        'cheque_number' => "null",
+                        'cheque_image' => "null",
+                        'amount' => 0,
+                        'bank_name' => "null",
+                        'status' => "0",
+                        'payment_type' => "partial",
+                    ]);
+                    $this->addError('request','The Request Has been Successfully Submitted.');
+                    $this->clear();
                 }else{
                     $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
                     $months_remain = (int)($difference/(60*60*24*30));
@@ -409,7 +420,18 @@ class SelectedBankUpdate extends Component
                         'bank_id' => $contract->bank_id,
                         'contract_type' => 'partial',
                     ]);
-                    return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+                    // return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+                    Payment::create([
+                        'bank_id' => $contract->bank_id,
+                        'cheque_number' => "null",
+                        'cheque_image' => "null",
+                        'amount' => 0,
+                        'bank_name' => "null",
+                        'status' => "0",
+                        'payment_type' => "partial",
+                    ]);
+                    $this->addError('request','The Request Has been Successfully Submitted.');
+                    $this->clear();
 
                 }
             }elseif($this->subscription == 'state'){
@@ -438,7 +460,18 @@ class SelectedBankUpdate extends Component
                         unset($this->bank_city_filter[$key]);
                     }
                 }
-                return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+                // return redirect()->route('payment',['id'=>Auth::user()->bank_id,'type'=>'partial']);
+                Payment::create([
+                    'bank_id' => Auth::user()->bank_id,
+                    'cheque_number' => "null",
+                    'cheque_image' => "null",
+                    'amount' => 0,
+                    'bank_name' => "null",
+                    'status' => "0",
+                    'payment_type' => "partial",
+                ]);
+                $this->addError('request','The Request Has been Successfully Submitted.');
+                $this->clear();
             }
         }else{
             $this->addError('payment','Please Wait for the Previous Request to be completed before Changing');
