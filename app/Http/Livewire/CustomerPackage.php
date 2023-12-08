@@ -283,6 +283,9 @@ class CustomerPackage extends Component
             array_push($this->custom_banks, $id);
             $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
             array_push($this->selected_banks_name,$bank_name_now);
+            usort($this->selected_banks_name, function($a, $b) {
+                return strcmp($a["name"], $b["name"]);
+            });
         }
         foreach ($this->all_banks as $bank) {
             array_push($this->selectedbanks, $bank->id);
@@ -349,8 +352,8 @@ class CustomerPackage extends Component
             }
             $charges = Packages::where('package_type', $this->subscription)->first();
             $contract = Contract::create([
-                'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 2 weeks')),
-                'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year + 2 weeks')),
+                'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') )),
+                'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year ')),
                 'charges' => $charges->price*count($this->bank_city_filter),
                 'bank_id' => $this->bank->id,
             ]);
@@ -409,6 +412,26 @@ class CustomerPackage extends Component
     public function loadMore(){
         $this->page++;
         $this->update = true;
+    }
+
+    public function clear(){
+        $this->bank_state_filter = [];
+        $this->bank_state_filter_name = [];
+
+        $this->bank_city_filter = [];
+        $this->bank_city_filter_name = [];
+
+        $this->bank_cbsa_filter = [];
+        $this->bank_cbsa_filter_name = [];
+
+        $this->selected_state_now = '';
+        $this->selected_city_now = '';
+        $this->selected_cbsa_now = '';
+
+        $this->selectedbanks = [];
+
+        $this->selected_banks_name = [];
+        $this->custom_banks = [];
     }
 
 }

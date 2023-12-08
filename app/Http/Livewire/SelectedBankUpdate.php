@@ -308,6 +308,9 @@ class SelectedBankUpdate extends Component
             array_push($this->custom_banks, $id);
             $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
             array_push($this->selected_banks_name,$bank_name_now);
+            usort($this->selected_banks_name, function($a, $b) {
+                return strcmp($a["name"], $b["name"]);
+            });
         }
         foreach ($this->all_banks as $bank) {
             array_push($this->selectedbanks, $bank->id);
@@ -480,5 +483,6 @@ class SelectedBankUpdate extends Component
         $this->selectedbanks = [];
 
         $this->selected_banks_name = [];
+        $this->custom_banks = [];
     }
 }

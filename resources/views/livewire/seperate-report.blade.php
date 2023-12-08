@@ -10,105 +10,194 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-2 mb-2">
-                    @if ($customer_type->display_reports == 'custom')
+                @if ($customer_type->display_reports == 'custom')
+                    <div class="col-md-2 mb-2">
                         <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)" wire:model="state_id">
                             <option value="">Select State</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
                             @endforeach
                         </select>
-                    @endif
-                </div>
-                <div class="col-md-2">
-                    {{-- @if ($customer_type->display_reports == 'custom') --}}
-                    <select class="form-select form-control" aria-label="Default select example"
-                        wire:model="msa_code">
-                        <option value="">Select Metropolitan Area</option>
-                        @foreach ($msa_codes as $code)
-                            <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
-                        @endforeach
-                    </select>
-                    {{-- @endif --}}
-                </div>
+                    </div>
+                    <div class="col-md-2">
+                        {{-- @if ($customer_type->display_reports == 'custom') --}}
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="msa_code">
+                            <option value="">Select Metropolitan Area</option>
+                            @foreach ($msa_codes as $code)
+                                <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
+                            @endforeach
+                        </select>
+                        {{-- @endif --}}
+                    </div>
 
-                <div class="col-md-2">
-                    <select class="form-select form-control" aria-label="Default select example"
-                        wire:model="selected_bank_type">
-                        <option value="">Select All</option>
-                        <option value="">Select Institution Type</option>
-                        @foreach ($bankTypes as $bt)
-                            <option value="{{ $bt->id }}">{{ $bt->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select form-control" aria-label="Default select example"
-                        wire:model="selected_bank">
-                        <option value="">Select Institution</option>
-                        @foreach ($banks as $bank)
-                            <option value="{{ $bank->id }}">{{ $bank->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <!-- <button class="btn btn-primary" style="background-color:#4e73df; color:white; float:right;" type="button">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button> -->
-                    <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
-                </div>
-                <div class="col-md-2">
-                    <div class="dropdown d-flex mb-2">
-                        <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Select Columns
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
-                            aria-labelledby="dropdownMenuButton1">
-                            @php
-                                $count = 0;
-                            @endphp
-                            @foreach ($reports as $rt)
-                            <li>
-                                <div class="form-check ml-1" style="color:white;">
-                                    @if ($columns[$rt->id] == 1)
-                                        <input class="form-check-input" type="checkbox" value="" checked
-                                            wire:click="check_column({{ $rt->id }})">
-                                        {{ $rt->name }}
-                                        @php
-                                            $count++;
-                                        @endphp
+                    <div class="col-md-2">
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="selected_bank_type">
+                            <option value="">Select All</option>
+                            <option value="">Select Institution Type</option>
+                            @foreach ($bankTypes as $bt)
+                                <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="selected_bank">
+                            <option value="">Select Institution</option>
+                            @foreach ($banks as $bank)
+                                <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <!-- <button class="btn btn-primary" style="background-color:#4e73df; color:white; float:right;" type="button">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button> -->
+                        <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="dropdown d-flex mb-2">
+                            <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Columns
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
+                                aria-labelledby="dropdownMenuButton1">
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($reports as $rt)
+                                <li>
+                                    <div class="form-check ml-1" style="color:white;">
+                                        @if ($columns[$rt->id] == 1)
+                                            <input class="form-check-input" type="checkbox" value="" checked
+                                                wire:click="check_column({{ $rt->id }})">
+                                            {{ $rt->name }}
+                                            @php
+                                                $count++;
+                                            @endphp
+                                        @else
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                wire:click="check_column({{ $rt->id }})">
+                                            {{ $rt->name }}
+                                        @endif
+                                    </div>
+                                </li>
+                                @endforeach
+                                <div class="text-center">
+                                    @if ($count == count($reports))
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAll">
+                                            Deselect All
+                                        </button>
                                     @else
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            wire:click="check_column({{ $rt->id }})">
-                                        {{ $rt->name }}
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="selectAll">
+                                            Select All
+                                        </button>
                                     @endif
                                 </div>
-                            </li>
-                            @endforeach
-                            <div class="text-center">
-                                @if ($count == count($reports))
-                                    <button class="btn mt-2"
-                                        style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAll">
-                                        Deselect All
-                                    </button>
-                                @else
-                                    <button class="btn mt-2"
-                                        style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="selectAll">
-                                        Select All
-                                    </button>
-                                @endif
-                            </div>
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
-                </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
+                    </div>
+                @endif
+                @if ($customer_type->display_reports == 'state')
+                    <div class="col-md-3">
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="msa_code">
+                            <option value="">Select Metropolitan Area</option>
+                            @foreach ($msa_codes as $code)
+                                <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="selected_bank_type">
+                            <option value="">Select All</option>
+                            <option value="">Select Institution Type</option>
+                            @foreach ($bankTypes as $bt)
+                                <option value="{{ $bt->id }}">{{ $bt->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="selected_bank">
+                            <option value="">Select Institution</option>
+                            @foreach ($banks as $bank)
+                                <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <!-- <button class="btn btn-primary" style="background-color:#4e73df; color:white; float:right;" type="button">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button> -->
+                        <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="dropdown d-flex mb-2">
+                            <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Columns
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
+                                aria-labelledby="dropdownMenuButton1">
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($reports as $rt)
+                                <li>
+                                    <div class="form-check ml-1" style="color:white;">
+                                        @if ($columns[$rt->id] == 1)
+                                            <input class="form-check-input" type="checkbox" value="" checked
+                                                wire:click="check_column({{ $rt->id }})">
+                                            {{ $rt->name }}
+                                            @php
+                                                $count++;
+                                            @endphp
+                                        @else
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                wire:click="check_column({{ $rt->id }})">
+                                            {{ $rt->name }}
+                                        @endif
+                                    </div>
+                                </li>
+                                @endforeach
+                                <div class="text-center">
+                                    @if ($count == count($reports))
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAll">
+                                            Deselect All
+                                        </button>
+                                    @else
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="selectAll">
+                                            Select All
+                                        </button>
+                                    @endif
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
+                    </div>
+                @endif
                 @error('filter_error')
                 <div class="mt-3 text-center">
                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
@@ -250,35 +339,67 @@
                             <td style="text-align:center;">Highest APY</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }}</td>
+                            @if ($results[$key]['c_max']-$results[$key]['p_max'] == "0")
+                                <td style="text-align:center;" class="text-dark">---</td>
+                            @elseif ($results[$key]['c_max']-$results[$key]['p_max'] > "0")
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }}</td>
+                            @else
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }}</td>
+                            @endif
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Median</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_med'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }}</td>
+                            @if ($results[$key]['c_med']-$results[$key]['p_med'] == "0")
+                                <td style="text-align:center;" class="text-dark">---</td>
+                            @elseif ($results[$key]['c_med']-$results[$key]['p_med'] > "0")
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }}</td>
+                            @else
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }}</td>
+                            @endif
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Lowest APY</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_min'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td>
+                            @if ($results[$key]['c_min']-$results[$key]['p_min'] == "0")
+                                <td style="text-align:center;" class="text-dark">---</td>
+                            @elseif ($results[$key]['c_min']-$results[$key]['p_min'] > "0")
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td>
+                            @else
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td>
+                            @endif
+                            {{-- <td style="text-align:center;">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td> --}}
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Average</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['p_avg'],2) }}</td>
                             <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }}</td>
+                            @if ($results[$key]['c_avg']-$results[$key]['p_avg'] == "0")
+                                <td style="text-align:center;" class="text-dark">---</td>
+                            @elseif ($results[$key]['c_avg']-$results[$key]['p_avg'] > "0")
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }}</td>
+                            @else
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }}</td>
+                            @endif
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Mode</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['p_mode'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }}</td>
+                                <td style="text-align:center;">{{ number_format($results[$key]['p_mode'],2) }}</td>
+                                <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
+
+                            @if ($results[$key]['c_mode']-$results[$key]['p_mode'] == "0")
+                                <td style="text-align:center;" class="text-dark">---</td>
+                            @elseif ($results[$key]['c_mode']-$results[$key]['p_mode'] > "0")
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }}</td>
+                            @else
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }}</td>
+                            @endif
                         </tr>
                     </tfoot>
                     @endif

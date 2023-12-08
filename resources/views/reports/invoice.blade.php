@@ -143,7 +143,7 @@
 
                     <tr>
                         <th>Product Type</th>
-                        <td>Intelli-Rate Report.</td>
+                        <td>Intelli-Rate Report</td>
                     </tr>
 
                     <tr>
@@ -177,7 +177,7 @@
 
                     <tr>
                         <th>Price</th>
-                        <td>${{ $reports->charges }}</td>
+                        <td>${{ number_format($reports->charges) }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -209,7 +209,7 @@
 
                         <td class="align_right border_none">
                             <p><strong>Invoice No:</strong> IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</p>
-                            <p><strong>Product Type:</strong> Intelli-Rate Report.</p>
+                            <p><strong>Product Type:</strong> Intelli-Rate Report</p>
                             <p><strong>Product Desc.</strong> Survey</p>
                             <p><strong>Terms(Mos.)</strong> {{ $fromDate->diffInMonths($toDate); }}</p>
                             <p><strong>Different Terms:</strong> ______________________</p>

@@ -16,29 +16,28 @@
                 @php
                     $bank = \app\Models\CustomerBank::where('id',Auth::user()->bank_id)->first();
                 @endphp
-            @if($bank->display_reports == 'custom')
                 <div class="col-md-4">
                     <label for="state">Select State</label>
                     <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_state_filter" wire:change="selectstate($event.target.value)">
                         <option value="">Select State</option>
                         @foreach ($bank_states as $state)
-                            <option value="{{ $state->id }}">{{ $state->name }}</option>
+                        <option value="{{ $state->id }}">{{ $state->name }}</option>
                         @endforeach
                         <option value="">All Data</option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label for="city"> Select City</label>
-                    <select class="form-select form-control mb-3" id="city" aria-label="Default select example" wire:model="bank_city_filter">
-                        <option value="">Select City</option>
-                        @foreach ($bank_cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
-                            {{-- <option value="{{ $city->id }}">{{ $city->name }}</option> --}}
-                        @endforeach
-                        <option value="">All Data</option>
-                    </select>
-                </div>
-            @endif
+                {{-- @if($bank->display_reports == 'custom')
+                    <div class="col-md-4">
+                        <label for="city"> Select City</label>
+                        <select class="form-select form-control mb-3" id="city" aria-label="Default select example" wire:model="bank_city_filter">
+                            <option value="">Select City</option>
+                            @foreach ($bank_cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            @endforeach
+                            <option value="">All Data</option>
+                        </select>
+                    </div>
+                @endif --}}
             </div>
             <div class="table-responsive">
 
@@ -46,7 +45,7 @@
                     <thead>
                         <tr>
                             <th>Institution Name</th>
-                            <th>Rate</th>
+                            <th>APY</th>
                             <th>Description</th>
                         </tr>
                     </thead>

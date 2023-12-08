@@ -264,10 +264,10 @@
                                                             City
                                                         </label>
                                                         @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
-                                                            <label>{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
+                                                            <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
                                                         @else
                                                             <label
-                                                                class="text-danger">{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
+                                                                class="text-danger">Numbers Selected: {{ count($this->custom_banks) }}</label>
                                                         @endif
                                                     </div>
                                                     <div class="mt-2">
@@ -352,6 +352,9 @@
                                                     </li>
                                                 @empty
                                                 @endforelse
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn btn-danger" wire:click="clear()"> Clear </button>
+                                                </div>
                                             </ul>
                                         @endif
                                         {{-- </div> --}}

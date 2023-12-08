@@ -1,52 +1,54 @@
 <div>
-    <div class="card shadow mb-4">
-        <div class="accordion" id="accordionFlushExample">
-            <div class="accordion-item">
-                <div class="card-header py-3" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-                    aria-expanded="false" aria-controls="flush-collapseOne">
-                    <div class="d-flex justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Selected Banks</h6>
-                        <i class="fa fa-chevron-down pl-2" aria-hidden="true"></i>
+    @if ($this->subscription == 'custom')\
+        <div class="card shadow mb-4">
+            <div class="accordion" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <div class="card-header py-3" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                        aria-expanded="false" aria-controls="flush-collapseOne">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Selected Banks</h6>
+                            <i class="fa fa-chevron-down pl-2" aria-hidden="true"></i>
+                        </div>
                     </div>
-                </div>
-                <div id="flush-collapseOne" class="accordion-collapse card-body collapse    "
-                    aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Institution Name</th>
-                                    <th>Institution Email</th>
-                                    <th>Institution Phone Number</th>
-                                    <th>Website</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($data as $dt)
+                    <div id="flush-collapseOne" class="accordion-collapse card-body collapse    "
+                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
                                     <tr>
-                                        <td>{{ $dt->name }}</td>
-                                        <td>{{ $dt->cp_email }}</td>
-                                        <td>{{ $dt->phone_number }}</td>
-                                        <td>{{ $dt->website }}</td>
-                                        <td>
-                                            <button type="button" class="btn"
-                                                wire:click="deleteRequest({{ $dt->cpb_id }})"><span
-                                                    class="bi bi-trash"></span></button>
-                                        </td>
+                                        <th>Institution Name</th>
+                                        <th>Institution Email</th>
+                                        <th>Institution Phone Number</th>
+                                        <th>Website</th>
+                                        <th>Action</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="9" class="text-center">No Data</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @forelse ($data as $dt)
+                                        <tr>
+                                            <td>{{ $dt->name }}</td>
+                                            <td>{{ $dt->cp_email }}</td>
+                                            <td>{{ $dt->phone_number }}</td>
+                                            <td>{{ $dt->website }}</td>
+                                            <td>
+                                                <button type="button" class="btn"
+                                                    wire:click="deleteRequest({{ $dt->cpb_id }})"><span
+                                                        class="bi bi-trash"></span></button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="9" class="text-center">No Data</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Customize My Package</h6>
@@ -249,10 +251,10 @@
                                         City
                                     </label>
                                     @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
-                                        <label>{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
+                                        <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
                                     @else
                                         <label
-                                            class="text-danger">{{ count($this->custom_banks) }}/{{ $this->selected_package->number_of_units }}</label>
+                                            class="text-danger">Numbers Selected: {{ count($this->custom_banks) }}</label>
                                     @endif
                                 </div>
                                 <div class="mt-2">
@@ -311,6 +313,9 @@
                                     </li>
                                 @empty
                                 @endforelse
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-danger" wire:click="clear()"> Clear </button>
+                                </div>
                             </ul>
                         @endif
                         {{-- </div> --}}

@@ -328,7 +328,8 @@ class BankPrices extends Model
                 if($filter->display_reports == 'custom'){
                     $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
                 }elseif($filter->display_reports == 'state'){
-                    $selected_banks = Bank::where('state_id',$filter->state)->pluck('id')->toArray();
+                    $city_ids = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
+                    $selected_banks = Bank::where('city_id',$city_ids)->pluck('id')->toArray();
                 }else{
                     $selected_banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
                 }
@@ -350,7 +351,8 @@ class BankPrices extends Model
                     ->pluck('custom_package_banks.customer_selected_bank_id')
                     ->toArray();
                 }elseif($filter->display_reports == 'state'){
-                    $selected_banks = Bank::where('state_id',$filter->state)->pluck('id')->toArray();
+                    $city_ids = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
+                    $selected_banks = Bank::where('city_id',$city_ids)->pluck('id')->toArray();
                 }else{
                     $selected_banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
                 }
