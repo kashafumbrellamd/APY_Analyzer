@@ -108,6 +108,9 @@
                     <div class="col-md-2">
                         <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
                     </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear()">Clear Filters</button>
+                    </div>
                 @endif
                 @if ($customer_type->display_reports == 'state')
                     <div class="col-md-3">
@@ -196,6 +199,9 @@
                     </div>
                     <div class="col-md-2">
                         <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear()">Clear Filters</button>
                     </div>
                 @endif
                 @error('filter_error')

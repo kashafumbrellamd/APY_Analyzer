@@ -67,6 +67,7 @@ class CustomerPackage extends Component
             }
         }else{
             $this->all_banks = $newData;
+            $this->update = false;
         }
         $packages = Packages::get();
         $this->selected_package = Packages::where('package_type',$this->subscription)->first();
@@ -232,39 +233,39 @@ class CustomerPackage extends Component
         $this->selected_city_now = '';
     }
 
-    public function select_all_banks()
-    {
-        foreach ($this->all_banks as $bank) {
-            if (!in_array($bank->id, $this->custom_banks)) {
-                array_push($this->custom_banks, $bank->id);
-            }
-            array_push($this->selectedbanks, $bank->id);
-        }
-        $All_banks = Bank::whereIn('banks.id', $this->selectedbanks)
-            ->join('states', 'banks.state_id', 'states.id')
-            ->join('cities', 'banks.city_id', 'cities.id')
-            ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-            ->get();
-        $this->all_banks = $All_banks;
-        $this->selectedbanks = [];
-    }
+    // public function select_all_banks()
+    // {
+    //     foreach ($this->all_banks as $bank) {
+    //         if (!in_array($bank->id, $this->custom_banks)) {
+    //             array_push($this->custom_banks, $bank->id);
+    //         }
+    //         array_push($this->selectedbanks, $bank->id);
+    //     }
+    //     $All_banks = Bank::whereIn('banks.id', $this->selectedbanks)
+    //         ->join('states', 'banks.state_id', 'states.id')
+    //         ->join('cities', 'banks.city_id', 'cities.id')
+    //         ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
+    //         ->get();
+    //     $this->all_banks = $All_banks;
+    //     $this->selectedbanks = [];
+    // }
 
-    public function deselect_all_banks()
-    {
-        foreach ($this->all_banks as $bank) {
-            if (in_array($bank->id, $this->custom_banks)) {
-                unset($this->custom_banks[array_search($bank->id, $this->custom_banks)]);
-            }
-            array_push($this->selectedbanks, $bank->id);
-        }
-        $All_banks = Bank::whereIn('banks.id', $this->selectedbanks)
-            ->join('states', 'banks.state_id', 'states.id')
-            ->join('cities', 'banks.city_id', 'cities.id')
-            ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-            ->get();
-        $this->all_banks = $All_banks;
-        $this->selectedbanks = [];
-    }
+    // public function deselect_all_banks()
+    // {
+    //     foreach ($this->all_banks as $bank) {
+    //         if (in_array($bank->id, $this->custom_banks)) {
+    //             unset($this->custom_banks[array_search($bank->id, $this->custom_banks)]);
+    //         }
+    //         array_push($this->selectedbanks, $bank->id);
+    //     }
+    //     $All_banks = Bank::whereIn('banks.id', $this->selectedbanks)
+    //         ->join('states', 'banks.state_id', 'states.id')
+    //         ->join('cities', 'banks.city_id', 'cities.id')
+    //         ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
+    //         ->get();
+    //     $this->all_banks = $All_banks;
+    //     $this->selectedbanks = [];
+    // }
 
     public function select_bank($id)
     {
@@ -290,13 +291,16 @@ class CustomerPackage extends Component
         foreach ($this->all_banks as $bank) {
             array_push($this->selectedbanks, $bank->id);
         }
-        $All_banks = Bank::whereIn('banks.id', $this->selectedbanks)
-            ->join('states', 'banks.state_id', 'states.id')
-            ->join('cities', 'banks.city_id', 'cities.id')
-            ->select('banks.*', 'states.name as state_name', 'cities.name as city_name')
-            ->get();
-        $this->all_banks = $All_banks;
-        $this->selectedbanks = [];
+        // $All_banks = Bank::with('states','cities')
+        //     ->whereIn('banks.id', $this->selectedbanks)
+        //     // ->join('states', 'banks.state_id', 'states.id')
+        //     // ->join('cities', 'banks.city_id', 'cities.id')
+        //     ->select('banks.*')
+        //     ->get();
+        //     if($this->update){
+        //         $this->all_banks = $All_banks;
+        //         $this->selectedbanks = [];
+        //     }
     }
 
     public function submitForm()
@@ -326,16 +330,16 @@ class CustomerPackage extends Component
             $charges = Packages::where('package_type', $this->subscription)->first();
             if(count($this->custom_banks) <= $charges->number_of_units){
                 $contract = Contract::create([
-                    'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 2 weeks')),
-                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year + 2 weeks')),
+                    'contract_start' => "null",
+                    'contract_end' => "null",
                     'charges' => $charges->price,
                     'bank_id' => $this->bank->id,
                 ]);
             }else{
                 $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
                 $contract = Contract::create([
-                    'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 2 weeks')),
-                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year + 2 weeks')),
+                    'contract_start' => "null",
+                    'contract_end' => "null",
                     'charges' => $amount_charged,
                     'bank_id' => $this->bank->id,
                 ]);

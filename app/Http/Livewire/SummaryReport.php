@@ -133,4 +133,9 @@ class SummaryReport extends Component
             $this->addError('filter_error','No Filter is saved');
         }
     }
+
+    public function clear_filer(){
+        $this->selected_bank = '';
+        $this->selected_bank_type = '';
+    }
 }

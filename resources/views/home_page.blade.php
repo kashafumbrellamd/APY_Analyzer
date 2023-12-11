@@ -340,6 +340,15 @@
                                         <p class="card-text">{{ $package->description }}</p>
                                     </div>
                                     <div class="card-body text-center">
+                                        @if ($package->package_type == 'state')
+                                            <select class="form-select form-control mb-3 ">
+                                                <option>Saint Louis, Missouri</option>
+                                                <option>Miami, Florida</option>
+                                                <option>Tampa, Florida</option>
+                                            </select>
+                                        @endif
+                                    </div>
+                                    <div class="card-body text-center">
                                         @if (Auth::check())
                                             <button class="btn btn-outline-primary btn-lg"
                                                 style="border-radius:20px" onclick='window.location.href="/home"'>Select</button>

@@ -75,23 +75,6 @@
             </div>
             <div class="row" wire:loading.remove>
                 <div>
-                    {{-- <div class="mb-3">
-                        @foreach ($packages as $package)
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                    id="inlineRadio{{ $package->id }}" value="{{ $package->package_type }}"
-                                    wire:model.lazy="subscription" disabled>
-                                <label class="form-check-label" style="margin-bottom: 12px;"
-                                    for="inlineRadio{{ $package->id }}">{{ $package->name }}
-                                </label>
-                            </div>
-                            <div class="bank_select_divv h-100">
-                                {{ $package->description }}
-                            </div>
-                            <br>
-                        @endforeach
-                    </div> --}}
-
                     <section class="show_box">
                         <div class="container-fluid">
                             <div class="container p-5">
@@ -111,6 +94,15 @@
                                                     <p class="card-text2"
                                                         style="text-align: justify; margin-bottom: 0px;">
                                                         {{ $package->description }} </p>
+                                                </div>
+                                                <div class="card-body text-center">
+                                                    @if ($package->package_type == 'state')
+                                                        <select class="form-select form-control">
+                                                            <option>Saint Louis, Missouri</option>
+                                                            <option>Miami, Florida</option>
+                                                            <option>Tampa, Florida</option>
+                                                        </select>
+                                                    @endif
                                                 </div>
                                                 <div class="card-body text-center">
                                                     <button class="btn btn-outline-primary btn-md"

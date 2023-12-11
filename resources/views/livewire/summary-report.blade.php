@@ -79,6 +79,9 @@
                 <div class="col-md-2">
                     <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
                 </div>
+                <div class="col-md-2">
+                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear_filer">Clear Filters</button>
+                </div>
                 @error('filter_error')
                 <div class="mt-3 text-center">
                     <span class="alert alert-danger" role="alert">{{ $message }}</span>

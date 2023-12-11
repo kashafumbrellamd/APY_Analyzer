@@ -124,16 +124,37 @@ class GeneralController extends Controller
 
         $contract = Contract::where('bank_id',$user->bank_id)->orderby('id','desc')->first();
         if($contract != null){
-            if($contract->contract_start >= date('Y-m-d')){
-                $code = rand(111111, 999999);
-                $otp = OTP::updateOrCreate(
-                    ['user_id' => $user->id],
-                    ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
-                );
-                Mail::to($user->email)->send(new OtpMail($otp));
-                return redirect()->route('otp_apply',['id'=>$user->id]);
-            }
-            if($contract->contract_end >= date('Y-m-d')){
+            if($contract->contract_start != "0000-00-00"){
+                if(date('Y-m-d', strtotime($contract->contract_start . ' + 4 weeks ')) > date('Y-m-d')){
+                    $code = rand(111111, 999999);
+                    $otp = OTP::updateOrCreate(
+                        ['user_id' => $user->id],
+                        ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
+                    );
+                    Mail::to($user->email)->send(new OtpMail($otp));
+                    return redirect()->route('otp_apply',['id'=>$user->id]);
+                }
+                if($contract->contract_end >= date('Y-m-d')){
+                    $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
+                    if($payment != null){
+                        if($payment->status == "1"){
+                            $code = rand(111111, 999999);
+                            $otp = OTP::updateOrCreate(
+                                ['user_id' => $user->id],
+                                ['opt' => $code, 'expiry_date' => now()->addSeconds(120)]
+                            );
+                            Mail::to($user->email)->send(new OtpMail($otp));
+                            return redirect()->route('otp_apply',['id'=>$user->id]);
+                        }else{
+                            return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+                        }
+                    }else{
+                        return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Four-Week Free Trial has ended.  Please make the payment and wait for Admin approval.  Thank you.');
+                    }
+                }else{
+                    return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
+                }
+            }else{
                 $payment = Payment::where('bank_id',$user->bank_id)->where('payment_type','complete')->orderby('id','desc')->first();
                 if($payment != null){
                     if($payment->status == "1"){
@@ -148,10 +169,8 @@ class GeneralController extends Controller
                         return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
                     }
                 }else{
-                    return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Four-Week Free Trial has ended.  Please make the payment and wait for Admin approval.  Thank you.');
+                    return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Please fill the Form below to make payment.');
                 }
-            }else{
-                return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Sorry, Your Contract has Expired. Please fill the Form below to make payment.');
             }
         }else{
             return redirect()->route('customer_package',['id'=>$user->bank_id]);

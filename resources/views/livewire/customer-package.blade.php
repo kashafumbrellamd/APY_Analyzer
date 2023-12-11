@@ -49,22 +49,6 @@
                         <div>
                             <div class="row">
                                 <div>
-                                    {{-- <div class="mb-3">
-                                        @foreach ($packages as $package)
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                                    id="inlineRadio{{ $package->id }}"
-                                                    value="{{ $package->package_type }}" wire:model.lazy="subscription" wire:change="subscription_changed">
-                                                <label class="form-check-label"
-                                                    for="inlineRadio{{ $package->id }}">{{ $package->name }}
-                                                </label>
-                                            </div>
-                                            <div class="bank_select_divv h-100">
-                                                {{ $package->description }}
-                                            </div>
-                                            <br>
-                                        @endforeach
-                                    </div> --}}
                                     <section class="show_box">
                                         <div class="container-fluid">
                                             <div class="container p-5">
@@ -80,7 +64,7 @@
                                                     @foreach ($packages as $package)
                                                         <div class="col-lg-6 col-md-12 mb-6">
                                                             <div class="card card_2 h-100 shadow-lg mb-3"
-                                                                style="min-height: 320px;">
+                                                                style="min-height: 370px;">
                                                                 <div class="card-body">
                                                                     <div class="text-center p-3">
                                                                         <h5 class="card-title h3"
@@ -92,6 +76,15 @@
                                                                     <p class="card-text2"
                                                                         style="text-align: justify; margin-bottom: 0px;">
                                                                         {{ $package->description }} </p>
+                                                                </div>
+                                                                <div class="card-body text-center">
+                                                                    @if ($package->package_type == 'state')
+                                                                        <select class="form-select form-control">
+                                                                            <option>Saint Louis, Missouri</option>
+                                                                            <option>Miami, Florida</option>
+                                                                            <option>Tampa, Florida</option>
+                                                                        </select>
+                                                                    @endif
                                                                 </div>
                                                                 <div class="card-body text-center">
                                                                     <button class="btn btn-outline-primary btn-md"
@@ -307,8 +300,8 @@
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
                                                                                 {{ $bank->name }} <span
-                                                                                    class="state_city_span">({{ $bank->state_name }},
-                                                                                    &nbsp;{{ $bank->city_name }})</span>
+                                                                                    class="state_city_span">({{ $bank->states->name }},
+                                                                                    &nbsp;{{ $bank->cities->name }})</span>
                                                                             </label>
                                                                         </div>
                                                                         @php $count++; @endphp

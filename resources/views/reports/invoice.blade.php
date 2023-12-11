@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BancAnalytics Corporation Invoice</title>
     <style>
-        /* .invoice {
+        *{
+            margin: 0;
+            padding: 0;
+        }
+         .invoice {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+            margin: 0px;
+            padding: 0px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        } */
+        }
 
         .header {
             background-color: #333399;
@@ -124,7 +128,7 @@
 
         <div class="client-details ">
             <h2>Client:</h2>
-            <p class="margin_0"><strong>Bank Name: </strong>{{ $bank->bank_name }}</p>
+            <p class="margin_0"><strong>Company Name: </strong>{{ $bank->bank_name }}</p>
             @if ($bank->billing_address != null)
                 <p class="margin_0"><strong>Address: </strong> {{ $bank->billing_address }}</p>
             @endif
@@ -158,21 +162,33 @@
 
                     <tr>
                         <th>Start Date</th>
-                        <td>{{ date("m-d-Y", strtotime($reports->contract_start)) }}</td>
+                        @if ($reports->contract_start == "0000-00-00")
+                            <td>---</td>
+                        @else
+                            <td>{{ date("m-d-Y", strtotime($reports->contract_start)) }}</td>
+                        @endif
                     </tr>
 
                     <tr>
                         <th>Term(in Months)</th>
-                        @php
-                            $toDate = \Carbon\Carbon::parse($reports->contract_start);
-                            $fromDate = \Carbon\Carbon::parse($reports->contract_end);
-                        @endphp
-                        <td>{{ $fromDate->diffInMonths($toDate); }}</td>
+                        @if ($reports->contract_start == "0000-00-00")
+                            <td>---</td>
+                        @else
+                            @php
+                                $toDate = \Carbon\Carbon::parse($reports->contract_start);
+                                $fromDate = \Carbon\Carbon::parse($reports->contract_end);
+                            @endphp
+                            <td>{{ $fromDate->diffInMonths($toDate); }}</td>
+                        @endif
                     </tr>
 
                     <tr>
                         <th>End Date</th>
-                        <td>{{ date("m-d-Y", strtotime($reports->contract_end)) }}</td>
+                        @if ($reports->contract_end == "0000-00-00")
+                            <td>---</td>
+                        @else
+                            <td>{{ date("m-d-Y", strtotime($reports->contract_end)) }}</td>
+                        @endif
                     </tr>
 
                     <tr>
@@ -186,6 +202,10 @@
         <div class="message ">
             <h2>Message:</h2>
             <p></p>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
 
         <p class="details_blow_text">Please make checks payable to: BancAnalytics Corporation</p>
@@ -211,7 +231,11 @@
                             <p><strong>Invoice No:</strong> IR-{{ str_pad($reports->id, 5, '0', STR_PAD_LEFT); }}</p>
                             <p><strong>Product Type:</strong> Intelli-Rate Report</p>
                             <p><strong>Product Desc.</strong> Survey</p>
-                            <p><strong>Terms(Mos.)</strong> {{ $fromDate->diffInMonths($toDate); }}</p>
+                            @if ($reports->contract_start == "0000-00-00")
+                                <p><strong>Terms(Mos.)</strong> ___ </p>
+                            @else
+                                <p><strong>Terms(Mos.)</strong> {{ $fromDate->diffInMonths($toDate); }}</p>
+                            @endif
                             <p><strong>Different Terms:</strong> ______________________</p>
                             <p><strong>Different Product:</strong> ______________________</p>
                         </td>
