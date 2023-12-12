@@ -129,3 +129,5 @@ Route::get('/getNonCDLabels', [App\Http\Controllers\GeneralController::class,'ge
 
 Route::get('/add_packages',[App\Http\Controllers\GeneralController::class,'add_packages']);
 Route::post('/bank_request_submit',[App\Http\Controllers\GeneralController::class,'bank_request_submit'])->name('bank_request_submit');
+
+Route::get('/flush_cache',[App\Http\Controllers\GeneralController::class,'flush_cache']);
