@@ -77,7 +77,7 @@
         <hr class="sidebar-divider">
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -91,7 +91,7 @@
                 </div>
             </div>
         </li>
-        {{-- <hr class="sidebar-divider">
+        <hr class="sidebar-divider"> --}}
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
                 aria-expanded="true" aria-controls="collapseFour">
@@ -105,7 +105,7 @@
                     <a class="collapse-item" href="{{ url('/view/customer/bank/admin') }}">Bank Admin</a>
                 </div>
             </div>
-        </li> --}}
+        </li>
         <hr class="sidebar-divider">
 
         <li class="nav-item">

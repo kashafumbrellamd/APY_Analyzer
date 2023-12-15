@@ -15,26 +15,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <span><strong>Institute Email: </strong>
-                                {{ $customerBank->bank_email }}
-                            </span>
-                        </div>
-
-                        <div class="mb-3">
                             <span><strong>Institute Phone Number: </strong>
                                 {{ $customerBank->bank_phone_numebr }}
-                            </span>
-                        </div>
-
-                        <div class="mb-3">
-                            <span><strong>Institute CBSA Code: </strong>
-                                {{ $customerBank->cbsa_code }}
-                            </span>
-                        </div>
-
-                        <div class="mb-3">
-                            <span><strong>Institute CBSA Name: </strong>
-                                {{ $customerBank->cbsa_name }}
                             </span>
                         </div>
                     </div>
@@ -46,12 +28,6 @@
                         </div>
 
                         <div class="mb-3">
-                            <span><strong>MSA CODE: </strong>
-                                {{ $customerBank->msa_code }}
-                            </span>
-                        </div>
-
-                        <div class="mb-3">
                             <span><strong>State: </strong>
                                 {{ $customerBank->states->name }}
                             </span>
@@ -59,7 +35,11 @@
 
                         <div class="mb-3">
                             <span><strong>Display Report Type: </strong>
-                                <td>{{ Str::ucfirst($customerBank->display_reports) }}</td>
+                                @if ($customerBank->display_reports == "state")
+                                    <td>Standard Metropolitan Report</td>
+                                @elseif ($customerBank->display_reports == "custom")
+                                    <td>Custom Report</td>
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -103,19 +83,27 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Bank Name</th>
-                                <th>Zip Code</th>
-                                <th>State</th>
-                                <th>City</th>
+                                @if ($customerBank->display_reports == "custom")
+                                    <th>Bank Name</th>
+                                    <th>Zip Code</th>
+                                    <th>State</th>
+                                    <th>City</th>
+                                @else
+                                    <th>Metropolitan Area</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($customerBank->selected_banks as $dt)
                                 <tr>
+                                @if ($customerBank->display_reports == "custom")
                                     <td>{{ $dt->name }}</td>
                                     <td>{{ $dt->zip_code }}</td>
                                     <td>{{ $dt->state_name }}</td>
                                     <td>{{ $dt->city_name }}</td>
+                                @else
+                                    <td>{{ $dt->city_name }}</td>
+                                @endif
                                 </tr>
                             @empty
                                 <tr>
@@ -153,7 +141,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">No Data</td>
+                                    <td colspan="6" class="text-center">No Payment yet</td>
                                 </tr>
                             @endforelse
                         </tbody>

@@ -5,10 +5,12 @@ namespace App\Http\Livewire;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 use App\Models\Stories as Story;
+use Livewire\WithPagination;
 
 class Stories extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     protected $rules = [
         'title' => 'required',
@@ -28,7 +30,7 @@ class Stories extends Component
 
     public function render()
     {
-        $data = Story::get();
+        $data = Story::paginate(10);
         return view('livewire.stories',['data'=>$data]);
     }
 

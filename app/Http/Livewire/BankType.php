@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\BankType as BT;
+use Livewire\WithPagination;
 
 class BankType extends Component
 {
+    use WithPagination;
+
     protected $rules = [
         'name'=>'required',
         'status'=>'required',
@@ -19,7 +22,7 @@ class BankType extends Component
 
     public function render()
     {
-        $data = BT::get();
+        $data = BT::paginate(10);
         return view('livewire.bank-type',['data'=>$data]);
     }
 

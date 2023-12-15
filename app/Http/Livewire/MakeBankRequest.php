@@ -8,9 +8,12 @@ use App\Models\Zip_code;
 use App\Models\BankRequest;
 use Livewire\Component;
 use Str;
+use Livewire\WithPagination;
 
 class MakeBankRequest extends Component
 {
+    use WithPagination;
+
     protected $rules = [
         'name' => 'required',
         'zip_code' => 'required',
@@ -28,7 +31,7 @@ class MakeBankRequest extends Component
     {
         $states = State::where('country_id','233')->get();
         $cities = Cities::get();
-        $data = BankRequest::with('state','cities')->get();
+        $data = BankRequest::with('state','cities')->paginate(10);
         return view('livewire.make-bank-request',['data'=>$data, 'states'=>$states, 'cities'=>$cities]);
     }
 

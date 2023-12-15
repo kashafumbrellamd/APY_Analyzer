@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Charity;
+use Livewire\WithPagination;
 
 class ManageCharity extends Component
 {
+    use WithPagination;
+
     public $charity_name = '';
     public $charity_description = '';
     public $update = false;
@@ -16,7 +19,7 @@ class ManageCharity extends Component
 
     public function render()
     {
-        $charities = Charity::all();
+        $charities = Charity::paginate(10);
         return view('livewire.manage-charity',['charities'=>$charities]);
     }
 

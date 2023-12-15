@@ -87,6 +87,7 @@
                             @enderror
                         </tbody>
                 </table>
+                {{ $charities->links('livewire::bootstrap') }}
             </div>
         </div>
     </div>

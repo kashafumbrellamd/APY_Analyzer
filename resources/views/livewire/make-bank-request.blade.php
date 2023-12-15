@@ -102,6 +102,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $data->links('livewire::bootstrap') }}
 
                 </div>
             </div>
