@@ -71,7 +71,7 @@
                                                                             style="font-weight: 600;">
                                                                             {{ $package->name }}</h5>
                                                                         <span
-                                                                            class="h3">${{ $package->price }}</span>/Annually
+                                                                            class="h3">${{ number_format($package->price) }}</span>/Annually
                                                                     </div>
                                                                     <p class="card-text2"
                                                                         style="text-align: justify; margin-bottom: 0px;">
@@ -256,12 +256,7 @@
                                                             State ,
                                                             City
                                                         </label>
-                                                        @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
-                                                            <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
-                                                        @else
-                                                            <label
-                                                                class="text-danger">Numbers Selected: {{ count($this->custom_banks) }}</label>
-                                                        @endif
+                                                        <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
                                                     </div>
                                                     <div class="mt-2">
                                                         <div class="bank_select_divv">

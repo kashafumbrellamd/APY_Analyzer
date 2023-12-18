@@ -343,68 +343,89 @@
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Highest APY</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
+                            {{-- <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
+                            <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td> --}}
                             @if ($results[$key]['c_max']-$results[$key]['p_max'] == "0")
+                                <td style="text-align:center;">{{ number_format($results[$key]['p_max'],2) }}</td>
+                                <td style="text-align:center;">{{ number_format($results[$key]['c_max'],2) }}</td>
                                 <td style="text-align:center;" class="text-dark">---</td>
                             @elseif ($results[$key]['c_max']-$results[$key]['p_max'] > "0")
-                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['p_max'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_max'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }} <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                             @else
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_max'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_max'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Median</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['p_med'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
                             @if ($results[$key]['c_med']-$results[$key]['p_med'] == "0")
+                                <td style="text-align:center;">{{ number_format($results[$key]['p_med'],2) }}</td>
+                                <td style="text-align:center;">{{ number_format($results[$key]['c_med'],2) }}</td>
                                 <td style="text-align:center;" class="text-dark">---</td>
                             @elseif ($results[$key]['c_med']-$results[$key]['p_med'] > "0")
-                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['p_med'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_med'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }} <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                             @else
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_med'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_med'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Lowest APY</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['p_min'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
                             @if ($results[$key]['c_min']-$results[$key]['p_min'] == "0")
+                                <td style="text-align:center;">{{ number_format($results[$key]['p_min'],2) }}</td>
+                                <td style="text-align:center;">{{ number_format($results[$key]['c_min'],2) }}</td>
                                 <td style="text-align:center;" class="text-dark">---</td>
                             @elseif ($results[$key]['c_min']-$results[$key]['p_min'] > "0")
-                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['p_min'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_min'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }} <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                             @else
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_min'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_min'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                             {{-- <td style="text-align:center;">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td> --}}
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Average</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['p_avg'],2) }}</td>
-                            <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
                             @if ($results[$key]['c_avg']-$results[$key]['p_avg'] == "0")
+                                <td style="text-align:center;">{{ number_format($results[$key]['p_avg'],2) }}</td>
+                                <td style="text-align:center;">{{ number_format($results[$key]['c_avg'],2) }}</td>
                                 <td style="text-align:center;" class="text-dark">---</td>
                             @elseif ($results[$key]['c_avg']-$results[$key]['p_avg'] > "0")
-                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['p_avg'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_avg'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }} <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                             @else
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_avg'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_avg'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                         <tr>
                             <td></td>
                             <td style="text-align:center;">Mode</td>
+                            @if ($results[$key]['c_mode']-$results[$key]['p_mode'] == "0")
                                 <td style="text-align:center;">{{ number_format($results[$key]['p_mode'],2) }}</td>
                                 <td style="text-align:center;">{{ number_format($results[$key]['c_mode'],2) }}</td>
-
-                            @if ($results[$key]['c_mode']-$results[$key]['p_mode'] == "0")
                                 <td style="text-align:center;" class="text-dark">---</td>
                             @elseif ($results[$key]['c_mode']-$results[$key]['p_mode'] > "0")
-                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['p_mode'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_mode'],2) }}</td>
+                                <td style="text-align:center;" class="text-success">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }} <i class="fa fa-arrow-up" aria-hidden="true"></i></td>
                             @else
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_mode'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_mode'],2) }}</td>
+                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                     </tfoot>

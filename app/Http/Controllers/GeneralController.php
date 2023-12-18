@@ -201,169 +201,177 @@ class GeneralController extends Controller
     }
 
     public function mhlChart(){
-        if(!Cache::has('MHLChart')){
-            $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
-            $ids = [];
-            $max = [];
-            $min = [];
-            $my = [];
-            $ids = array_column($rate_cd, 'id');
-            $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-            $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
-            $my_data = BankPrices::BankPricesWithType($my_bank_id);
-            if(count($my_data) != 0){
-                foreach($my_data as $md){
-                    if(in_array($md->rate_type_id,$ids)){
-                        array_push($my,$md->current_rate);
+        if(Auth::user()->user_type != "admin"){
+            if(!Cache::has('MHLChart')){
+                $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
+                $ids = [];
+                $max = [];
+                $min = [];
+                $my = [];
+                $ids = array_column($rate_cd, 'id');
+                $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+                $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
+                $my_data = BankPrices::BankPricesWithType($my_bank_id);
+                if(count($my_data) != 0){
+                    foreach($my_data as $md){
+                        if(in_array($md->rate_type_id,$ids)){
+                            array_push($my,$md->current_rate);
+                        }
                     }
                 }
-            }
-            if($customer_type->display_reports=='state'){
-                $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
-            }elseif ($customer_type->display_reports == 'msa') {
-                $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
-            }else {
-                $data = BankPrices::get_min_max_func('all','0',"","");
-            }
-            foreach ($data as $key => $value) {
-                if(in_array($value->id,$ids)){
-                    array_push($max,$value->c_max);
-                    array_push($min,$value->c_min);
+                if($customer_type->display_reports=='state'){
+                    $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
+                }elseif ($customer_type->display_reports == 'msa') {
+                    $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+                }else {
+                    $data = BankPrices::get_min_max_func('all','0',"","");
                 }
+                foreach ($data as $key => $value) {
+                    if(in_array($value->id,$ids)){
+                        array_push($max,$value->c_max);
+                        array_push($min,$value->c_min);
+                    }
+                }
+                Cache::put('MHLChart', ['max'=>$max,'min'=>$min,'my'=>$my], now()->addMinutes(30));
+            }else{
+                $data = Cache::get('MHLChart');
+                $max = $data['max'];
+                $min = $data['min'];
+                $my = $data['my'];
             }
-            Cache::put('MHLChart', ['max'=>$max,'min'=>$min,'my'=>$my], now()->addMinutes(30));
-        }else{
-            $data = Cache::get('MHLChart');
-            $max = $data['max'];
-            $min = $data['min'];
-            $my = $data['my'];
+            return response()->json(['max'=>$max,'min'=>$min,'my'=>$my]);
         }
-        return response()->json(['max'=>$max,'min'=>$min,'my'=>$my]);
     }
 
     public function mamChart(){
-        if(!Cache::has('MAMChart')){
-            $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
-            $ids = [];
-            $med = [];
-            $avg = [];
-            $my = [];
-            $ids = array_column($rate_cd, 'id');
-            $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-            $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
-            $my_data = BankPrices::BankPricesWithType($my_bank_id);
-            if(count($my_data) != 0){
-                foreach($my_data as $md){
-                    if(in_array($md->rate_type_id,$ids)){
-                        array_push($my,$md->current_rate);
+        if(Auth::user()->user_type != "admin"){
+            if(!Cache::has('MAMChart')){
+                $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
+                $ids = [];
+                $med = [];
+                $avg = [];
+                $my = [];
+                $ids = array_column($rate_cd, 'id');
+                $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+                $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
+                $my_data = BankPrices::BankPricesWithType($my_bank_id);
+                if(count($my_data) != 0){
+                    foreach($my_data as $md){
+                        if(in_array($md->rate_type_id,$ids)){
+                            array_push($my,$md->current_rate);
+                        }
                     }
                 }
-            }
-            if($customer_type->display_reports=='state'){
-                $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
-            }elseif ($customer_type->display_reports == 'msa') {
-                $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
-            }else {
-                $data = BankPrices::get_min_max_func('all','0',"","");
-            }
-
-            foreach ($data as $key => $value) {
-                if(in_array($value->id,$ids)){
-                    array_push($med,$value->c_med);
-                    array_push($avg,$value->c_avg);
+                if($customer_type->display_reports=='state'){
+                    $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
+                }elseif ($customer_type->display_reports == 'msa') {
+                    $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+                }else {
+                    $data = BankPrices::get_min_max_func('all','0',"","");
                 }
+
+                foreach ($data as $key => $value) {
+                    if(in_array($value->id,$ids)){
+                        array_push($med,$value->c_med);
+                        array_push($avg,$value->c_avg);
+                    }
+                }
+                Cache::put('MAMChart', ['med'=>$med,'avg'=>$avg,'my'=>$my], now()->addMinutes(30));
+            }else{
+                $data = Cache::get('MAMChart');
+                $med = $data['med'];
+                $avg = $data['avg'];
+                $my = $data['my'];
             }
-            Cache::put('MAMChart', ['med'=>$med,'avg'=>$avg,'my'=>$my], now()->addMinutes(30));
-        }else{
-            $data = Cache::get('MAMChart');
-            $med = $data['med'];
-            $avg = $data['avg'];
-            $my = $data['my'];
+            return response()->json(['med'=>$med,'avg'=>$avg,'my'=>$my]);
         }
-        return response()->json(['med'=>$med,'avg'=>$avg,'my'=>$my]);
     }
 
     public function mhlChartNonCD(){
-        if(!Cache::has('NonCDMHLChart')){
-            $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
-            $ids = [];
-            $max = [];
-            $min = [];
-            $my = [];
-            $ids = array_column($rate_cd, 'id');
-            $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-            $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
-            $my_data = BankPrices::BankPricesWithType($my_bank_id);
-            if(count($my_data) != 0){
-                foreach($my_data as $md){
-                    if(in_array($md->rate_type_id,$ids)){
-                        array_push($my,$md->current_rate);
+        if(Auth::user()->user_type != "admin"){
+            if(!Cache::has('NonCDMHLChart')){
+                $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
+                $ids = [];
+                $max = [];
+                $min = [];
+                $my = [];
+                $ids = array_column($rate_cd, 'id');
+                $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+                $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
+                $my_data = BankPrices::BankPricesWithType($my_bank_id);
+                if(count($my_data) != 0){
+                    foreach($my_data as $md){
+                        if(in_array($md->rate_type_id,$ids)){
+                            array_push($my,$md->current_rate);
+                        }
                     }
                 }
-            }
-            if($customer_type->display_reports=='state'){
-                $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
-            }elseif ($customer_type->display_reports == 'msa') {
-                $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
-            }else {
-                $data = BankPrices::get_min_max_func('all','0',"","");
-            }
-            foreach ($data as $key => $value) {
-                if(in_array($value->id,$ids)){
-                    array_push($max,$value->c_max);
-                    array_push($min,$value->c_min);
+                if($customer_type->display_reports=='state'){
+                    $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
+                }elseif ($customer_type->display_reports == 'msa') {
+                    $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+                }else {
+                    $data = BankPrices::get_min_max_func('all','0',"","");
                 }
+                foreach ($data as $key => $value) {
+                    if(in_array($value->id,$ids)){
+                        array_push($max,$value->c_max);
+                        array_push($min,$value->c_min);
+                    }
+                }
+                Cache::put('NonCDMHLChart', ['max'=>$max,'min'=>$min,'my'=>$my], now()->addMinutes(30));
+            }else{
+                $data = Cache::get('NonCDMHLChart');
+                $max = $data['max'];
+                $min = $data['min'];
+                $my = $data['my'];
             }
-            Cache::put('NonCDMHLChart', ['max'=>$max,'min'=>$min,'my'=>$my], now()->addMinutes(30));
-        }else{
-            $data = Cache::get('NonCDMHLChart');
-            $max = $data['max'];
-            $min = $data['min'];
-            $my = $data['my'];
+            return response()->json(['max'=>$max,'min'=>$min,'my'=>$my]);
         }
-        return response()->json(['max'=>$max,'min'=>$min,'my'=>$my]);
     }
 
     public function mamChartNonCD(){
-        if(!Cache::has('NonCDMAMChart')){
-            $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
-            $ids = [];
-            $med = [];
-            $avg = [];
-            $my = [];
-            $ids = array_column($rate_cd, 'id');
-            $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-            $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
-            $my_data = BankPrices::BankPricesWithType($my_bank_id);
-            if(count($my_data) != 0){
-                foreach($my_data as $md){
-                    if(in_array($md->rate_type_id,$ids)){
-                        array_push($my,$md->current_rate);
+        if(Auth::user()->user_type != "admin"){
+            if(!Cache::has('NonCDMAMChart')){
+                $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
+                $ids = [];
+                $med = [];
+                $avg = [];
+                $my = [];
+                $ids = array_column($rate_cd, 'id');
+                $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+                $my_bank_id = Bank::where('banks.name','like',$customer_type->bank_name)->pluck('id')->first();
+                $my_data = BankPrices::BankPricesWithType($my_bank_id);
+                if(count($my_data) != 0){
+                    foreach($my_data as $md){
+                        if(in_array($md->rate_type_id,$ids)){
+                            array_push($my,$md->current_rate);
+                        }
                     }
                 }
-            }
-            if($customer_type->display_reports=='state'){
-                $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
-            }elseif ($customer_type->display_reports == 'msa') {
-                $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
-            }else {
-                $data = BankPrices::get_min_max_func('all','0',"","");
-            }
-
-            foreach ($data as $key => $value) {
-                if(in_array($value->id,$ids)){
-                    array_push($med,$value->c_med);
-                    array_push($avg,$value->c_avg);
+                if($customer_type->display_reports=='state'){
+                    $data = BankPrices::get_min_max_func('state',$customer_type->state,"","");
+                }elseif ($customer_type->display_reports == 'msa') {
+                    $data = BankPrices::get_min_max_func('msa',$customer_type->msa,"");
+                }else {
+                    $data = BankPrices::get_min_max_func('all','0',"","");
                 }
+
+                foreach ($data as $key => $value) {
+                    if(in_array($value->id,$ids)){
+                        array_push($med,$value->c_med);
+                        array_push($avg,$value->c_avg);
+                    }
+                }
+                Cache::put('NonCDMAMChart', ['med'=>$med,'avg'=>$avg,'my'=>$my], now()->addMinutes(30));
+            }else{
+                $data = Cache::get('NonCDMAMChart');
+                $med = $data['med'];
+                $avg = $data['avg'];
+                $my = $data['my'];
             }
-            Cache::put('NonCDMAMChart', ['med'=>$med,'avg'=>$avg,'my'=>$my], now()->addMinutes(30));
-        }else{
-            $data = Cache::get('NonCDMAMChart');
-            $med = $data['med'];
-            $avg = $data['avg'];
-            $my = $data['my'];
+            return response()->json(['med'=>$med,'avg'=>$avg,'my'=>$my]);
         }
-        return response()->json(['med'=>$med,'avg'=>$avg,'my'=>$my]);
     }
 
     public function getLabels(){
