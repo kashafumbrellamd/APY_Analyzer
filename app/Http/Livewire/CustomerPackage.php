@@ -53,6 +53,8 @@ class CustomerPackage extends Component
     public $page = 1;
     public $update = true;
 
+    public $selectedItems = [];
+
     public function mount($id)
     {
         $this->bank = CustomerBank::findOrFail($id);
@@ -129,6 +131,7 @@ class CustomerPackage extends Component
         $this->bank_city_filter_name = [];
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
+        $this->resetErrorBag();
     }
 
     public function getStates()
@@ -303,67 +306,104 @@ class CustomerPackage extends Component
         //     }
     }
 
+    public function save_banks(){
+        // dd($this->selectedItems);
+        $this->custom_banks = [];
+        $this->selected_banks_name = [];
+        foreach($this->selectedItems as $id){
+            if (in_array($id, $this->custom_banks)) {
+                unset($this->custom_banks[array_search($id, $this->custom_banks)]);
+                $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+                foreach ($this->selected_banks_name as $index => $item) {
+                    if ($item['name'] == $bank_name_now['name']) {
+                        $key = $index;
+                        break;
+                    }
+                }
+                unset($this->selected_banks_name[$key]);
+                $this->selected_banks_name = array_values($this->selected_banks_name);
+            } else {
+                array_push($this->custom_banks, $id);
+                $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+                array_push($this->selected_banks_name,$bank_name_now);
+                usort($this->selected_banks_name, function($a, $b) {
+                    return strcmp($a["name"], $b["name"]);
+                });
+            }
+            foreach ($this->all_banks as $bank) {
+                array_push($this->selectedbanks, $bank->id);
+            }
+        }
+    }
+
     public function submitForm()
     {
-
-        if ($this->subscription == 'custom') {
-            foreach ($this->custom_banks as $key => $custom_bank) {
-                $check = Bank::find($custom_bank);
-                if($check->surveyed == "0"){
-                    $user = User::where('bank_id',$this->bank->id)->first();
-                    BankRequest::create([
-                        'name' => $check->name,
-                        'zip_code' => "null",
-                        'state_id' => $check->state_id,
-                        'city_id' => $check->city_id,
-                        'description' => null,
-                        'user_id' => $user->id,
-                        'email' => null,
-                        'phone_number' => null,
+        if($this->subscription != ""){
+            if ($this->subscription == 'custom') {
+                if(count($this->custom_banks) != 0){
+                    foreach ($this->custom_banks as $key => $custom_bank) {
+                        $check = Bank::find($custom_bank);
+                        if($check->surveyed == "0"){
+                            $user = User::where('bank_id',$this->bank->id)->first();
+                            BankRequest::create([
+                                'name' => $check->name,
+                                'zip_code' => "null",
+                                'state_id' => $check->state_id,
+                                'city_id' => $check->city_id,
+                                'description' => null,
+                                'user_id' => $user->id,
+                                'email' => null,
+                                'phone_number' => null,
+                            ]);
+                        }
+                        $custom_selected_banks = CustomPackageBanks::create([
+                            'bank_id' => $this->bank->id,
+                            'customer_selected_bank_id' => $custom_bank,
+                        ]);
+                    }
+                    $charges = Packages::where('package_type', $this->subscription)->first();
+                    if(count($this->custom_banks) <= $charges->number_of_units){
+                        $contract = Contract::create([
+                            'contract_start' => "null",
+                            'contract_end' => "null",
+                            'charges' => $charges->price,
+                            'bank_id' => $this->bank->id,
+                        ]);
+                    }else{
+                        $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
+                        $contract = Contract::create([
+                            'contract_start' => "null",
+                            'contract_end' => "null",
+                            'charges' => $amount_charged,
+                            'bank_id' => $this->bank->id,
+                        ]);
+                    }
+                }else{
+                    $this->addError('notselected', 'Please Select Banks.');
+                    return false;
+                }
+            }elseif($this->subscription == 'state'){
+                $bank = CustomerBank::find($this->bank->id);
+                $bank->display_reports = $this->subscription;
+                $bank->save();
+                foreach ($this->bank_city_filter as $key => $city) {
+                    BankSelectedCity::create([
+                        'bank_id' => $this->bank->id,
+                        'city_id' => $city,
                     ]);
                 }
-                $custom_selected_banks = CustomPackageBanks::create([
-                    'bank_id' => $this->bank->id,
-                    'customer_selected_bank_id' => $custom_bank,
-                ]);
-            }
-            $charges = Packages::where('package_type', $this->subscription)->first();
-            if(count($this->custom_banks) <= $charges->number_of_units){
+                $charges = Packages::where('package_type', $this->subscription)->first();
                 $contract = Contract::create([
-                    'contract_start' => "null",
-                    'contract_end' => "null",
-                    'charges' => $charges->price,
-                    'bank_id' => $this->bank->id,
-                ]);
-            }else{
-                $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
-                $contract = Contract::create([
-                    'contract_start' => "null",
-                    'contract_end' => "null",
-                    'charges' => $amount_charged,
+                    'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') )),
+                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year ')),
+                    'charges' => $charges->price*count($this->bank_city_filter),
                     'bank_id' => $this->bank->id,
                 ]);
             }
-        }elseif($this->subscription == 'state'){
-            $bank = CustomerBank::find($this->bank->id);
-            $bank->display_reports = $this->subscription;
-            $bank->save();
-            foreach ($this->bank_city_filter as $key => $city) {
-                BankSelectedCity::create([
-                    'bank_id' => $this->bank->id,
-                    'city_id' => $city,
-                ]);
-            }
-            $charges = Packages::where('package_type', $this->subscription)->first();
-            $contract = Contract::create([
-                'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') )),
-                'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year ')),
-                'charges' => $charges->price*count($this->bank_city_filter),
-                'bank_id' => $this->bank->id,
-            ]);
+            return redirect()->route('invoice',['id'=>$this->bank->id, 'type'=>'complete']);
+        }else{
+            $this->addError('subscription','Please Select a Subscription to proced.');
         }
-
-        return redirect()->route('invoice',['id'=>$this->bank->id, 'type'=>'complete']);
     }
 
     public function deleteState($item){
@@ -436,6 +476,8 @@ class CustomerPackage extends Component
 
         $this->selected_banks_name = [];
         $this->custom_banks = [];
+        $this->selectedItems = [];
+
     }
 
 }

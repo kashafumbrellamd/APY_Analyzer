@@ -11,5 +11,6 @@ class RateType extends Model
 
     protected $fillable = [
         'name',
+        'display_order',
     ];
 }

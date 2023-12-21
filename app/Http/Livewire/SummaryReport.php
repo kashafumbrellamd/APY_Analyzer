@@ -19,12 +19,17 @@ class SummaryReport extends Component
     public $columns = [];
     public $last_updated = '';
     public $selected_bank = '';
-    public $selected_bank_type = '';
+    public $selected_bank_type = [];
     public $my_bank_id = '';
 
     public function render()
     {
-        $rt = RateType::orderby('id','ASC')->get();
+        $rt = RateType::orderby('display_order')->get();
+        $bankTypes = BankType::where('status','1')->get();
+        if($this->selected_bank_type == [])
+        {
+            $this->fill_type($bankTypes);
+        }
         foreach ($rt as $key => $value) {
             $data = BankPrices::summary_report($value->id,$this->selected_bank_type);
             $value->data = $data;
@@ -34,9 +39,7 @@ class SummaryReport extends Component
         {
             $this->fill($rt);
         }
-
         $customer_bank = CustomerBank::where('id',auth()->user()->bank_id)->first();
-        $bankTypes = BankType::where('status','1')->get();
         $this->my_bank_id = Bank::where('name','like','%'.$customer_bank->bank_name.'%')->pluck('id')->first();
         if($customer_bank->display_reports == "custom"){
             $banks = CustomPackageBanks::where('bank_id',auth()->user()->bank_id)
@@ -49,7 +52,7 @@ class SummaryReport extends Component
         }else{
             $banks = Bank::get();
         }
-        return view('livewire.summary-report',['rate_type'=>$rt,'banks'=>$banks,'bankTypes'=>$bankTypes]);
+        return view('livewire.summary-report',['rate_type'=>$rt,'banks'=>$banks,'bankTypes'=>$bankTypes,'customer_bank'=>$customer_bank]);
     }
 
     public function fill($data)
@@ -137,5 +140,20 @@ class SummaryReport extends Component
     public function clear_filer(){
         $this->selected_bank = '';
         $this->selected_bank_type = '';
+    }
+
+    public function fill_type($data)
+    {
+        foreach ($data as $key => $dt) {
+            array_push($this->selected_bank_type,$dt->id);
+        }
+    }
+
+    public function deselectAllInstituteType(){
+        $this->selected_bank_type = [""];
+    }
+
+    public function selectAllInstituteType(){
+        $this->selected_bank_type = [];
     }
 }

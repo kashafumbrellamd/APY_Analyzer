@@ -108,12 +108,16 @@
                                         <span class="text-danger">Loading...</span>
                                     </div>
                                 </div>
+                                @error('subscription')
+                                    <div class="mb-5 text-center" wire:loading.class="invisible">
+                                        <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                                    </div>
+                                @enderror
                                 @if ($this->current_amount != 0)
                                     <p wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
                                         ${{ number_format($this->current_amount) }}</p>
                                 @endif
                                 @if ($this->subscription == 'custom')
-
                                     <div class="col-md-7" style="width: 100% !important" wire:loading.class="invisible">
                                         <div>
                                             <div>
@@ -243,9 +247,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                     <div class="col-md-6" wire:loading.class="invisible">
                                         <div>
                                             <div>
@@ -288,9 +289,10 @@
                                                                     @if (in_array($bank->id, $this->custom_banks))
                                                                         <div class="form-check">
                                                                             <input class="form-check-input"
-                                                                                type="checkbox" value=""
+                                                                                type="checkbox" value="{{ $bank->id }}"
                                                                                 id="defaultCheck{{ $bank->id }}"
-                                                                                wire:click="select_bank({{ $bank->id }})"
+                                                                                wire:model.defer="selectedItems"
+                                                                                {{-- wire:click="select_bank({{ $bank->id }})" --}}
                                                                                 checked>
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
@@ -303,9 +305,11 @@
                                                                     @else
                                                                         <div class="form-check">
                                                                             <input class="form-check-input"
-                                                                                type="checkbox" value=""
+                                                                                type="checkbox" value="{{ $bank->id }}"
                                                                                 id="defaultCheck{{ $bank->id }}"
-                                                                                wire:click="select_bank({{ $bank->id }})">
+                                                                                wire:model.defer="selectedItems"
+                                                                                {{-- wire:click="select_bank({{ $bank->id }})" --}}
+                                                                                >
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
                                                                                 {{ $bank->name }} <span
@@ -319,6 +323,9 @@
                                                             <a wire:click="loadMore"
                                                                 style="cursor:pointer; display: block; text-align: center;"
                                                                 class="">Load More</a>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center m-2">
+                                                            <button class="btn btn-primary" wire:click="save_banks">Save</button>
                                                         </div>
                                                         {{-- <div class="text-center text-primary">
                                                         </div> --}}
@@ -340,13 +347,18 @@
                                                     </li>
                                                 @empty
                                                 @endforelse
-                                                <div class="d-flex justify-content-end">
+                                                <div class="d-flex justify-content-center m-2">
                                                     <button class="btn btn-danger" wire:click="clear()"> Clear </button>
                                                 </div>
                                             </ul>
                                         @endif
                                         {{-- </div> --}}
                                     </div>
+                                    @error('notselected')
+                                        <div class="mb-5 text-center" wire:loading.class="invisible">
+                                            <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                                        </div>
+                                    @enderror
                                 @elseif ($this->subscription == 'state')
                                     <div class="col-md-12" wire:loading.class="invisible">
                                         <div>

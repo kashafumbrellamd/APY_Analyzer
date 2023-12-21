@@ -49,6 +49,8 @@ class SelectedBankUpdate extends Component
     public $page = 1;
     public $update = true;
 
+    public $selectedItems = [];
+
     public function mount(){
         $this->addSelected();
     }
@@ -339,6 +341,35 @@ class SelectedBankUpdate extends Component
         $this->addError('request','The Delete Request Has been Successfully Submitted.');
     }
 
+    public function save_banks(){
+        // dd($this->selectedItems);
+        $this->selected_banks_name = [];
+        foreach($this->selectedItems as $id){
+            if (in_array($id, $this->custom_banks)) {
+                unset($this->custom_banks[array_search($id, $this->custom_banks)]);
+                $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+                foreach ($this->selected_banks_name as $index => $item) {
+                    if ($item['name'] == $bank_name_now['name']) {
+                        $key = $index;
+                        break;
+                    }
+                }
+                unset($this->selected_banks_name[$key]);
+                $this->selected_banks_name = array_values($this->selected_banks_name);
+            } else {
+                array_push($this->custom_banks, $id);
+                $bank_name_now = Bank::with('states','cities')->where('id',$id)->first()->toArray();
+                array_push($this->selected_banks_name,$bank_name_now);
+                usort($this->selected_banks_name, function($a, $b) {
+                    return strcmp($a["name"], $b["name"]);
+                });
+            }
+            foreach ($this->all_banks as $bank) {
+                array_push($this->selectedbanks, $bank->id);
+            }
+        }
+    }
+
     public function submitForm()
     {
         $payment = Payment::where('bank_id',Auth::user()->bank_id)->where('status','0')->first();
@@ -516,6 +547,14 @@ class SelectedBankUpdate extends Component
         $this->selectedbanks = [];
 
         $this->selected_banks_name = [];
-        $this->custom_banks = [];
+        foreach($this->selectedItems as $id){
+            if (($key = array_search($id, $this->custom_banks)) !== false) {
+                unset($this->custom_banks[$key]);
+            }
+        }
+        $this->selectedItems = [];
+        $this->custom_banks = array_values($this->custom_banks);
+        // dd($this->custom_banks,$this->selectedItems);
+        // $this->custom_banks = [];
     }
 }

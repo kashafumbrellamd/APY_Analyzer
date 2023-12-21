@@ -7,91 +7,126 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-3 mb-2">
-                    <select class="form-select form-control" aria-label="Default select example"
-                        wire:model="selected_bank">
-                        <option value="">Select Institution</option>
-                        @foreach ($banks as $bank)
-                            <option value="{{ $bank->id }}">{{ $bank->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select class="form-select form-control" aria-label="Default select example"
-                        wire:model="selected_bank_type">
-                        <option value="">Select All</option>
-                        <option value="">Select Institution Type</option>
-                        @foreach ($bankTypes as $bankType)
-                            <option value="{{ $bankType->id }}">{{ $bankType->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <div class="dropdown d-flex mb-2" style="float:right;">
-                        <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;"
-                            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Select Columns
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
-                            aria-labelledby="dropdownMenuButton1">
-                            @php
-                                $count = 0;
-                            @endphp
-                            @foreach ($rate_type as $rt)
+                @if ($customer_bank->display_reports == "state")
+                    <div class="col-md-3 mb-2">
+                        <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="selected_bank">
+                            <option value="">Select Institution</option>
+                            @foreach ($banks as $bank)
+                                <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="dropdown d-flex mb-2" style="float:right;">
+                            <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Institution Types
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
+                                aria-labelledby="dropdownMenuButton1">
+                                @foreach ($bankTypes as $bt)
                                 <li>
                                     <div class="form-check ml-1" style="color:white;">
-                                        @if ($columns[$rt->id] == 1)
-                                            <input class="form-check-input" type="checkbox" value="" checked
-                                                wire:click="check_column({{ $rt->id }})">
-                                            {{ $rt->name }}
-                                            @php
-                                                $count++;
-                                            @endphp
-                                        @else
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                wire:click="check_column({{ $rt->id }})">
-                                            {{ $rt->name }}
-                                        @endif
+                                        <input class="form-check-input" type="checkbox" value="{{ $bt->id }}" checked
+                                            wire:model='selected_bank_type'
+                                            {{-- wire:click="change_ins_type({{ $bt->id }})" --}}
+                                            >
+                                        {{ $bt->name }}
                                     </div>
                                 </li>
+                                @endforeach
+                                <div class="text-center">
+                                    @if (count($bankTypes) == count($selected_bank_type))
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAllInstituteType">
+                                            Deselect All
+                                        </button>
+                                    @else
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="selectAllInstituteType">
+                                            Select All
+                                        </button>
+                                    @endif
+                                </div>
+                            </ul>
+                        </div>
+                        {{-- <select class="form-select form-control" aria-label="Default select example"
+                            wire:model="selected_bank_type">
+                            <option value="">Select All</option>
+                            <option value="">Select Institution Type</option>
+                            @foreach ($bankTypes as $bankType)
+                                <option value="{{ $bankType->id }}">{{ $bankType->name }}</option>
                             @endforeach
-                            <div class="text-center">
-                                @if ($count == count($rate_type))
-                                    <button class="btn mt-2"
-                                        style="background-color:#4e73df; color:white; padding: 1px 15px;"
-                                        wire:click="deselectAll">
-                                        Deselect All
-                                    </button>
-                                @else
-                                    <button class="btn mt-2"
-                                        style="background-color:#4e73df; color:white; padding: 1px 15px;"
-                                        wire:click="selectAll">
-                                        Select All
-                                    </button>
-                                @endif
-                            </div>
-                        </ul>
+                        </select> --}}
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear_filer">Clear Filters</button>
-                </div>
-                @error('filter_error')
-                <div class="mt-3 text-center">
-                    <span class="alert alert-danger" role="alert">{{ $message }}</span>
-                </div>
-                @enderror
-                @error('filter_success')
-                <div class="mt-3 text-center">
-                    <span class="alert alert-success" role="alert">{{ $message }}</span>
-                </div>
-                @enderror
+                    <div class="col-md-2">
+                        <div class="dropdown d-flex mb-2" style="float:right;">
+                            <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;"
+                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Columns
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
+                                aria-labelledby="dropdownMenuButton1">
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($rate_type as $rt)
+                                    <li>
+                                        <div class="form-check ml-1" style="color:white;">
+                                            @if ($columns[$rt->id] == 1)
+                                                <input class="form-check-input" type="checkbox" value="" checked
+                                                    wire:click="check_column({{ $rt->id }})">
+                                                {{ $rt->name }}
+                                                @php
+                                                    $count++;
+                                                @endphp
+                                            @else
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    wire:click="check_column({{ $rt->id }})">
+                                                {{ $rt->name }}
+                                            @endif
+                                        </div>
+                                    </li>
+                                @endforeach
+                                <div class="text-center">
+                                    @if ($count == count($rate_type))
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;"
+                                            wire:click="deselectAll">
+                                            Deselect All
+                                        </button>
+                                    @else
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;"
+                                            wire:click="selectAll">
+                                            Select All
+                                        </button>
+                                    @endif
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="save_filters">Save Filters</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="load_filters">Apply Filters</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear_filer">Clear Filters</button>
+                    </div>
+                    @error('filter_error')
+                    <div class="mt-3 text-center">
+                        <span class="alert alert-danger" role="alert">{{ $message }}</span>
+                    </div>
+                    @enderror
+                    @error('filter_success')
+                    <div class="mt-3 text-center">
+                        <span class="alert alert-success" role="alert">{{ $message }}</span>
+                    </div>
+                    @enderror
+                @endif
             </div>
             <div class="text-center">
                 <div wire:loading.delay>

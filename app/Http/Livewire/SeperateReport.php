@@ -27,14 +27,19 @@ class SeperateReport extends Component
     public $msa_code = "";
     public $last_updated = "";
     public $selected_bank = "";
-    public $selected_bank_type = "";
+    public $selected_bank_type = [];
     public $my_bank_id = "";
     public function render()
     {
-        $rt = RateType::orderby('id','ASC')->get();
+        $rt = RateType::orderby('display_order')->get();
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
+        $bankTypes = BankType::where('status','1')->get();
+        if($this->selected_bank_type == [])
+        {
+            $this->fill_type($bankTypes);
+        }
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!="" && $this->state_id!='all'){
             $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
@@ -54,7 +59,6 @@ class SeperateReport extends Component
             $this->fill($rt);
         }
         $banks = $response['show_banks'];
-        $bankTypes = BankType::where('status','1')->get();
         $my_bank_name = CustomerBank::where('id',auth()->user()->bank_id)->pluck('bank_name')->first();
         $this->my_bank_id = Bank::where('name','like','%'.$my_bank_name.'%')->pluck('id')->first();
         return view('livewire.seperate-report',['customer_type'=>$customer_type,'states'=>$states,'msa_codes'=>$msa_codes,'bankTypes'=>$bankTypes,'banks'=>$banks]);
@@ -64,6 +68,13 @@ class SeperateReport extends Component
     {
         foreach ($data as $key => $dt) {
             $this->columns[$dt->id] = 1;
+        }
+    }
+
+    public function fill_type($data)
+    {
+        foreach ($data as $key => $dt) {
+            array_push($this->selected_bank_type,$dt->id);
         }
     }
 
@@ -123,9 +134,17 @@ class SeperateReport extends Component
         }
     }
 
+    public function deselectAllInstituteType(){
+        $this->selected_bank_type = [""];
+    }
+
+    public function selectAllInstituteType(){
+        $this->selected_bank_type = [];
+    }
+
     public function print_report()
     {
-        $rt = RateType::orderby('id','ASC')->get();
+        $rt = RateType::orderby('display_order')->get();
         if($this->state_id!='' && $this->state_id!='all'){
             $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
             $reports = $response['rate_types'];

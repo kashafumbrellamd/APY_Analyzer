@@ -203,7 +203,7 @@ class GeneralController extends Controller
     public function mhlChart(){
         if(Auth::user()->user_type != "admin"){
             if(!Cache::has('MHLChart')){
-                $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
+                $rate_cd = RateType::where('name','like','%CD%')->select('id')->orderby('display_order')->get()->toArray();
                 $ids = [];
                 $max = [];
                 $min = [];
@@ -246,7 +246,7 @@ class GeneralController extends Controller
     public function mamChart(){
         if(Auth::user()->user_type != "admin"){
             if(!Cache::has('MAMChart')){
-                $rate_cd = RateType::where('name','like','%CD%')->select('id')->get()->toArray();
+                $rate_cd = RateType::where('name','like','%CD%')->orderby('display_order')->select('id')->get()->toArray();
                 $ids = [];
                 $med = [];
                 $avg = [];
@@ -290,7 +290,7 @@ class GeneralController extends Controller
     public function mhlChartNonCD(){
         if(Auth::user()->user_type != "admin"){
             if(!Cache::has('NonCDMHLChart')){
-                $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
+                $rate_cd = RateType::where('name','not like','%CD%')->orderby('display_order')->select('id')->get()->toArray();
                 $ids = [];
                 $max = [];
                 $min = [];
@@ -333,7 +333,7 @@ class GeneralController extends Controller
     public function mamChartNonCD(){
         if(Auth::user()->user_type != "admin"){
             if(!Cache::has('NonCDMAMChart')){
-                $rate_cd = RateType::where('name','not like','%CD%')->select('id')->get()->toArray();
+                $rate_cd = RateType::where('name','not like','%CD%')->orderby('display_order')->select('id')->get()->toArray();
                 $ids = [];
                 $med = [];
                 $avg = [];
@@ -376,7 +376,7 @@ class GeneralController extends Controller
 
     public function getLabels(){
         if(!Cache::has('CDLabels')){
-            $rate_cd = RateType::where('name','like','%CD%')->select('name')->get()->toArray();
+            $rate_cd = RateType::where('name','like','%CD%')->select('name')->orderby('display_order')->get()->toArray();
             $ids = [];
             $ids = array_column($rate_cd, 'name');
             Cache::put('CDLabels', $ids, now()->addMinutes(30));
@@ -388,7 +388,7 @@ class GeneralController extends Controller
 
     public function getNonCDLabels(){
         if(!Cache::has('NonCDLabels')){
-            $rate_cd = RateType::where('name','not like','%CD%')->select('name')->get()->toArray();
+            $rate_cd = RateType::where('name','not like','%CD%')->select('name')->orderby('display_order')->get()->toArray();
             $ids = [];
             $ids = array_column($rate_cd, 'name');
             Cache::put('NonCDLabels', $ids, now()->addMinutes(30));
@@ -460,7 +460,7 @@ class GeneralController extends Controller
 
     public function update_price($id){
         if(Auth::check()){
-            $rt = RateType::orderby('id','ASC')->get();
+            $rt = RateType::orderby('display_order')->get();
             $prices = [];
             foreach ($rt as $key => $rate) {
                 $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name','rate_types.name')

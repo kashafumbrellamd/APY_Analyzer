@@ -1,5 +1,5 @@
 <div>
-    @if ($this->subscription == 'custom')\
+    @if ($this->subscription == 'custom')
         <div class="card shadow mb-4">
             <div class="accordion" id="accordionFlushExample">
                 <div class="accordion-item">
@@ -74,44 +74,46 @@
                 </div>
             </div>
             <div class="row" wire:loading.remove>
-                <div>
+                <div class="col-md-12">
                     <section class="show_box">
                         <div class="container-fluid">
                             <div class="container p-5">
                                 <div class="row">
                                     @foreach ($packages as $package)
-                                        <div class="col-lg-6 col-md-12 mb-6">
-                                            <div class="card card_2 h-100 shadow-lg mb-3"
-                                                style="min-height: 320px;">
-                                                <div class="card-body">
-                                                    <div class="text-center p-3">
-                                                        <h5 class="card-title h3"
-                                                            style="font-weight: 600;">
-                                                            {{ $package->name }}</h5>
-                                                        <span
-                                                            class="h3">${{ $package->price }}</span>/Annually
-                                                    </div>
-                                                    <p class="card-text2"
-                                                        style="text-align: justify; margin-bottom: 0px;">
-                                                        {{ $package->description }} </p>
+                                    <div class="col-lg-12 col-md-12 mb-6">
+                                        @if ($this->subscription == $package->package_type)
+                                        <div class="card card_2 h-100 shadow-lg mb-3"
+                                            style="min-height: 320px;">
+                                            <div class="card-body">
+                                                <div class="text-center p-3">
+                                                    <h5 class="card-title h3"
+                                                        style="font-weight: 600;">
+                                                        {{ $package->name }}</h5>
+                                                    <span
+                                                        class="h3">${{ number_format($package->price) }}</span>/Annually
                                                 </div>
-                                                <div class="card-body text-center">
-                                                    @if ($package->package_type == 'state')
-                                                        <select class="form-select form-control">
-                                                            <option>Saint Louis, Missouri</option>
-                                                            <option>Miami, Florida</option>
-                                                            <option>Tampa, Florida</option>
-                                                        </select>
-                                                    @endif
-                                                </div>
-                                                <div class="card-body text-center">
-                                                    <button class="btn btn-outline-primary btn-md"
-                                                        style="border-radius:10px"
-                                                        >
-                                                        Select</button>
-                                                </div>
+                                                <p class="card-text2"
+                                                    style="text-align: justify; margin-bottom: 0px;">
+                                                    {{ $package->description }} </p>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                @if ($package->package_type == 'state')
+                                                    <select class="form-select form-control">
+                                                        <option>Saint Louis, Missouri</option>
+                                                        <option>Miami, Florida</option>
+                                                        <option>Tampa, Florida</option>
+                                                    </select>
+                                                @endif
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <button class="btn btn-outline-primary btn-md"
+                                                    style="border-radius:10px"
+                                                    >
+                                                    Select</button>
                                             </div>
                                         </div>
+                                        @endif
+                                    </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -246,12 +248,7 @@
                                         <label wire:loading.class="invisible" class="text-success fw-bold">Total Amount:
                                             ${{ number_format($this->current_amount) }}</label>
                                     @endif
-                                    @if (count($this->custom_banks) <= $this->selected_package->number_of_units)
                                         <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
-                                    @else
-                                        <label
-                                            class="text-danger">Numbers Selected: {{ count($this->custom_banks) }}</label>
-                                    @endif
                                 </div>
                                 <div class="mt-2">
                                     <div class="bank_select_divv">
@@ -261,9 +258,11 @@
                                                 @if (in_array($bank->id, $this->custom_banks))
                                                     <div class="form-check">
                                                         <input class="form-check-input" style="position: relative;"
-                                                            type="checkbox" value=""
+                                                            type="checkbox" value="{{ $bank->id }}"
                                                             id="defaultCheck{{ $bank->id }}"
-                                                            wire:click="select_bank({{ $bank->id }})" checked
+                                                            wire:model.defer="selectedItems"
+                                                            {{-- wire:click="select_bank({{ $bank->id }})"  --}}
+                                                            checked
                                                             {{ in_array($bank->id, $this->already) ? 'disabled' : '' }}>
                                                         <label class="form-check-label"
                                                             for="defaultCheck{{ $bank->id }}">
@@ -276,9 +275,11 @@
                                                 @else
                                                     <div class="form-check">
                                                         <input class="form-check-input" style="position: relative;"
-                                                            type="checkbox" value=""
+                                                            type="checkbox" value="{{ $bank->id }}"
                                                             id="defaultCheck{{ $bank->id }}"
-                                                            wire:click="select_bank({{ $bank->id }})">
+                                                            wire:model.defer="selectedItems"
+                                                            {{-- wire:click="select_bank({{ $bank->id }})" --}}
+                                                            >
                                                         <label class="form-check-label"
                                                             for="defaultCheck{{ $bank->id }}">
                                                             {{ $bank->name }} <span
@@ -292,6 +293,9 @@
                                         <a wire:click="loadMore"
                                             style="cursor:pointer; display: block; text-align: center;"
                                             class="">Load More</a>
+                                    </div>
+                                    <div class="d-flex justify-content-center m-2">
+                                        <button class="btn btn-primary" wire:click="save_banks">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +313,7 @@
                                     </li>
                                 @empty
                                 @endforelse
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-center">
                                     <button class="btn btn-danger" wire:click="clear()"> Clear </button>
                                 </div>
                             </ul>

@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="row">
                 @if ($customer_type->display_reports == 'custom')
-                    <div class="col-md-2 mb-2">
+                    {{-- <div class="col-md-2 mb-2">
                         <select class="form-select form-control" aria-label="Default select example" wire:change="selectstate($event.target.value)" wire:model="state_id">
                             <option value="">Select State</option>
                             @foreach ($states as $state)
@@ -20,7 +20,6 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        {{-- @if ($customer_type->display_reports == 'custom') --}}
                         <select class="form-select form-control" aria-label="Default select example"
                             wire:model="msa_code">
                             <option value="">Select Metropolitan Area</option>
@@ -28,7 +27,6 @@
                                 <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
                             @endforeach
                         </select>
-                        {{-- @endif --}}
                     </div>
 
                     <div class="col-md-2">
@@ -110,7 +108,7 @@
                     </div>
                     <div class="col-md-2">
                         <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear()">Clear Filters</button>
-                    </div>
+                    </div> --}}
                 @endif
                 @if ($customer_type->display_reports == 'state')
                     <div class="col-md-3">
@@ -123,7 +121,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <select class="form-select form-control" aria-label="Default select example"
                             wire:model="selected_bank_type">
                             <option value="">Select All</option>
@@ -132,8 +130,8 @@
                                 <option value="{{ $bt->id }}">{{ $bt->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="col-md-2">
+                    </div> --}}
+                    <div class="col-md-3">
                         <select class="form-select form-control" aria-label="Default select example"
                             wire:model="selected_bank">
                             <option value="">Select Institution</option>
@@ -143,11 +141,42 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <!-- <button class="btn btn-primary" style="background-color:#4e73df; color:white; float:right;" type="button">
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button> -->
                         <button class="btn" style="background-color:#4e73df; color:white; float:right;" wire:click="print_report">Generate PDF</button>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="dropdown d-flex mb-2">
+                            <button class="btn dropdown-toggle" style="background-color:#4e73df; color:white;" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Institution Types
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="background:gray;"
+                                aria-labelledby="dropdownMenuButton1">
+                                @foreach ($bankTypes as $bt)
+                                <li>
+                                    <div class="form-check ml-1" style="color:white;">
+                                        <input class="form-check-input" type="checkbox" value="{{ $bt->id }}" checked
+                                            wire:model='selected_bank_type'
+                                            {{-- wire:click="change_ins_type({{ $bt->id }})" --}}
+                                            >
+                                        {{ $bt->name }}
+                                    </div>
+                                </li>
+                                @endforeach
+                                <div class="text-center">
+                                    @if (count($bankTypes) == count($selected_bank_type))
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="deselectAllInstituteType">
+                                            Deselect All
+                                        </button>
+                                    @else
+                                        <button class="btn mt-2"
+                                            style="background-color:#4e73df; color:white; padding: 1px 15px;" wire:click="selectAllInstituteType">
+                                            Select All
+                                        </button>
+                                    @endif
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <div class="dropdown d-flex mb-2">
@@ -264,7 +293,7 @@
                                                 @else
                                                     <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                     <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                    <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                    <td class="text-danger" style="text-align:center;">{{ abs(number_format($bank['change'],2)) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                                 @endif
                                             </tr>
                                         @else
@@ -283,7 +312,7 @@
                                                     @else
                                                         <td class="text-danger" style="text-align:center; color:#9d4201!important;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                         <td class="text-danger" style="text-align:center; color:#9d4201!important;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                        <td class="text-danger" style="text-align:center; color:#9d4201!important;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                        <td class="text-danger" style="text-align:center; color:#9d4201!important;">{{ abs(number_format($bank['change'],2)) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                                     @endif
                                                 @else
                                                     <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
@@ -298,7 +327,7 @@
                                                     @else
                                                         <td class="text-danger" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                         <td class="text-danger" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
-                                                        <td class="text-danger" style="text-align:center;">{{ number_format($bank['change'],2) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                        <td class="text-danger" style="text-align:center;">{{ abs(number_format($bank['change'],2)) }}  <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                                                     @endif
                                                 @endif
                                             </tr>
@@ -356,7 +385,7 @@
                             @else
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_max'],2) }}</td>
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_max'],2) }}</td>
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_max']-$results[$key]['p_max'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                <td style="text-align:center;" class="text-danger">{{ abs(number_format($results[$key]['c_max']-$results[$key]['p_max'],2)) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                         <tr>
@@ -373,7 +402,7 @@
                             @else
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_med'],2) }}</td>
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_med'],2) }}</td>
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_med']-$results[$key]['p_med'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                <td style="text-align:center;" class="text-danger">{{ abs(number_format($results[$key]['c_med']-$results[$key]['p_med'],2)) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                         <tr>
@@ -390,7 +419,7 @@
                             @else
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_min'],2) }}</td>
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_min'],2) }}</td>
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                <td style="text-align:center;" class="text-danger">{{ abs(number_format($results[$key]['c_min']-$results[$key]['p_min'],2)) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                             {{-- <td style="text-align:center;">{{ number_format($results[$key]['c_min']-$results[$key]['p_min'],2) }}</td> --}}
                         </tr>
@@ -408,7 +437,7 @@
                             @else
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_avg'],2) }}</td>
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_avg'],2) }}</td>
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                <td style="text-align:center;" class="text-danger">{{ abs(number_format($results[$key]['c_avg']-$results[$key]['p_avg'],2)) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                         <tr>
@@ -425,7 +454,7 @@
                             @else
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['p_mode'],2) }}</td>
                                 <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_mode'],2) }}</td>
-                                <td style="text-align:center;" class="text-danger">{{ number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                <td style="text-align:center;" class="text-danger">{{ abs(number_format($results[$key]['c_mode']-$results[$key]['p_mode'],2)) }} <i class="fa fa-arrow-down" aria-hidden="true"></i></td>
                             @endif
                         </tr>
                     </tfoot>

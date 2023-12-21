@@ -33,7 +33,7 @@ class AddBankRates extends Component
     public function render()
     {
         $data = Bank::BanksWithState();
-        $rate_types = RateType::all();
+        $rate_types = RateType::orderBy('display_order')->all();
         $bank_prices = BankPrices::BankPricesWithType($this->bank_id);
         $special_prices = SpecializationRates::specialPricesWithBankId($this->bank_id);
         return view('livewire.add-bank-rates',
@@ -310,7 +310,7 @@ class AddBankRates extends Component
         $spreadsheet = IOFactory::load($filePath);
         $worksheet = $spreadsheet->getActiveSheet();
         $rows = $worksheet->toArray();
-        
+
         // Remove the header row if needed
         $data['headerRow'] = array_shift($rows);
 

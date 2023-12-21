@@ -56,7 +56,7 @@ class SendFormToCustomer extends Command
             $bank_email = $value->bank_email;
             $cp_email = $value->cp_email;
             $id = $value->id;
-            $rt = RateType::orderby('id','ASC')->get();
+            $rt = RateType::orderby('display_order')->get();
             $prices = [];
             foreach ($rt as $key => $rate) {
                 $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name','rate_types.name')

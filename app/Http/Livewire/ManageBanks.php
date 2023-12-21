@@ -13,7 +13,7 @@ use App\Models\Zip_code;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\SpreadSheet;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Response;
 use DB;
@@ -313,25 +313,27 @@ class ManageBanks extends Component
 
             $spreadsheet = new Spreadsheet();
             $activeWorksheet = $spreadsheet->getActiveSheet();
-            $activeWorksheet->setCellValue('A1', 'Name');
-            $activeWorksheet->setCellValue('B1', 'State');
-            $activeWorksheet->setCellValue('C1', 'Phone Number');
-            $activeWorksheet->setCellValue('D1', 'Website');
-            $activeWorksheet->setCellValue('E1', 'Institution Type');
-            $activeWorksheet->setCellValue('F1', 'Contact Person Name');
-            $activeWorksheet->setCellValue('G1', 'Contact Person Email');
-            $activeWorksheet->setCellValue('H1', 'Contact Person Phone');
+            $activeWorksheet->setCellValue('A1', 'Id');
+            $activeWorksheet->setCellValue('B1', 'Name');
+            $activeWorksheet->setCellValue('C1', 'State');
+            $activeWorksheet->setCellValue('D1', 'Phone Number');
+            $activeWorksheet->setCellValue('E1', 'Website');
+            $activeWorksheet->setCellValue('F1', 'Institution Type');
+            $activeWorksheet->setCellValue('G1', 'Contact Person Name');
+            $activeWorksheet->setCellValue('H1', 'Contact Person Email');
+            $activeWorksheet->setCellValue('I1', 'Contact Person Phone');
 
             $number = 2;
             foreach ($data as $key => $value) {
-                $activeWorksheet->setCellValue('A'.$number, $value->name);
-                $activeWorksheet->setCellValue('B'.$number, $value->state_name);
-                $activeWorksheet->setCellValue('C'.$number, $value->phone_number);
-                $activeWorksheet->setCellValue('D'.$number, $value->website);
-                $activeWorksheet->setCellValue('E'.$number, $value->type_name);
-                $activeWorksheet->setCellValue('F'.$number, $value->cp_name);
-                $activeWorksheet->setCellValue('G'.$number, $value->cp_email);
-                $activeWorksheet->setCellValue('H'.$number, $value->cp_phone);
+                $activeWorksheet->setCellValue('A'.$number, $value->id);
+                $activeWorksheet->setCellValue('B'.$number, $value->name);
+                $activeWorksheet->setCellValue('C'.$number, $value->state_name);
+                $activeWorksheet->setCellValue('D'.$number, $value->phone_number);
+                $activeWorksheet->setCellValue('E'.$number, $value->website);
+                $activeWorksheet->setCellValue('F'.$number, $value->type_name);
+                $activeWorksheet->setCellValue('G'.$number, $value->cp_name);
+                $activeWorksheet->setCellValue('H'.$number, $value->cp_email);
+                $activeWorksheet->setCellValue('I'.$number, $value->cp_phone);
                 $number++;
             }
 

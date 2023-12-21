@@ -8,6 +8,8 @@
                 @if (auth()->user()->hasRole('admin'))
                     <input type="text" class="form-control mr-2" wire:model.lazy="rate_type"
                         placeholder="Enter New Rate Type....">
+                    <input type="text" class="form-control mr-2" wire:model.lazy="display_order"
+                        placeholder="Enter Its Order of Display....">
                     <button type="submit" wire:click="submitForm" class="btn btn-primary">Submit</button>
                 @endif
             </div>
@@ -30,6 +32,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
+                            <th>Display Order</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -42,26 +45,35 @@
                                         <td class="d-flex">
                                             <input type="text" class="form-control mr-2"
                                                 wire:model.lazy="update_name" placeholder="Enter New Role...." />
-
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control mr-2"
+                                                wire:model.lazy="update_display_order" placeholder="Enter New Role...." />
+                                        </td>
+                                        <td>
                                             <button type="button" wire:click="update"
-                                                class="btn btn-primary mr-2">Update</button>
+                                            class="btn btn-primary mr-2">Update</button>
 
                                             <button type="button" wire:click="cancel"
                                                 class="btn btn-danger mr-2">Cancel</button>
-
                                         </td>
                                     @else
                                         <td>{{ $dt->name }}</td>
+                                        <td>{{ $dt->display_order }}</td>
                                     @endif
                                 @else
                                     <td>{{ $dt->name }}</td>
+                                    <td>{{ $dt->display_order }}</td>
+
                                 @endif
-                                <td class="text-center">
-                                    <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
-                                            class="bi bi-pen"></span></button>
-                                    <button type="button" class="btn" wire:click="delete({{ $dt->id }})"><span
-                                            class="bi bi-trash"></span></button>
-                                </td>
+                                @if (!$update)
+                                    <td class="text-center">
+                                        <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
+                                                class="bi bi-pen"></span></button>
+                                        <button type="button" class="btn" wire:click="delete({{ $dt->id }})"><span
+                                                class="bi bi-trash"></span></button>
+                                    </td>
+                                @endif
                             </tr>
                             @empty
                                 <tr>
