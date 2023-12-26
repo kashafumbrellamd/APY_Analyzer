@@ -33,7 +33,7 @@ class AddBankRates extends Component
     public function render()
     {
         $data = Bank::BanksWithState();
-        $rate_types = RateType::orderBy('display_order')->all();
+        $rate_types = RateType::orderBy('display_order')->get();
         $bank_prices = BankPrices::BankPricesWithType($this->bank_id);
         $special_prices = SpecializationRates::specialPricesWithBankId($this->bank_id);
         return view('livewire.add-bank-rates',
@@ -167,19 +167,22 @@ class AddBankRates extends Component
             $data = $head['file'];
             $head = $head['headerRow'];
             foreach ($data as $key => $dt) {
-                $bank = Bank::where('name',$dt['Bank Name'])->first();
+                $bank = Bank::where('id',$dt['Id'])->first();
                 if($bank!=null)
                 {
                     $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
                     foreach ($head as $key => $hd) {
-                        if($hd!=null && $hd != 'Bank Name' && $hd!='Date (mm/dd/YYYY)' && $dt[$hd]!=null)
-                        {
+                        if($hd!=null && $hd!='Id' && $hd != 'Name'
+                        && $hd!='State' && $hd!='Phone Number'
+                        && $hd!='Website' && $hd!='Institution Type'
+                        && $hd!='Contact Person Name' && $hd!='Contact Person Email' && $hd != 'Contact Person Phone'
+                        && $hd!='Date (mm/dd/YYYY)' && $hd!=null){
                             $rt = RateType::where('name',$hd)->first();
                             if($rt!=null)
                             {
                                 $check = BankPrices::where('bank_id',$bank->id)->where('rate_type_id',$rt->id)->orderby('id','DESC')->first();
                                 if($check==null){
-                                    $p_user = DB::table('bank_prices')->insert([
+                                    $p_user = DB::table('bank_prices')->insertGetID([
                                         'bank_id' => $bank->id,
                                         'rate_type_id' => $rt->id,
                                         'rate' => $dt[$hd],
@@ -190,15 +193,8 @@ class AddBankRates extends Component
                                         'created_at' => $date,
                                         'updated_at' => $date,
                                     ]);
-                                    // $p_user = BankPrices::create([
-                                    //     'bank_id' => $bank->id,
-                                    //     'rate_type_id' => $rt->id,
-                                    //     'rate' => $dt[$hd],
-                                    //     'previous_rate' => $dt[$hd],
-                                    //     'current_rate' => $dt[$hd],
-                                    // ]);
                                 }else{
-                                    $p_user = DB::table('bank_prices')->insert([
+                                    $p_user = DB::table('bank_prices')->insertGetID([
                                         'bank_id' => $bank->id,
                                         'rate_type_id' => $rt->id,
                                         'rate' => $check->rate,
@@ -209,14 +205,6 @@ class AddBankRates extends Component
                                         'created_at' => $date,
                                         'updated_at' => $date,
                                     ]);
-                                    // $p_user = BankPrices::create([
-                                    //     'bank_id' => $bank->id,
-                                    //     'rate_type_id' => $rt->id,
-                                    //     'rate' => $check->rate,
-                                    //     'previous_rate' => $check->current_rate,
-                                    //     'current_rate' => $dt[$hd],
-                                    //     'change' => $dt[$hd]-$check->current_rate,
-                                    // ]);
                                 }
                             }else{
                                 array_push($this->not_inserted_rt,$hd);
@@ -255,7 +243,7 @@ class AddBankRates extends Component
             $data = $head['file'];
             $head = $head['headerRow'];
             foreach ($data as $key => $dt) {
-                $bank = Bank::where('name',$dt['Bank Name'])->first();
+                $bank = Bank::where('id',$dt['Id'])->first();
                 if($bank!=null)
                 {
                     $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
