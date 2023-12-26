@@ -83,7 +83,7 @@
                                     <div class="col-lg-12 col-md-12 mb-6">
                                         @if ($this->subscription == $package->package_type)
                                         <div class="card card_2 h-100 shadow-lg mb-3"
-                                            style="min-height: 320px;">
+                                            style="min-height: 393px;">
                                             <div class="card-body">
                                                 <div class="text-center p-3">
                                                     <h5 class="card-title h3"
@@ -98,6 +98,7 @@
                                             </div>
                                             <div class="card-body text-center">
                                                 @if ($package->package_type == 'state')
+                                                    <p>4 Weeks Free Trial</p>
                                                     <select class="form-select form-control">
                                                         <option>Saint Louis, Missouri</option>
                                                         <option>Miami, Florida</option>

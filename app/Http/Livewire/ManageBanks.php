@@ -275,6 +275,7 @@ class ManageBanks extends Component
         $state = DB::table('banks')
             ->join('states','states.id','banks.state_id')
             ->select('states.id','states.name')
+            ->orderBy('name','ASC')
             ->groupBy('state_id')
             ->get();
         return $state;

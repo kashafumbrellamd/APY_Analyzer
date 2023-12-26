@@ -43,7 +43,7 @@
                             @csrf
                         </form>
                         @else
-                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
+                        <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign Up Now</button>
                         <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>

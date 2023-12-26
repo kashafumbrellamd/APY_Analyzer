@@ -51,7 +51,7 @@
                                 @csrf
                             </form>
                         @else
-                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Start Your Free Trial</button>
+                            <button onclick="window.location.href='/signup'" class="btn signUp_btn me-2">Sign Up Now</button>
                             <button onclick="window.location.href='/signin'" class="btn submit_btn">Login</button>
                         @endif
                     </div>
@@ -341,6 +341,7 @@
                                     </div>
                                     <div class="card-body text-center">
                                         @if ($package->package_type == 'state')
+                                            <p>4 Weeks Free Trial</p>
                                             <select class="form-select form-control mb-3 ">
                                                 <option>Saint Louis, Missouri</option>
                                                 <option>Miami, Florida</option>
