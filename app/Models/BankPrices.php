@@ -206,7 +206,7 @@ class BankPrices extends Model
         $latest_bank_prices_by_type = [];
         foreach ($rate_types['rate_types'] as $rt) {
             $id = $rt->id;
-            $latest_bank_prices = BankPrices::select('bank_prices.*', 'banks.name as bank_name')
+            $latest_bank_prices = BankPrices::select('bank_prices.*', 'banks.name as bank_name','banks.cbsa_name as cbsa_name')
                 ->join('banks', 'bank_prices.bank_id', 'banks.id')
                 ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {
                     $query->selectRaw('MAX(created_at)')
@@ -657,7 +657,7 @@ class BankPrices extends Model
         //     ->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
         //     ->orderBy('bank_prices.current_rate','desc')
         //     ->get();
-        $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name')
+        $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name','banks.cbsa_name as cbsa_name')
             ->join('banks', 'bank_prices.bank_id', 'banks.id')
             ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {
                 $query->selectRaw('MAX(created_at)')
