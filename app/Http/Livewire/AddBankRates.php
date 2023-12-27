@@ -182,19 +182,22 @@ class AddBankRates extends Component
                             {
                                 $check = BankPrices::where('bank_id',$bank->id)->where('rate_type_id',$rt->id)->orderby('id','DESC')->first();
                                 if($check==null){
-                                    $p_user = DB::table('bank_prices')->insertGetID([
-                                        'bank_id' => $bank->id,
-                                        'rate_type_id' => $rt->id,
-                                        'rate' => $dt[$hd],
-                                        'previous_rate' => $dt[$hd],
-                                        'current_rate' => $dt[$hd],
-                                        'change' => 0,
-                                        'is_checked' => 1,
-                                        'created_at' => $date,
-                                        'updated_at' => $date,
-                                    ]);
+                                    if($dt[$hd] != null){
+                                        $p_user = DB::table('bank_prices')->insertGetID([
+                                            'bank_id' => $bank->id,
+                                            'rate_type_id' => $rt->id,
+                                            'rate' => $dt[$hd],
+                                            'previous_rate' => $dt[$hd],
+                                            'current_rate' => $dt[$hd],
+                                            'change' => 0,
+                                            'is_checked' => 1,
+                                            'created_at' => $date,
+                                            'updated_at' => $date,
+                                        ]);
+                                    }
                                 }else{
-                                    $p_user = DB::table('bank_prices')->insertGetID([
+                                    if($dt[$hd] != null){
+                                        $p_user = DB::table('bank_prices')->insertGetID([
                                         'bank_id' => $bank->id,
                                         'rate_type_id' => $rt->id,
                                         'rate' => $check->rate,
@@ -205,6 +208,7 @@ class AddBankRates extends Component
                                         'created_at' => $date,
                                         'updated_at' => $date,
                                     ]);
+                                    }
                                 }
                             }else{
                                 array_push($this->not_inserted_rt,$hd);
