@@ -172,7 +172,7 @@ class AddBankRates extends Component
                 {
                     $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
                     foreach ($head as $key => $hd) {
-                        if($hd!=null && $hd!='Id' && $hd != 'Name'
+                        if($hd!=null && $hd!='Id' && $hd != 'Bank Name'
                         && $hd!='State' && $hd!='Phone Number'
                         && $hd!='Website' && $hd!='Institution Type'
                         && $hd!='Contact Person Name' && $hd!='Contact Person Email' && $hd != 'Contact Person Phone'
