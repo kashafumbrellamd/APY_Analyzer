@@ -10,6 +10,8 @@
                                 <thead>
                                     <tr>
                                         <th class="first-col" style="text-align:center;">Bank Name</td>
+                                        <th class="first-col" style="text-align:center;">Area Name</td>
+                                        <th class="first-col" style="text-align:center;">Zip Code</td>
                                         <th class="first-col" style="text-align:center;">Previous</td>
                                         <th class="first-col" style="text-align:center;">APY</td>
                                         <th class="first-col" style="text-align:center;">Changes</td>
@@ -25,6 +27,10 @@
                                                             <td class="text-success" style="text-align:center;">
                                                                 {{ $bank['bank_name'] }}</td>
                                                             <td class="text-success" style="text-align:center;">
+                                                                {{ $bank['cbsa_name'] }}</td>
+                                                            <td class="text-success" style="text-align:center;">
+                                                                {{ $bank['zip_code'] }}</td>
+                                                            <td class="text-success" style="text-align:center;">
                                                                 {{ $bank['previous_rate'] }}</td>
                                                             <td class="text-success" style="text-align:center;">
                                                                 {{ $bank['current_rate'] }}</td>
@@ -33,12 +39,18 @@
                                                                     aria-hidden="true"></i></td>
                                                         @elseif ($bank['current_rate'] == $bank['previous_rate'])
                                                             <td style="text-align:center;">{{ $bank['bank_name'] }}</td>
+                                                            <td style="text-align:center;">{{ $bank['cbsa_name'] }}</td>
+                                                            <td style="text-align:center;">{{ $bank['zip_code'] }}</td>
                                                             <td style="text-align:center;">{{ $bank['previous_rate'] }}</td>
                                                             <td style="text-align:center;">{{ $bank['current_rate'] }}</td>
                                                             <td style="text-align:center;">---</td>
                                                         @else
                                                             <td class="text-danger" style="text-align:center;">
                                                                 {{ $bank['bank_name'] }}</td>
+                                                            <td class="text-danger" style="text-align:center;">
+                                                                {{ $bank['cbsa_name'] }}</td>
+                                                            <td class="text-danger" style="text-align:center;">
+                                                                {{ $bank['zip_code'] }}</td>
                                                             <td class="text-danger" style="text-align:center;">
                                                                 {{ $bank['previous_rate'] }}</td>
                                                             <td class="text-danger" style="text-align:center;">

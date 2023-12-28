@@ -163,7 +163,7 @@ class SeperateReport extends Component
             $this->fill($rt);
         }
         $columns = $this->columns;
-        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns'))->output();
+        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns'))->setPaper('a4', 'landscape')->output();
         return response()->streamDownload(
             fn () => print($pdf),
             "Seperate_Report.pdf"
