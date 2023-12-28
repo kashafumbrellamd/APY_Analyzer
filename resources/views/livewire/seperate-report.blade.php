@@ -255,7 +255,7 @@
             <div class="row" wire:loading.class="invisible">
             @foreach($reports as $key => $rt)
             @if($columns[$rt->id] == 1)
-            <div class="col-md-6 mt-3">
+            <div class="col-md-12 mt-3">
             <div class="table-responsive table__font_style">
             <h5 class="m-0 font-weight-bold text-primary" style="text-align:center;">{{$rt->name}}</h5>
                 <div class="table-wrapper">
@@ -265,6 +265,7 @@
                             <th class="first-col" style="text-align:center;">Rank</td>
                             <th class="first-col" style="text-align:center;">Institution Name</td>
                             <th class="first-col" style="text-align:center;">Area Name</td>
+                            <th class="first-col" style="text-align:center;">Zip Code</td>
                             <th class="first-col" style="text-align:center;">Previous</td>
                             <th class="first-col" style="text-align:center;">APY</td>
                             <th class="first-col" style="text-align:center;">Changes</td>
@@ -280,10 +281,12 @@
                                                 <td>{{ ++$key1 }}</td>
                                                 @if($bank['bank_id'] == $my_bank_id)
                                                     <td style="text-align: left; color:#9d4201!important;">{{ $bank['bank_name'] }}</td>
-                                                    <td style="text-align: left; color:#9d4201!important;">{{ $bank['cbsa_name'] }}</td>
+                                                    <td style="color:#9d4201!important;">{{ $bank['cbsa_name'] }}</td>
+                                                    <td style="color:#9d4201!important;">{{ $bank['zip_code'] }}</td>
                                                 @else
                                                     <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
-                                                    <td style="text-align: left;">{{ $bank['cbsa_name'] }}</td>
+                                                    <td>{{ $bank['cbsa_name'] }}</td>
+                                                    <td>{{ $bank['zip_code'] }}</td>
                                                     @endif
                                                 @if ($bank['current_rate'] > $bank['previous_rate'])
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
@@ -304,7 +307,8 @@
                                                 <td>{{ ++$key1 }}</td>
                                                 @if($bank['bank_id'] == $my_bank_id)
                                                     <td style="text-align: left; color:#9d4201!important;">{{ $bank['bank_name'] }}</td>
-                                                    <td style="text-align: left; color:#9d4201!important;">{{ $bank['cbsa_name'] }}</td>
+                                                    <td style="color:#9d4201!important;">{{ $bank['cbsa_name'] }}</td>
+                                                    <td style="color:#9d4201!important;">{{ $bank['zip_code'] }}</td>
                                                     @if ($bank['current_rate'] > $bank['previous_rate'])
                                                         <td class="text-success" style="text-align:center; color:#9d4201!important;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                         <td class="text-success" style="text-align:center; color:#9d4201!important;">{{ number_format($bank['current_rate'],2) }}</td>
@@ -320,7 +324,8 @@
                                                     @endif
                                                 @else
                                                     <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
-                                                    <td style="text-align: left;">{{ $bank['cbsa_name'] }}</td>
+                                                    <td>{{ $bank['cbsa_name'] }}</td>
+                                                    <td>{{ $bank['zip_code'] }}</td>
                                                     @if ($bank['current_rate'] > $bank['previous_rate'])
                                                         <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
                                                         <td class="text-success" style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
