@@ -83,7 +83,7 @@
                                 <th>Zip Code</th>
                                 <th>State</th>
                                 <th>City</th>
-                                <th>Description</th>
+                                {{-- <th>Description</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -93,7 +93,7 @@
                                     <td>{{ $dt->zip_code }}</td>
                                     <td>{{ $dt->state->name }}</td>
                                     <td>{{ $dt->cities->name }}</td>
-                                    <td>{{ $dt->description }}</td>
+                                    {{-- <td>{{ $dt->description }}</td> --}}
                                 </tr>
                             @empty
                                 <tr>

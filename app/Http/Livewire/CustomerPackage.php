@@ -38,13 +38,15 @@ class CustomerPackage extends Component
     public $bank_cbsa_filter = [];
     public $bank_cbsa_filter_name = [];
 
+    public $bank_zip_code = "";
+
     public $selected_banks_name = [];
 
     public $selected_state_now = '';
     public $selected_city_now = '';
     public $selected_cbsa_now = '';
 
-    public $subscription = '';
+    public $subscription = 'custom';
     public $selected_package = [];
 
     public $state_state;
@@ -104,6 +106,11 @@ class CustomerPackage extends Component
         if (!empty($this->bank_cbsa_filter)) {
             $query->whereIn('banks.cbsa_code', $this->bank_cbsa_filter);
         }
+
+        if (!empty($this->bank_zip_code)) {
+            $query->where('banks.zip_code', $this->bank_zip_code);
+        }
+
         return $query->skip(($page-1)*50)->take(50)->get();
         // return $query->paginate(10)->items();
     }
@@ -347,7 +354,7 @@ class CustomerPackage extends Component
                             $user = User::where('bank_id',$this->bank->id)->first();
                             BankRequest::create([
                                 'name' => $check->name,
-                                'zip_code' => "null",
+                                'zip_code' => $check->zip_code,
                                 'state_id' => $check->state_id,
                                 'city_id' => $check->city_id,
                                 'description' => null,
@@ -480,4 +487,20 @@ class CustomerPackage extends Component
 
     }
 
+    public function zipCodeChanged(){
+        $this->bank_state_filter = [];
+        $this->bank_state_filter_name = [];
+
+        $this->bank_city_filter = [];
+        $this->bank_city_filter_name = [];
+
+        $this->bank_cbsa_filter = [];
+        $this->bank_cbsa_filter_name = [];
+
+        $this->selected_state_now = '';
+        $this->selected_city_now = '';
+        $this->selected_cbsa_now = '';
+        $this->page = 1;
+        $this->all_banks = null;
+    }
 }

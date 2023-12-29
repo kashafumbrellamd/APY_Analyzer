@@ -246,6 +246,15 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div>
+                                                <div class="mb-3">
+                                                    <label for="zip_search" class="form-label">Enter Zip Code</label>
+                                                    <input type="text" class="form-control" wire:model.defer="bank_zip_code"
+                                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                                         style="width: 50%!important; display:inline;"  maxlength="5">
+                                                    <button class="btn btn-primary" wire:click="zipCodeChanged">Search</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6" wire:loading.class="invisible">
@@ -298,7 +307,7 @@
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
                                                                                 {{ $bank->name }} <span
-                                                                                    class="state_city_span">({{ $bank->states->name }},
+                                                                                    class="state_city_span">({{ $bank->zip_code }}, {{ $bank->states->name }},
                                                                                     &nbsp;{{ $bank->cities->name }})</span>
                                                                             </label>
                                                                         </div>
@@ -314,7 +323,7 @@
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
                                                                                 {{ $bank->name }} <span
-                                                                                    class="state_city_span">({{ $bank->states->name }},
+                                                                                    class="state_city_span">({{ $bank->zip_code }}, {{ $bank->states->name }},
                                                                                     &nbsp;{{ $bank->cities->name }})</span>
                                                                             </label>
                                                                         </div>
@@ -344,7 +353,7 @@
                                                 @forelse ($selected_banks_name as $item)
                                                     {{-- <li class="">{{ $item['name'] }}</li> --}}
                                                     <li class=""><b>{{ $item['name'] }}</b>
-                                                        ({{ $item['states']['name'] }},{{ $item['cities']['name'] }})
+                                                        ({{ $item['zip_code'] }}, {{ $item['states']['name'] }},{{ $item['cities']['name'] }})
                                                     </li>
                                                 @empty
                                                 @endforelse

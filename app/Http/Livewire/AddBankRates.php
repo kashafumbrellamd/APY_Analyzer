@@ -75,7 +75,11 @@ class AddBankRates extends Component
                         'rate' => $this->rate,
                         'previous_rate' => $this->rate,
                         'current_rate' => $this->rate,
+                        'is_checked' => 1,
                     ]);
+                    $bank = Bank::find($this->bank_id);
+                    $bank->surveyed = 1;
+                    $bank->save();
                     $this->clear();
                 }
                 else
@@ -94,7 +98,11 @@ class AddBankRates extends Component
                         'previous_rate' => $check->current_rate,
                         'current_rate' => $this->rate,
                         'change' => $this->rate-$check->current_rate,
+                        'is_checked' => 1,
                     ]);
+                    $bank = Bank::find($this->bank_id);
+                    $bank->surveyed = 1;
+                    $bank->save();
                     $this->clear();
                 }
                 else
@@ -210,6 +218,8 @@ class AddBankRates extends Component
                                     ]);
                                     }
                                 }
+                                $bank->surveyed = 1;
+                                $bank->save();
                             }else{
                                 array_push($this->not_inserted_rt,$hd);
                             }
