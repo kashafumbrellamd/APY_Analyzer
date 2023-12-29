@@ -46,7 +46,7 @@ class CustomerPackage extends Component
     public $selected_city_now = '';
     public $selected_cbsa_now = '';
 
-    public $subscription = 'custom';
+    public $subscription = '';
     public $selected_package = [];
 
     public $state_state;
