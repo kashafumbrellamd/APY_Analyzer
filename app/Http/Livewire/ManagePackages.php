@@ -12,6 +12,7 @@ class ManagePackages extends Component
     public $additional_price = '';
     public $description = '';
     public $number_of_units = '';
+    public $package_type = '';
     public $package_id = '';
     public $update = false;
 
@@ -36,7 +37,7 @@ class ManagePackages extends Component
             'additional_price' => $this->additional_price,
             'description' => $this->description,
             'number_of_units' => $this->number_of_units,
-            'package_type' => 'custom',
+            'package_type' => $this->package_type,
         ]);
         $this->clear();
         $this->render();
@@ -49,6 +50,7 @@ class ManagePackages extends Component
         $this->additional_price = $packages->additional_price;
         $this->description = $packages->description;
         $this->number_of_units = $packages->number_of_units;
+        $this->package_type = $packages->package_type;
         $this->package_id = $id;
         $this->update = true;
         $this->render();
@@ -61,7 +63,7 @@ class ManagePackages extends Component
             'additional_price' => $this->additional_price,
             'description' => $this->description,
             'number_of_units' => $this->number_of_units,
-            'package_type' => 'custom',
+            'package_type' => $this->package_type,
         ]);
         $this->clear();
     }
@@ -78,6 +80,7 @@ class ManagePackages extends Component
         $this->description = '';
         $this->number_of_units = '';
         $this->package_id = '';
+        $this->package_type = '';
         $this->update = false;
     }
 

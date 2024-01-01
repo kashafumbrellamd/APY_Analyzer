@@ -35,7 +35,7 @@
                                         <div class="col-md-2">
                                             <label for="CBSA_name" class="form-label">CBSA name</label>
                                             <input type="text" id="cbsa_name" class="form-control" wire:model.lazy="cbsa_name"
-                                                placeholder="Enter CBSA name.." required>
+                                                placeholder="Enter CBSA name.." >
                                         </div>
                                     </div>
                                     {{-- <div class="row">
@@ -124,7 +124,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cp_email">Email</label>
-                                                <input type="email" id="cp_email" class="form-control mr-2" wire:model.lazy="cp_email"
+                                                <input type="text" id="cp_email" class="form-control mr-2" wire:model.lazy="cp_email"
                                                     placeholder="Enter Email....">
                                         </div>
                                         <div class="col-md-4">
@@ -310,6 +310,10 @@
                         @endforeach
                         <option value="">All Data</option>
                     </select>
+                </div>
+                <div class="col-md-4 d-flex justify-content-between">
+                    <input type="search" class="form-control mb-3" wire:model.defer="search" placeholder="Search By Bank Name">
+                    <button class="btn btn-primary h-75 ml-2" wire:click="render"><i class="bi bi-search"></i></button>
                 </div>
             </div>
             <div class="table-responsive">

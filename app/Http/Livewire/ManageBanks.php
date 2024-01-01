@@ -44,16 +44,33 @@ class ManageBanks extends Component
     public $bank_state_filter = '';
     public $bank_city_filter = '';
 
+    public $search = "";
+
     public function render()
     {
-        if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
-            $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
-        }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
-            $data = Bank::BanksWithStateIdAndType('',$this->bank_city_filter);
-        }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
-            $data = Bank::BanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
+        if($this->search == ""){
+            if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
+                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
+            }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
+                $data = Bank::BanksWithStateIdAndType('',$this->bank_city_filter);
+            }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
+                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
+            }else{
+                $data = Bank::BanksWithStateAndType();
+            }
         }else{
-            $data = Bank::BanksWithStateAndType();
+            $query = Bank::join('states', 'banks.state_id', '=', 'states.id')->with('cities')
+             ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+             ->where('banks.name','like','%'.$this->search.'%')
+             ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+             ->orderby('name','ASC');
+             if($this->bank_state_filter != ''){
+                $query->where('banks.state_id',$this->bank_state_filter);
+             }
+             if($this->bank_city_filter != ''){
+                $query->where('banks.city_id',$this->bank_city_filter);
+             }
+             $data = $query->paginate(10);
         }
         $states = State::where('country_id','233')->get();
         $cities = Cities::get();

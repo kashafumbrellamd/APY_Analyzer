@@ -206,6 +206,7 @@ class CustomerPackage extends Component
         $this->bank_city_filter_name = [];
         $this->bank_cbsa_filter = [];
         $this->bank_cbsa_filter_name = [];
+        $this->bank_zip_code = "";
     }
 
     public function selectcity($id)

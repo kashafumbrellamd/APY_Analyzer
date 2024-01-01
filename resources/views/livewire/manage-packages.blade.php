@@ -16,6 +16,13 @@
                 <div class="d-flex justify-content-between mb-4">
                     <input type="text" class="form-control mr-2" wire:model.lazy="number_of_units"
                         placeholder="Enter Number of Bank...">
+                    <select wire:model="package_type" class="form-control form-select mr-2 ">
+                        <option value="">Select Report Type</option>
+                        <option value="state">Standard Report</option>
+                        <option value="custom">Custom Report</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
                     <textarea class="form-control mr-2" cols="1" rows="1" wire:model.lazy="description"
                         placeholder="Enter Package Description..."></textarea>
                 </div>
@@ -32,6 +39,13 @@
                 <div class="d-flex justify-content-between mb-4">
                     <input type="text" class="form-control mr-2" wire:model.lazy="number_of_units"
                         placeholder="Enter Number of Bank...">
+                    <select wire:model="package_type" class="form-control form-select mr-2 ">
+                        <option value="">Select Report Type</option>
+                        <option value="state">Standard Report</option>
+                        <option value="custom">Custom Report</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
                     <textarea class="form-control mr-2" cols="1" rows="1" wire:model.lazy="description"
                         placeholder="Enter Package Description..."></textarea>
                 </div>
