@@ -30,13 +30,6 @@ class BankPrices extends Model
 
     public static function BankPricesWithType($id)
     {
-        // $latestRates = BankPrices::select('bank_prices.*', 'rate_types.name as rate_type_name')
-        // ->join('rate_types', 'rate_types.id', '=', 'bank_prices.rate_type_id')
-        // ->where('bank_prices.bank_id',$id)
-        // ->groupBy('bank_prices.rate_type_id')
-        // ->latest('bank_prices.created_at')
-        // ->get();
-        // $id=2;
         $latestRates= BankPrices::select('bank_prices.id', 'bank_prices.rate_type_id','bank_prices.previous_rate','bank_prices.current_rate','bank_prices.change', 'bank_prices.rate', 'bank_prices.created_at','bank_prices.is_checked','rate_types.name as rate_type_name')
         ->whereIn('bank_prices.created_at', function ($query) use ($id) {
             $query->selectRaw('MAX(created_at)')
@@ -47,8 +40,6 @@ class BankPrices extends Model
         ->where('bank_prices.bank_id', $id)
         ->join('rate_types', 'bank_prices.rate_type_id', '=', 'rate_types.id')
         ->get();
-        //BankPrices::distinct('rate_type_id')->where('bank_id',$id)->with('rates')->get();
-        // dd($latestRates);
         return $latestRates;
     }
 
@@ -108,107 +99,147 @@ class BankPrices extends Model
         return $banks;
     }
 
-    public static function SeperateReports($type,$state,$code,$selected_bank_type)
+    // public static function SeperateReports($type,$state,$code,$selected_bank_type)
+    // {
+    //     $bankQuery = Bank::query();
+    //     if ($type == 'state') {
+    //         $filter = CustomerBank::where('id', auth()->user()->bank_id)->first();
+    //         if($filter->display_reports == "custom"){
+    //             $bankQuery = $bankQuery->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
+    //             ->where('custom_package_banks.bank_id', $filter->id)
+    //             ->where('banks.state_id', $state);
+    //         }else{
+    //             $bankQuery->where('state_id', $state);
+    //         }
+
+    //         if ($selected_bank_type != "") {
+    //             $bankQuery->whereIn('bank_type_id', $selected_bank_type);
+    //         }
+
+    //         if ($code != "") {
+    //             $bankQuery->where('msa_code', $code);
+    //         }
+
+    //         $banks = $bankQuery->pluck('banks.id')->toArray();
+    //     } elseif ($type == 'msa') {
+    //         $bankQuery->where('msa_code', $code);
+
+    //         if ($selected_bank_type != "") {
+    //             $bankQuery->whereIn('bank_type_id', $selected_bank_type);
+    //         }
+    //         $banks = $bankQuery->pluck('id')->toArray();
+    //     } elseif ($type == 'all') {
+    //         $filter = CustomerBank::where('id', auth()->user()->bank_id)->first();
+
+    //         if ($filter->display_reports == 'state') {
+    //             $cities = BankSelectedCity::where('bank_id', $filter->id)->pluck('city_id')->toArray();
+    //             $bankQuery->whereIn('city_id', $cities);
+    //             if ($selected_bank_type != "") {
+    //                 $bankQuery->whereIn('banks.bank_type_id', $selected_bank_type);
+    //             }
+    //             $banks = $bankQuery->pluck('id')->toArray();
+    //         } elseif ($filter->display_reports == 'msa') {
+    //             $bankQuery->where('msa_code', $filter->msa_code);
+    //             $banks = $bankQuery->pluck('id')->toArray();
+    //         } elseif ($filter->display_reports == 'custom') {
+    //             $customQuery = CustomPackageBanks::where('bank_id', $filter->id);
+    //             if ($selected_bank_type != "") {
+    //                 $customQuery->join('banks', 'banks.id', 'custom_package_banks.customer_selected_bank_id')
+    //                             ->whereIn('banks.bank_type_id', $selected_bank_type);
+    //             }
+    //             $banks = $customQuery->pluck('customer_selected_bank_id')->toArray();
+    //         }
+    //     }
+
+    //     $rate_types['rate_types'] = RateType::orderBy('display_order')->get();
+    //     $latest_bank_prices_by_type = [];
+    //     foreach ($rate_types['rate_types'] as $rt) {
+    //         $id = $rt->id;
+    //         $latest_bank_prices = BankPrices::select('bank_prices.*', 'banks.name as bank_name','banks.cbsa_name as cbsa_name','banks.zip_code as zip_code')
+    //             ->join('banks', 'bank_prices.bank_id', 'banks.id')
+    //             ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {
+    //                 $query->selectRaw('MAX(created_at)')
+    //                     ->from('bank_prices')
+    //                     ->where('rate_type_id', $id)
+    //                     ->where('is_checked', 1)
+    //                     ->whereIn('bank_id', $banks)
+    //                     ->groupBy('bank_id');
+    //             })
+    //             ->where('rate_type_id', $id)
+    //             ->where('is_checked', 1)
+    //             ->whereIn('bank_id', $banks)
+    //             ->groupBy('bank_id')
+    //             ->orderBy('current_rate', 'DESC')
+    //             ->get();
+    //         $rt['banks'] = $latest_bank_prices;
+    //     }
+
+    //     $rate_types['show_banks'] = Bank::whereIn('id',$banks)->get();
+    //     return $rate_types;
+    // }
+    public static function SeperateReports($type, $state, $code, $selectedBankType,$unique)
     {
-        // if($type == 'state' && $selected_bank_type == "" && $code == ""){
-        //     dd($type);
-        //     $banks = Bank::where('state_id',$state)->pluck('id')->toArray();
-        // }elseif($type == 'msa' && $selected_bank_type == ""){
-        //     $banks = Bank::where('msa_code',$code)->pluck('id')->toArray();
-        // }elseif($type == 'state' && $selected_bank_type != "" && $code==""){
-        //     $banks = Bank::where('state_id',$state)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
-        // }elseif($type == 'state' && $selected_bank_type == "" && $code!=""){
-        //     $banks = Bank::where('state_id',$state)->where('msa_code',$code)->pluck('id')->toArray();
-        // }elseif($type == 'state' && $selected_bank_type != "" && $code!=""){
-        //     $banks = Bank::where('state_id',$state)->where('bank_type_id',$selected_bank_type)->where('msa_code',$code)->pluck('id')->toArray();
-        // }elseif($type == 'msa' && $selected_bank_type != ""){
-        //     $banks = Bank::where('msa_code',$code)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
-        // }elseif($type == 'all' && $selected_bank_type == ""){
-        //     $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
-        //     if($filter->display_reports == 'state'){
-        //         $cities = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-        //         $banks = Bank::whereIn('city_id',$cities)->pluck('id')->toArray();
-        //     }elseif ($filter->display_reports == 'msa') {
-        //         $banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
-        //     }elseif($filter->display_reports == 'custom' && $selected_bank_type == ""){
-        //         $banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
-        //     }elseif($filter->display_reports == 'custom' && $selected_bank_type != ""){
-        //         $banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
-        //     }
-        // }elseif($type == 'all' && $selected_bank_type != ""){
-        //     $filter = CustomerBank::where('id',auth()->user()->bank_id)->first();
-        //     if($filter->display_reports == 'state'){
-        //         $cities = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-        //         $banks = Bank::whereIn('city_id',$cities)->where('banks.bank_type_id',$selected_bank_type)->pluck('id')->toArray();
-        //     }elseif ($filter->display_reports == 'msa') {
-        //         $banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
-        //     }elseif($filter->display_reports == 'custom' && $selected_bank_type == ""){
-        //         $banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
-        //     }elseif($filter->display_reports == 'custom' && $selected_bank_type != ""){
-        //         $banks = CustomPackageBanks::where('bank_id',$filter->id)
-        //         ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
-        //         ->where('banks.bank_type_id',$selected_bank_type)
-        //         ->pluck('customer_selected_bank_id')->toArray();
-        //     }
-        // }
+        $userBank = auth()->user();
         $bankQuery = Bank::query();
-
-        if ($type == 'state') {
-            $filter = CustomerBank::where('id', auth()->user()->bank_id)->first();
-            if($filter->display_reports == "custom"){
-                $bankQuery = $bankQuery->join('custom_package_banks','banks.id','custom_package_banks.customer_selected_bank_id')
-                ->where('custom_package_banks.bank_id', $filter->id)
-                ->where('banks.state_id', $state);
-            }else{
-                $bankQuery->where('state_id', $state);
-            }
-
-            if ($selected_bank_type != "") {
-                $bankQuery->whereIn('bank_type_id', $selected_bank_type);
-            }
-
-            if ($code != "") {
+        $filter = CustomerBank::find($userBank->bank_id);
+        switch ($type) {
+            case 'state':
+                if ($filter->display_reports == 'custom') {
+                    $bankQuery->join('custom_package_banks', 'banks.id', 'custom_package_banks.customer_selected_bank_id')
+                        ->where('custom_package_banks.bank_id', $filter->id)
+                        ->where('banks.state_id', $state);
+                } else {
+                    $bankQuery->where('state_id', $state);
+                }
+                if ($unique) {
+                    $bankQuery->groupBy('banks.name');
+                }
+                break;
+            case 'msa':
                 $bankQuery->where('msa_code', $code);
-            }
-
-            $banks = $bankQuery->pluck('banks.id')->toArray();
-        } elseif ($type == 'msa') {
-            $bankQuery->where('msa_code', $code);
-
-            if ($selected_bank_type != "") {
-                $bankQuery->whereIn('bank_type_id', $selected_bank_type);
-            }
-            $banks = $bankQuery->pluck('id')->toArray();
-        } elseif ($type == 'all') {
-            $filter = CustomerBank::where('id', auth()->user()->bank_id)->first();
-
-            if ($filter->display_reports == 'state') {
-                $cities = BankSelectedCity::where('bank_id', $filter->id)->pluck('city_id')->toArray();
-                $bankQuery->whereIn('city_id', $cities);
-                if ($selected_bank_type != "") {
-                    $bankQuery->whereIn('banks.bank_type_id', $selected_bank_type);
+                if ($unique) {
+                    $bankQuery->groupBy('banks.name');
                 }
-                $banks = $bankQuery->pluck('id')->toArray();
-            } elseif ($filter->display_reports == 'msa') {
-                $bankQuery->where('msa_code', $filter->msa_code);
-                $banks = $bankQuery->pluck('id')->toArray();
-            } elseif ($filter->display_reports == 'custom') {
-                $customQuery = CustomPackageBanks::where('bank_id', $filter->id);
-                if ($selected_bank_type != "") {
-                    $customQuery->join('banks', 'banks.id', 'custom_package_banks.customer_selected_bank_id')
-                                ->whereIn('banks.bank_type_id', $selected_bank_type);
+                break;
+            case 'all':
+                // $filter = CustomerBank::find($userBank->bank_id);
+                if ($filter->display_reports == 'state') {
+                    $cities = BankSelectedCity::where('bank_id', $filter->id)->pluck('city_id')->toArray();
+                    $bankQuery->whereIn('city_id', $cities);
+                } elseif ($filter->display_reports == 'msa') {
+                    $bankQuery->where('msa_code', $filter->msa_code);
+                } elseif ($filter->display_reports == 'custom') {
+                    // $customQuery = CustomPackageBanks::where('bank_id', $filter->id);
+                    $bankQuery->join('custom_package_banks', 'custom_package_banks.bank_id', 'banks.id')
+                        ->where('custom_package_banks.bank_id',$filter->id);
+                    if (!empty($selectedBankType)) {
+                        $bankQuery->whereIn('banks.bank_type_id', $selectedBankType);
+                    }
+                    $banks = $bankQuery->pluck('customer_selected_bank_id')->toArray();
+                    break;
                 }
-                $banks = $customQuery->pluck('customer_selected_bank_id')->toArray();
-            }
+                if (!empty($selectedBankType)) {
+                    $bankQuery->whereIn('bank_type_id', $selectedBankType);
+                }
+                if (!empty($code)) {
+                    $bankQuery->where('msa_code', $code);
+                }
+                if ($unique) {
+                    $bankQuery->groupBy('banks.name');
+                }
+                break;
         }
-
-        $rate_types['rate_types'] = RateType::orderBy('display_order')->get();
-        $latest_bank_prices_by_type = [];
-        foreach ($rate_types['rate_types'] as $rt) {
-            $id = $rt->id;
-            $latest_bank_prices = BankPrices::select('bank_prices.*', 'banks.name as bank_name','banks.cbsa_name as cbsa_name','banks.zip_code as zip_code')
+        if($filter->display_reports == "custom"){
+            $banks = $bankQuery->pluck('customer_selected_bank_id')->toArray();
+        }else{
+            $banks = $bankQuery->pluck('id')->toArray();
+        }
+        $rateTypes['rate_types'] = RateType::orderBy('display_order')->get();
+        foreach ($rateTypes['rate_types'] as $rateType) {
+            $id = $rateType->id;
+            $latestBankPrices = BankPrices::select('bank_prices.*', 'banks.name as bank_name', 'banks.cbsa_name as cbsa_name', 'banks.zip_code as zip_code')
                 ->join('banks', 'bank_prices.bank_id', 'banks.id')
-                ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {
+                ->whereIn('bank_prices.created_at', function ($query) use ($id, $banks) {
                     $query->selectRaw('MAX(created_at)')
                         ->from('bank_prices')
                         ->where('rate_type_id', $id)
@@ -220,14 +251,14 @@ class BankPrices extends Model
                 ->where('is_checked', 1)
                 ->whereIn('bank_id', $banks)
                 ->groupBy('bank_id')
-                ->orderBy('current_rate', 'DESC')
+                ->orderByDesc('current_rate')
                 ->get();
-            $rt['banks'] = $latest_bank_prices;
+            $rateType['banks'] = $latestBankPrices;
         }
-
-        $rate_types['show_banks'] = Bank::whereIn('id',$banks)->get();
-        return $rate_types;
+        $rateTypes['show_banks'] = Bank::whereIn('id', $banks)->get();
+        return $rateTypes;
     }
+
 
     public static function BankReportsWithState($state_id,$code,$selected_bank_type)
     {
@@ -603,16 +634,24 @@ class BankPrices extends Model
     //     return $rate_types;
     // }
 
-    public static function summary_report($id,$selected_bank_type){
+    public static function summary_report($id,$selected_bank_type,$unique){
         $type = DB::table('customer_bank')->where('id',auth()->user()->bank_id)->first();
         if($type->display_reports == 'state' && $selected_bank_type == ""){
             $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
-            $banks = Bank::whereIn('city_id',$cities)->pluck('id')->toArray();
+            if($unique){
+                $banks = Bank::whereIn('city_id',$cities)->groupBy('banks.name')->pluck('id')->toArray();
+            }else{
+                $banks = Bank::whereIn('city_id',$cities)->pluck('id')->toArray();
+            }
         }elseif($type->display_reports == 'msa' && $selected_bank_type == ""){
             $banks = Bank::where('msa_code',$type->msa_code)->pluck('id')->toArray();
         }elseif($type->display_reports == 'state' && $selected_bank_type != ""){
             $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
-            $banks = Bank::whereIn('city_id',$cities)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+            if($unique){
+                $banks = Bank::whereIn('city_id',$cities)->whereIn('bank_type_id',$selected_bank_type)->groupBy('banks.name')->pluck('id')->toArray();
+            }else{
+                $banks = Bank::whereIn('city_id',$cities)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+            }
         }elseif($type->display_reports == 'msa_code' && $selected_bank_type != ""){
             $banks = Bank::where('msa_code',$type->msa_code)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
         }elseif($type->display_reports == 'custom' && $selected_bank_type == ""){
@@ -642,21 +681,6 @@ class BankPrices extends Model
                 ->toArray();
             }
         }
-        // $data = BankPrices::select('bank_prices.id', 'bank_prices.rate_type_id','bank_prices.previous_rate','bank_prices.current_rate','bank_prices.change', 'bank_prices.rate', 'bank_prices.created_at','bank_prices.is_checked','rate_types.name as rate_type_name','banks.name as bk_name','banks.id as bk_id')
-        //     ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {
-        //         $query->selectRaw('MAX(created_at)')
-        //             ->from('bank_prices')
-        //             ->where('rate_type_id', $id)
-        //             ->whereIn('bank_id',$banks)
-        //             ->where('is_checked','1')
-        //             ->groupBy('bank_id')
-        //             ->groupBy('rate_type_id');
-        //     })
-        //     ->where('bank_prices.rate_type_id', $id)
-        //     ->join('rate_types', 'bank_prices.rate_type_id', '=', 'rate_types.id')
-        //     ->join('banks', 'bank_prices.bank_id', '=', 'banks.id')
-        //     ->orderBy('bank_prices.current_rate','desc')
-        //     ->get();
         $data = BankPrices::select('bank_prices.*', 'banks.name as bank_name','banks.cbsa_name as cbsa_name','banks.zip_code as zip_code')
             ->join('banks', 'bank_prices.bank_id', 'banks.id')
             ->whereIn('bank_prices.created_at', function ($query) use ($id,$banks) {

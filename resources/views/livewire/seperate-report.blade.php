@@ -232,6 +232,14 @@
                     <div class="col-md-2">
                         <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear()">Clear Filters</button>
                     </div>
+                    <div class="col-md-4"></div>
+                    <div class="align-items-end col-md-2 d-flex">
+                        <h4>Unique: </h4>
+                        <label class="switch">
+                            <input type="checkbox" wire:model="unique">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 @endif
                 @error('filter_error')
                 <div class="mt-3 text-center">
@@ -495,5 +503,64 @@
     }
     .table td {
     white-space: nowrap;
+    }
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    }
+
+    .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 10px;
+    left: 10px;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 5px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider {
+    background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
     }
 </style>

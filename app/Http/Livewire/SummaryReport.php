@@ -21,6 +21,7 @@ class SummaryReport extends Component
     public $selected_bank = '';
     public $selected_bank_type = [];
     public $my_bank_id = '';
+    public $unique = true;
 
     public function render()
     {
@@ -31,7 +32,7 @@ class SummaryReport extends Component
             $this->fill_type($bankTypes);
         }
         foreach ($rt as $key => $value) {
-            $data = BankPrices::summary_report($value->id,$this->selected_bank_type);
+            $data = BankPrices::summary_report($value->id,$this->selected_bank_type,$this->unique);
             $value->data = $data;
         }
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
@@ -48,7 +49,11 @@ class SummaryReport extends Component
             ->get();
         }elseif($customer_bank->display_reports == "state"){
             $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
-            $banks = Bank::whereIn('city_id',$cities)->get();
+            if($this->unique){
+                $banks = Bank::whereIn('city_id',$cities)->groupBy('banks.name')->get();
+            }else{
+                $banks = Bank::whereIn('city_id',$cities)->get();
+            }
         }else{
             $banks = Bank::get();
         }

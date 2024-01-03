@@ -29,10 +29,19 @@ class SeperateReport extends Component
     public $selected_bank = "";
     public $selected_bank_type = [];
     public $my_bank_id = "";
+    public $unique = true;
+
     public function render()
     {
         $rt = RateType::orderby('display_order')->get();
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+        if($this->unique){
+            if($customer_type->display_reports == "custom"){
+                $this->unique = false;
+            }elseif($customer_type->display_reports == "state"){
+                $this->unique = true;
+            }
+        }
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
         $bankTypes = BankType::where('status','1')->get();
@@ -42,15 +51,15 @@ class SeperateReport extends Component
         }
         $this->last_updated = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', BankPrices::max('updated_at'))->format('m-d-Y');
         if($this->state_id!="" && $this->state_id!='all'){
-            $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type,$this->unique);
             $this->reports = $response['rate_types'];
             $this->results = BankPrices::get_min_max_func('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
         }elseif ($this->msa_code != "" && $this->msa_code!='all') {
-            $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type,$this->unique);
             $this->reports = $response['rate_types'];
             $this->results = BankPrices::get_min_max_func('msa','all',$this->msa_code,$this->selected_bank_type);
         }else {
-            $response = BankPrices::SeperateReports('all','all','0',$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('all','all','0',$this->selected_bank_type,$this->unique);
             $this->reports = $response['rate_types'];
             $this->results = BankPrices::get_min_max_func('all','all','0',$this->selected_bank_type);
         }
@@ -146,15 +155,15 @@ class SeperateReport extends Component
     {
         $rt = RateType::orderby('display_order')->get();
         if($this->state_id!='' && $this->state_id!='all'){
-            $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('state',$this->state_id,$this->msa_code,$this->selected_bank_type,$this->unique);
             $reports = $response['rate_types'];
             $results = BankPrices::get_min_max_func('state',$this->state_id,$this->msa_code,$this->selected_bank_type);
         }elseif ($this->msa_code != '' && $this->msa_code!='all') {
-            $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('msa','all',$this->msa_code,$this->selected_bank_type,$this->unique);
             $reports = $response['rate_types'];
             $results = BankPrices::get_min_max_func('msa','all',$this->msa_code,$this->selected_bank_type);
         }else {
-            $response = BankPrices::SeperateReports('all','all','0',$this->selected_bank_type);
+            $response = BankPrices::SeperateReports('all','all','0',$this->selected_bank_type,$this->unique);
             $reports = $response['rate_types'];
             $results = BankPrices::get_min_max_func('all','all','0',$this->selected_bank_type);
         }
