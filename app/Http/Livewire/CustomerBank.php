@@ -48,6 +48,8 @@ class CustomerBank extends Component
     public $custom_bank_select = '';
     public $selectedbanks = [];
 
+    public $search = '';
+
     protected $rules = [
         'bank_name' => 'required',
         'bank_email' => 'required',
@@ -71,7 +73,11 @@ class CustomerBank extends Component
     {
         $states = State::where('country_id', '233')->get();
         $charities = Charity::all();
-        $data = CB::with('contract','states')->paginate(10);
+        if ($this->search == "") {
+            $data = CB::with('contract','states')->paginate(10);
+        }else{
+            $data = CB::with('contract','states')->where('bank_name','like','%'.$this->search.'%')->paginate(10);
+        }
         if($this->state != ""){
             $this->bank_cities = Cities::where('state_id',$this->state)->get();
         }else{
@@ -269,5 +275,9 @@ class CustomerBank extends Component
 
     public function view($id){
         return redirect(url('/view/detailed/customer/bank/'.$id));
+    }
+
+    public function search(){
+        $this->resetPage();
     }
 }

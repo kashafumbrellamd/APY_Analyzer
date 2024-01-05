@@ -31,7 +31,11 @@ class MakeBankRequest extends Component
     {
         $states = State::where('country_id','233')->get();
         $cities = Cities::get();
-        $data = BankRequest::with('state','cities')->paginate(10);
+        $data = BankRequest::with('state','cities')
+            ->join('users','bank_requests.user_id','users.id')
+            ->join('customer_bank','customer_bank.id','users.bank_id')
+            ->select('bank_requests.*','customer_bank.id as customer_bank_id','customer_bank.bank_name as customer_bank_name')
+            ->paginate(10);
         return view('livewire.make-bank-request',['data'=>$data, 'states'=>$states, 'cities'=>$cities]);
     }
 

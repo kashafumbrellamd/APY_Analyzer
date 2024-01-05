@@ -23,7 +23,12 @@ class Bank extends Model
         'cbsa_code',
         'cbsa_name',
         'zip_code',
+        'other_zips',
         'surveyed',
+    ];
+
+    protected $casts = [
+        'other_zips' => 'array'
     ];
 
     public static function BanksWithState()
@@ -93,45 +98,43 @@ class Bank extends Model
         return $this->belongsTo(State::class,'state_id','id');
      }
 
-    public static function ToExcelInsertedData()
+    public static function ToExcelInsertedData($search)
     {
-        $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+        $query = Bank::join('states', 'banks.state_id', '=', 'states.id')
              ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
              ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
              ->with('cities')
-             ->orderby('name','ASC')
-             ->get();
+             ->orderby('name','ASC');
+            //  ->get();
+        if ($search != '') {
+            $query->where('banks.name','like','%'.$search.'%');
+        }
+        $states = $query->get();
         return $states;
     }
 
-    public static function ToExcelFilteredInsertedData($state_id='',$city_id='')
+    public static function toExcelFilteredInsertedData($state_id = '', $city_id = '',$search)
     {
-        if($state_id != '' && $city_id == ''){
-            $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
-                 ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
-                 ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
-                 ->where('banks.state_id',$state_id)
-                 ->with('cities')
-                 ->orderby('name','ASC')
-                 ->get();
-        }elseif($state_id != '' && $city_id != ''){
-            $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
-                ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
-                ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
-                ->where('banks.state_id',$state_id)
-                ->where('banks.city_id',$city_id)
-                ->with('cities')
-                ->orderby('name','ASC')
-                ->get();
-        }elseif($state_id == '' && $city_id != ''){
-            $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
-                ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
-                ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
-                ->where('banks.city_id',$city_id)
-                ->with('cities')
-                ->orderby('name','ASC')
-                ->get();
+        $query = Bank::join('states', 'banks.state_id', '=', 'states.id')
+            ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+            ->select('banks.*', 'states.name as state_name', 'bank_types.name as type_name')
+            ->with('cities')
+            ->orderby('name', 'ASC');
+
+        if ($state_id != '') {
+            $query->where('banks.state_id', $state_id);
         }
+
+        if ($city_id != '') {
+            $query->where('banks.city_id', $city_id);
+        }
+        if ($search != '') {
+            $query->where('banks.name','like','%'.$search.'%');
+        }
+
+        $states = $query->get();
+
         return $states;
     }
+
 }

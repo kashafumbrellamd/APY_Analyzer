@@ -107,6 +107,11 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div>
+                                            <label for="other_zips" class="form-label">Other Zip Codes</label>
+                                            <input type="text" id="other_zips" class="form-control" wire:model.lazy="other_zips"
+                                                placeholder="Enter Zip Code">
+                                        </div>
                                         <div class="col-md-1">
 
                                             <!-- <label for="more">(Optional)</label><br>
@@ -173,7 +178,7 @@
                                         <input type="text" id="zip_code" class="form-control" wire:model="zip_code"
                                             placeholder="Enter Zip Code" wire:keyup="fetch_zip_code" required>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="state">State</label>
                                         <select class="form-select form-control" id="state" aria-label="Default select example"
                                             wire:model="state_id">
@@ -183,7 +188,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="city">City</label>
                                         <select class="form-select form-control" id="city" aria-label="Default select example"
                                             wire:model="msa_code">
@@ -203,6 +208,11 @@
                                                 <option value="{{ $bt->id }}">{{ $bt->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div>
+                                        <label for="other_zips" class="form-label">Other Zip Codes</label>
+                                        <input type="text" id="other_zips" class="form-control" wire:model.lazy="other_zips"
+                                            placeholder="Enter Zip Code">
                                     </div>
                                     <div class="col-md-1">
                                         <label for="more">(Optional)</label><br>
@@ -322,11 +332,13 @@
                         <tr>
                             <th>S.No</th>
                             <th>Name</th>
+                            <th>Zip Code</th>
                             <th>State</th>
                             <th>Phone Number</th>
                             <th>Website</th>
                             <th>City</th>
                             <th>Institution Type</th>
+                            <th>Other Zips</th>
                             <th>Contact Person Name</th>
                             <th>Contact Person Email</th>
                             <th>Contact Person Phone</th>
@@ -344,11 +356,13 @@
                                 <td>{{$data->currentPage()}}0</td>
                                 @endif
                                 <td>{{ $dt->name }}</td>
+                                <td>{{ $dt->zip_code }}</td>
                                 <td>{{ $dt->state_name }}</td>
                                 <td>{{ $dt->phone_number }}</td>
                                 <td>{{ $dt->website }}</td>
                                 <td>{{ $dt->cities->name }}</td>
                                 <td>{{ $dt->type_name }}</td>
+                                <td>{{ $dt->other_zips }}</td>
                                 <td>{{ $dt->cp_name }}</td>
                                 <td>{{ $dt->cp_email }}</td>
                                 <td>{{ $dt->cp_phone }}</td>

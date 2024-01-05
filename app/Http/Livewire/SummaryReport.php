@@ -21,7 +21,7 @@ class SummaryReport extends Component
     public $selected_bank = '';
     public $selected_bank_type = [];
     public $my_bank_id = '';
-    public $unique = true;
+    public $unique = false;
 
     public function render()
     {
@@ -49,11 +49,12 @@ class SummaryReport extends Component
             ->get();
         }elseif($customer_bank->display_reports == "state"){
             $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
-            if($this->unique){
-                $banks = Bank::whereIn('city_id',$cities)->groupBy('banks.name')->get();
-            }else{
-                $banks = Bank::whereIn('city_id',$cities)->get();
-            }
+            // if($this->unique){
+            //     $banks = Bank::whereIn('city_id',$cities)->groupBy('banks.name')->get();
+            // }else{
+            //     $banks = Bank::whereIn('city_id',$cities)->get();
+            // }
+            $banks = Bank::whereIn('city_id',$cities)->get();
         }else{
             $banks = Bank::get();
         }

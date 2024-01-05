@@ -116,14 +116,14 @@
                     <div class="col-md-2">
                         <button class="btn" style="background-color:#4e73df; color:white;" wire:click="clear_filer">Clear Filters</button>
                     </div>
-                    <div class="col-md-4"></div>
+                    {{-- <div class="col-md-4"></div>
                     <div class="align-items-end col-md-2 d-flex">
                         <h4>Unique: </h4>
                         <label class="switch">
                             <input type="checkbox" wire:model="unique">
                             <span class="slider round"></span>
                         </label>
-                    </div>
+                    </div> --}}
                     @error('filter_error')
                     <div class="mt-3 text-center">
                         <span class="alert alert-danger" role="alert">{{ $message }}</span>
@@ -180,25 +180,29 @@
                                                 @if ($rt['data'][$i]->bank_id != $selected_bank)
                                                     <td
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;Last Updated: {{date('m-d-Y',strtotime(explode(' ',$rt['data'][$i]->created_at)[0]))}}">
-                                                        {{ $rt['data'][$i]->bank_name }} <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span>
+                                                        {{ $rt['data'][$i]->bank_name }}
+                                                        {{-- <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span> --}}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @else
                                                     <td
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;"
-                                                        class="text-danger">{{ $rt['data'][$i]->bank_name }} <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span>
+                                                        class="text-danger">{{ $rt['data'][$i]->bank_name }}
+                                                        {{-- <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span> --}}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @endif
                                             @else
                                                 @if ($rt['data'][$i]->bank_id != $selected_bank)
                                                     <td style="color:#9d4201!important;"
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;Last Updated: {{date('m-d-Y',strtotime(explode(' ',$rt['data'][$i]->created_at)[0]))}}">
-                                                        {{ $rt['data'][$i]->bank_name }} <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span>
+                                                        {{ $rt['data'][$i]->bank_name }}
+                                                         {{-- <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span> --}}
                                                         ({{ number_format($rt['data'][$i]->current_rate,2) }})</td>
                                                 @else
                                                     <td style="color:#9d4201!important;"
                                                         title="Change: {{ $rt['data'][$i]->change }} &#10;Previous: {{ $rt['data'][$i]->previous_rate }}&#10;"
                                                         class="text-danger">
-                                                            {{ $rt['data'][$i]->bank_name }} <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span>
+                                                            {{ $rt['data'][$i]->bank_name }}
+                                                            {{-- <span style="color: #000000!important;">({{ $rt['data'][$i]->cbsa_name }}) ({{ $rt['data'][$i]->zip_code }})</span> --}}
                                                             ({{ number_format($rt['data'][$i]->current_rate,2) }})
                                                     </td>
                                                 @endif

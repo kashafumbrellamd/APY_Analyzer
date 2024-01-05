@@ -79,8 +79,10 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Bank Name</th>
-                                <th>Zip Code</th>
+                                <th>Customer Bank Id</th>
+                                <th>Customer Bank Name</th>
+                                <th>Requested Bank Name</th>
+                                {{-- <th>Zip Code</th> --}}
                                 <th>State</th>
                                 <th>City</th>
                                 {{-- <th>Description</th> --}}
@@ -89,8 +91,19 @@
                         <tbody>
                             @forelse ($data as $dt)
                                 <tr>
+                                    <td>
+                                        <a href="/view/detailed/customer/bank/{{ $dt->customer_bank_id }}"
+                                            style="color:black !important;">
+                                            {{ $dt->customer_bank_id }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/view/detailed/customer/bank/{{ $dt->customer_bank_id }}"
+                                        style="color:black !important;">{{ $dt->customer_bank_name }}
+                                        </a>
+                                    </td>
                                     <td>{{ $dt->name }}</td>
-                                    <td>{{ $dt->zip_code }}</td>
+                                    {{-- <td>{{ $dt->zip_code }}</td> --}}
                                     <td>{{ $dt->state->name }}</td>
                                     <td>{{ $dt->cities->name }}</td>
                                     {{-- <td>{{ $dt->description }}</td> --}}

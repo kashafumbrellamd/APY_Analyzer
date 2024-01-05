@@ -6,7 +6,13 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 d-flex">
+                        <input type="search" class="form-control mb-3" wire:model.defer="search" placeholder="Search By Bank Name">
+                        <button class="btn btn-primary h-75 ml-2" wire:click="search"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>

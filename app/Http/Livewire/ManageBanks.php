@@ -33,6 +33,7 @@ class ManageBanks extends Component
     public $cbsa_code = '';
     public $cbsa_name = '';
     public $zip_code = '';
+    public $other_zips = '';
 
     public $bank_type  = '';
     public $cp_name = '';
@@ -92,6 +93,7 @@ class ManageBanks extends Component
                 'city_id' => $this->msa_code,
                 'msa_code' => $this->msa_code,
                 'zip_code' => $this->zip_code,
+                'other_zips' => $this->other_zips,
                 'cbsa_code' => $this->cbsa_code,
                 'cbsa_name' => $this->cbsa_name,
                 'bank_type_id' => $this->bank_type,
@@ -119,6 +121,7 @@ class ManageBanks extends Component
         $this->website = $bank->website;
         $this->msa_code = $bank->msa_code;
         $this->zip_code = $bank->zip_code;
+        $this->other_zips = $bank->other_zips;
         $this->cbsa_code = $bank->cbsa_code;
         $this->cbsa_name = $bank->cbsa_name;
         $this->bank_type  = $bank->bank_type_id;
@@ -140,6 +143,7 @@ class ManageBanks extends Component
                 'msa_code' => $this->msa_code,
                 'city_id' => $this->msa_code,
                 'zip_code' => $this->zip_code,
+                'other_zips' => $this->other_zips,
                 'cbsa_code' => $this->cbsa_code,
                 'cbsa_name' => $this->cbsa_name,
                 'cp_name' => $this->cp_name,
@@ -249,6 +253,7 @@ class ManageBanks extends Component
         $this->cp_phone = '';
         $this->update = false;
         $this->zip_code = '';
+        $this->other_zips = '';
         $this->cbsa_code = '';
         $this->cbsa_name = '';
         $this->render();
@@ -320,13 +325,13 @@ class ManageBanks extends Component
 
     public function downloadData(){
             if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
-                $data = Bank::ToExcelFilteredInsertedData($this->bank_state_filter);
+                $data = Bank::ToExcelFilteredInsertedData($this->bank_state_filter,'',$this->search);
             }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
-                $data = Bank::ToExcelFilteredInsertedData('',$this->bank_city_filter);
+                $data = Bank::ToExcelFilteredInsertedData('',$this->bank_city_filter,$this->search);
             }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
-                $data = Bank::ToExcelFilteredInsertedData($this->bank_state_filter,$this->bank_city_filter);
+                $data = Bank::ToExcelFilteredInsertedData($this->bank_state_filter,$this->bank_city_filter,$this->search);
             }else{
-                $data = Bank::ToExcelInsertedData();
+                $data = Bank::ToExcelInsertedData($this->search);
             }
 
             $spreadsheet = new Spreadsheet();
@@ -335,12 +340,13 @@ class ManageBanks extends Component
             $activeWorksheet->setCellValue('B1', 'Name');
             $activeWorksheet->setCellValue('C1', 'Zip Code');
             $activeWorksheet->setCellValue('D1', 'State');
-            $activeWorksheet->setCellValue('E1', 'Phone Number');
-            $activeWorksheet->setCellValue('F1', 'Website');
-            $activeWorksheet->setCellValue('G1', 'Institution Type');
-            $activeWorksheet->setCellValue('H1', 'Contact Person Name');
-            $activeWorksheet->setCellValue('I1', 'Contact Person Email');
-            $activeWorksheet->setCellValue('J1', 'Contact Person Phone');
+            $activeWorksheet->setCellValue('E1', 'CBSA Name');
+            $activeWorksheet->setCellValue('F1', 'Phone Number');
+            $activeWorksheet->setCellValue('G1', 'Website');
+            $activeWorksheet->setCellValue('H1', 'Institution Type');
+            $activeWorksheet->setCellValue('I1', 'Contact Person Name');
+            $activeWorksheet->setCellValue('J1', 'Contact Person Email');
+            $activeWorksheet->setCellValue('K1', 'Contact Person Phone');
 
             $number = 2;
             foreach ($data as $key => $value) {
@@ -348,12 +354,13 @@ class ManageBanks extends Component
                 $activeWorksheet->setCellValue('B'.$number, $value->name);
                 $activeWorksheet->setCellValue('C'.$number, $value->zip_code);
                 $activeWorksheet->setCellValue('D'.$number, $value->state_name);
-                $activeWorksheet->setCellValue('E'.$number, $value->phone_number);
-                $activeWorksheet->setCellValue('F'.$number, $value->website);
-                $activeWorksheet->setCellValue('G'.$number, $value->type_name);
-                $activeWorksheet->setCellValue('H'.$number, $value->cp_name);
-                $activeWorksheet->setCellValue('I'.$number, $value->cp_email);
-                $activeWorksheet->setCellValue('J'.$number, $value->cp_phone);
+                $activeWorksheet->setCellValue('E'.$number, $value->cbsa_name);
+                $activeWorksheet->setCellValue('F'.$number, $value->phone_number);
+                $activeWorksheet->setCellValue('G'.$number, $value->website);
+                $activeWorksheet->setCellValue('H'.$number, $value->type_name);
+                $activeWorksheet->setCellValue('I'.$number, $value->cp_name);
+                $activeWorksheet->setCellValue('J'.$number, $value->cp_email);
+                $activeWorksheet->setCellValue('K'.$number, $value->cp_phone);
                 $number++;
             }
 
@@ -361,7 +368,7 @@ class ManageBanks extends Component
 
             $headers = [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment; filename="hello_world.xlsx"',
+                'Content-Disposition' => 'attachment; filename="Banks_Data.xlsx"',
             ];
 
             $callback = function () use ($writer) {

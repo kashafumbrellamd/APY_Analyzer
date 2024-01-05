@@ -29,19 +29,19 @@ class SeperateReport extends Component
     public $selected_bank = "";
     public $selected_bank_type = [];
     public $my_bank_id = "";
-    public $unique = true;
+    public $unique = false;
 
     public function render()
     {
         $rt = RateType::orderby('display_order')->get();
         $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
-        if($this->unique){
-            if($customer_type->display_reports == "custom"){
-                $this->unique = false;
-            }elseif($customer_type->display_reports == "state"){
-                $this->unique = true;
-            }
-        }
+        // if($this->unique){
+        //     if($customer_type->display_reports == "custom"){
+        //         $this->unique = false;
+        //     }elseif($customer_type->display_reports == "state"){
+        //         $this->unique = true;
+        //     }
+        // }
         $states = $this->getstates();
         $msa_codes = $this->getmsacodes();
         $bankTypes = BankType::where('status','1')->get();

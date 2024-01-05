@@ -246,7 +246,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div>
+                                            {{-- <div>
                                                 <div class="mb-3">
                                                     <label for="zip_search" class="form-label">Enter Zip Code</label>
                                                     <input type="text" class="form-control" wire:model.defer="bank_zip_code"
@@ -254,7 +254,7 @@
                                                          style="width: 50%!important; display:inline;"  maxlength="5">
                                                     <button class="btn btn-primary" wire:click="zipCodeChanged">Search</button>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="col-md-6" wire:loading.class="invisible">
