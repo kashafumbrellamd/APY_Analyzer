@@ -202,11 +202,11 @@ class ManageBanks extends Component
                                     'city_id'=>$city_id,
                                     'zip_code'=>$bank['Zip Code'],
                                     'cbsa_code'=>$bank['CBSA Code'],
-                                    'cbsa_name'=>$bank['CBSA'],
+                                    'cbsa_name'=>$bank['CBSA Name'],
                                     'cp_name'=>$bank['Contact Person Name'],
                                     'cp_email'=>$bank['Contact Person Email'],
                                     'cp_phone'=>$bank['Contact Person Phone'],
-                                    'surveyed'=>$bank['is_survey'],
+                                    'surveyed'=>$bank['is_surved'],
                                     'bank_type_id'=>$bank_type->id,
                                 ]);
                         }
@@ -340,13 +340,15 @@ class ManageBanks extends Component
             $activeWorksheet->setCellValue('B1', 'Name');
             $activeWorksheet->setCellValue('C1', 'Zip Code');
             $activeWorksheet->setCellValue('D1', 'State');
-            $activeWorksheet->setCellValue('E1', 'CBSA Name');
-            $activeWorksheet->setCellValue('F1', 'Phone Number');
-            $activeWorksheet->setCellValue('G1', 'Website');
-            $activeWorksheet->setCellValue('H1', 'Institution Type');
-            $activeWorksheet->setCellValue('I1', 'Contact Person Name');
-            $activeWorksheet->setCellValue('J1', 'Contact Person Email');
-            $activeWorksheet->setCellValue('K1', 'Contact Person Phone');
+            $activeWorksheet->setCellValue('E1', 'City');
+            $activeWorksheet->setCellValue('F1', 'CBSA Code');
+            $activeWorksheet->setCellValue('G1', 'CBSA Name');
+            $activeWorksheet->setCellValue('H1', 'Phone Number');
+            $activeWorksheet->setCellValue('I1', 'Website');
+            $activeWorksheet->setCellValue('J1', 'Institution Type');
+            $activeWorksheet->setCellValue('K1', 'Contact Person Name');
+            $activeWorksheet->setCellValue('L1', 'Contact Person Email');
+            $activeWorksheet->setCellValue('M1', 'Contact Person Phone');
 
             $number = 2;
             foreach ($data as $key => $value) {
@@ -354,13 +356,15 @@ class ManageBanks extends Component
                 $activeWorksheet->setCellValue('B'.$number, $value->name);
                 $activeWorksheet->setCellValue('C'.$number, $value->zip_code);
                 $activeWorksheet->setCellValue('D'.$number, $value->state_name);
-                $activeWorksheet->setCellValue('E'.$number, $value->cbsa_name);
-                $activeWorksheet->setCellValue('F'.$number, $value->phone_number);
-                $activeWorksheet->setCellValue('G'.$number, $value->website);
-                $activeWorksheet->setCellValue('H'.$number, $value->type_name);
-                $activeWorksheet->setCellValue('I'.$number, $value->cp_name);
-                $activeWorksheet->setCellValue('J'.$number, $value->cp_email);
-                $activeWorksheet->setCellValue('K'.$number, $value->cp_phone);
+                $activeWorksheet->setCellValue('E'.$number, $value->cities->name);
+                $activeWorksheet->setCellValue('F'.$number, $value->cbsa_code);
+                $activeWorksheet->setCellValue('G'.$number, $value->cbsa_name);
+                $activeWorksheet->setCellValue('H'.$number, $value->phone_number);
+                $activeWorksheet->setCellValue('I'.$number, $value->website);
+                $activeWorksheet->setCellValue('J'.$number, $value->type_name);
+                $activeWorksheet->setCellValue('K'.$number, $value->cp_name);
+                $activeWorksheet->setCellValue('L'.$number, $value->cp_email);
+                $activeWorksheet->setCellValue('M'.$number, $value->cp_phone);
                 $number++;
             }
 

@@ -181,7 +181,7 @@ class AddBankRates extends Component
                     $date = date('Y-m-d H:i:s',strtotime($dt['Date (mm/dd/YYYY)']));
                     foreach ($head as $key => $hd) {
                         if($hd!=null && $hd!='Id' && $hd != 'Bank Name' && $hd != 'Zip Code'
-                        && $hd!='State' && $hd!='Phone Number'
+                        && $hd!='State' && $hd!='City' && $hd!='CBSA Code' && $hd!='CBSA Name' && $hd!='Phone Number'
                         && $hd!='Website' && $hd!='Institution Type'
                         && $hd!='Contact Person Name' && $hd!='Contact Person Email' && $hd != 'Contact Person Phone'
                         && $hd!='Date (mm/dd/YYYY)' && $hd!=null){
