@@ -173,7 +173,7 @@ class ManageBanks extends Component
         {
             $banks = $this->xlsxToArray($this->file->path());
             foreach ($banks as $key => $bank) {
-                $bank_check = Bank::where('name',$bank['Bank Name'])->where('zip_code',$bank['Zip Code'])->first();
+                $bank_check = Bank::where('name',$bank['Bank Name'])->where('cbsa_code',$bank['CBSA Code'])->first();
                 if($bank_check==null && $bank['Bank Name']!= null)
                 {
                     $zip = Zip_code::where('zip_code',$bank['Zip Code'])->first();
@@ -201,6 +201,7 @@ class ManageBanks extends Component
                                     'msa_code'=>$city_id,
                                     'city_id'=>$city_id,
                                     'zip_code'=>$bank['Zip Code'],
+                                    'other_zips'=>$bank['Other Zip'],
                                     'cbsa_code'=>$bank['CBSA Code'],
                                     'cbsa_name'=>$bank['CBSA Name'],
                                     'cp_name'=>$bank['Contact Person Name'],
@@ -349,6 +350,7 @@ class ManageBanks extends Component
             $activeWorksheet->setCellValue('K1', 'Contact Person Name');
             $activeWorksheet->setCellValue('L1', 'Contact Person Email');
             $activeWorksheet->setCellValue('M1', 'Contact Person Phone');
+            $activeWorksheet->setCellValue('N1', 'Other Zips');
 
             $number = 2;
             foreach ($data as $key => $value) {
@@ -365,6 +367,7 @@ class ManageBanks extends Component
                 $activeWorksheet->setCellValue('K'.$number, $value->cp_name);
                 $activeWorksheet->setCellValue('L'.$number, $value->cp_email);
                 $activeWorksheet->setCellValue('M'.$number, $value->cp_phone);
+                $activeWorksheet->setCellValue('N'.$number, $value->other_zips);
                 $number++;
             }
 

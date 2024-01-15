@@ -182,7 +182,7 @@ class AddBankRates extends Component
                     foreach ($head as $key => $hd) {
                         if($hd!=null && $hd!='Id' && $hd != 'Bank Name' && $hd != 'Zip Code'
                         && $hd!='State' && $hd!='City' && $hd!='CBSA Code' && $hd!='CBSA Name' && $hd!='Phone Number'
-                        && $hd!='Website' && $hd!='Institution Type'
+                        && $hd!='Website' && $hd!='Institution Type' && $hd!='Other Zips'
                         && $hd!='Contact Person Name' && $hd!='Contact Person Email' && $hd != 'Contact Person Phone'
                         && $hd!='Date (mm/dd/YYYY)' && $hd!=null){
                             $rt = RateType::where('name',$hd)->first();
