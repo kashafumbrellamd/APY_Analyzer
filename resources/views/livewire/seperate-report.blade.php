@@ -293,8 +293,8 @@
                                                     <td style="color:#9d4201!important;">{{ $bank['zip_code'] }}</td> --}}
                                                 @else
                                                     <td style="text-align: left;">{{ $bank['bank_name'] }}</td>
-                                                    <td>{{ $bank['cbsa_name'] }}</td>
-                                                    <td>{{ $bank['zip_code'] }}</td>
+                                                    {{-- <td>{{ $bank['cbsa_name'] }}</td>
+                                                    <td>{{ $bank['zip_code'] }}</td> --}}
                                                     @endif
                                                 @if ($bank['current_rate'] > $bank['previous_rate'])
                                                     <td class="text-success" style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
@@ -365,7 +365,7 @@
                             </tr>
                         @endforelse
                     </tbody>
-                    @if (
+                    {{-- @if (
                         $results[$key]['c_max'] != null &&
                         $results[$key]['p_max'] != null &&
                         $results[$key]['c_min'] != null &&
@@ -375,7 +375,7 @@
                         $results[$key]['c_med'] != null &&
                         $results[$key]['p_med'] != null &&
                         $results[$key]['c_mode'] != null &&
-                        $results[$key]['p_mode'] != null)
+                        $results[$key]['p_mode'] != null) --}}
                     <tfoot>
                         <tr>
                             <th></th>
@@ -476,7 +476,7 @@
                             @endif
                         </tr>
                     </tfoot>
-                    @endif
+                    {{-- @endif --}}
                 </table>
                 </div>
             </div>
