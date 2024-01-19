@@ -74,7 +74,7 @@ class ManageBanks extends Component
              $data = $query->paginate(10);
         }
         $states = State::where('country_id','233')->get();
-        $cities = Cities::get();
+        $cities = Cities::where('country_id','233')->get();
         $bts = BankType::where('status','1')->get();
         $bank_states = $this->getStates();
         $bank_cities = $this->getCities();

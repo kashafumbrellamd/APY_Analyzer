@@ -368,17 +368,17 @@ class BankPrices extends Model
         }else{
             if($type == 'state'){
                 if($code!= ""){
-                    $selected_banks = Bank::where('state_id',$state)->where('msa_code',$code)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+                    $selected_banks = Bank::where('state_id',$state)->where('msa_code',$code)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
                 }else{
-                    $selected_banks = Bank::where('state_id',$state)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+                    $selected_banks = Bank::where('state_id',$state)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
                 }
             }elseif($type == 'msa'){
-                $selected_banks = Bank::where('msa_code',$code)->where('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+                $selected_banks = Bank::where('msa_code',$code)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
             }else{
                 if($filter->display_reports == 'custom'){
                     $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)
                     ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
-                    ->where('banks.bank_type_id',$selected_bank_type)
+                    ->whereIn('banks.bank_type_id',$selected_bank_type)
                     ->pluck('custom_package_banks.customer_selected_bank_id')
                     ->toArray();
                 }elseif($filter->display_reports == 'state'){

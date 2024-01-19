@@ -323,7 +323,8 @@
                                                                             <label class="form-check-label"
                                                                                 for="defaultCheck{{ $bank->id }}">
                                                                                 {{ $bank->name }} <span
-                                                                                    class="state_city_span">({{ $bank->zip_code }}, {{ $bank->states->name }},
+                                                                                    class="state_city_span">
+                                                                                    ({{-- {{ $bank->zip_code }}, --}}{{ $bank->states->name }},
                                                                                     &nbsp;{{ $bank->cities->name }})</span>
                                                                             </label>
                                                                         </div>
@@ -353,7 +354,7 @@
                                                 @forelse ($selected_banks_name as $item)
                                                     {{-- <li class="">{{ $item['name'] }}</li> --}}
                                                     <li class=""><b>{{ $item['name'] }}</b>
-                                                        ({{ $item['zip_code'] }}, {{ $item['states']['name'] }},{{ $item['cities']['name'] }})
+                                                        ({{-- {{ $item['zip_code'] }}, --}}{{ $item['states']['name'] }},{{ $item['cities']['name'] }})
                                                     </li>
                                                 @empty
                                                 @endforelse
