@@ -86,6 +86,11 @@ class GeneralController extends Controller
         return view('packages');
     }
 
+    public function standard_metropolitan_area()
+    {
+        return view('standard_metropolitan_area');
+    }
+
     public function summary_reports()
     {
         return view('customer_bank.summary_reports');
@@ -148,7 +153,7 @@ class GeneralController extends Controller
                             Mail::to($user->email)->send(new OtpMail($otp));
                             return redirect()->route('otp_apply',['id'=>$user->id]);
                         }else{
-                            return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+                            return redirect()->back()->with('approval','Please wait for Administration approval to proceed.');
                         }
                     }else{
                         return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Four-Week Free Trial has ended.  Please make the payment and wait for Admin approval.  Thank you.');
@@ -168,7 +173,7 @@ class GeneralController extends Controller
                         Mail::to($user->email)->send(new OtpMail($otp));
                         return redirect()->route('otp_apply',['id'=>$user->id]);
                     }else{
-                        return redirect()->back()->with('approval','Please wait for the Admin Approval to Proceed');
+                        return redirect()->back()->with('approval','Please wait for Administration approval to proceed.');
                     }
                 }else{
                     return redirect()->route('payment',['id'=>$user->bank_id, 'type'=>'complete'])->with('contract','Please fill the Form below to make payment.');
@@ -193,7 +198,7 @@ class GeneralController extends Controller
                     return redirect()->back();
                 }
             // }else{
-                // return redirect()->back()->with('success','Please wait for the Admin Approval to Proceed');
+                // return redirect()->back()->with('success','Please wait for Administration approval to proceed.');
             // }
         }else{
             return redirect()->back();

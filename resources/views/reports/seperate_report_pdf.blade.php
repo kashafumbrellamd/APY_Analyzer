@@ -2,7 +2,7 @@
     <div class="row">
         @foreach ($reports as $key => $rt)
             @if ($columns[$rt->id] == 1)
-                <div class="col-md-6 mt-3">
+                <div class="col-md-3 mt-3">
                     <div class="table-responsive table__font_style">
                         <h5 class="m-0 font-weight-bold text-primary" style="text-align:center;">{{ $rt->name }}</h5>
                         <div class="table-wrapper">
@@ -10,8 +10,6 @@
                                 <thead>
                                     <tr>
                                         <th class="first-col" style="text-align:center;">Bank Name</td>
-                                        <th class="first-col" style="text-align:center;">Area Name</td>
-                                        <th class="first-col" style="text-align:center;">Zip Code</td>
                                         <th class="first-col" style="text-align:center;">Previous</td>
                                         <th class="first-col" style="text-align:center;">APY</td>
                                         <th class="first-col" style="text-align:center;">Changes</td>
@@ -27,36 +25,26 @@
                                                             <td class="text-success" style="text-align:center;">
                                                                 {{ $bank['bank_name'] }}</td>
                                                             <td class="text-success" style="text-align:center;">
-                                                                {{ $bank['cbsa_name'] }}</td>
+                                                                {{ number_format($bank['previous_rate'],2) }}</td>
                                                             <td class="text-success" style="text-align:center;">
-                                                                {{ $bank['zip_code'] }}</td>
+                                                                {{ number_format($bank['current_rate'],2) }}</td>
                                                             <td class="text-success" style="text-align:center;">
-                                                                {{ $bank['previous_rate'] }}</td>
-                                                            <td class="text-success" style="text-align:center;">
-                                                                {{ $bank['current_rate'] }}</td>
-                                                            <td class="text-success" style="text-align:center;">
-                                                                {{ $bank['change'] }} <i class="fa fa-arrow-up"
+                                                                {{ number_format($bank['change'],2) }} <i class="fa fa-arrow-up"
                                                                     aria-hidden="true"></i></td>
                                                         @elseif ($bank['current_rate'] == $bank['previous_rate'])
                                                             <td style="text-align:center;">{{ $bank['bank_name'] }}</td>
-                                                            <td style="text-align:center;">{{ $bank['cbsa_name'] }}</td>
-                                                            <td style="text-align:center;">{{ $bank['zip_code'] }}</td>
-                                                            <td style="text-align:center;">{{ $bank['previous_rate'] }}</td>
-                                                            <td style="text-align:center;">{{ $bank['current_rate'] }}</td>
+                                                            <td style="text-align:center;">{{ number_format($bank['previous_rate'],2) }}</td>
+                                                            <td style="text-align:center;">{{ number_format($bank['current_rate'],2) }}</td>
                                                             <td style="text-align:center;">---</td>
                                                         @else
                                                             <td class="text-danger" style="text-align:center;">
                                                                 {{ $bank['bank_name'] }}</td>
                                                             <td class="text-danger" style="text-align:center;">
-                                                                {{ $bank['cbsa_name'] }}</td>
+                                                                {{ number_format($bank['previous_rate'],2) }}</td>
                                                             <td class="text-danger" style="text-align:center;">
-                                                                {{ $bank['zip_code'] }}</td>
+                                                                {{ number_format($bank['current_rate'],2) }}</td>
                                                             <td class="text-danger" style="text-align:center;">
-                                                                {{ $bank['previous_rate'] }}</td>
-                                                            <td class="text-danger" style="text-align:center;">
-                                                                {{ $bank['current_rate'] }}</td>
-                                                            <td class="text-danger" style="text-align:center;">
-                                                                {{ $bank['change'] }} <i class="fa fa-arrow-down"
+                                                                {{ number_format($bank['change'],2) }} <i class="fa fa-arrow-down"
                                                                     aria-hidden="true"></i></td>
                                                         @endif
                                                     </tr>
@@ -177,23 +165,3 @@
         @endforeach
     </div>
 </div>
-<style>
-    .table {
-        border-radius: 0.2rem;
-        width: 100%;
-        padding-bottom: 1rem;
-        color: #212529;
-        margin-bottom: 0;
-    }
-
-    .first-col {
-        position: sticky;
-        left: 0;
-        color: #373737;
-        background: #fafafa
-    }
-
-    .table td {
-        white-space: nowrap;
-    }
-</style>

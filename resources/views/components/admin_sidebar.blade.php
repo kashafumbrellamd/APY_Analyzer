@@ -120,6 +120,13 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Manage Packages</span></a>
         </li>
+
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/standard/metropolitan/area') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Standard Metropolitan Areas</span></a>
+        </li>
     @endif
 
 

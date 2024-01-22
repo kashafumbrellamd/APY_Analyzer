@@ -17,6 +17,7 @@ use App\Models\BankSelectedCity;
 use DB;
 use Auth;
 use Livewire\Component;
+use App\Models\StandardReportList;
 
 
 class CustomerPackage extends Component
@@ -54,6 +55,7 @@ class CustomerPackage extends Component
     public $current_amount;
     public $page = 1;
     public $update = true;
+    public $standard_report_list;
 
     public $selectedItems = [];
 
@@ -80,6 +82,7 @@ class CustomerPackage extends Component
         $available_cities = $this->getCities();
         $available_cbsa = $this->getCBSA();
         $this->current_amount = $this->calulate_current_amount();
+        $this->standard_report_list = StandardReportList::where('status','1')->get();
         return view('livewire.customer-package', compact('packages', 'bank_types', 'available_states', 'available_cities','available_cbsa'));
     }
 
@@ -410,7 +413,7 @@ class CustomerPackage extends Component
             }
             return redirect()->route('invoice',['id'=>$this->bank->id, 'type'=>'complete']);
         }else{
-            $this->addError('subscription','Please Select a Subscription to proced.');
+            $this->addError('subscription','Please select a subscription to proceed.');
         }
     }
 

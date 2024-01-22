@@ -98,11 +98,11 @@
                                             </div>
                                             <div class="card-body text-center">
                                                 @if ($package->package_type == 'state')
-                                                    <p>4 Weeks Free Trial</p>
-                                                    <select class="form-select form-control">
-                                                        <option>Saint Louis, Missouri</option>
-                                                        <option>Miami, Florida</option>
-                                                        <option>Tampa, Florida</option>
+                                                    <p>Four-Week Free Trial</p>
+                                                    <select class="form-select form-control mb-3 ">
+                                                        @foreach ($standard_report_list as $srl)
+                                                            <option>{{ $srl->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 @endif
                                             </div>
@@ -352,16 +352,11 @@
                                     <select class="form-select form-control mb-3 " aria-label="Default select example"
                                         wire:model="selected_city_now" wire:change="selectcity($event.target.value)">
                                         <option value="">Select Metropolitan Area</option>
-                                        {{-- <option value="119383">Kansas City</option> --}}
-                                        @if (!in_array('125680',$check_city))
-                                            <option value="125680">Saint Louis, Missouri</option>
-                                        @endif
-                                        @if (!in_array('121746',$check_city))
-                                            <option value="121746">Miami, Florida</option>
-                                        @endif
-                                        @if (!in_array('127407',$check_city))
-                                            <option value="127407">Tampa, Florida</option>
-                                        @endif
+                                        @foreach ($standard_report_list as $srl)
+                                            @if (!in_array($srl->city_id,$check_city))
+                                                <option value="{{ $srl->city_id }}">{{ $srl->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

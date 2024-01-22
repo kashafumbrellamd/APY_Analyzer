@@ -341,11 +341,11 @@
                                     </div>
                                     <div class="card-body text-center">
                                         @if ($package->package_type == 'state')
-                                            <p>4 Weeks Free Trial</p>
+                                            <p>Four-Week Free Trial</p>
                                             <select class="form-select form-control mb-3 ">
-                                                <option>Saint Louis, Missouri</option>
-                                                <option>Miami, Florida</option>
-                                                <option>Tampa, Florida</option>
+                                                @foreach ($standard_report_list as $srl)
+                                                    <option>{{ $srl->name }}</option>
+                                                @endforeach
                                             </select>
                                         @endif
                                     </div>

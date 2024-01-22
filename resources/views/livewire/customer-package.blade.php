@@ -79,11 +79,11 @@
                                                                 </div>
                                                                 <div class="card-body text-center">
                                                                     @if ($package->package_type == 'state')
-                                                                        <p>4 Weeks Free Trial</p>
-                                                                        <select class="form-select form-control">
-                                                                            <option>Saint Louis, Missouri</option>
-                                                                            <option>Miami, Florida</option>
-                                                                            <option>Tampa, Florida</option>
+                                                                        <p>Four-Week Free Trial</p>
+                                                                        <select class="form-select form-control mb-3 ">
+                                                                            @foreach ($standard_report_list as $srl)
+                                                                                <option>{{ $srl->name }}</option>
+                                                                            @endforeach
                                                                         </select>
                                                                     @endif
                                                                 </div>
@@ -401,11 +401,9 @@
                                                         wire:model="selected_city_now"
                                                         wire:change="selectcity($event.target.value)">
                                                         <option value="">Select Metropolitan Area</option>
-                                                        {{-- <option value="119383">Kansas City</option> --}}
-                                                        <option value="125680">Saint Louis, Missouri</option>
-                                                        <option value="121746">Miami, Florida</option>
-                                                        <option value="127407">Tampa, Florida</option>
-                                                        {{-- <option value="127546">Texas</option> --}}
+                                                        @foreach ($standard_report_list as $srl)
+                                                            <option value="{{ $srl->city_id }}">{{ $srl->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

@@ -18,6 +18,7 @@ use App\Models\Payment;
 use DB;
 use Auth;
 use Livewire\Component;
+use App\Models\StandardReportList;
 
 class SelectedBankUpdate extends Component
 {
@@ -50,6 +51,7 @@ class SelectedBankUpdate extends Component
     public $update = true;
 
     public $selectedItems = [];
+    public $standard_report_list;
 
     public function mount(){
         $this->addSelected();
@@ -75,7 +77,7 @@ class SelectedBankUpdate extends Component
         $available_cities = $this->getCities();
         $available_cbsa = $this->getCBSA();
         $this->current_amount = $this->calulate_current_amount();
-
+        $this->standard_report_list = StandardReportList::where('status','1')->get();
         $data = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)
             ->join('banks','banks.id','custom_package_banks.customer_selected_bank_id')
             ->select('custom_package_banks.id as cpb_id','banks.*')

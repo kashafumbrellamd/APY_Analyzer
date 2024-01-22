@@ -7,6 +7,7 @@ use App\Models\Stories;
 use App\Models\State;
 use App\Models\Cities;
 use App\Models\Packages;
+use App\Models\StandardReportList;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +30,8 @@ Route::get('/',function(){
     // $states = State::where('country_id',233)->get();
     // $cities = Cities::where('country_id',233)->get();
     $packages = Packages::get();
-    return view('home_page',compact('packages'));
+    $standard_report_list = StandardReportList::where('status','1')->get();
+    return view('home_page',compact('packages','standard_report_list'));
 });
 
 Route::get('/home', function () {
@@ -99,6 +101,7 @@ Route::get('/view/bank/request', [App\Http\Controllers\GeneralController::class,
 Route::get('/view/registered/bank', [App\Http\Controllers\GeneralController::class,'view_registered_bank']);
 //Route::get('/managee/charity', App\Http\Livewire\ManageCharity::class);
 Route::get('/manage/packages', [App\Http\Controllers\GeneralController::class,'manage_packages']);
+Route::get('/standard/metropolitan/area', [App\Http\Controllers\GeneralController::class,'standard_metropolitan_area']);
 Route::get('/customize/packages', [App\Http\Controllers\GeneralController::class,'customize_packages']);
 Route::get('/view/customization/requests', [App\Http\Controllers\GeneralController::class,'view_customization_requests']);
 
