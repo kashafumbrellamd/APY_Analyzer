@@ -15,7 +15,7 @@
                     <select name="city_id" class="form-control mr-2" wire:model.lazy="city_id">
                         <option value="">Select City</option>
                         @foreach ($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            <option value="{{ $city->cbsa_code }}">{{ $city->cbsa_name }}</option>
                         @endforeach
                     </select>
                     @if ($update)
@@ -54,7 +54,7 @@
                             <tr>
                                 <td>{{ $dt->id }}</td>
                                 <td>{{ $dt->name }}</td>
-                                <td>{{ $dt->cities->name }}</td>
+                                <td>{{ $dt->cbsa->cbsa_name }}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
                                             class="bi bi-pen"></span></button>
@@ -64,7 +64,7 @@
                             </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center">No Data</td>
+                                    <td colspan="4" class="text-center">No Data</td>
                                 </tr>
                             @endforelse
                         </tbody>

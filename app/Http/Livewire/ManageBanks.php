@@ -338,7 +338,7 @@ class ManageBanks extends Component
             $spreadsheet = new Spreadsheet();
             $activeWorksheet = $spreadsheet->getActiveSheet();
             $activeWorksheet->setCellValue('A1', 'Id');
-            $activeWorksheet->setCellValue('B1', 'Name');
+            $activeWorksheet->setCellValue('B1', 'Bank Name');
             $activeWorksheet->setCellValue('C1', 'Zip Code');
             $activeWorksheet->setCellValue('D1', 'State');
             $activeWorksheet->setCellValue('E1', 'City');

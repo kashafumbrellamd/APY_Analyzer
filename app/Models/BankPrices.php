@@ -196,7 +196,7 @@ class BankPrices extends Model
                 }
                 break;
             case 'msa':
-                $bankQuery->where('msa_code', $code);
+                $bankQuery->where('cbsa_code', $code);
                 if ($unique) {
                     $bankQuery->groupBy('banks.name');
                 }
@@ -205,7 +205,7 @@ class BankPrices extends Model
                 // $filter = CustomerBank::find($userBank->bank_id);
                 if ($filter->display_reports == 'state') {
                     $cities = BankSelectedCity::where('bank_id', $filter->id)->pluck('city_id')->toArray();
-                    $bankQuery->whereIn('city_id', $cities);
+                    $bankQuery->whereIn('cbsa_code', $cities);
                 } elseif ($filter->display_reports == 'msa') {
                     $bankQuery->where('msa_code', $filter->msa_code);
                 } elseif ($filter->display_reports == 'custom') {
@@ -352,7 +352,7 @@ class BankPrices extends Model
         if($selected_bank_type == ""){
             if($type == 'state'){
                 $cities = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-                $selected_banks = Bank::whereIn('city_id',$cities)->pluck('id')->toArray();
+                $selected_banks = Bank::whereIn('cbsa_code',$cities)->pluck('id')->toArray();
             }elseif($type == 'msa'){
                 $selected_banks = Bank::where('msa_code',$code)->pluck('id')->toArray();
             }else{
@@ -360,7 +360,7 @@ class BankPrices extends Model
                     $selected_banks = CustomPackageBanks::where('bank_id',$filter->id)->pluck('customer_selected_bank_id')->toArray();
                 }elseif($filter->display_reports == 'state'){
                     $city_ids = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-                    $selected_banks = Bank::where('city_id',$city_ids)->pluck('id')->toArray();
+                    $selected_banks = Bank::where('cbsa_code',$city_ids)->pluck('id')->toArray();
                 }else{
                     $selected_banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
                 }
@@ -383,7 +383,7 @@ class BankPrices extends Model
                     ->toArray();
                 }elseif($filter->display_reports == 'state'){
                     $city_ids = BankSelectedCity::where('bank_id',$filter->id)->pluck('city_id')->toArray();
-                    $selected_banks = Bank::where('city_id',$city_ids)->pluck('id')->toArray();
+                    $selected_banks = Bank::where('cbsa_code',$city_ids)->pluck('id')->toArray();
                 }else{
                     $selected_banks = Bank::where('msa_code',$filter->msa_code)->pluck('id')->toArray();
                 }
@@ -639,18 +639,18 @@ class BankPrices extends Model
         if($type->display_reports == 'state' && $selected_bank_type == ""){
             $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
             if($unique){
-                $banks = Bank::whereIn('city_id',$cities)->groupBy('banks.name')->pluck('id')->toArray();
+                $banks = Bank::whereIn('cbsa_code',$cities)->groupBy('banks.name')->pluck('id')->toArray();
             }else{
-                $banks = Bank::whereIn('city_id',$cities)->pluck('id')->toArray();
+                $banks = Bank::whereIn('cbsa_code',$cities)->pluck('id')->toArray();
             }
         }elseif($type->display_reports == 'msa' && $selected_bank_type == ""){
             $banks = Bank::where('msa_code',$type->msa_code)->pluck('id')->toArray();
         }elseif($type->display_reports == 'state' && $selected_bank_type != ""){
             $cities = BankSelectedCity::where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
             if($unique){
-                $banks = Bank::whereIn('city_id',$cities)->whereIn('bank_type_id',$selected_bank_type)->groupBy('banks.name')->pluck('id')->toArray();
+                $banks = Bank::whereIn('cbsa_code',$cities)->whereIn('bank_type_id',$selected_bank_type)->groupBy('banks.name')->pluck('id')->toArray();
             }else{
-                $banks = Bank::whereIn('city_id',$cities)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
+                $banks = Bank::whereIn('cbsa_code',$cities)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();
             }
         }elseif($type->display_reports == 'msa_code' && $selected_bank_type != ""){
             $banks = Bank::where('msa_code',$type->msa_code)->whereIn('bank_type_id',$selected_bank_type)->pluck('id')->toArray();

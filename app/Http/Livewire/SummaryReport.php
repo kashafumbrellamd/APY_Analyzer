@@ -54,7 +54,7 @@ class SummaryReport extends Component
             // }else{
             //     $banks = Bank::whereIn('city_id',$cities)->get();
             // }
-            $banks = Bank::whereIn('city_id',$cities)->get();
+            $banks = Bank::whereIn('cbsa_code',$cities)->get();
         }else{
             $banks = Bank::get();
         }
@@ -145,7 +145,7 @@ class SummaryReport extends Component
 
     public function clear_filer(){
         $this->selected_bank = '';
-        $this->selected_bank_type = '';
+        $this->selected_bank_type = [];
     }
 
     public function fill_type($data)

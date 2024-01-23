@@ -125,7 +125,7 @@ class GeneralController extends Controller
     public function bank_login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        if ($user == null) {
+        if ($user == null || $user->bank_id == null) {
             return redirect()->back()->with('error','Sorry This Email is not Registered.');
         }
 

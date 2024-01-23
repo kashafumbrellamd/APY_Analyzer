@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Cities;
+use App\Models\Bank;
 use App\Models\StandardReportList;
 use Livewire\WithPagination;
 
@@ -20,8 +21,11 @@ class StandardMetropolitanArea extends Component
 
     public function render()
     {
-        $cities = Cities::join('banks','banks.city_id','cities.id')->select('cities.*')->distinct()->orderBy('cities.name','ASC')->get();
-        $data = StandardReportList::with('cities')->paginate(10);
+        $cities = Bank::select('cbsa_name', 'cbsa_code')
+            ->orderBy('cbsa_name', 'ASC')
+            ->groupBy('cbsa_name', 'cbsa_code')
+            ->get();
+        $data = StandardReportList::with('cbsa')->paginate(10);
         return view('livewire.standard-metropolitan-area',['cities'=>$cities,'data'=>$data]);
     }
 

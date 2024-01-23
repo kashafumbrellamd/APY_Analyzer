@@ -18,4 +18,8 @@ class StandardReportList extends Model
     public function cities(){
         return $this->hasOne(Cities::class,'id','city_id');
     }
+
+    public function cbsa(){
+        return $this->hasOne(Bank::class,'cbsa_code','city_id');
+    }
 }

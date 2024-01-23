@@ -121,7 +121,7 @@ class SeperateReport extends Component
             $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
             if($customer_type->display_reports == 'state'){
                 $banks_city = DB::table('bank_selected_city')->where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
-                $msa_codes = Bank::with('cities')->whereIn('city_id',$banks_city)->groupBy('city_id')->get();
+                $msa_codes = Bank::with('cities')->whereIn('cbsa_code',$banks_city)->groupBy('cbsa_code')->get();
                 return $msa_codes;
             }elseif($customer_type->display_reports == 'custom'){
                 $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
@@ -172,7 +172,7 @@ class SeperateReport extends Component
             $this->fill($rt);
         }
         $columns = $this->columns;
-        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns'))->setPaper('a4', 'landscape')->output();
+        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns'))->setPaper('a4')->output();
         return response()->streamDownload(
             fn () => print($pdf),
             "Seperate_Report.pdf"
@@ -184,7 +184,7 @@ class SeperateReport extends Component
     {
         $this->state_id = "";
         $this->msa_code = "";
-        $this->selected_bank_type = "";
+        $this->selected_bank_type = [];
         $this->selected_bank = "";
     }
 

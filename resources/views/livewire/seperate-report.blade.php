@@ -116,8 +116,9 @@
                             wire:model="msa_code">
                             <option value="">Select Metropolitan Area</option>
                             @foreach ($msa_codes as $code)
-                                <option value="{{ $code->city_id }}">{{ $code->cities->name }}</option>
+                                <option value="{{ $code->cbsa_code }}">{{ $code->cbsa_name }}</option>
                             @endforeach
+                            <option value="all">All Data</option>
                         </select>
                     </div>
 
