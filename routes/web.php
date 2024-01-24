@@ -7,7 +7,11 @@ use App\Models\Stories;
 use App\Models\State;
 use App\Models\Cities;
 use App\Models\Packages;
+use App\Models\Bank;
 use App\Models\StandardReportList;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -134,3 +138,32 @@ Route::get('/add_packages',[App\Http\Controllers\GeneralController::class,'add_p
 Route::post('/bank_request_submit',[App\Http\Controllers\GeneralController::class,'bank_request_submit'])->name('bank_request_submit');
 
 Route::get('/flush_cache',[App\Http\Controllers\GeneralController::class,'flush_cache']);
+
+Route::get('/replace_names',function(){
+        $filePath = public_path('Replacements.xlsx');
+        $spreadsheet = IOFactory::load($filePath);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $rows = $worksheet->toArray();
+
+        // Remove the header row if needed
+        $headerRow = array_shift($rows);
+
+        $data = [];
+        foreach ($rows as $row) {
+            $data[] = array_combine($headerRow, $row);
+        }
+        // Data here ok
+        foreach ($data as $dt) {
+            if($dt['Website'] != null){
+                $banks = Bank::where('name',$dt['Website'])->get();
+                if(count($banks) > 0){
+                    foreach($banks as $bank){
+                        if ($dt['Client Requirement'] != null) {
+                            $bank->name = $dt['Client Requirement'];
+                            $bank->save();
+                        }
+                    }
+                }
+            }
+        }
+    });

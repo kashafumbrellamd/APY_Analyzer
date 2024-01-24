@@ -178,7 +178,7 @@ class SelectedBankUpdate extends Component
         } else {
             if (!in_array($id, $this->bank_city_filter)) {
                 array_push($this->bank_city_filter, $id);
-                array_push($this->bank_city_filter_name, Cities::find($id)->name);
+                array_push($this->bank_city_filter_name, Bank::where('cbsa_code',$id)->pluck('cbsa_name')->first());
             }
         }
         $this->all_banks = null;
@@ -219,8 +219,11 @@ class SelectedBankUpdate extends Component
     }
 
     public function deleteCity($item){
-        $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
-        unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
+        // $bank = Cities::where('name',$this->bank_city_filter_name[$item])->first();
+        // unset($this->bank_city_filter[array_search($bank->id,$this->bank_city_filter)]);
+        // unset($this->bank_city_filter_name[$item]);
+        $bank = Bank::where('cbsa_name',$this->bank_city_filter_name[$item])->first();
+        unset($this->bank_city_filter[array_search($bank->cbsa_code,$this->bank_city_filter)]);
         unset($this->bank_city_filter_name[$item]);
         $this->all_banks = null;
         $this->bank_cbsa_filter = [];
