@@ -44,14 +44,16 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>Rank</th>
                             <th>Institution Name</th>
                             <th>APY</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($specialization_rates as $dt)
+                        @forelse ($specialization_rates as $key => $dt)
                             <tr>
+                                <td>{{ ++$key }}</td>
                                 <td style="text-align: left;">{{ $dt->bank->name }}</td>
                                 <td>{{ number_format($dt->rate,2) }}</td>
                                 <td style="text-align: left;">{{ $dt->description }}</td>

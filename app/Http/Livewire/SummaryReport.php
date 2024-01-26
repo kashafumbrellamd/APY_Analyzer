@@ -54,9 +54,9 @@ class SummaryReport extends Component
             // }else{
             //     $banks = Bank::whereIn('city_id',$cities)->get();
             // }
-            $banks = Bank::whereIn('cbsa_code',$cities)->get();
+            $banks = Bank::join('bank_prices','banks.id','bank_prices.bank_id')->whereIn('cbsa_code',$cities)->orderBy('name','ASC')->select('banks.*')->groupBy('banks.name')->get();
         }else{
-            $banks = Bank::get();
+            $banks = Bank::join('bank_prices','banks.id','bank_prices.bank_id')->orderBy('name','ASC')->get();
         }
         return view('livewire.summary-report',['rate_type'=>$rt,'banks'=>$banks,'bankTypes'=>$bankTypes,'customer_bank'=>$customer_bank]);
     }
