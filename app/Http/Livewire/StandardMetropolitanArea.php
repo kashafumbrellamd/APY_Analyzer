@@ -7,6 +7,10 @@ use App\Models\Cities;
 use App\Models\Bank;
 use App\Models\StandardReportList;
 use Livewire\WithPagination;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Response;
 
 class StandardMetropolitanArea extends Component
 {
@@ -74,6 +78,37 @@ class StandardMetropolitanArea extends Component
         }
         $this->cancel();
         $this->render();
+    }
+
+    public function downloadBanks($id){
+        $cbsa_code = StandardReportList::find($id)->city_id;
+        $banks = Bank::join('bank_prices','bank_prices.bank_id','banks.id')
+            ->where('banks.cbsa_code',$cbsa_code)
+            ->orderBy('banks.name')
+            ->groupBy('banks.name')
+            ->select('banks.name')
+            ->get();
+
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'Name');
+        $number = 2;
+        foreach ($banks as $key => $bank) {
+            $activeWorksheet->setCellValue('A'.$number, $bank->name);
+            $number++;
+        }
+        $writer = new Xlsx($spreadsheet);
+
+        $headers = [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="Added_Rates_Banks.xlsx"',
+        ];
+
+        $callback = function () use ($writer) {
+            $writer->save('php://output');
+        };
+
+        return Response::stream($callback, 200, $headers);
     }
 
     public function cancel(){

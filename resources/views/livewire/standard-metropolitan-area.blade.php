@@ -56,6 +56,8 @@
                                 <td>{{ $dt->name }}</td>
                                 <td>{{ $dt->cbsa->cbsa_name }}</td>
                                 <td class="text-center">
+                                    <button type="button" class="btn" wire:click="downloadBanks({{ $dt->id }})"><span
+                                            class="bi bi-download"></span></button>
                                     <button type="button" class="btn" wire:click="edit({{ $dt->id }})"><span
                                             class="bi bi-pen"></span></button>
                                     <button type="button" class="btn" wire:click="delete({{ $dt->id }})"><span
