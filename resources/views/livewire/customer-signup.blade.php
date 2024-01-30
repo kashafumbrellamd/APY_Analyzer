@@ -168,7 +168,7 @@
                                                     <input type="name" id="admin_first_name"
                                                         name="admin_first_name" class="form-control"
                                                         aria-describedby="name" wire:model.lazy="admin_first_name"
-                                                        required  placeholder="John">
+                                                        required  placeholder="First Name">
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>
@@ -177,7 +177,7 @@
                                                     <label for="admin_last_name" class="form-label">Last Name</label>
                                                     <input type="name" id="admin_last_name" name="admin_last_name"
                                                         class="form-control" aria-describedby="name"
-                                                        wire:model.lazy="admin_last_name"  placeholder="Doe" required>
+                                                        wire:model.lazy="admin_last_name"  placeholder="Last Name" required>
                                                     <!-- <div id="name" class="form-text">error message</div> -->
                                                 </div>
                                             </div>

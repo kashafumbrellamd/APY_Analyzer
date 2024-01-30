@@ -145,14 +145,14 @@
                 </div>
             </div>
             <div class="table-responsive table__font_style mt-3" wire:loading.class="invisible">
-                <div class="table-wrapper">
+                <div class="table-wrapper" style="height: 100vh;  overflow: auto;">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+                        <thead style="position: sticky;top: 0; color: #373737; background: #fafafa">
                             <tr>
-                                <th>Rank</th>
+                                <th scope="col">Rank</th>
                                 @foreach ($rate_type as $rt)
                                     @if ($columns[$rt->id] == 1)
-                                        <th>{{ $rt->name }}</th>
+                                        <th scope="col">{{ $rt->name }}</th>
                                     @endif
                                 @endforeach
                             </tr>
@@ -289,4 +289,9 @@
     .text-danger{
         color: green !important;
     }
+
+
+
+
+
 </style>

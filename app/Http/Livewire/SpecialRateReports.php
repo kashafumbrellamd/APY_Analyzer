@@ -12,6 +12,7 @@ use App\Models\CustomPackageBanks;
 use App\Models\BankSelectedCity;
 use App\Models\State;
 use App\Models\Cities;
+use PDF;
 
 class SpecialRateReports extends Component
 {
@@ -35,7 +36,7 @@ class SpecialRateReports extends Component
             ->whereRaw('specialization_rates.created_at = (SELECT MAX(created_at) FROM specialization_rates AS sr WHERE sr.bank_id = specialization_rates.bank_id)')
             ->orderBy('specialization_rates.rate','desc');
 
-        if(!empty($this->bank_state_filter)){
+        if(!empty($this->bank_state_filter) && $this->bank_state_filter != 'all'){
             $specialization_rates->where('banks.state_id',$this->bank_state_filter);
         }
         if(!empty($this->bank_city_filter)){
@@ -87,5 +88,37 @@ class SpecialRateReports extends Component
     public function selectstate($id)
     {
         $this->bank_city_filter = "";
+    }
+
+    public function print_report()
+    {
+        $customer_bank = CustomerBank::find(Auth::user()->bank_id);
+        if($customer_bank->display_reports == "state"){
+            $city_id = BankSelectedCity::where('bank_id',Auth::user()->bank_id)->pluck('city_id');
+            $bank_ids = Bank::whereIn('cbsa_code',$city_id)->pluck('id');
+        }elseif($customer_bank->display_reports == "custom"){
+            $bank_ids = CustomPackageBanks::where('bank_id',Auth::user()->bank_id)->pluck('customer_selected_bank_id');
+        }
+
+        $specialization_rates = SpecializationRates::join('banks', 'banks.id', '=', 'specialization_rates.bank_id')
+            ->whereIn('banks.id', $bank_ids)
+            ->select('specialization_rates.*')
+            // ->whereRaw('specialization_rates.id = (SELECT MAX(id) FROM specialization_rates AS sr WHERE sr.bank_id = specialization_rates.bank_id)')
+            ->whereRaw('specialization_rates.created_at = (SELECT MAX(created_at) FROM specialization_rates AS sr WHERE sr.bank_id = specialization_rates.bank_id)')
+            ->orderBy('specialization_rates.rate','desc');
+
+        if(!empty($this->bank_state_filter) && $this->bank_state_filter != 'all'){
+            $specialization_rates->where('banks.state_id',$this->bank_state_filter);
+        }
+        if(!empty($this->bank_city_filter)){
+            $specialization_rates->where('banks.city_id',$this->bank_city_filter);
+        }
+        $specialization_rates = $specialization_rates->get();
+        $pdf = PDF::loadView('reports.special_report_pdf', compact('specialization_rates'))->output();
+        return response()->streamDownload(
+            fn () => print($pdf),
+            "Special_Report.pdf"
+        );
+        $this->render();
     }
 }

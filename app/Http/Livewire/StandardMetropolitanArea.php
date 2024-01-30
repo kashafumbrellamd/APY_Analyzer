@@ -84,11 +84,17 @@ class StandardMetropolitanArea extends Component
         $cbsa_code = StandardReportList::find($id)->city_id;
         $banks = Bank::join('bank_prices','bank_prices.bank_id','banks.id')
             ->where('banks.cbsa_code',$cbsa_code)
+            ->whereIn('bank_prices.created_at', function ($query) {
+                $query->selectRaw('MAX(created_at)')
+                    ->from('bank_prices')
+                    ->where('is_checked', 1)
+                    ->groupBy('rate_type_id')
+                    ->groupBy('bank_id');
+            })
             ->orderBy('banks.name')
             ->groupBy('banks.name')
             ->select('banks.name')
             ->get();
-
         $spreadsheet = new Spreadsheet();
         $activeWorksheet = $spreadsheet->getActiveSheet();
         $activeWorksheet->setCellValue('A1', 'Name');

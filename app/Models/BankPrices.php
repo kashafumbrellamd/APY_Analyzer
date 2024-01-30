@@ -255,7 +255,10 @@ class BankPrices extends Model
                 ->get();
             $rateType['banks'] = $latestBankPrices;
         }
-        $rateTypes['show_banks'] = Bank::whereIn('banks.id', $banks)->join('bank_prices','banks.id','bank_prices.bank_id')->orderBy('banks.name')->groupBy('banks.name')->get();
+        $rateTypes['show_banks'] = Bank::whereIn('banks.id', $banks)->join('bank_prices','banks.id','bank_prices.bank_id')
+            ->orderBy('banks.name')
+            ->groupBy('banks.id','banks.name')
+            ->select('banks.id','banks.name')->get();
         return $rateTypes;
     }
 

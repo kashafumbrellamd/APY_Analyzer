@@ -57,6 +57,11 @@
                                                         <h2 class="fw-bold fs-2 ">
                                                             Select Your Plan
                                                         </h2>
+                                                        <p style="text-align: justify;">
+                                                            The dropdown menu indicates metropolitan areas where the Standard Report is currently offered.
+                                                            Click the “Select” button, then choose your metropolitan area in the field below.
+                                                            If not listed, select a Custom Report and we will design a report specifically for your area with the institutions of your choice.
+                                                        </p>
                                                     </div>
                                                 </div>
 

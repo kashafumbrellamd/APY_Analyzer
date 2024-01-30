@@ -375,16 +375,16 @@ class CustomerPackage extends Component
                     $charges = Packages::where('package_type', $this->subscription)->first();
                     if(count($this->custom_banks) <= $charges->number_of_units){
                         $contract = Contract::create([
-                            'contract_start' => "null",
-                            'contract_end' => "null",
+                            'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 2 weeks ')),
+                            'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year + 2 weeks')),
                             'charges' => $charges->price,
                             'bank_id' => $this->bank->id,
                         ]);
                     }else{
                         $amount_charged = $charges->price + ($charges->additional_price*(count($this->custom_banks)-$charges->number_of_units));
                         $contract = Contract::create([
-                            'contract_start' => "null",
-                            'contract_end' => "null",
+                            'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 2 weeks ')),
+                            'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year + 2 weeks')),
                             'charges' => $amount_charged,
                             'bank_id' => $this->bank->id,
                         ]);
