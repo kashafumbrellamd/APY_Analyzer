@@ -18,29 +18,29 @@
                             <div class="col-md-4">
                                 <label for="name">Name</label>
                                 <input type="text" wire:model.lazy="admin_name" class="form-control mr-2"
-                                    placeholder="Enter Name....">
+                                    placeholder="Name....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Email</label>
                                 <input type="text" wire:model.lazy="admin_email" class="form-control mr-2"
-                                     placeholder="Enter Email....">
+                                     placeholder="Email....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Phone Number</label>
                                 <input type="text" wire:model.lazy="admin_phone_number" class="form-control mr-2"
-                                     placeholder="Enter Phone Number....">
+                                     placeholder="Phone Number....">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="name">Designation</label>
                                 <input type="text" wire:model.lazy="designation" class="form-control mr-2"
-                                    placeholder="Enter Designation....">
+                                    placeholder="Designation....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Employee Id</label>
                                 <input type="text" wire:model.lazy="employee_id" class="form-control mr-2"
-                                     placeholder="Enter Employee Id....">
+                                     placeholder="Employee Id....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Gender</label>

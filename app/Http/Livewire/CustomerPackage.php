@@ -406,7 +406,7 @@ class CustomerPackage extends Component
                 $charges = Packages::where('package_type', $this->subscription)->first();
                 $contract = Contract::create([
                     'contract_start' => date('Y-m-d', strtotime(date('Y-m-d') )),
-                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year ')),
+                    'contract_end' => date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 year + 4 weeks')),
                     'charges' => $charges->price*count($this->bank_city_filter),
                     'bank_id' => $this->bank->id,
                 ]);

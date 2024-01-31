@@ -17,29 +17,29 @@
                             <div class="col-md-4">
                                 <label for="name">First Name</label>
                                 <input type="text" wire:model.lazy="first_admin_name" class="form-control mr-2"
-                                    placeholder="Enter Name....">
+                                    placeholder="Name....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Last Name</label>
                                 <input type="text" wire:model.lazy="last_admin_name" class="form-control mr-2"
-                                    placeholder="Enter Name....">
+                                    placeholder="Name....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name">Email Adress</label>
                                 <input type="text" wire:model.lazy="admin_email" class="form-control mr-2"
-                                    placeholder="Enter Email....">
+                                    placeholder="Email....">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="name">Phone Number</label>
                                 <input type="text" wire:model.lazy="admin_phone_number" class="form-control mr-2"
-                                    placeholder="Enter Phone Number....">
+                                    placeholder="Phone Number....">
                             </div>
                             <div class="col-md-4">
                                 <label for="name"> Title</label>
                                 <input type="text" wire:model.lazy="designation" class="form-control mr-2"
-                                    placeholder="Enter Designation....">
+                                    placeholder="Designation....">
                             </div>
                         </div>
                     </div>

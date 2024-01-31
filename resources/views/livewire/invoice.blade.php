@@ -688,13 +688,13 @@
                             <div class="form-check mt-2">
                                 <input class="form-check-input" type="checkbox" wire:model="tandc" id="flexCheckDefault" required>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Check here to indicate that you have read and agree to our Terms & Condidtions.</label>
+                                    Check here to indicate that you have read and agree to our Terms & Conditions.</label>
                               </div>
                             {{-- <div class="col-md-2">
                             <input type="checkbox" class="form-control" name="terms" required>
                         </div>
                             <div class="col-md-10">
-                                <p>Check here to indicate that you have read and agree to our Terms & Condidtions.</p>
+                                <p>Check here to indicate that you have read and agree to our Terms & Conditions.</p>
                             </div> --}}
                     </div>
                     <div class="col-md-12 mt-3">

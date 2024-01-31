@@ -7,12 +7,12 @@
             @if (auth()->user()->hasRole('admin'))
                 <div class="d-flex justify-content-between mb-4">
                     <input type="text" class="form-control mr-2 @error('name') is-invalid @enderror" wire:model="name"
-                        placeholder="Enter Name....">
+                        placeholder="Name....">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                     <input type="email" class="form-control mr-2 @error('email') is-invalid @enderror"
-                        wire:model="email" placeholder="Enter Email....">
+                        wire:model="email" placeholder="Email....">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

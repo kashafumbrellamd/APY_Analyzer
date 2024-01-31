@@ -71,9 +71,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-2">
-                        <label for="exampleFormControlInput1" class="form-label">Enter Name</label>
+                        <label for="exampleFormControlInput1" class="form-label">Name</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" name="name"
-                            placeholder="Enter Name of the Bank." required>
+                            placeholder="Name of the Bank." required>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -239,7 +239,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="mb-2">
-                <label for="exampleFormControlInput1" class="form-label">Enter Name</label>
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
               </div>
             </div>

@@ -172,7 +172,8 @@ class SeperateReport extends Component
             $this->fill($rt);
         }
         $columns = $this->columns;
-        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns'))->setPaper('a4')->output();
+        $msa_codes = $this->getmsacodes();
+        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns','msa_codes'))->setPaper('a4')->output();
         return response()->streamDownload(
             fn () => print($pdf),
             "Seperate_Report.pdf"

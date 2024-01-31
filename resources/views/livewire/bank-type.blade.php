@@ -18,7 +18,7 @@
                                 <div class="col-md-6">
                                     <label for="name">Name</label>
                                     <input type="text" wire:model.lazy="name" class="form-control mr-2"
-                                        placeholder="Enter Name....">
+                                        placeholder="Name....">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="status">Status</label>
@@ -41,7 +41,7 @@
                                         <div class="col-md-6">
                                             <label for="name">Name</label>
                                             <input type="text" wire:model.lazy="name" class="form-control mr-2"
-                                                placeholder="Enter Name....">
+                                                placeholder="Name....">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="status">Status</label>

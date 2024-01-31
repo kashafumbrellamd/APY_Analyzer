@@ -12,6 +12,8 @@ use App\Models\StandardReportList;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +76,21 @@ Route::get('/interesting_stories', function () {
     $stories = Stories::where('status','1')->get();
     return view('interesting_stories',['stories'=>$stories]);
 })->name('interesting_stories');
+
+Route::get('/view_feedback', function () {
+    return view('view_feedback');
+})->name('view_feedback');
+
+Route::post('/post_feedback', function (Request $request) {
+    DB::table('contact_us')->insert([
+        'name'=> $request->name,
+        'email'=> $request->email,
+        'message'=> $request->message,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+    return redirect()->back()->with('success','Thank you for the feedback.');
+})->name('post_feedback');
 
 
 Auth::routes();

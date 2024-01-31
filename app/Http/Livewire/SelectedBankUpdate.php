@@ -415,7 +415,7 @@ class SelectedBankUpdate extends Component
                         'status' => "0",
                         'payment_type' => "partial",
                     ]);
-                    $this->addError('request','The Request Has been Successfully Submitted.');
+                    $this->addError('request','The request has been successfully submitted.');
                     $this->clear();
 
                 }elseif(count($this->already) <= $charges->number_of_units){
@@ -441,7 +441,7 @@ class SelectedBankUpdate extends Component
                         'status' => "0",
                         'payment_type' => "partial",
                     ]);
-                    $this->addError('request','The Request Has been Successfully Submitted.');
+                    $this->addError('request','The request has been successfully submitted.');
                     $this->clear();
                 }else{
                     $difference = strtotime($contract->contract_end)-strtotime(date('Y-m-d'));
@@ -466,7 +466,7 @@ class SelectedBankUpdate extends Component
                         'status' => "0",
                         'payment_type' => "partial",
                     ]);
-                    $this->addError('request','The Request Has been Successfully Submitted.');
+                    $this->addError('request','The request has been successfully submitted.');
                     $this->clear();
 
                 }
@@ -506,7 +506,7 @@ class SelectedBankUpdate extends Component
                     'status' => "0",
                     'payment_type' => "partial",
                 ]);
-                $this->addError('request','The Request Has been Successfully Submitted.');
+                $this->addError('request','The request has been successfully submitted.');
                 $this->clear();
             }
         }else{

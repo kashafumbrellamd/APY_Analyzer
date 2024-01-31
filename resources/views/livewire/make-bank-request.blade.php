@@ -8,7 +8,7 @@
                 <div class="d-flex justify-content-between mb-4">
                     <div class="d-flex flex-column w-25 mr-3 ">
                         <input type="text" class="form-control mr-2 @error('name') is-invalid @enderror"
-                            wire:model="name" placeholder="Enter Name....">
+                            wire:model="name" placeholder="Name....">
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -16,7 +16,7 @@
 
                     <div class="d-flex flex-column w-25 mr-3">
                         <input type="text" class="form-control mr-2 @error('zip_code') is-invalid @enderror"
-                            wire:model="zip_code" placeholder="Enter Zip code...." wire:keyup="fetch_zip_code">
+                            wire:model="zip_code" placeholder="Zip code...." wire:keyup="fetch_zip_code">
                         @error('zip_code')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -49,7 +49,7 @@
 
                 <div class="d-flex justify-content-center mb-4">
                     <textarea type="text" class="form-control mr-2 @error('description') is-invalid @enderror" wire:model="description"
-                        placeholder="Enter Description...." rows="4" cols="50"></textarea>
+                        placeholder="Description...." rows="4" cols="50"></textarea>
                     @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

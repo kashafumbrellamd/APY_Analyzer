@@ -125,17 +125,17 @@
                                         <div class="col-md-4">
                                             <label for="cp_name">Name</label>
                                             <input type="text" id="cp_name" class="form-control mr-2" wire:model.lazy="cp_name"
-                                                placeholder="Enter Name....">
+                                                placeholder="Name....">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cp_email">Email</label>
                                                 <input type="text" id="cp_email" class="form-control mr-2" wire:model.lazy="cp_email"
-                                                    placeholder="Enter Email....">
+                                                    placeholder="Email....">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cp_phone">Phone Number</label>
                                             <input type="text" id="cp_phone" class="form-control mr-2" wire:model.lazy="cp_phone"
-                                                placeholder="Enter Phone NUmber....">
+                                                placeholder="Phone NUmber....">
                                         </div>
                                     </div>
                                     <center>
@@ -227,17 +227,17 @@
                                         <div class="col-md-4">
                                             <label for="cp_name">Name</label>
                                             <input type="text" id="cp_name" class="form-control mr-2" wire:model.lazy="cp_name"
-                                                placeholder="Enter Name....">
+                                                placeholder="Name....">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cp_email">Email</label>
                                                 <input type="email" id="cp_email" class="form-control mr-2" wire:model.lazy="cp_email"
-                                                    placeholder="Enter Email....">
+                                                    placeholder="Email....">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cp_phone">Phone Number</label>
                                             <input type="text" id="cp_phone" class="form-control mr-2" wire:model.lazy="cp_phone"
-                                                placeholder="Enter Phone Number....">
+                                                placeholder="Phone Number....">
                                         </div>
                                     </div>
                                 </div>

@@ -241,8 +241,8 @@
                         <div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label for="bank_name_city" class="form-label">Institution Name ,
-                                        State ,
+                                    <label for="bank_name_city" class="form-label">Institution Name,
+                                        State,
                                         City
                                     </label>
                                     @if ($this->current_amount != 0)

@@ -268,11 +268,11 @@
                                                 <div class="mb-3">
                                                     <div class="d-flex justify-content-between">
                                                         <label for="bank_name_city" class="form-label">Institution
-                                                            Name ,
-                                                            State ,
+                                                            Name,
+                                                            State,
                                                             City
                                                         </label>
-                                                        <label>Numbers Selected: {{ count($this->custom_banks) }}</label>
+                                                        <label>Number Selected: {{ count($this->custom_banks) }}</label>
                                                     </div>
                                                     <div class="mt-2">
                                                         <div class="bank_select_divv">
