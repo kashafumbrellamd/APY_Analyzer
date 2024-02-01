@@ -33,6 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('interesting_stories') }}">News</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('view_feedback') }}">Feedback</a>
+                        </li>
                     </ul>
                     <div class="d-flex">
                         @if (Auth::check())
@@ -176,6 +179,7 @@
                         <ul>
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li><a href="{{ url('/interesting_stories') }}">News</a></li>
+                            <li><a href="{{ route('view_feedback') }}">Feedback</a></li>
                             {{-- <li><a href="#">Our Product</a></li>
                             <li><a href="#">New Survey</a></li>
                             <li><a href="#">About</a></li> --}}

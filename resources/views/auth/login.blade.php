@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('interesting_stories') }}">News</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('view_feedback') }}">Feedback</a>
+                        </li>
                     </ul>
                     <div class="d-flex">
                         @if (Auth::check())

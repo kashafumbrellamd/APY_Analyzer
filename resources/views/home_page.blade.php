@@ -35,6 +35,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('interesting_stories') }}">News</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('view_feedback') }}">Feedback</a>
+                        </li>
                     </ul>
                     <div class="d-flex">
                         @if (Auth::check())
@@ -327,6 +330,16 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="section-header text-center  pb-5">
+                            <h2 class="fw-bold fs-2 ">
+                                Select Your Plan
+                            </h2>
+                            <p style="text-align: justify;">
+                                The dropdown menu indicates metropolitan areas where the Standard Report is currently offered.
+                                Click the “Select” button, then choose your metropolitan area in the field below.
+                                If not listed, select a Custom Report and we will design a report specifically for your area with the institutions of your choice.
+                            </p>
+                        </div>
                         @foreach ($packages as $package)
                             <div class="col-lg-6 col-md-12 mb-6">
                                 <div class="card h-100 shadow-lg">
@@ -472,6 +485,7 @@
                             <ul>
                                 <li><a href="{{ url('/') }}">Home</a></li>
                                 <li><a href="{{ url('/interesting_stories') }}">News</a></li>
+                                <li><a href="{{ route('view_feedback') }}">Feedback</a></li>
                                 {{-- <li><a href="#">Our Product</a></li>
                                 <li><a href="#">New Survey</a></li>
                                 <li><a href="#">About</a></li> --}}
