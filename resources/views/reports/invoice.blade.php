@@ -129,6 +129,7 @@
         <div class="client-details ">
             <h2>Client:</h2>
             <p class="margin_0"><strong>Company Name: </strong>{{ $bank->bank_name }}</p>
+            <p class="margin_0"><strong>Ordered by: </strong>{{ $user->name." ".$user->last_name }}</p>
             @if ($bank->billing_address != null)
                 <p class="margin_0"><strong>Address: </strong> {{ $bank->billing_address }}</p>
             @endif
@@ -249,6 +250,7 @@
                     <tr>
                         <td class="border_none">
                             <p class="margin_0">{{ $bank->bank_name }}</p>
+                            <p class="margin_0">{{ $user->name." ".$user->last_name }}</p>
                             @if ($bank->billing_address != null)
                                 <p class="margin_0"> {{ $bank->billing_address }}</p>
                             @endif

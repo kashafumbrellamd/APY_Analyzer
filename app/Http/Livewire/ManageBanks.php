@@ -51,11 +51,11 @@ class ManageBanks extends Component
     {
         if($this->search == ""){
             if($this->bank_state_filter != '' && $this->bank_city_filter == ''){
-                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter);
+                $data = Bank::ManageBanksWithStateIdAndType($this->bank_state_filter);
             }elseif($this->bank_state_filter == '' && $this->bank_city_filter != ''){
-                $data = Bank::BanksWithStateIdAndType('',$this->bank_city_filter);
+                $data = Bank::ManageBanksWithStateIdAndType('',$this->bank_city_filter);
             }elseif($this->bank_state_filter != '' && $this->bank_city_filter != ''){
-                $data = Bank::BanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
+                $data = Bank::ManageBanksWithStateIdAndType($this->bank_state_filter,$this->bank_city_filter);
             }else{
                 $data = Bank::BanksWithStateAndType();
             }
@@ -75,6 +75,10 @@ class ManageBanks extends Component
         }
         $states = State::where('country_id','233')->get();
         $cities = Cities::where('country_id','233')->get();
+        // $cities = Bank::select('cbsa_name', 'cbsa_code')
+        //         ->orderBy('cbsa_name', 'ASC')
+        //         ->groupBy('cbsa_name', 'cbsa_code')
+        //         ->get();
         $bts = BankType::where('status','1')->get();
         $bank_states = $this->getStates();
         $bank_cities = $this->getCities();
@@ -308,12 +312,21 @@ class ManageBanks extends Component
     {
         if($this->bank_state_filter!='' && $this->bank_state_filter!='all')
         {
-            $msa_codes = Bank::with('cities')->where('state_id',$this->bank_state_filter)->groupBy('city_id')->get();
+            $msa_codes = Bank::select('cbsa_name', 'cbsa_code')
+            ->where('banks.state_id',$this->bank_state_filter)
+            ->orderBy('cbsa_name', 'ASC')
+            ->groupBy('cbsa_name', 'cbsa_code')
+            ->get();
+            // Bank::with('cities')->where('state_id',$this->bank_state_filter)->groupBy('city_id')->get();
             return $msa_codes;
         }
         else
         {
-            $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            // $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+            $msa_codes = Bank::select('cbsa_name', 'cbsa_code')
+                ->orderBy('cbsa_name', 'ASC')
+                ->groupBy('cbsa_name', 'cbsa_code')
+                ->get();
             return $msa_codes;
         }
 

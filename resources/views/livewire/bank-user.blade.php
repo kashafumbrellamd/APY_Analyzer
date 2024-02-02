@@ -25,7 +25,7 @@
                                     placeholder="Name....">
                             </div>
                             <div class="col-md-4">
-                                <label for="name">Email Adress</label>
+                                <label for="name">Email Address</label>
                                 <input type="text" wire:model.lazy="admin_email" class="form-control mr-2"
                                     placeholder="Email....">
                             </div>

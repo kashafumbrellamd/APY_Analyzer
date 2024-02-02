@@ -315,7 +315,7 @@
                     <select class="form-select form-control mb-3" aria-label="Default select example" wire:model="bank_city_filter">
                         <option value="">Select City</option>
                         @foreach ($bank_cities as $city)
-                            <option value="{{ $city->city_id }}">{{ $city->cities->name }}</option>
+                            <option value="{{ $city->cbsa_code }}">{{ $city->cbsa_name }}</option>
                             {{-- <option value="{{ $city->id }}">{{ $city->name }}</option> --}}
                         @endforeach
                         <option value="">All Data</option>

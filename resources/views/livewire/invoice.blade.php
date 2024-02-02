@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class=" border border-3 border-dark p-3">
-                                @include('reports.invoice',compact('reports','bank'))
+                                @include('reports.invoice',compact('reports','bank','user'))
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">

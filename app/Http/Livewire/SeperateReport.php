@@ -173,9 +173,20 @@ class SeperateReport extends Component
         }
         $columns = $this->columns;
         $msa_codes = $this->getmsacodes();
-        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns','msa_codes'))->setPaper('a4')->output();
+
+        $pdf = PDF::loadView('reports.seperate_report_pdf', compact('reports','results','columns','msa_codes'))
+            ->set_option("isPhpEnabled", true)
+            ->setPaper('a4')
+            ->output();
+
+        // return response()->streamDownload(
+        //     fn () => print($pdf),
+        //     "Seperate_Report.pdf"
+        // );
         return response()->streamDownload(
-            fn () => print($pdf),
+            function () use ($pdf, $msa_codes) {
+                print($pdf);
+            },
             "Seperate_Report.pdf"
         );
         $this->render();

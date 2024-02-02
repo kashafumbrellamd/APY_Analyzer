@@ -81,6 +81,37 @@ class Bank extends Model
         return $states;
     }
 
+    public static function ManageBanksWithStateIdAndType($state_id='',$city_id='')
+    {
+        if($state_id != '' && $city_id == ''){
+            $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+                 ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+                 ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+                 ->where('banks.state_id',$state_id)
+                 ->with('cities')
+                 ->orderby('name','ASC')
+                 ->paginate(10);
+        }elseif($state_id != '' && $city_id != ''){
+            $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+                ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+                ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+                ->where('banks.state_id',$state_id)
+                ->where('banks.cbsa_code',$city_id)
+                ->with('cities')
+                ->orderby('name','ASC')
+                ->paginate(10);
+        }elseif($state_id == '' && $city_id != ''){
+            $states = Bank::join('states', 'banks.state_id', '=', 'states.id')
+                ->join('bank_types', 'bank_types.id', '=', 'banks.bank_type_id')
+                ->select('banks.*', 'states.name as state_name','bank_types.name as type_name')
+                ->where('banks.cbsa_code',$city_id)
+                ->with('cities')
+                ->orderby('name','ASC')
+                ->paginate(10);
+        }
+        return $states;
+    }
+
     public function BankWithState($id)
     {
         $states = Bank::where('banks.id',$id)

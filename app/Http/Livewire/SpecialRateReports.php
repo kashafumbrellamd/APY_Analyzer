@@ -45,7 +45,7 @@ class SpecialRateReports extends Component
         $specialization_rates = $specialization_rates->get();
 
         $bank_states = $this->getStates($bank_ids);
-        $bank_cities = $this->getCities($bank_ids);
+        $bank_cities = $this->getmsacodes();
         return view('livewire.special-rate-reports', ['specialization_rates'=>$specialization_rates,'bank_states'=>$bank_states,'bank_cities'=>$bank_cities]);
     }
 
@@ -60,29 +60,26 @@ class SpecialRateReports extends Component
         return $state;
     }
 
-    public function getCities()
+    public function getmsacodes()
     {
         if($this->bank_state_filter!='' && $this->bank_state_filter!='all')
         {
-            $msa_codes = DB::table('specialization_rates')
-            ->join('banks','banks.id','specialization_rates.bank_id')
-            ->join('cities','cities.id','banks.city_id')
-            ->where('banks.state_id',$this->bank_state_filter)
-            ->select('cities.id','cities.name')
-            ->groupBy('city_id')
-            ->get();
+            $msa_codes = Bank::with('cities')->where('state_id',$this->bank_state_filter)->groupBy('city_id')->get();
             return $msa_codes;
         }
         else
         {
-            $msa_codes = DB::table('specialization_rates')
-                ->join('banks','banks.id','specialization_rates.bank_id')
-                ->join('cities','cities.id','banks.city_id')
-                ->select('cities.id','cities.name')
-                ->groupBy('city_id')
-                ->get();
-            return $msa_codes;
+            $customer_type = CustomerBank::where('id',auth()->user()->bank_id)->first();
+            if($customer_type->display_reports == 'state'){
+                $banks_city = DB::table('bank_selected_city')->where('bank_id',auth()->user()->bank_id)->pluck('city_id')->toArray();
+                $msa_codes = Bank::with('cities')->whereIn('cbsa_code',$banks_city)->groupBy('cbsa_code')->get();
+                return $msa_codes;
+            }elseif($customer_type->display_reports == 'custom'){
+                $msa_codes = Bank::with('cities')->groupBy('city_id')->get();
+                return $msa_codes;
+            }
         }
+
     }
 
     public function selectstate($id)
@@ -114,7 +111,8 @@ class SpecialRateReports extends Component
             $specialization_rates->where('banks.city_id',$this->bank_city_filter);
         }
         $specialization_rates = $specialization_rates->get();
-        $pdf = PDF::loadView('reports.special_report_pdf', compact('specialization_rates'))->output();
+        $msa_codes = $this->getmsacodes();
+        $pdf = PDF::loadView('reports.special_report_pdf', compact('specialization_rates','msa_codes'))->set_option("isPhpEnabled", true)->output();
         return response()->streamDownload(
             fn () => print($pdf),
             "Special_Report.pdf"

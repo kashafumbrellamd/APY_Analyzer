@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use PDF;
 use App\Models\CustomerBank;
 use App\Models\Contract;
+use App\Models\User;
 use Livewire\Component;
 use Auth;
 
@@ -26,7 +27,8 @@ class Invoice extends Component
     {
         $reports = Contract::where('bank_id', $this->bank->id)->orderBy('id','desc')->first();
         $bank = $this->bank;
-        return view('livewire.invoice',compact('reports','bank'));
+        $user = User::where('bank_id', $this->bank->id)->first();
+        return view('livewire.invoice',compact('reports','bank','user'));
     }
 
     public function download(){
